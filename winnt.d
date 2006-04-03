@@ -15,6 +15,14 @@ private extern(C) {
   void* memset(void*, uint, uint);
 }
 
+alias void* LPVOID;
+alias char UCHAR;
+alias char* PUCHAR;
+alias uint ULONG;
+alias uint* PULONG;
+
+alias HANDLE* LPHANDLE;
+
 // #ifndef _WINNT_
 // #define _WINNT_
 
