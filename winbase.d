@@ -146,22 +146,22 @@ enum : DWORD {
 }
 
 enum  : DWORD {
-	SP_PARITY=1,
-	SP_BAUD=2,
-	SP_DATABITS=4,
-	SP_STOPBITS=8,
-	SP_HANDSHAKING=16,
-	SP_PARITY_CHECK=32,
-	SP_RLSD=64
+	SP_PARITY       = 1,
+	SP_BAUD         = 2,
+	SP_DATABITS     = 4,
+	SP_STOPBITS     = 8,
+	SP_HANDSHAKING  = 16,
+	SP_PARITY_CHECK = 32,
+	SP_RLSD         = 64
 }
 
 enum : DWORD {
-	DATABITS_5=1,
-	DATABITS_6=2,
-	DATABITS_7=4,
-	DATABITS_8=8,
-	DATABITS_16=16,
-	DATABITS_16X=32
+	DATABITS_5   = 1,
+	DATABITS_6   = 2,
+	DATABITS_7   = 4,
+	DATABITS_8   = 8,
+	DATABITS_16  = 16,
+	DATABITS_16X = 32
 }
 
 enum {
@@ -220,22 +220,27 @@ const FILE_END=2;
 
 const DWORD INVALID_SET_FILE_POINTER = -1;
 
-const OF_READ=0;
-const OF_READWRITE=2;
-const OF_WRITE=1;
-const OF_SHARE_COMPAT=0;
-const OF_SHARE_DENY_NONE=64;
-const OF_SHARE_DENY_READ=48;
-const OF_SHARE_DENY_WRITE=32;
-const OF_SHARE_EXCLUSIVE=16;
-const OF_CANCEL=2048;
-const OF_CREATE=4096;
-const OF_DELETE=512;
-const OF_EXIST=16384;
-const OF_PARSE=256;
-const OF_PROMPT=8192;
-const OF_REOPEN=32768;
-const OF_VERIFY=1024;
+// for OpenFile()
+deprecated {
+enum : UINT {
+	OF_READ      = 0,
+	OF_WRITE     = 1,
+	OF_READWRITE = 2,
+	OF_SHARE_COMPAT     = 0,
+	OF_SHARE_DENY_NONE  = 64,
+	OF_SHARE_DENY_READ  = 48,
+	OF_SHARE_DENY_WRITE = 32,
+	OF_SHARE_EXCLUSIVE  = 16,
+	OF_PARSE   = 256,
+	OF_DELETE  = 512,
+	OF_VERIFY  = 1024;
+	OF_CANCEL  = 2048,
+	OF_CREATE  = 4096,
+	OF_PROMPT  = 8192,
+	OF_EXIST   = 16384,
+	OF_REOPEN  = 32768
+}
+}
 
 enum : DWORD {
 	NMPWAIT_NOWAIT       = 1,
@@ -294,29 +299,32 @@ const PIPE_CLIENT_END=0;
 const PIPE_SERVER_END=1;
 const PIPE_UNLIMITED_INSTANCES=255;
 
-const DEBUG_PROCESS=0x00000001;
-const DEBUG_ONLY_THIS_PROCESS=0x00000002;
-const CREATE_SUSPENDED=0x00000004;
-const DETACHED_PROCESS=0x00000008;
-const CREATE_NEW_CONSOLE=0x00000010;
-const NORMAL_PRIORITY_CLASS=0x00000020;
-const IDLE_PRIORITY_CLASS=0x00000040;
-const HIGH_PRIORITY_CLASS=0x00000080;
-const REALTIME_PRIORITY_CLASS=0x00000100;
-const CREATE_NEW_PROCESS_GROUP=0x00000200;
-const CREATE_UNICODE_ENVIRONMENT=0x00000400;
-const CREATE_SEPARATE_WOW_VDM=0x00000800;
-const CREATE_SHARED_WOW_VDM=0x00001000;
-const CREATE_FORCEDOS=0x00002000;
-const BELOW_NORMAL_PRIORITY_CLASS=0x00004000;
-const ABOVE_NORMAL_PRIORITY_CLASS=0x00008000;
-const CREATE_BREAKAWAY_FROM_JOB=0x01000000;
-const CREATE_WITH_USERPROFILE=0x02000000;
-const CREATE_DEFAULT_ERROR_MODE=0x04000000;
-const CREATE_NO_WINDOW=0x08000000;
-const PROFILE_USER=0x10000000;
-const PROFILE_KERNEL=0x20000000;
-const PROFILE_SERVER=0x40000000;
+// dwCreationFlags for CreateProcess() and CreateProcessAsUser()
+enum : DWORD  {
+	DEBUG_PROCESS               = 0x00000001,
+	DEBUG_ONLY_THIS_PROCESS     = 0x00000002,
+	CREATE_SUSPENDED            = 0x00000004,
+	DETACHED_PROCESS            = 0x00000008,
+	CREATE_NEW_CONSOLE          = 0x00000010,
+	NORMAL_PRIORITY_CLASS       = 0x00000020,
+	IDLE_PRIORITY_CLASS         = 0x00000040,
+	HIGH_PRIORITY_CLASS         = 0x00000080,
+	REALTIME_PRIORITY_CLASS     = 0x00000100,
+	CREATE_NEW_PROCESS_GROUP    = 0x00000200,
+	CREATE_UNICODE_ENVIRONMENT  = 0x00000400,
+	CREATE_SEPARATE_WOW_VDM     = 0x00000800,
+	CREATE_SHARED_WOW_VDM       = 0x00001000,
+	CREATE_FORCEDOS             = 0x00002000,
+	BELOW_NORMAL_PRIORITY_CLASS = 0x00004000,
+	ABOVE_NORMAL_PRIORITY_CLASS = 0x00008000,
+	CREATE_BREAKAWAY_FROM_JOB   = 0x01000000,
+	CREATE_WITH_USERPROFILE     = 0x02000000,
+	CREATE_DEFAULT_ERROR_MODE   = 0x04000000,
+	CREATE_NO_WINDOW            = 0x08000000,
+	PROFILE_USER                = 0x10000000,
+	PROFILE_KERNEL              = 0x20000000,
+	PROFILE_SERVER              = 0x40000000
+}
 
 const CONSOLE_TEXTMODE_BUFFER=1;
 
@@ -364,11 +372,13 @@ const HW_PROFILE_GUIDLEN=39;
 
 const MAX_PROFILE_LEN=80;
 
-const DOCKINFO_UNDOCKED=1;
-const DOCKINFO_DOCKED=2;
-const DOCKINFO_USER_SUPPLIED=4;
-const DOCKINFO_USER_UNDOCKED=(DOCKINFO_USER_SUPPLIED|DOCKINFO_UNDOCKED);
-const DOCKINFO_USER_DOCKED=(DOCKINFO_USER_SUPPLIED|DOCKINFO_DOCKED);
+enum {
+	DOCKINFO_UNDOCKED      = 1,
+	DOCKINFO_DOCKED        = 2,
+	DOCKINFO_USER_SUPPLIED = 4,
+	DOCKINFO_USER_UNDOCKED = (DOCKINFO_USER_SUPPLIED|DOCKINFO_UNDOCKED),
+	DOCKINFO_USER_DOCKED   = (DOCKINFO_USER_SUPPLIED|DOCKINFO_DOCKED)
+}
 
 enum {
 	DRIVE_UNKNOWN = 0,
@@ -427,25 +437,36 @@ const FS_PERSISTENT_ACLS=8;
 const FS_FILE_COMPRESSION=16;
 const FS_VOL_IS_COMPRESSED=32768;
 
-const GMEM_FIXED=0;
-const GMEM_MOVEABLE=2;
-const GMEM_NOCOMPACT=16;
-const GMEM_NODISCARD=32;
-const GMEM_ZEROINIT=64;
-const GMEM_MODIFY=128;
-const GMEM_DISCARDABLE=256;
-const GMEM_LOCKCOUNT=255;
-const GMEM_NOT_BANKED=4096;
-const GMEM_LOWER=4096;
-const GMEM_SHARE=8192;
-const GMEM_DDESHARE=8192;
+// Flags for GlobalAlloc
+enum : SIZE_T {
+	GMEM_FIXED=0,
+	GMEM_MOVEABLE=2,
+	GMEM_ZEROINIT=64,
+	GPTR = 66,
+	// Used only for GlobalRealloc
+	GMEM_MODIFY = 128
+
+/+  // Obselete flags (Win16 only)
+	GMEM_NOCOMPACT=16;
+	GMEM_NODISCARD=32;
+	GMEM_DISCARDABLE=256;
+	GMEM_NOT_BANKED=4096;
+	GMEM_LOWER=4096;
+	GMEM_SHARE=8192;
+	GMEM_DDESHARE=8192;
+
+	GMEM_LOCKCOUNT=255;
++/
+}
+
+// for GlobalFlags().
 const GMEM_DISCARDED=16384;
-const GMEM_NOTIFY = 16384;
 const GMEM_INVALID_HANDLE = 32768;
+
+const GMEM_NOTIFY = 16384;
 const GMEM_VALID_FLAGS = 32626;
 
 const GPTR = 64;
-const GHND = 66;
 
 const LMEM_FIXED=0;
 const LMEM_MOVEABLE=2;
@@ -609,15 +630,19 @@ enum {
 const FORMAT_MESSAGE_MAX_WIDTH_MASK = 255;
 
 /* also in ddk/ntapi.h */
-const SEM_FAILCRITICALERRORS=0x0001;
-const SEM_NOGPFAULTERRORBOX=0x0002;
-const SEM_NOALIGNMENTFAULTEXCEPT=0x0004;
-const SEM_NOOPENFILEERRORBOX=0x8000;
+enum {
+	SEM_FAILCRITICALERRORS     = 0x0001,
+	SEM_NOGPFAULTERRORBOX      = 0x0002,
+	SEM_NOALIGNMENTFAULTEXCEPT = 0x0004,
+	SEM_NOOPENFILEERRORBOX     = 0x8000
+}
 /* end ntapi.h */
 
-const SLE_ERROR=1;
-const SLE_MINORERROR=2;
-const SLE_WARNING=3;
+enum {
+	SLE_ERROR = 1,
+	SLE_MINORERROR,
+	SLE_WARNING
+}
 
 const SHUTDOWN_NORETRY=1;
 
@@ -631,6 +656,7 @@ enum  : ATOM {
 	MAXINTATOM   = 0xC000,
 	INVALID_ATOM = 0
 }
+
 const IGNORE = 0;
 const INFINITE = 0xFFFFFFFF;
 
@@ -716,40 +742,50 @@ enum {
 	BACKUP_SPARSE_BLOCK
 }
 
-const STREAM_NORMAL_ATTRIBUTE=0;
-const STREAM_MODIFIED_WHEN_READ=1;
-const STREAM_CONTAINS_SECURITY=2;
-const STREAM_CONTAINS_PROPERTIES=4;
+enum {
+	STREAM_NORMAL_ATTRIBUTE    = 0,
+	STREAM_MODIFIED_WHEN_READ  = 1,
+	STREAM_CONTAINS_SECURITY   = 2,
+	STREAM_CONTAINS_PROPERTIES = 4
+}
 
-const STARTF_USESHOWWINDOW=1;
-const STARTF_USESIZE=2;
-const STARTF_USEPOSITION=4;
-const STARTF_USECOUNTCHARS=8;
-const STARTF_USEFILLATTRIBUTE=16;
-const STARTF_RUNFULLSCREEN=32;
-const STARTF_FORCEONFEEDBACK=64;
-const STARTF_FORCEOFFFEEDBACK=128;
-const STARTF_USESTDHANDLES=256;
-const STARTF_USEHOTKEY=512;
+enum {
+	STARTF_USESHOWWINDOW    = 1,
+	STARTF_USESIZE          = 2,
+	STARTF_USEPOSITION      = 4,
+	STARTF_USECOUNTCHARS    = 8,
+	STARTF_USEFILLATTRIBUTE = 16,
+	STARTF_RUNFULLSCREEN    = 32,
+	STARTF_FORCEONFEEDBACK  = 64,
+	STARTF_FORCEOFFFEEDBACK = 128,
+	STARTF_USESTDHANDLES    = 256,
+	STARTF_USEHOTKEY        = 512
+}
 
-const TC_NORMAL=0;
-const TC_HARDERR=1;
-const TC_GP_TRAP=2;
-const TC_SIGNAL=3;
+enum {
+	TC_NORMAL  = 0,
+	TC_HARDERR = 1,
+	TC_GP_TRAP = 2,
+	TC_SIGNAL  = 3
+}
 
-const AC_LINE_OFFLINE=0;
-const AC_LINE_ONLINE=1;
-const AC_LINE_BACKUP_POWER=2;
-const AC_LINE_UNKNOWN=255;
+enum {
+	AC_LINE_OFFLINE      = 0,
+	AC_LINE_ONLINE       = 1,
+	AC_LINE_BACKUP_POWER = 2,
+	AC_LINE_UNKNOWN      = 255
+}
 
-const BATTERY_FLAG_HIGH=1;
-const BATTERY_FLAG_LOW=2;
-const BATTERY_FLAG_CRITICAL=4;
-const BATTERY_FLAG_CHARGING=8;
-const BATTERY_FLAG_NO_BATTERY=128;
-const BATTERY_FLAG_UNKNOWN=255;
-const BATTERY_PERCENTAGE_UNKNOWN=255;
-const BATTERY_LIFE_UNKNOWN=0xFFFFFFFF;
+enum {
+	BATTERY_FLAG_HIGH          = 1,
+	BATTERY_FLAG_LOW           = 2,
+	BATTERY_FLAG_CRITICAL      = 4,
+	BATTERY_FLAG_CHARGING      = 8,
+	BATTERY_FLAG_NO_BATTERY    = 128,
+	BATTERY_FLAG_UNKNOWN       = 255,
+	BATTERY_PERCENTAGE_UNKNOWN = 255,
+	BATTERY_LIFE_UNKNOWN       = 0xFFFFFFFF
+}
 
 const DDD_RAW_TARGET_PATH=1;
 const DDD_REMOVE_DEFINITION=2;
@@ -877,7 +913,7 @@ struct DCB{
 }
 alias DCB * LPDCB;
 
-struct COMMCONFIG{
+struct COMM_CONFIG{
 	DWORD dwSize;
 	WORD  wVersion;
 	WORD  wReserved;
@@ -1337,6 +1373,8 @@ struct PROCESS_HEAP_ENTRY{
 }
 alias PROCESS_HEAP_ENTRY * LPPROCESS_HEAP_ENTRY;
 
+deprecated {
+
 struct OFSTRUCT{
 	BYTE cBytes;
 	BYTE fFixedDisk;
@@ -1346,6 +1384,8 @@ struct OFSTRUCT{
 	CHAR szPathName[OFS_MAXPATHNAME];
 }
 alias OFSTRUCT * LPOFSTRUCT, POFSTRUCT;
+
+}
 
 struct WIN_CERTIFICATE{
 	DWORD dwLength;
@@ -1486,7 +1526,7 @@ static if (_WIN32_WINNT >= 0x0500) {
  BOOL AllocateLocallyUniqueId(PLUID);
  BOOL AreAllAccessesGranted(DWORD,DWORD);
  BOOL AreAnyAccessesGranted(DWORD,DWORD);
- BOOL AreFileApisANSI();
+ BOOL AreFileApisANSI(void);
  BOOL BackupEventLogA(HANDLE,LPCSTR);
  BOOL BackupEventLogW(HANDLE,LPCWSTR);
  BOOL BackupRead(HANDLE,LPBYTE,DWORD,LPDWORD,BOOL,BOOL,LPVOID*);
@@ -1510,6 +1550,7 @@ static if (_WIN32_WINNT >= 0x0501) {
  BOOL CheckNameLegalDOS8Dot3W(LPCWSTR,LPSTR,DWORD,PBOOL,PBOOL);
  BOOL CheckRemoteDebuggerPresent(HANDLE,PBOOL);
 }
+
  BOOL ClearCommBreak(HANDLE);
  BOOL ClearCommError(HANDLE,PDWORD,LPCOMSTAT);
  BOOL ClearEventLogA(HANDLE,LPCSTR);
@@ -1621,7 +1662,6 @@ static if (_WIN32_WINNT >= 0x0500) {
  HANDLE CreateThread(LPSECURITY_ATTRIBUTES,DWORD,LPTHREAD_START_ROUTINE,PVOID,DWORD,PDWORD);
  HANDLE CreateWaitableTimerA(LPSECURITY_ATTRIBUTES,BOOL,LPCSTR);
  HANDLE CreateWaitableTimerW(LPSECURITY_ATTRIBUTES,BOOL,LPCWSTR);
-
 
  BOOL DebugActiveProcess(DWORD);
  void DebugBreak(void);
@@ -1788,10 +1828,10 @@ static if (_WIN32_WINNT >= 0x0501) {
  DWORD GetCurrentDirectoryW(DWORD,LPWSTR);
  BOOL GetCurrentHwProfileA(LPHW_PROFILE_INFOA);
  BOOL GetCurrentHwProfileW(LPHW_PROFILE_INFOW);
- HANDLE GetCurrentProcess();
- DWORD GetCurrentProcessId();
- HANDLE GetCurrentThread();
- DWORD GetCurrentThreadId();
+ HANDLE GetCurrentProcess(void);
+ DWORD GetCurrentProcessId(void);
+ HANDLE GetCurrentThread(void);
+ DWORD GetCurrentThreadId(void);
 
 alias GetTickCount GetCurrentTime;
 
@@ -1809,9 +1849,9 @@ static if (_WIN32_WINNT >= 0x0502) {
 
  UINT GetDriveTypeA(LPCSTR);
  UINT GetDriveTypeW(LPCWSTR);
- LPSTR GetEnvironmentStrings();
- LPSTR GetEnvironmentStringsA();
- LPWSTR GetEnvironmentStringsW();
+ LPSTR GetEnvironmentStrings(void);
+ LPSTR GetEnvironmentStringsA(void);
+ LPWSTR GetEnvironmentStringsW(void);
  DWORD GetEnvironmentVariableA(LPCSTR,LPSTR,DWORD);
  DWORD GetEnvironmentVariableW(LPCWSTR,LPWSTR,DWORD);
  BOOL GetExitCodeProcess(HANDLE,PDWORD);
@@ -1901,7 +1941,7 @@ static if (_WIN32_WINNT >= 0x0500) {
  BOOL GetProcessShutdownParameters(PDWORD,PDWORD);
  BOOL GetProcessTimes(HANDLE,LPFILETIME,LPFILETIME,LPFILETIME,LPFILETIME);
  DWORD GetProcessVersion(DWORD);
- HWINSTA GetProcessWindowStation();
+ HWINSTA GetProcessWindowStation(void);
  BOOL GetProcessWorkingSetSize(HANDLE,PSIZE_T,PSIZE_T);
  UINT GetProfileIntA(LPCSTR,LPCSTR,INT);
  UINT GetProfileIntW(LPCWSTR,LPCWSTR,INT);
@@ -1922,8 +1962,8 @@ static if (_WIN32_WINNT >= 0x0500) {
  DWORD GetSidLengthRequired(UCHAR);
  PDWORD GetSidSubAuthority(PSID,DWORD);
  PUCHAR GetSidSubAuthorityCount(PSID);
- void GetStartupInfoA(LPSTARTUPINFOA);
- void GetStartupInfoW(LPSTARTUPINFOW);
+ VOID GetStartupInfoA(LPSTARTUPINFOA);
+ VOID GetStartupInfoW(LPSTARTUPINFOW);
  HANDLE GetStdHandle(DWORD);
  UINT GetSystemDirectoryA(LPSTR,UINT);
  UINT GetSystemDirectoryW(LPWSTR,UINT);
@@ -1970,12 +2010,12 @@ static if (_WIN32_WINNT >= 0x0502) {
  BOOL GetThreadPriorityBoost(HANDLE,PBOOL);
  BOOL GetThreadSelectorEntry(HANDLE,DWORD,LPLDT_ENTRY);
  BOOL GetThreadTimes(HANDLE,LPFILETIME,LPFILETIME,LPFILETIME,LPFILETIME);
- DWORD GetTickCount();
+ DWORD GetTickCount(VOID);
  DWORD GetTimeZoneInformation(LPTIME_ZONE_INFORMATION);
  BOOL GetTokenInformation(HANDLE,TOKEN_INFORMATION_CLASS,PVOID,DWORD,PDWORD);
  BOOL GetUserNameA (LPSTR,PDWORD);
  BOOL GetUserNameW(LPWSTR,PDWORD);
- DWORD GetVersion();
+ DWORD GetVersion(void);
  BOOL GetVersionExA(LPOSVERSIONINFOA);
  BOOL GetVersionExW(LPOSVERSIONINFOW);
  BOOL GetVolumeInformationA(LPCSTR,LPSTR,DWORD,PDWORD,PDWORD,PDWORD,LPSTR,DWORD);
@@ -2068,7 +2108,7 @@ static if (_WIN32_WINNT >= 0x0501) {
  BOOL IsProcessInJob(HANDLE,HANDLE,PBOOL);
 }
  BOOL IsProcessorFeaturePresent(DWORD);
- BOOL IsSystemResumeAutomatic();
+ BOOL IsSystemResumeAutomatic(void);
  BOOL IsTextUnicode(PCVOID,int,LPINT);
  BOOL IsValidAcl(PACL);
  BOOL IsValidSecurityDescriptor(PSECURITY_DESCRIPTOR);
@@ -2149,7 +2189,9 @@ static if (_WIN32_WINNT >= 0x0501) {
  HANDLE OpenEventLogA (LPCSTR,LPCSTR);
  HANDLE OpenEventLogW(LPCWSTR,LPCWSTR);
  HANDLE OpenEventW(DWORD,BOOL,LPCWSTR);
+deprecated {
  HFILE OpenFile(LPCSTR,LPOFSTRUCT,UINT);
+}
  HANDLE OpenFileMappingA(DWORD,BOOL,LPCSTR);
  HANDLE OpenFileMappingW(DWORD,BOOL,LPCWSTR);
  HANDLE OpenMutexA(DWORD,BOOL,LPCSTR);
@@ -2235,7 +2277,7 @@ static if (_WIN32_WINNT >= 0x0510) {
 }
 
  DWORD ResumeThread(HANDLE);
- BOOL RevertToSelf();
+ BOOL RevertToSelf(void);
  DWORD SearchPathA(LPCSTR,LPCSTR,LPCSTR,DWORD,LPSTR,LPSTR*);
  DWORD SearchPathW(LPCWSTR,LPCWSTR,LPCWSTR,DWORD,LPWSTR,LPWSTR*);
  BOOL SetAclInformation(PACL,PVOID,DWORD,ACL_INFORMATION_CLASS);
@@ -2267,8 +2309,8 @@ static if (_WIN32_WINNT >= 0x0502) {
  BOOL SetEnvironmentVariableW(LPCWSTR,LPCWSTR);
  UINT SetErrorMode(UINT);
  BOOL SetEvent(HANDLE);
- void SetFileApisToANSI();
- void SetFileApisToOEM();
+ VOID SetFileApisToANSI(void);
+ VOID SetFileApisToOEM(void);
  BOOL SetFileAttributesA(LPCSTR,DWORD);
  BOOL SetFileAttributesW(LPCWSTR,DWORD);
  DWORD SetFilePointer(HANDLE,LONG,PLONG,DWORD);
@@ -2348,7 +2390,7 @@ static if (_WIN32_WINNT >= 0x0500) {
  DWORD SleepEx(DWORD,BOOL);
  DWORD SuspendThread(HANDLE);
  void SwitchToFiber(PVOID);
- BOOL SwitchToThread();
+ BOOL SwitchToThread(void);
  BOOL SystemTimeToFileTime( SYSTEMTIME*,LPFILETIME);
  BOOL SystemTimeToTzSpecificLocalTime(LPTIME_ZONE_INFORMATION,LPSYSTEMTIME,LPSYSTEMTIME);
  BOOL TerminateProcess(HANDLE,UINT);
@@ -2521,6 +2563,7 @@ alias GetTempPathW GetTempPath;
 alias GetUserNameW GetUserName;
 alias GetVersionExW GetVersionEx;
 alias GetVolumeInformationW GetVolumeInformation;
+alias GetVolumeNameForVolumeMountPointW GetVolumeNameForVolumeMountPoint;
 alias GetVolumePathNameW GetVolumePathName;
 alias GetVolumePathNamesForVolumeNameW GetVolumePathNamesForVolumeName;
 alias GetWindowsDirectoryW GetWindowsDirectory;
@@ -2588,7 +2631,6 @@ static if (_WIN32_WINNT >= 0x0500) {
 	alias CreateHardLinkW CreateHardLink;
 	alias CreateJobObjectW CreateJobObject;
 
-	alias GetVolumeNameForVolumeMountPointW GetVolumeNameForVolumeMountPoint;
 	alias DeleteVolumeMountPointW DeleteVolumeMountPoint;
 	alias DnsHostnameToComputerNameW DnsHostnameToComputerName;
 	
@@ -2724,6 +2766,7 @@ alias GetTempPathA GetTempPath;
 alias GetUserNameA GetUserName;
 alias GetVersionExA GetVersionEx;
 alias GetVolumeInformationA GetVolumeInformation;
+alias GetVolumeNameForVolumeMountPointA GetVolumeNameForVolumeMountPoint;
 alias GetVolumePathNameA GetVolumePathName;
 alias GetVolumePathNamesForVolumeNameA GetVolumePathNamesForVolumeName;
 alias GetWindowsDirectoryA GetWindowsDirectory;
@@ -2791,7 +2834,6 @@ static if ((_WIN32_WINNT >= 0x0500) || (_WIN32_WINDOWS >= 0x0410)) {
 static if (_WIN32_WINNT >= 0x0500) {
 	alias CreateHardLinkA CreateHardLink;
 	alias CreateJobObjectA CreateJobObject;
-	alias GetVolumeNameForVolumeMountPointA GetVolumeNameForVolumeMountPoint;
 	alias DeleteVolumeMountPointA DeleteVolumeMountPoint;
 	alias DnsHostnameToComputerNameA DnsHostnameToComputerName;
 
