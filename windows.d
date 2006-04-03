@@ -12,6 +12,8 @@
 
 */
 
+const int WINVER=0x0501;
+
 //import stdarg;
 import win32.windef;
 //import win32.wincon;

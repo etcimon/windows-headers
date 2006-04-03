@@ -1,6 +1,10 @@
 // Converted from MINGW w32api\winbase.h
 // Public domain.
 
+module win32.winbase;
+import win32.winver;
+import win32.windef;
+
 /*
 The following macros are obsolete, and have no effect. 
 
@@ -873,7 +877,7 @@ struct DCB{
 }
 alias DCB * LPDCB;
 
-struct COMM_CONFIG{
+struct COMMCONFIG{
 	DWORD dwSize;
 	WORD  wVersion;
 	WORD  wReserved;
@@ -1482,7 +1486,7 @@ static if (_WIN32_WINNT >= 0x0500) {
  BOOL AllocateLocallyUniqueId(PLUID);
  BOOL AreAllAccessesGranted(DWORD,DWORD);
  BOOL AreAnyAccessesGranted(DWORD,DWORD);
- BOOL AreFileApisANSI(void);
+ BOOL AreFileApisANSI();
  BOOL BackupEventLogA(HANDLE,LPCSTR);
  BOOL BackupEventLogW(HANDLE,LPCWSTR);
  BOOL BackupRead(HANDLE,LPBYTE,DWORD,LPDWORD,BOOL,BOOL,LPVOID*);
@@ -1784,10 +1788,10 @@ static if (_WIN32_WINNT >= 0x0501) {
  DWORD GetCurrentDirectoryW(DWORD,LPWSTR);
  BOOL GetCurrentHwProfileA(LPHW_PROFILE_INFOA);
  BOOL GetCurrentHwProfileW(LPHW_PROFILE_INFOW);
- HANDLE GetCurrentProcess(void);
- DWORD GetCurrentProcessId(void);
- HANDLE GetCurrentThread(void);
- DWORD GetCurrentThreadId(void);
+ HANDLE GetCurrentProcess();
+ DWORD GetCurrentProcessId();
+ HANDLE GetCurrentThread();
+ DWORD GetCurrentThreadId();
 
 alias GetTickCount GetCurrentTime;
 
@@ -1805,9 +1809,9 @@ static if (_WIN32_WINNT >= 0x0502) {
 
  UINT GetDriveTypeA(LPCSTR);
  UINT GetDriveTypeW(LPCWSTR);
- LPSTR GetEnvironmentStrings(void);
- LPSTR GetEnvironmentStringsA(void);
- LPWSTR GetEnvironmentStringsW(void);
+ LPSTR GetEnvironmentStrings();
+ LPSTR GetEnvironmentStringsA();
+ LPWSTR GetEnvironmentStringsW();
  DWORD GetEnvironmentVariableA(LPCSTR,LPSTR,DWORD);
  DWORD GetEnvironmentVariableW(LPCWSTR,LPWSTR,DWORD);
  BOOL GetExitCodeProcess(HANDLE,PDWORD);
@@ -1897,7 +1901,7 @@ static if (_WIN32_WINNT >= 0x0500) {
  BOOL GetProcessShutdownParameters(PDWORD,PDWORD);
  BOOL GetProcessTimes(HANDLE,LPFILETIME,LPFILETIME,LPFILETIME,LPFILETIME);
  DWORD GetProcessVersion(DWORD);
- HWINSTA GetProcessWindowStation(void);
+ HWINSTA GetProcessWindowStation();
  BOOL GetProcessWorkingSetSize(HANDLE,PSIZE_T,PSIZE_T);
  UINT GetProfileIntA(LPCSTR,LPCSTR,INT);
  UINT GetProfileIntW(LPCWSTR,LPCWSTR,INT);
@@ -1918,8 +1922,8 @@ static if (_WIN32_WINNT >= 0x0500) {
  DWORD GetSidLengthRequired(UCHAR);
  PDWORD GetSidSubAuthority(PSID,DWORD);
  PUCHAR GetSidSubAuthorityCount(PSID);
- VOID GetStartupInfoA(LPSTARTUPINFOA);
- VOID GetStartupInfoW(LPSTARTUPINFOW);
+ void GetStartupInfoA(LPSTARTUPINFOA);
+ void GetStartupInfoW(LPSTARTUPINFOW);
  HANDLE GetStdHandle(DWORD);
  UINT GetSystemDirectoryA(LPSTR,UINT);
  UINT GetSystemDirectoryW(LPWSTR,UINT);
@@ -1966,12 +1970,12 @@ static if (_WIN32_WINNT >= 0x0502) {
  BOOL GetThreadPriorityBoost(HANDLE,PBOOL);
  BOOL GetThreadSelectorEntry(HANDLE,DWORD,LPLDT_ENTRY);
  BOOL GetThreadTimes(HANDLE,LPFILETIME,LPFILETIME,LPFILETIME,LPFILETIME);
- DWORD GetTickCount(VOID);
+ DWORD GetTickCount();
  DWORD GetTimeZoneInformation(LPTIME_ZONE_INFORMATION);
  BOOL GetTokenInformation(HANDLE,TOKEN_INFORMATION_CLASS,PVOID,DWORD,PDWORD);
  BOOL GetUserNameA (LPSTR,PDWORD);
  BOOL GetUserNameW(LPWSTR,PDWORD);
- DWORD GetVersion(void);
+ DWORD GetVersion();
  BOOL GetVersionExA(LPOSVERSIONINFOA);
  BOOL GetVersionExW(LPOSVERSIONINFOW);
  BOOL GetVolumeInformationA(LPCSTR,LPSTR,DWORD,PDWORD,PDWORD,PDWORD,LPSTR,DWORD);
@@ -2064,7 +2068,7 @@ static if (_WIN32_WINNT >= 0x0501) {
  BOOL IsProcessInJob(HANDLE,HANDLE,PBOOL);
 }
  BOOL IsProcessorFeaturePresent(DWORD);
- BOOL IsSystemResumeAutomatic(void);
+ BOOL IsSystemResumeAutomatic();
  BOOL IsTextUnicode(PCVOID,int,LPINT);
  BOOL IsValidAcl(PACL);
  BOOL IsValidSecurityDescriptor(PSECURITY_DESCRIPTOR);
@@ -2231,7 +2235,7 @@ static if (_WIN32_WINNT >= 0x0510) {
 }
 
  DWORD ResumeThread(HANDLE);
- BOOL RevertToSelf(void);
+ BOOL RevertToSelf();
  DWORD SearchPathA(LPCSTR,LPCSTR,LPCSTR,DWORD,LPSTR,LPSTR*);
  DWORD SearchPathW(LPCWSTR,LPCWSTR,LPCWSTR,DWORD,LPWSTR,LPWSTR*);
  BOOL SetAclInformation(PACL,PVOID,DWORD,ACL_INFORMATION_CLASS);
@@ -2263,8 +2267,8 @@ static if (_WIN32_WINNT >= 0x0502) {
  BOOL SetEnvironmentVariableW(LPCWSTR,LPCWSTR);
  UINT SetErrorMode(UINT);
  BOOL SetEvent(HANDLE);
- VOID SetFileApisToANSI(void);
- VOID SetFileApisToOEM(void);
+ void SetFileApisToANSI();
+ void SetFileApisToOEM();
  BOOL SetFileAttributesA(LPCSTR,DWORD);
  BOOL SetFileAttributesW(LPCWSTR,DWORD);
  DWORD SetFilePointer(HANDLE,LONG,PLONG,DWORD);
@@ -2344,7 +2348,7 @@ static if (_WIN32_WINNT >= 0x0500) {
  DWORD SleepEx(DWORD,BOOL);
  DWORD SuspendThread(HANDLE);
  void SwitchToFiber(PVOID);
- BOOL SwitchToThread(void);
+ BOOL SwitchToThread();
  BOOL SystemTimeToFileTime( SYSTEMTIME*,LPFILETIME);
  BOOL SystemTimeToTzSpecificLocalTime(LPTIME_ZONE_INFORMATION,LPSYSTEMTIME,LPSYSTEMTIME);
  BOOL TerminateProcess(HANDLE,UINT);
@@ -2517,7 +2521,6 @@ alias GetTempPathW GetTempPath;
 alias GetUserNameW GetUserName;
 alias GetVersionExW GetVersionEx;
 alias GetVolumeInformationW GetVolumeInformation;
-alias GetVolumeNameForVolumeMountPointW GetVolumeNameForVolumeMountPoint;
 alias GetVolumePathNameW GetVolumePathName;
 alias GetVolumePathNamesForVolumeNameW GetVolumePathNamesForVolumeName;
 alias GetWindowsDirectoryW GetWindowsDirectory;
@@ -2585,6 +2588,7 @@ static if (_WIN32_WINNT >= 0x0500) {
 	alias CreateHardLinkW CreateHardLink;
 	alias CreateJobObjectW CreateJobObject;
 
+	alias GetVolumeNameForVolumeMountPointW GetVolumeNameForVolumeMountPoint;
 	alias DeleteVolumeMountPointW DeleteVolumeMountPoint;
 	alias DnsHostnameToComputerNameW DnsHostnameToComputerName;
 	
@@ -2720,7 +2724,6 @@ alias GetTempPathA GetTempPath;
 alias GetUserNameA GetUserName;
 alias GetVersionExA GetVersionEx;
 alias GetVolumeInformationA GetVolumeInformation;
-alias GetVolumeNameForVolumeMountPointA GetVolumeNameForVolumeMountPoint;
 alias GetVolumePathNameA GetVolumePathName;
 alias GetVolumePathNamesForVolumeNameA GetVolumePathNamesForVolumeName;
 alias GetWindowsDirectoryA GetWindowsDirectory;
@@ -2788,6 +2791,7 @@ static if ((_WIN32_WINNT >= 0x0500) || (_WIN32_WINDOWS >= 0x0410)) {
 static if (_WIN32_WINNT >= 0x0500) {
 	alias CreateHardLinkA CreateHardLink;
 	alias CreateJobObjectA CreateJobObject;
+	alias GetVolumeNameForVolumeMountPointA GetVolumeNameForVolumeMountPoint;
 	alias DeleteVolumeMountPointA DeleteVolumeMountPoint;
 	alias DnsHostnameToComputerNameA DnsHostnameToComputerName;
 
