@@ -1,4 +1,5 @@
 /*
+    Translated from win32apis/windows.h
 	windows.h - main header file for the Win32 API
 
 	Written by Anders Norlander <anorland@hem2.passagen.se>
@@ -13,60 +14,32 @@
 
 //import stdarg;
 import win32.windef;
-//import wincon;
-//import winbase;
+//import win32.wincon;
+import win32.winbase;
 import win32.wingdi;
-/+
-#include <stdarg.h>
-#include <windef.h>
-#include <wincon.h>
-#include <winbase.h>
-#if !(defined NOGDI || defined  _WINGDI_H)
-#include <wingdi.h>
-#endif
-#ifndef _WINUSER_H
-#include <winuser.h>
-#endif
-#ifndef _WINNLS_H
-#include <winnls.h>
-#endif
-#ifndef _WINVER_H
-#include <winver.h>
-#endif
-#ifndef _WINNETWK_H
-#include <winnetwk.h>
-#endif
-#ifndef _WINREG_H
-#include <winreg.h>
-#endif
-#ifndef _WINSVC_H
-#include <winsvc.h>
-#endif
 
-#ifndef WIN32_LEAN_AND_MEAN
-#include <cderr.h>
-#include <dde.h>
-#include <ddeml.h>
-#include <dlgs.h>
-#include <imm.h>
-#include <lzexpand.h>
-#include <mmsystem.h>
-#include <nb30.h>
-#include <rpc.h>
-#include <shellapi.h>
-#include <winperf.h>
-#ifndef NOGDI
-#include <commdlg.h>
-#include <winspool.h>
-#endif
-#if defined(Win32_Winsock)
-#warning "The  Win32_Winsock macro name is deprecated.\
-    Please use __USE_W32_SOCKETS instead"
-#ifndef __USE_W32_SOCKETS
-#define __USE_W32_SOCKETS
-#endif
-#endif
-#if defined(__USE_W32_SOCKETS) || !(defined(__CYGWIN__) || defined(__MSYS__) || defined(_UWIN))
+import win32.winuser;
+import win32.winnls;
+import win32.winver;
+import win32.winnetwk;
+//import win32.winsvc;
+
+//#ifndef WIN32_LEAN_AND_MEAN
+import win32.cderr;
+import win32.dde;
+//import win32.ddeml;
+import win32.dlgs;
+//import win32.imm;
+//import win32.lzexpand;
+//import win32.mmsystem;
+//import win32.nb30;
+//import win32.rpc;
+//import win32.shellapi;
+//import win32.winperf;
+//#ifndef NOGDI
+//import win32.commdlg;
+//import win32.winspool;
+/+
 #if (_WIN32_WINNT >= 0x0400)
 #include <winsock2.h>
 /*
@@ -77,16 +50,7 @@ import win32.wingdi;
 #else
 #include <winsock.h>
 #endif /*  (_WIN32_WINNT >= 0x0400) */
-#endif
-#ifndef NOGDI
-#if !defined (__OBJC__)
-#if (__GNUC__ >= 3) || defined (__WATCOMC__)
-#include <ole2.h>
-#endif
-#endif /* __OBJC__ */
-#endif
-
-#endif /* WIN32_LEAN_AND_MEAN */
-
-#endif /* RC_INVOKED */
 +/
+
+//import win32.ole2;
+// #endif /* WIN32_LEAN_AND_MEAN */
