@@ -38,17 +38,16 @@ version (Win64) {
 	alias ushort UHALF_PTR;
 	alias ushort* PUHALF_PTR;
 
-// FIXME: check types (are these necessary anyway?)
-	uint HandleToUlong(HANDLE h) { return cast(uint) h; }
-	int HandleToLong(HANDLE h) { return cast(int) h; }
+	uint HandleToUlong(HANDLE h)    { return cast(uint) h; }
+	int HandleToLong(HANDLE h)      { return cast(int) h; }
 	HANDLE LongToHandle(LONG_PTR h) { return cast(HANDLE) h; }
-	uint PtrToUlong(ULONG_PTR p) { return cast(uint) p; }
-	uint PtrToUint(UINT_PTR p) { return cast(uint) p; }
-	int PtrToInt(INT_PTR p) { return cast(int) p; }
-	ushort PtrToUshort(ULONG_PTR p) { return cast(ushort) p; }
-	short PtrToShort(LONG_PTR p) { return cast(short) p; }
-	void* IntToPtr(int i) { return cast(void*) i; }
-	void* UIntToPtr(uint ui) { return cast(void*) ui; }
+	uint PtrToUlong(void* p)        { return cast(uint) p; }
+	uint PtrToUint(void* p)         { return cast(uint) p; }
+	int PtrToInt(void* p)           { return cast(int) p; }
+	ushort PtrToUshort(void* p)     { return cast(ushort) p; }
+	short PtrToShort(void* p)       { return cast(short) p; }
+	void* IntToPtr(int i)           { return cast(void*) i; }
+	void* UIntToPtr(uint ui)        { return cast(void*) ui; }
 	alias IntToPtr LongToPtr;
 	alias UIntToPtr ULongToPtr;
 }

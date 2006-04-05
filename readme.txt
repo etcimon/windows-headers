@@ -106,14 +106,23 @@ Where #ifdef UNICODE is used to select A/W versions of functions and other ident
 As an exception, reduce string constants to a single declaration of type TCHAR[], bypassing the need to put such a constant in a version block.
 
 
-7. Other conditional compilation
+7. Translate conditional compilation based on Windows version support
+
+Every module that uses this conditional compilation must privately import win32.w32api, which defines the constants used to set the minimum version of Windows an application supports.
+
+Unlike with the C headers, the programmer is expected to specify both the minimum Windows 9x version and the minimum Windows NT version, so both _WIN32_WINDOWS and _WIN32_WINNT are defined in any project.  Conditional compilation must therefore, in general, involve checking the values of both constants either directly or indirectly.  The WINVER and _WIN32_WINNT_ONLY constants are also defined for syntactic sugar.
+
+Rather than relying on the conditionals in the MinGW headers, it is a good idea to look on http://msdn.microsoft.com/ to see which Windows versions support each entity that is CC'd.
+
+
+8. Other conditional compilation
 
 Use the built-in version (Win32) and version (Win64) to deal with _WIN64 conditional blocks.
 
-For #ifdefs using WINVER, _WIN32_WINDOWS or _WIN32_WINNT, leave the directive in, commented out.  This is pending decision on a good way of dealing with these.
+For other #ifdefs designed to be specified by the programmer, leave the directive in, commented out.  This is pending decision on which to include and which to leave out, and how to name them.
 
 
-8. Convert function-like macros to functions
+9. Convert function-like macros to functions
 
 Use the appropriate parameter and return types.  If necessary, consult the API docs to find out what these are.  (Watch out for parameters that are documented as LPSTR but should actually be LPTSTR!)
 
@@ -124,12 +133,12 @@ Don't just leave the macro expansion verbatim; make some effort to make it look 
 * using line breaks and indentation as you might normally would when writing a function
 
 
-9. Remove leftover preprocessor directives
+10. Remove leftover preprocessor directives
 
 Remove any preprocessor directives, such as #if..#elseif..#endif and any #defines, that have been deemed unnecessary.
 
 
-10. Section heading comments (optional)
+11. Section heading comments (optional)
 
 Comments may be used to create logical section headings within a module.  They shall look like this:
 
@@ -137,14 +146,14 @@ Comments may be used to create logical section headings within a module.  They s
 // --------------
 
 
-11. Deprecate functions (optional)
+12. Deprecate functions (optional)
 
 If you discover when reading the documentation for a function, structure, etc. that it is intended only for compatibility with 16-bit Windows versions, you may mark it as deprecated.  Group deprecated function prototypes within a block under a deprecated attribute block.  Be sure to deprecate the ANSI/Unicode aliases as well.
 
 Although bothering with this is optional for the time being, it is preferred that if you do it at all, then you check the whole module for deprecated structures and functions.
 
 
-12. Always check that the translated module compiles
+13. Always check that the translated module compiles
 
 After translating, compile the module to check for errors.
 

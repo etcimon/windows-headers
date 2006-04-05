@@ -11,7 +11,7 @@
 module win32.windef;
 
 import win32.winnt;
-private import win32.basetsd;
+private import win32.w32api, win32.basetsd;
 
 const size_t MAX_PATH = 260;
 
@@ -74,10 +74,9 @@ alias HANDLE HGLOBAL, HLOCAL, GLOBALHANDLE, LOCALHANDLE, HGDIOBJ, HACCEL,
   HRSRC, HSTR, HTASK, HWND, HWINSTA, HKL, HCURSOR;
 alias HANDLE* PHKEY;
 
-/* FIXME: How to handle these. SM_CMONITORS etc in winuser.h also. */
-/* #if (WINVER >= 0x0500) */
-alias HANDLE HMONITOR, HTERMINAL, HWINEVENTHOOK;
-/* #endif */
+static if (WINVER >= 0x0500) {
+	alias HANDLE HMONITOR, HTERMINAL, HWINEVENTHOOK;
+}
 
 alias extern (Windows) int function() FARPROC, NEARPROC, PROC;
 

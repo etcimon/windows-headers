@@ -10,7 +10,7 @@
 \***********************************************************************/
 module win32.winnls;
 
-private import win32.basetsd, win32.windef, win32.winbase;
+private import win32.w32api, win32.basetsd, win32.windef, win32.winbase;
 
 alias DWORD LCTYPE, CALTYPE, CALID, LGRPID, GEOID, GEOTYPE, GEOCLASS;
 
@@ -20,10 +20,8 @@ const size_t
 	MAX_DEFAULTCHAR =  2,
 	MAX_LEADBYTES   = 12;
 
-const LOCALE_USE_CP_ACP = 0x40000000;
-//#if (WINVER >= 0x0400)
+const LOCALE_USE_CP_ACP    = 0x40000000;
 const LOCALE_RETURN_NUMBER = 0x20000000;
-//#endif
 
 enum : LCTYPE {
 	LOCALE_ILANGUAGE = 1,
@@ -468,33 +466,33 @@ enum : LGRPID {
 	LGRPID_ARMENIAN // = 17
 }
 
-//#if (WINVER >= 0x0500)
-enum : LCTYPE {
-	LOCALE_SYEARMONTH             = 0x1006,
-	LOCALE_SENGCURRNAME           = 0x1007,
-	LOCALE_SNATIVECURRNAME        = 0x1008,
-	LOCALE_IDEFAULTEBCDICCODEPAGE = 0x1012,
-	LOCALE_SSORTNAME              = 0x1013,
-	LOCALE_IDIGITSUBSTITUTION     = 0x1014,
-	LOCALE_IPAPERSIZE             = 0x100A
-}
+static if (WINVER >= 0x500) {
+	enum : LCTYPE {
+		LOCALE_SYEARMONTH             = 0x1006,
+		LOCALE_SENGCURRNAME           = 0x1007,
+		LOCALE_SNATIVECURRNAME        = 0x1008,
+		LOCALE_IDEFAULTEBCDICCODEPAGE = 0x1012,
+		LOCALE_SSORTNAME              = 0x1013,
+		LOCALE_IDIGITSUBSTITUTION     = 0x1014,
+		LOCALE_IPAPERSIZE             = 0x100A
+	}
 
-const DWORD
-	DATE_YEARMONTH  =  8,
-	DATE_LTRREADING = 16,
-	DATE_RTLREADING = 32;
+	const DWORD
+		DATE_YEARMONTH  =  8,
+		DATE_LTRREADING = 16,
+		DATE_RTLREADING = 32;
 
-const DWORD MAP_EXPAND_LIGATURES = 0x2000;
-const DWORD WC_NO_BEST_FIT_CHARS = 1024;
+	const DWORD MAP_EXPAND_LIGATURES = 0x2000;
+	const DWORD WC_NO_BEST_FIT_CHARS = 1024;
 
-enum {
-	CAL_SYEARMONTH       = 47,
-	CAL_ITWODIGITYEARMAX = 48,
-	CAL_NOUSEROVERRIDE   = LOCALE_NOUSEROVERRIDE,
-	CAL_RETURN_NUMBER    = LOCALE_RETURN_NUMBER,
-	CAL_USE_CP_ACP       = LOCALE_USE_CP_ACP
-}
-//#endif /* (WINVER >= 0x0500) */
+	enum {
+		CAL_SYEARMONTH       = 47,
+		CAL_ITWODIGITYEARMAX = 48,
+		CAL_NOUSEROVERRIDE   = LOCALE_NOUSEROVERRIDE,
+		CAL_RETURN_NUMBER    = LOCALE_RETURN_NUMBER,
+		CAL_USE_CP_ACP       = LOCALE_USE_CP_ACP
+	}
+} // (WINVER >= 0x500)
 
 extern (Windows) {
 	alias BOOL function(LPSTR) CALINFO_ENUMPROCA;
@@ -690,23 +688,32 @@ extern (Windows) {
 	BOOL SetUserGeoID(GEOID);
 	int WideCharToMultiByte(UINT, DWORD, LPCWSTR, int, LPSTR, int, LPCSTR,
 	  LPBOOL);
-	//#if (WINVER >= 0x0500)
-	BOOL EnumCalendarInfoExA(CALINFO_ENUMPROCEXA, LCID, CALID, CALTYPE);
-	BOOL EnumCalendarInfoExW(CALINFO_ENUMPROCEXW, LCID, CALID, CALTYPE);
-	BOOL EnumDateFormatsExA(DATEFMT_ENUMPROCEXA, LCID, DWORD);
-	BOOL EnumDateFormatsExW(DATEFMT_ENUMPROCEXW, LCID, DWORD);
-	BOOL EnumSystemLanguageGroupsA(LANGUAGEGROUP_ENUMPROCA, DWORD, LONG_PTR);
-	BOOL EnumSystemLanguageGroupsW(LANGUAGEGROUP_ENUMPROCW, DWORD, LONG_PTR);
-	BOOL EnumLanguageGroupLocalesA(LANGGROUPLOCALE_ENUMPROCA, LGRPID, DWORD,
-	  LONG_PTR);
-	BOOL EnumLanguageGroupLocalesW(LANGGROUPLOCALE_ENUMPROCW, LGRPID, DWORD,
-	  LONG_PTR);
-	BOOL EnumUILanguagesA(UILANGUAGE_ENUMPROCA, DWORD, LONG_PTR);
-	BOOL EnumUILanguagesW(UILANGUAGE_ENUMPROCW, DWORD, LONG_PTR);
-	LANGID GetSystemDefaultUILanguage();
-	LANGID GetUserDefaultUILanguage();
-	BOOL IsValidLanguageGroup(LGRPID, DWORD);
-	//#endif /* (WINVER >= 0x0500) */
+	
+	static if (WINVER >= 0x410) {
+		BOOL EnumCalendarInfoExA(CALINFO_ENUMPROCEXA, LCID, CALID, CALTYPE);
+		BOOL EnumCalendarInfoExW(CALINFO_ENUMPROCEXW, LCID, CALID, CALTYPE);
+		BOOL EnumDateFormatsExA(DATEFMT_ENUMPROCEXA, LCID, DWORD);
+		BOOL EnumDateFormatsExW(DATEFMT_ENUMPROCEXW, LCID, DWORD);
+		BOOL IsValidLanguageGroup(LGRPID, DWORD);
+	}
+	
+	static if (WINVER >= 0x500) {
+		LANGID GetSystemDefaultUILanguage();
+		LANGID GetUserDefaultUILanguage();
+
+		static if (_WIN32_WINNT_ONLY) {
+			BOOL EnumSystemLanguageGroupsA(LANGUAGEGROUP_ENUMPROCA, DWORD,
+			  LONG_PTR);
+			BOOL EnumSystemLanguageGroupsW(LANGUAGEGROUP_ENUMPROCW, DWORD,
+			  LONG_PTR);
+			BOOL EnumLanguageGroupLocalesA(LANGGROUPLOCALE_ENUMPROCA, LGRPID,
+			  DWORD, LONG_PTR);
+			BOOL EnumLanguageGroupLocalesW(LANGGROUPLOCALE_ENUMPROCW, LGRPID,
+			  DWORD, LONG_PTR);
+			BOOL EnumUILanguagesA(UILANGUAGE_ENUMPROCA, DWORD, LONG_PTR);
+			BOOL EnumUILanguagesW(UILANGUAGE_ENUMPROCW, DWORD, LONG_PTR);
+		}
+	}
 }
 
 version (Unicode) {
@@ -744,13 +751,18 @@ version (Unicode) {
 	alias LCMapStringW LCMapString;
 	alias SetCalendarInfoW SetCalendarInfo;
 	alias SetLocaleInfoW SetLocaleInfo;
-	//#if (WINVER >= 0x0500)
-	alias EnumCalendarInfoExW EnumCalendarInfoEx;
-	alias EnumDateFormatsExW EnumDateFormatsEx;
-	alias EnumSystemLanguageGroupsW EnumSystemLanguageGroups;
-	alias EnumLanguageGroupLocalesW EnumLanguageGroupLocales;
-	alias EnumUILanguagesW EnumUILanguages;
-	//#endif /* (WINVER >= 0x0500) */
+
+	static if (WINVER >= 0x410) {
+		alias EnumCalendarInfoExW EnumCalendarInfoEx;
+		alias EnumDateFormatsExW EnumDateFormatsEx;
+	}
+	
+	static if (_WIN32_WINNT_ONLY && WINVER >= 0x500) {
+		alias EnumSystemLanguageGroupsW EnumSystemLanguageGroups;
+		alias EnumLanguageGroupLocalesW EnumLanguageGroupLocales;
+		alias EnumUILanguagesW EnumUILanguages;
+	}
+
 } else {
 	alias CALINFO_ENUMPROCA CALINFO_ENUMPROC;
 	alias CALINFO_ENUMPROCEXA CALINFO_ENUMPROCEX;
@@ -786,11 +798,15 @@ version (Unicode) {
 	alias LCMapStringA LCMapString;
 	alias SetCalendarInfoA SetCalendarInfo;
 	alias SetLocaleInfoA SetLocaleInfo;
-	//#if (WINVER >= 0x0500)
-	alias EnumCalendarInfoExA EnumCalendarInfoEx;
-	alias EnumDateFormatsExA EnumDateFormatsEx;
-	alias EnumSystemLanguageGroupsA EnumSystemLanguageGroups;
-	alias EnumLanguageGroupLocalesA EnumLanguageGroupLocales;
-	alias EnumUILanguagesA EnumUILanguages;
-	//#endif /* (WINVER >= 0x0500) */
+
+	static if (WINVER >= 0x410) {
+		alias EnumCalendarInfoExA EnumCalendarInfoEx;
+		alias EnumDateFormatsExA EnumDateFormatsEx;
+	}
+	
+	static if (_WIN32_WINNT_ONLY && WINVER >= 0x500) {
+		alias EnumSystemLanguageGroupsA EnumSystemLanguageGroups;
+		alias EnumLanguageGroupLocalesA EnumLanguageGroupLocales;
+		alias EnumUILanguagesA EnumUILanguages;
+	}
 }
