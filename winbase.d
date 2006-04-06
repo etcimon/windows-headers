@@ -2569,9 +2569,16 @@ alias GetTempPathW GetTempPath;
 alias GetUserNameW GetUserName;
 alias GetVersionExW GetVersionEx;
 alias GetVolumeInformationW GetVolumeInformation;
+
+static if (_WIN32_WINNT >= 0x0500) {
 alias GetVolumeNameForVolumeMountPointW GetVolumeNameForVolumeMountPoint;
 alias GetVolumePathNameW GetVolumePathName;
+}
+
+static if (_WIN32_WINNT >= 0x0501) {
 alias GetVolumePathNamesForVolumeNameW GetVolumePathNamesForVolumeName;
+}
+
 alias GetWindowsDirectoryW GetWindowsDirectory;
 alias GlobalAddAtomW GlobalAddAtom;
 alias GlobalFindAtomW GlobalFindAtom;
@@ -2619,7 +2626,11 @@ alias SetEnvironmentVariableW SetEnvironmentVariable;
 alias SetFileAttributesW SetFileAttributes;
 alias SetFileSecurityW SetFileSecurity;
 alias SetVolumeLabelW SetVolumeLabel;
+
+static if (_WIN32_WINNT >= 0x0500) {
 alias SetVolumeMountPointW SetVolumeMountPoint;
+}
+
 alias UpdateResourceW UpdateResource;
 alias VerifyVersionInfoW VerifyVersionInfo;
 alias WaitNamedPipeW WaitNamedPipe;
