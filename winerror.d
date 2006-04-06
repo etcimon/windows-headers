@@ -7,6 +7,7 @@
 
 module win32.winerror;
 private import win32.windef;
+import win32.wtypes;
 
 enum : uint {
 	ERROR_SUCCESS = 0,

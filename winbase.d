@@ -6,6 +6,9 @@ import win32.winver;
 import win32.windef;
 private import win32.w32api;
 
+// FIXME:
+alias void va_list;
+
 /*
 The following macros are obsolete, and have no effect. 
 
@@ -467,7 +470,7 @@ const GMEM_INVALID_HANDLE = 32768;
 const GMEM_NOTIFY = 16384;
 const GMEM_VALID_FLAGS = 32626;
 
-const GPTR = 64;
+const GHND = 64;
 
 const LMEM_FIXED=0;
 const LMEM_MOVEABLE=2;
@@ -794,10 +797,10 @@ const DDD_EXACT_MATCH_ON_REMOVE=4;
 
 const HINSTANCE_ERROR=32;
 
-const SECURITY_ANONYMOUS=(SecurityAnonymous<<16);
-const SECURITY_IDENTIFICATION=(SecurityIdentification<<16);
-const SECURITY_IMPERSONATION=(SecurityImpersonation<<16);
-const SECURITY_DELEGATION=(SecurityDelegation<<16);
+const SECURITY_ANONYMOUS=(SECURITY_IMPERSONATION_LEVEL.SecurityAnonymous<<16);
+const SECURITY_IDENTIFICATION=(SECURITY_IMPERSONATION_LEVEL.SecurityIdentification<<16);
+const SECURITY_IMPERSONATION=(SECURITY_IMPERSONATION_LEVEL.SecurityImpersonation<<16);
+const SECURITY_DELEGATION=(SECURITY_IMPERSONATION_LEVEL.SecurityDelegation<<16);
 const SECURITY_CONTEXT_TRACKING = 0x40000;
 const SECURITY_EFFECTIVE_ONLY   = 0x80000;
 const SECURITY_SQOS_PRESENT     = 0x100000;
@@ -914,7 +917,7 @@ struct DCB{
 }
 alias DCB * LPDCB;
 
-struct COMM_CONFIG{
+struct COMMCONFIG{
 	DWORD dwSize;
 	WORD  wVersion;
 	WORD  wReserved;
@@ -1527,7 +1530,7 @@ static if (_WIN32_WINNT >= 0x0500) {
  BOOL AllocateLocallyUniqueId(PLUID);
  BOOL AreAllAccessesGranted(DWORD,DWORD);
  BOOL AreAnyAccessesGranted(DWORD,DWORD);
- BOOL AreFileApisANSI(void);
+ BOOL AreFileApisANSI();
  BOOL BackupEventLogA(HANDLE,LPCSTR);
  BOOL BackupEventLogW(HANDLE,LPCWSTR);
  BOOL BackupRead(HANDLE,LPBYTE,DWORD,LPDWORD,BOOL,BOOL,LPVOID*);
@@ -1565,7 +1568,7 @@ static if (_WIN32_WINNT >= 0x0501) {
  BOOL ContinueDebugEvent(DWORD,DWORD,DWORD);
  
 static if (_WIN32_WINNT >= 0x0400) {
- BOOL ConvertFiberToThread(void);
+ BOOL ConvertFiberToThread();
 }
 
  PVOID ConvertThreadToFiber(PVOID);
@@ -1574,6 +1577,7 @@ static if (_WIN32_WINNT >= 0x0400) {
  BOOL CopyFileExA(LPCSTR,LPCSTR,LPPROGRESS_ROUTINE,LPVOID,LPBOOL,DWORD);
  BOOL CopyFileExW(LPCWSTR,LPCWSTR,LPPROGRESS_ROUTINE,LPVOID,LPBOOL,DWORD);
 
+/+ FIXME
 alias memmove RtlMoveMemory;
 alias memcpy RtlCopyMemory;
 
@@ -1589,6 +1593,7 @@ alias RtlMoveMemory MoveMemory;
 alias RtlCopyMemory CopyMemory;
 alias RtlFillMemory FillMemory;
 alias RtlZeroMemory ZeroMemory;
++/
 
  BOOL CopySid(DWORD,PSID,PSID);
 static if (_WIN32_WINNT >= 0x0501) {
@@ -1656,7 +1661,7 @@ static if (_WIN32_WINNT >= 0x0500) {
  DWORD CreateTapePartition(HANDLE,DWORD,DWORD,DWORD);
  
 static if (_WIN32_WINNT >= 0x0500) {
- HANDLE CreateTimerQueue(void);
+ HANDLE CreateTimerQueue();
  BOOL CreateTimerQueueTimer(PHANDLE,HANDLE,WAITORTIMERCALLBACK,PVOID,DWORD,DWORD,ULONG);
 }
 
@@ -1665,7 +1670,7 @@ static if (_WIN32_WINNT >= 0x0500) {
  HANDLE CreateWaitableTimerW(LPSECURITY_ATTRIBUTES,BOOL,LPCWSTR);
 
  BOOL DebugActiveProcess(DWORD);
- void DebugBreak(void);
+ void DebugBreak();
 
 static if (_WIN32_WINNT >= 0x0501) {
  BOOL DebugActiveProcessStop(DWORD);
@@ -1803,8 +1808,8 @@ static if (_WIN32_WINNT >= 0x0502) {
  UINT GetAtomNameW(ATOM,LPWSTR,int);
  BOOL GetBinaryTypeA(LPCSTR,PDWORD);
  BOOL GetBinaryTypeW(LPCWSTR,PDWORD);
- LPSTR GetCommandLineA(VOID);
- LPWSTR GetCommandLineW(VOID);
+ LPSTR GetCommandLineA();
+ LPWSTR GetCommandLineW();
  BOOL GetCommConfig(HANDLE,LPCOMMCONFIG,PDWORD);
  BOOL GetCommMask(HANDLE,PDWORD);
  BOOL GetCommModemStatus(HANDLE,PDWORD);
@@ -1829,10 +1834,10 @@ static if (_WIN32_WINNT >= 0x0501) {
  DWORD GetCurrentDirectoryW(DWORD,LPWSTR);
  BOOL GetCurrentHwProfileA(LPHW_PROFILE_INFOA);
  BOOL GetCurrentHwProfileW(LPHW_PROFILE_INFOW);
- HANDLE GetCurrentProcess(void);
- DWORD GetCurrentProcessId(void);
- HANDLE GetCurrentThread(void);
- DWORD GetCurrentThreadId(void);
+ HANDLE GetCurrentProcess();
+ DWORD GetCurrentProcessId();
+ HANDLE GetCurrentThread();
+ DWORD GetCurrentThreadId();
 
 alias GetTickCount GetCurrentTime;
 
@@ -1850,9 +1855,9 @@ static if (_WIN32_WINNT >= 0x0502) {
 
  UINT GetDriveTypeA(LPCSTR);
  UINT GetDriveTypeW(LPCWSTR);
- LPSTR GetEnvironmentStrings(void);
- LPSTR GetEnvironmentStringsA(void);
- LPWSTR GetEnvironmentStringsW(void);
+ LPSTR GetEnvironmentStrings();
+ LPSTR GetEnvironmentStringsA();
+ LPWSTR GetEnvironmentStringsW();
  DWORD GetEnvironmentVariableA(LPCSTR,LPSTR,DWORD);
  DWORD GetEnvironmentVariableW(LPCWSTR,LPWSTR,DWORD);
  BOOL GetExitCodeProcess(HANDLE,PDWORD);
@@ -1926,7 +1931,7 @@ static if (_WIN32_WINNT >= 0x0501) {
  FARPROC GetProcAddress(HINSTANCE,LPCSTR);
  BOOL GetProcessAffinityMask(HANDLE,PDWORD,PDWORD);
 
- HANDLE GetProcessHeap(VOID);
+ HANDLE GetProcessHeap();
  DWORD GetProcessHeaps(DWORD,PHANDLE);
 
 static if (_WIN32_WINNT >= 0x0502) {
@@ -2011,7 +2016,7 @@ static if (_WIN32_WINNT >= 0x0502) {
  BOOL GetThreadPriorityBoost(HANDLE,PBOOL);
  BOOL GetThreadSelectorEntry(HANDLE,DWORD,LPLDT_ENTRY);
  BOOL GetThreadTimes(HANDLE,LPFILETIME,LPFILETIME,LPFILETIME,LPFILETIME);
- DWORD GetTickCount(VOID);
+ DWORD GetTickCount();
  DWORD GetTimeZoneInformation(LPTIME_ZONE_INFORMATION);
  BOOL GetTokenInformation(HANDLE,TOKEN_INFORMATION_CLASS,PVOID,DWORD,PDWORD);
  BOOL GetUserNameA (LPSTR,PDWORD);
@@ -2278,7 +2283,7 @@ static if (_WIN32_WINNT >= 0x0510) {
 }
 
  DWORD ResumeThread(HANDLE);
- BOOL RevertToSelf(void);
+ BOOL RevertToSelf();
  DWORD SearchPathA(LPCSTR,LPCSTR,LPCSTR,DWORD,LPSTR,LPSTR*);
  DWORD SearchPathW(LPCWSTR,LPCWSTR,LPCWSTR,DWORD,LPWSTR,LPWSTR*);
  BOOL SetAclInformation(PACL,PVOID,DWORD,ACL_INFORMATION_CLASS);
@@ -2767,9 +2772,15 @@ alias GetTempPathA GetTempPath;
 alias GetUserNameA GetUserName;
 alias GetVersionExA GetVersionEx;
 alias GetVolumeInformationA GetVolumeInformation;
+
+static if (_WIN32_WINNT >= 0x0500) {
 alias GetVolumeNameForVolumeMountPointA GetVolumeNameForVolumeMountPoint;
 alias GetVolumePathNameA GetVolumePathName;
+}
+
+static if (_WIN32_WINNT >= 0x0501) {
 alias GetVolumePathNamesForVolumeNameA GetVolumePathNamesForVolumeName;
+}
 alias GetWindowsDirectoryA GetWindowsDirectory;
 alias GlobalAddAtomA GlobalAddAtom;
 alias GlobalFindAtomA GlobalFindAtom;
@@ -2818,7 +2829,10 @@ alias SetFileAttributesA SetFileAttributes;
 alias SetFileSecurityA SetFileSecurity;
 
 alias SetVolumeLabelA SetVolumeLabel;
+
+static if (_WIN32_WINNT >= 0x0500) {
 alias SetVolumeMountPointA SetVolumeMountPoint;
+}
 alias UpdateResourceA UpdateResource;
 alias VerifyVersionInfoA VerifyVersionInfo;
 alias WaitNamedPipeA WaitNamedPipe;

@@ -2,7 +2,7 @@
 // Public domain.
 
 module win32.wingdi;
-
+private import win32.w32api;
 import win32.winver;
 import win32.windef;
 
