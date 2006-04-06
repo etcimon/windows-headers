@@ -2798,7 +2798,7 @@ alias JOBOBJECT_JOBSET_INFORMATION * PJOBOBJECT_JOBSET_INFORMATION;
 /* Fixme: Making these defines conditional on WINVER will break ddk includes */
 static if (WINVER >= 0x0500) {
 
-import pshpack4;
+align(4):
 
 const ES_SYSTEM_REQUIRED=0x00000001;
 const ES_DISPLAY_REQUIRED=0x00000002;
@@ -3128,7 +3128,8 @@ struct ADMINISTRATOR_POWER_POLICY{
 }
 alias ADMINISTRATOR_POWER_POLICY * PADMINISTRATOR_POWER_POLICY;
 
-import poppack;
+align:
+
 }//#endif /* WINVER >= 0x0500 */
 
 static if (_WIN32_WINNT >= 0x0500) {
