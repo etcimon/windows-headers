@@ -24,8 +24,8 @@ alias void * PVOID, LPVOID;
 alias void * PVOID64;
 
 alias wchar WCHAR;
-alias WCHAR * PWCHAR, LPWCH, PWCH, NWPSTR, LPWSTR, PWSTR;
-alias CHAR * PCHAR, LPCH, PCH, NPSTR, LPSTR, PSTR;
+alias WCHAR * PWCHAR, LPWCH, PWCH, LPWSTR, PWSTR;
+alias CHAR * PCHAR, LPCH, PCH, LPSTR, PSTR;
 
 // const versions
 alias WCHAR * LPCWCH, PCWCH, LPCWSTR, PCWSTR;
