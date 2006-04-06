@@ -11,6 +11,7 @@
 module win32.winnetwk;
 
 private import win32.winbase, win32.winnt;
+private import win32.winerror;
 
 enum : DWORD {
 	WNNC_NET_MSNET       = 0x00010000,

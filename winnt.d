@@ -2,6 +2,7 @@
 // Public domain.
 
 module win32.winnt;
+private import win32.w32api;
 import win32.windef;
 //import win32.winerror;
 
@@ -579,17 +580,27 @@ const SORT_GEORGIAN_MODERN=1;
 
 //MACRO #define MAKELANGID(p,s)	((((WORD)(s))<<10)|(WORD)(p))
 
-//MACRO #define MAKELCID(l,s) ((DWORD)((((DWORD)((WORD)(s)))<<16)|((DWORD)((WORD)(l)))))
-
 //MACRO #define PRIMARYLANGID(l)	((WORD)(l)&0x3ff)
+//MACRO #define SUBLANGID(l)	((WORD)(l)>>10)
+
+
+//MACRO #define MAKELCID(l,s) ((DWORD)((((DWORD)((WORD)(s)))<<16)|((DWORD)((WORD)(l)))))
 
 //MACRO #define SORTIDFROMLCID(l)	((WORD)((((DWORD)(l))&NLS_VALID_LOCALE_MASK)>>16))
 
 //MACRO #define SORTVERSIONFROMLCID(l) ((WORD)((((DWORD)(l))>>20)&0xf))
 
-//MACRO #define SUBLANGID(l)	((WORD)(l)>>10)
-
 //MACRO #define LANGIDFROMLCID(l)	((WORD)(l))
+
+WORD MAKELANGID(USHORT p, USHORT s) { return (((cast(WORD)(s)) << 10) | cast(WORD)(p)); }
+WORD PRIMARYLANGID(WORD lgid) { return lgid & 0x3ff; }
+WORD SUBLANGID(WORD lgid) { return lgid >>> 10; }
+
+DWORD MAKELCID(WORD lgid, WORD srtid) { return ((cast(DWORD)srtid) << 16) | (cast(DWORD)lgid); }
+//DWORD MAKESORTLCID(WORD lgid, WORD srtid, WORD ver) { return (MAKELCID(lgid, srtid)) | ((cast(DWORD)ver) << 20); }
+WORD LANGIDFROMLCID(LCID lcid) { return lcid; }
+WORD SORTIDFROMLCID(LCID lcid) { return (cast(DWORD)lcid >>> 16) & 0xf; }
+WORD SORTVERSIONFROMLCID(LCID lcid) { return (cast(DWORD)lcid >>> 20) & 0xf; }
 
 const LANG_SYSTEM_DEFAULT = MAKELANGID(LANG_NEUTRAL,SUBLANG_SYS_DEFAULT);
 const LANG_USER_DEFAULT   = MAKELANGID(LANG_NEUTRAL,SUBLANG_DEFAULT);
@@ -995,14 +1006,13 @@ const TCHAR [] IMAGE_ARCHIVE_LINKER_MEMBER = "/               ";
 const TCHAR [] IMAGE_ARCHIVE_LONGNAMES_MEMBER = "//              ";
 
 const IMAGE_ORDINAL_FLAG32 = 0x80000000;
-//MACRO #define IMAGE_SNAP_BY_ORDINAL32(o) ((o&IMAGE_ORDINAL_FLAG32)!=0)
 
-//MACRO #define IMAGE_ORDINAL32(o) (o&0xffff)
+ulong IMAGE_ORDINAL64(ulong Ordinal){ return Ordinal & 0xffff; }
+uint IMAGE_ORDINAL32(uint Ordinal){ return Ordinal & 0xffff; }
 
+bool IMAGE_SNAP_BY_ORDINAL32(uint Ordinal){ return (Ordinal & IMAGE_ORDINAL_FLAG32) != 0; }
 const ulong IMAGE_ORDINAL_FLAG64 = 0x8000000000000000L;
-//MACRO #define IMAGE_SNAP_BY_ORDINAL64(o) ((o&IMAGE_ORDINAL_FLAG64)!=0)
-
-//MACRO #define IMAGE_ORDINAL64(o) (o&0xffff)
+bool IMAGE_SNAP_BY_ORDINAL64(ulong Ordinal){ return (Ordinal & IMAGE_ORDINAL_FLAG64) != 0; }
 
 version(Win64) {
 	alias IMAGE_ORDINAL_FLAG64 IMAGE_ORDINAL_FLAG;
@@ -1032,12 +1042,14 @@ const FRAME_TRAP=1;
 const FRAME_TSS=2;
 const FRAME_NONFPO=3;
 const IMAGE_DEBUG_MISC_EXENAME=1;
+
 const N_BTMASK=0x000F;
 const N_TMASK=0x0030;
 const N_TMASK1=0x00C0;
 const N_TMASK2=0x00F0;
 const N_BTSHFT=4;
 const N_TSHIFT=2;
+
 const IS_TEXT_UNICODE_ASCII16=1;
 const IS_TEXT_UNICODE_REVERSE_ASCII16=16;
 const IS_TEXT_UNICODE_STATISTICS=2;
@@ -1085,6 +1097,20 @@ const SE_SACL_AUTO_INHERITED=2048;
 const SE_DACL_PROTECTED=4096;
 const SE_SACL_PROTECTED=8192;
 const SE_SELF_RELATIVE=0x8000;
+
+enum SECURITY_IMPERSONATION_LEVEL{
+	SecurityAnonymous,
+	SecurityIdentification,
+	SecurityImpersonation,
+	SecurityDelegation
+}
+alias SECURITY_IMPERSONATION_LEVEL * PSECURITY_IMPERSONATION_LEVEL;
+alias BOOLEAN SECURITY_CONTEXT_TRACKING_MODE;
+alias SECURITY_CONTEXT_TRACKING_MODE * PSECURITY_CONTEXT_TRACKING_MODE;
+
+
+
+
 const SECURITY_DESCRIPTOR_MIN_LENGTH=20;
 const SECURITY_DESCRIPTOR_REVISION=1;
 const SECURITY_DESCRIPTOR_REVISION1=1;
@@ -1092,8 +1118,8 @@ const SE_PRIVILEGE_ENABLED_BY_DEFAULT=1;
 const SE_PRIVILEGE_ENABLED=2;
 const SE_PRIVILEGE_USED_FOR_ACCESS=0x80000000;
 const PRIVILEGE_SET_ALL_NECESSARY=1;
-const SECURITY_MAX_IMPERSONATION_LEVEL=SecurityDelegation;
-const DEFAULT_IMPERSONATION_LEVEL=SecurityImpersonation;
+const SECURITY_MAX_IMPERSONATION_LEVEL=SECURITY_IMPERSONATION_LEVEL.SecurityDelegation;
+const DEFAULT_IMPERSONATION_LEVEL=SECURITY_IMPERSONATION_LEVEL.SecurityImpersonation;
 const SECURITY_DYNAMIC_TRACKING = true;
 const SECURITY_STATIC_TRACKING = false;
 /* also in ddk/ntifs.h */
@@ -1281,19 +1307,17 @@ enum {
 }
 
 }
-//MACRO #define BTYPE(x) ((x)&N_BTMASK)
 
-//MACRO #define ISPTR(x) (((x)&N_TMASK)==(IMAGE_SYM_DTYPE_POINTER<<N_BTSHFT))
-
-//MACRO #define ISFCN(x) (((x)&N_TMASK)==(IMAGE_SYM_DTYPE_FUNCTION<<N_BTSHFT))
-
-//MACRO #define ISARY(x) (((x)&N_TMASK)==(IMAGE_SYM_DTYPE_ARRAY<<N_BTSHFT))
-
-//MACRO #define ISTAG(x) ((x)==IMAGE_SYM_CLASS_STRUCT_TAG||(x)==IMAGE_SYM_CLASS_UNION_TAG||(x)==IMAGE_SYM_CLASS_ENUM_TAG)
-
-//MACRO #define INCREF(x) ((((x)&~N_BTMASK)<<N_TSHIFT)|(IMAGE_SYM_DTYPE_POINTER<<N_BTSHFT)|((x)&N_BTMASK))
-
-//MACRO #define DECREF(x) ((((x)>>N_TSHIFT)&~N_BTMASK)|((x)&N_BTMASK))
+// Macros
+BYTE BTYPE(BYTE x){ return x & N_BTMASK; }
+bool ISPTR(uint x){ return (x & N_TMASK) == (IMAGE_SYM_DTYPE_POINTER << N_BTSHFT); }
+bool ISFCN(uint x){ return (x & N_TMASK) == (IMAGE_SYM_DTYPE_FUNCTION << N_BTSHFT); }
+bool ISARY(uint x){ return (x & N_TMASK) == (IMAGE_SYM_DTYPE_ARRAY << N_BTSHFT); }
+bool ISTAG(uint x){
+		return x == IMAGE_SYM_CLASS_STRUCT_TAG || x == IMAGE_SYM_CLASS_UNION_TAG || x == IMAGE_SYM_CLASS_ENUM_TAG; }
+uint INCREF(uint x) {
+	return ((x&~N_BTMASK)<<N_TSHIFT)|(IMAGE_SYM_DTYPE_POINTER<<N_BTSHFT)|(x&N_BTMASK); }
+uint DECREF(uint x){ return ((x >>> N_TSHIFT) & ~N_BTMASK)|(x & N_BTMASK); }
 
 const TLS_MINIMUM_AVAILABLE=64;
 const IO_REPARSE_TAG_RESERVED_ZERO = 0;
@@ -1322,7 +1346,7 @@ struct GUID{
 }
 alias GUID * REFGUID, LPGUID;
 
-const SYSTEM_LUID = { QuadPart:999 };
+const LUID SYSTEM_LUID = { QuadPart:999 };
 
 struct GENERIC_MAPPING{
 	ACCESS_MASK GenericRead;
@@ -1552,16 +1576,6 @@ struct SECURITY_ATTRIBUTES{
 	BOOL bInheritHandle;
 }
 alias SECURITY_ATTRIBUTES * PSECURITY_ATTRIBUTES, LPSECURITY_ATTRIBUTES;
-
-enum SECURITY_IMPERSONATION_LEVEL{
-	SecurityAnonymous,
-	SecurityIdentification,
-	SecurityImpersonation,
-	SecurityDelegation
-}
-alias SECURITY_IMPERSONATION_LEVEL * PSECURITY_IMPERSONATION_LEVEL;
-alias BOOLEAN SECURITY_CONTEXT_TRACKING_MODE;
-alias SECURITY_CONTEXT_TRACKING_MODE * PSECURITY_CONTEXT_TRACKING_MODE;
 
 struct SECURITY_QUALITY_OF_SERVICE{
 	DWORD Length;
@@ -2571,6 +2585,10 @@ enum SERVICE_ERROR_TYPE {
 	CriticalError = SERVICE_ERROR_CRITICAL
 } 
 alias SERVICE_ERROR_TYPE _CM_ERROR_CONTROL_TYPE;
+
+//DAC: According to MSJ, 'UnderTheHood', May 1996, this
+// structure is not documented in any official Microsoft header file.
+alias void EXCEPTION_REGISTRATION_RECORD;
 
 struct NT_TIB{
 	EXCEPTION_REGISTRATION_RECORD *ExceptionList;

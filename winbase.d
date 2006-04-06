@@ -4,6 +4,7 @@
 module win32.winbase;
 import win32.winver;
 import win32.windef;
+private import win32.w32api;
 
 /*
 The following macros are obsolete, and have no effect. 
@@ -233,7 +234,7 @@ enum : UINT {
 	OF_SHARE_EXCLUSIVE  = 16,
 	OF_PARSE   = 256,
 	OF_DELETE  = 512,
-	OF_VERIFY  = 1024;
+	OF_VERIFY  = 1024,
 	OF_CANCEL  = 2048,
 	OF_CREATE  = 4096,
 	OF_PROMPT  = 8192,
@@ -1876,10 +1877,10 @@ static if (_WIN32_WINNT >= 0x0500) {
  DWORD GetFullPathNameW(LPCWSTR,DWORD,LPWSTR,LPWSTR*);
  BOOL GetHandleInformation(HANDLE,PDWORD);
  BOOL GetKernelObjectSecurity(HANDLE,SECURITY_INFORMATION,PSECURITY_DESCRIPTOR,DWORD,PDWORD);
- DWORD GetLastError(void);
+ DWORD GetLastError();
  DWORD GetLengthSid(PSID);
  void GetLocalTime(LPSYSTEMTIME);
- DWORD GetLogicalDrives(void);
+ DWORD GetLogicalDrives();
  DWORD GetLogicalDriveStringsA(DWORD,LPSTR);
  DWORD GetLogicalDriveStringsW(DWORD,LPWSTR);
 
@@ -1941,7 +1942,7 @@ static if (_WIN32_WINNT >= 0x0500) {
  BOOL GetProcessShutdownParameters(PDWORD,PDWORD);
  BOOL GetProcessTimes(HANDLE,LPFILETIME,LPFILETIME,LPFILETIME,LPFILETIME);
  DWORD GetProcessVersion(DWORD);
- HWINSTA GetProcessWindowStation(void);
+ HWINSTA GetProcessWindowStation();
  BOOL GetProcessWorkingSetSize(HANDLE,PSIZE_T,PSIZE_T);
  UINT GetProfileIntA(LPCSTR,LPCSTR,INT);
  UINT GetProfileIntW(LPCWSTR,LPCWSTR,INT);
@@ -2015,7 +2016,7 @@ static if (_WIN32_WINNT >= 0x0502) {
  BOOL GetTokenInformation(HANDLE,TOKEN_INFORMATION_CLASS,PVOID,DWORD,PDWORD);
  BOOL GetUserNameA (LPSTR,PDWORD);
  BOOL GetUserNameW(LPWSTR,PDWORD);
- DWORD GetVersion(void);
+ DWORD GetVersion();
  BOOL GetVersionExA(LPOSVERSIONINFOA);
  BOOL GetVersionExW(LPOSVERSIONINFOW);
  BOOL GetVolumeInformationA(LPCSTR,LPSTR,DWORD,PDWORD,PDWORD,PDWORD,LPSTR,DWORD);
@@ -2102,13 +2103,13 @@ static if (_WIN32_WINNT >= 0x0501) {
  BOOL IsBadStringPtrA(LPCSTR,UINT);
  BOOL IsBadStringPtrW(LPCWSTR,UINT);
  BOOL IsBadWritePtr(PVOID,UINT);
- BOOL IsDebuggerPresent(void);
+ BOOL IsDebuggerPresent();
 
 static if (_WIN32_WINNT >= 0x0501) {
  BOOL IsProcessInJob(HANDLE,HANDLE,PBOOL);
 }
  BOOL IsProcessorFeaturePresent(DWORD);
- BOOL IsSystemResumeAutomatic(void);
+ BOOL IsSystemResumeAutomatic();
  BOOL IsTextUnicode(PCVOID,int,LPINT);
  BOOL IsValidAcl(PACL);
  BOOL IsValidSecurityDescriptor(PSECURITY_DESCRIPTOR);
@@ -2309,8 +2310,8 @@ static if (_WIN32_WINNT >= 0x0502) {
  BOOL SetEnvironmentVariableW(LPCWSTR,LPCWSTR);
  UINT SetErrorMode(UINT);
  BOOL SetEvent(HANDLE);
- VOID SetFileApisToANSI(void);
- VOID SetFileApisToOEM(void);
+ VOID SetFileApisToANSI();
+ VOID SetFileApisToOEM();
  BOOL SetFileAttributesA(LPCSTR,DWORD);
  BOOL SetFileAttributesW(LPCWSTR,DWORD);
  DWORD SetFilePointer(HANDLE,LONG,PLONG,DWORD);
@@ -2390,12 +2391,12 @@ static if (_WIN32_WINNT >= 0x0500) {
  DWORD SleepEx(DWORD,BOOL);
  DWORD SuspendThread(HANDLE);
  void SwitchToFiber(PVOID);
- BOOL SwitchToThread(void);
+ BOOL SwitchToThread();
  BOOL SystemTimeToFileTime( SYSTEMTIME*,LPFILETIME);
  BOOL SystemTimeToTzSpecificLocalTime(LPTIME_ZONE_INFORMATION,LPSYSTEMTIME,LPSYSTEMTIME);
  BOOL TerminateProcess(HANDLE,UINT);
  BOOL TerminateThread(HANDLE,DWORD);
- DWORD TlsAlloc(VOID);
+ DWORD TlsAlloc();
  BOOL TlsFree(DWORD);
  PVOID TlsGetValue(DWORD);
  BOOL TlsSetValue(DWORD,PVOID);
