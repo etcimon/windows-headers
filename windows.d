@@ -16,11 +16,11 @@ import win32.windef;
 import win32.wincon;
 import win32.winbase;
 import win32.wingdi;
-//import win32.winuser;
+import win32.winuser;
 import win32.winnls;
 import win32.winver;
 import win32.winnetwk;
-//import win32.winsvc;
+import win32.winsvc;
 
 //#ifndef WIN32_LEAN_AND_MEAN
 import win32.cderr;
