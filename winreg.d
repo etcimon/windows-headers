@@ -11,9 +11,6 @@
 module win32.winreg;
 
 private import win32.windef, win32.winbase;
-/* FIXME: Tomino defines SECURITY_ATTRIBUTES in winbase, but it should be
- * in winnt
- */
 
 const HKEY
 	HKEY_CLASSES_ROOT     = cast(HKEY) 0x80000000,

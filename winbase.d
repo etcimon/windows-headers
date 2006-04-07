@@ -10,12 +10,12 @@ private import win32.w32api;
 alias void va_list;
 
 /*
-The following macros are obsolete, and have no effect. 
+The following macros are obsolete, and have no effect.
 
-//MACRO #define LockSegment(w) GlobalFix((HANDLE)(w)) 
+//MACRO #define LockSegment(w) GlobalFix((HANDLE)(w))
 //MACRO #define MakeProcInstance(p,i) (p)
 //MACRO #define UnlockResource(h) (h)
-//MACRO #define UnlockSegment(w) GlobalUnfix((HANDLE)(w)) 
+//MACRO #define UnlockSegment(w) GlobalUnfix((HANDLE)(w))
 //MACRO #define FreeModule(m) FreeLibrary(m)
 //MACRO #define FreeProcInstance(p) (void)(p)
 //MACRO #define GetFreeSpace(w) (0x100000L)
@@ -74,7 +74,7 @@ version(UseNtoSKernel){}else {
 	/* PVOID WINAPI InterlockedExchangePointer(PVOID*,PVOID); */
 	(PVOID)InterlockedExchange((LPLONG)(    (PVOID)InterlockedExchange((LPLONG)(t),(LONG)(v))
 	LONG InterlockedExchangeAdd(LPLONG,LONG);
-	
+
 	static if (_WIN32_WINNT >= 0x0501) {
 	PSLIST_ENTRY InterlockedFlushSList(PSLIST_HEADER);
 	}
@@ -129,7 +129,7 @@ enum : DWORD {
 	BAUD_38400  = 16384,
 	BAUD_56K    = 32768,
 	BAUD_128K   = 65536,
-	
+
 	BAUD_57600  = 262144,
 	BAUD_115200 = 131072,
 	BAUD_USER   = 0x10000000
@@ -497,17 +497,17 @@ enum {
 	STATUS_USER_APC         = 0xC0,
 	STATUS_TIMEOUT          = 0x102,
 	STATUS_PENDING          = 0x103,
-	
+
 	STATUS_SEGMENT_NOTIFICATION  = 0x40000005,
 	STATUS_GUARD_PAGE_VIOLATION  = 0x80000001,
 	STATUS_DATATYPE_MISALIGNMENT = 0x80000002,
 	STATUS_BREAKPOINT            = 0x80000003,
 	STATUS_SINGLE_STEP           = 0x80000004,
-	
+
 	STATUS_ACCESS_VIOLATION         = 0xC0000005,
 	STATUS_IN_PAGE_ERROR            = 0xC0000006,
 	STATUS_INVALID_HANDLE           = 0xC0000008,
-	
+
 	STATUS_NO_MEMORY                = 0xC0000017,
 	STATUS_ILLEGAL_INSTRUCTION      = 0xC000001D,
 	STATUS_NONCONTINUABLE_EXCEPTION = 0xC0000025,
@@ -527,7 +527,7 @@ enum {
 	STATUS_CONTROL_C_EXIT           = 0xC000013A,
 
 	CONTROL_C_EXIT                    = STATUS_CONTROL_C_EXIT,
-	
+
 	EXCEPTION_ACCESS_VIOLATION        = STATUS_ACCESS_VIOLATION,
 	EXCEPTION_DATATYPE_MISALIGNMENT   = STATUS_DATATYPE_MISALIGNMENT,
 	EXCEPTION_BREAKPOINT              = STATUS_BREAKPOINT,
@@ -628,7 +628,7 @@ enum {
 	FORMAT_MESSAGE_FROM_STRING     = 1024,
 	FORMAT_MESSAGE_FROM_HMODULE    = 2048,
 	FORMAT_MESSAGE_FROM_SYSTEM     = 4096,
-	FORMAT_MESSAGE_ARGUMENT_ARRAY  = 8192	
+	FORMAT_MESSAGE_ARGUMENT_ARRAY  = 8192
 }
 
 const FORMAT_MESSAGE_MAX_WIDTH_MASK = 255;
@@ -731,7 +731,7 @@ enum {
 }
 
 //-------
-// 
+//
 
 enum {
 	BACKUP_INVALID=0,
@@ -833,13 +833,13 @@ static if (_WIN32_WINNT >= 0x0500) {
 
 const WRITE_WATCH_FLAG_RESET=1;
 
-struct FILETIME{
+struct FILETIME {
 	DWORD dwLowDateTime;
 	DWORD dwHighDateTime;
 }
-alias FILETIME * PFILETIME, LPFILETIME;
+alias FILETIME* PFILETIME, LPFILETIME;
 
-struct BY_HANDLE_FILE_INFORMATION{
+struct BY_HANDLE_FILE_INFORMATION {
 	DWORD	dwFileAttributes;
 	FILETIME	ftCreationTime;
 	FILETIME	ftLastAccessTime;
@@ -851,9 +851,9 @@ struct BY_HANDLE_FILE_INFORMATION{
 	DWORD	nFileIndexHigh;
 	DWORD	nFileIndexLow;
 }
-alias BY_HANDLE_FILE_INFORMATION * LPBY_HANDLE_FILE_INFORMATION;
+alias BY_HANDLE_FILE_INFORMATION* LPBY_HANDLE_FILE_INFORMATION;
 
-struct DCB{
+struct DCB {
 	DWORD DCBlength;
 	DWORD BaudRate;
 /+
@@ -881,27 +881,27 @@ struct DCB{
 	void fDsrSensitivity(bool f) { _bf = (_bf & ~64) | (f<<6); }
 	void fTXContinueOnXoff(bool f) { _bf = (_bf & ~128) | (f<<7); }
 	void fOutX(bool f)           { _bf = (_bf & ~256) | (f<<8); }
-	void fInX(bool f)            { _bf = (_bf & ~512) | (f<<9); }               
+	void fInX(bool f)            { _bf = (_bf & ~512) | (f<<9); }
 	void fErrorChar(bool f)      { _bf = (_bf & ~1024) | (f<<10); }
 	void fNull(bool f)           { _bf = (_bf & ~2048) | (f<<11); }
-	void fRtsControl(byte x)     { _bf = (_bf & ~(4096+8192)) | (x<<12); }     
+	void fRtsControl(byte x)     { _bf = (_bf & ~(4096+8192)) | (x<<12); }
 	void fAbortOnError(bool f)   { _bf = (_bf & ~16384) | (f<<14); }
 
-    bool fBinary()         { return _bf & 1; }
-	bool fParity()         { return _bf & 2; }
-	bool fOutxCtsFlow()    { return _bf & 4; }
-	bool fOutxDsrFlow()    { return _bf & 8; }
+    bool fBinary()         { return cast(bool) (_bf & 1); }
+	bool fParity()         { return cast(bool) (_bf & 2); }
+	bool fOutxCtsFlow()    { return cast(bool) (_bf & 4); }
+	bool fOutxDsrFlow()    { return cast(bool) (_bf & 8); }
 	byte fDtrControl()     { return (_bf & (32+16))>>4; }
-	bool fDsrSensitivity() { return (_bf & 64); }
-	bool fTXContinueOnXoff() { return (_bf & 128); }
-	bool fOutX()           { return (_bf & 256); }
-	bool fInX()            { return (_bf & 512); }               
-	bool fErrorChar()      { return (_bf & ~1024); }
-	bool fNull()           { return (_bf & ~2048); }
-	byte fRtsControl()     { return (_bf & (4096+8192))>>12; }     
-	bool fAbortOnError()   { return (_bf & 16384); }
-  
-    
+	bool fDsrSensitivity() { return cast(bool) (_bf & 64); }
+	bool fTXContinueOnXoff() { return cast(bool) (_bf & 128); }
+	bool fOutX()           { return cast(bool) (_bf & 256); }
+	bool fInX()            { return cast(bool) (_bf & 512); }
+	bool fErrorChar()      { return cast(bool) (_bf & 1024); }
+	bool fNull()           { return cast(bool) (_bf & 2048); }
+	byte fRtsControl()     { return (_bf & (4096+8192))>>12; }
+	bool fAbortOnError()   { return cast(bool) (_bf & 16384); }
+
+
 	WORD wReserved;
 	WORD XonLim;
 	WORD XoffLim;
@@ -958,13 +958,13 @@ struct COMSTAT{
 	void fEof(bool f)      { _bf = (_bf & ~32) | (f<<5); }
 	void fTxim(bool f)     { _bf = (_bf & ~64) | (f<<6); }
 
-    bool fCtsHold()  { return _bf & 1; }
-	bool fDsrHold()  { return _bf & 2; }
-	bool fRlsdHold() { return _bf & 4; }
-	bool fXoffHold() { return _bf & 8; }
-	bool fXoffSent() { return _bf & 16; }
-	bool fEof()      { return _bf & 32; }
-	bool fTxim()     { return _bf & 64; }
+    bool fCtsHold()  { return cast(bool) (_bf & 1); }
+	bool fDsrHold()  { return cast(bool) (_bf & 2); }
+	bool fRlsdHold() { return cast(bool) (_bf & 4); }
+	bool fXoffHold() { return cast(bool) (_bf & 8); }
+	bool fXoffSent() { return cast(bool) (_bf & 16); }
+	bool fEof()      { return cast(bool) (_bf & 32); }
+	bool fTxim()     { return cast(bool) (_bf & 64); }
 
 	DWORD cbInQue;
 	DWORD cbOutQue;
@@ -1311,11 +1311,11 @@ struct LDT_ENTRY{
 		BYTE Flags1;
 		BYTE Flags2;
 		BYTE BaseHi;
-		
+
 		void Type(byte f)  { Flags1 = (Flags1 & 0xE0) | f; }
 		void Dpl(byte f)   { Flags1 = (Flags1 & 0x9F) | (f<<5); }
 		void Pres(bool f)  { Flags1 = (Flags1 & 0x7F) | (f<<7); }
-		
+
 		void LimitHi(byte f) { Flags2 = (Flags2 & 0xF0) | (f&0x0F); }
 		void Sys(bool f)     { Flags2 = (Flags2 & 0xEF) | (f<<4); }
 		// Next bit is reserved
@@ -1324,14 +1324,14 @@ struct LDT_ENTRY{
 
 		byte Type()  { return (Flags1 & 0x1F); }
 		byte Dpl()   { return (Flags1 & 0x60)>>5; }
-		bool Pres()  {  return (Flags1 & 0x80)>>7; }
-		
+		bool Pres()  {  return cast(bool) (Flags1 & 0x80); }
+
 		byte LimitHi() { return (Flags2 & 0x0F); }
-		bool Sys() { return Flags2 & 0x10; }
-		bool Default_Big() { return Flags2 & 0x40; }
-		bool Granularity() { return Flags2 & 0x80; }
+		bool Sys() { return cast(bool) (Flags2 & 0x10); }
+		bool Default_Big() { return cast(bool) (Flags2 & 0x40); }
+		bool Granularity() { return cast(bool) (Flags2 & 0x80); }
 	}
-/+	
+/+
 	union  HighWord {
 		struct Bytes {
 			BYTE BaseMid;
@@ -1352,7 +1352,7 @@ struct LDT_ENTRY{
 		DWORD BaseHi:8;
 	}
 	}
-+/	
++/
 }
 alias LDT_ENTRY * PLDT_ENTRY, LPLDT_ENTRY;
 
@@ -1445,7 +1445,7 @@ enum MEMORY_RESOURCE_NOTIFICATION_TYPE {
 	LowMemoryResourceNotification,
 	HighMemoryResourceNotification
 }
- 
+
 }/* (_WIN32_WINNT >= 0x0501) */
 
 static if (_WIN32_WINNT >= 0x0500) {
@@ -1483,7 +1483,7 @@ extern(Windows) {
 
 	alias void function (DWORD) PAPCFUNC;
 	alias void function (PVOID,DWORD,DWORD) PTIMERAPCROUTINE;
-	
+
 	static if (_WIN32_WINNT >= 0x0500) {
 		alias void function (PVOID,BOOLEAN) WAITORTIMERCALLBACK;
 	}
@@ -1494,7 +1494,7 @@ LPTSTR MAKEINTATOM(short i) {
 }
 
 extern (Windows):
- 
+
 
  BOOL AccessCheck(PSECURITY_DESCRIPTOR,HANDLE,DWORD,PGENERIC_MAPPING,PPRIVILEGE_SET,PDWORD,PDWORD,PBOOL);
  BOOL AccessCheckAndAuditAlarmA(LPCSTR,LPVOID,LPSTR,LPSTR,PSECURITY_DESCRIPTOR,DWORD,PGENERIC_MAPPING,BOOL,PDWORD,PBOOL,PBOOL);
@@ -1566,7 +1566,7 @@ static if (_WIN32_WINNT >= 0x0501) {
  LONG CompareFileTime(FILETIME*, FILETIME*);
  BOOL ConnectNamedPipe(HANDLE,LPOVERLAPPED);
  BOOL ContinueDebugEvent(DWORD,DWORD,DWORD);
- 
+
 static if (_WIN32_WINNT >= 0x0400) {
  BOOL ConvertFiberToThread();
 }
@@ -1582,7 +1582,7 @@ alias memmove RtlMoveMemory;
 alias memcpy RtlCopyMemory;
 
 void RtlFillMemory(PVOID dest,SIZE_T len, BYTE fill) {
-	memset(dest, fill, len);	
+	memset(dest, fill, len);
 }
 
 void RtlZeroMemory(PVOID dest, SIZE_T len) {
@@ -1614,7 +1614,7 @@ static if (_WIN32_WINNT >= 0x0400) {
  HANDLE CreateFileW(LPCWSTR,DWORD,DWORD,LPSECURITY_ATTRIBUTES,DWORD,DWORD,HANDLE);
  HANDLE CreateFileMappingA(HANDLE,LPSECURITY_ATTRIBUTES,DWORD,DWORD,DWORD,LPCSTR);
  HANDLE CreateFileMappingW(HANDLE,LPSECURITY_ATTRIBUTES,DWORD,DWORD,DWORD,LPCWSTR);
- 
+
  HANDLE CreateIoCompletionPort(HANDLE,HANDLE,DWORD,DWORD);
 
 static if (_WIN32_WINNT >= 0x0500) {
@@ -1659,7 +1659,7 @@ static if (_WIN32_WINNT >= 0x0500) {
  HANDLE CreateSemaphoreA(LPSECURITY_ATTRIBUTES,LONG,LONG,LPCSTR);
  HANDLE CreateSemaphoreW(LPSECURITY_ATTRIBUTES,LONG,LONG,LPCWSTR);
  DWORD CreateTapePartition(HANDLE,DWORD,DWORD,DWORD);
- 
+
 static if (_WIN32_WINNT >= 0x0500) {
  HANDLE CreateTimerQueue();
  BOOL CreateTimerQueueTimer(PHANDLE,HANDLE,WAITORTIMERCALLBACK,PVOID,DWORD,DWORD,ULONG);
@@ -2170,7 +2170,7 @@ static if (_WIN32_WINNT >= 0x0501) {
  int lstrlenW(LPCWSTR);
 
  BOOL MakeAbsoluteSD(PSECURITY_DESCRIPTOR,PSECURITY_DESCRIPTOR,PDWORD,PACL,PDWORD,PACL,PDWORD,PSID,PDWORD,PSID,PDWORD);
- 
+
  BOOL MakeSelfRelativeSD(PSECURITY_DESCRIPTOR,PSECURITY_DESCRIPTOR,PDWORD);
  VOID MapGenericMask(PDWORD,PGENERIC_MAPPING);
  PVOID MapViewOfFile(HANDLE,DWORD,DWORD,DWORD,DWORD);
@@ -2650,7 +2650,7 @@ static if (_WIN32_WINNT >= 0x0500) {
 
 	alias DeleteVolumeMountPointW DeleteVolumeMountPoint;
 	alias DnsHostnameToComputerNameW DnsHostnameToComputerName;
-	
+
 	alias FindFirstVolumeW FindFirstVolume;
 	alias FindFirstVolumeMountPointW FindFirstVolumeMountPoint;
 	alias FindNextVolumeW FindNextVolume;

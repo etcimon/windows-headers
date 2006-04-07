@@ -756,7 +756,7 @@ alias NMMOUSE* LPNMMOUSE, LPNMCLICK;
 struct NMOBJECTNOTIFY {
 	NMHDR hdr;
 	int iItem;
-	IID* piid;
+	GUID* piid;
 	void* pObject;
 	HRESULT hResult;
 	DWORD dwFlags;

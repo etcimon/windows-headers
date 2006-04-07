@@ -178,7 +178,7 @@ const LPTSTR MAXIMUM_RESERVED_MANIFEST_RESOURCE_ID = cast(LPTSTR)(16 );
 
 // #endif /* !NORESOURCE */
 
-extern(Windows) export int wvsprintfA(
+/+extern(Windows) export int wvsprintfA(
   LPSTR,
   LPCSTR,
   va_list arglist);
@@ -191,7 +191,7 @@ alias wvsprintfW wvsprintf;
 // #else
 // #...
 // #endif // !UNICODE
-
++/
 extern(C) export int wsprintfA(
   LPSTR,
   LPCSTR,
@@ -1582,7 +1582,7 @@ enum : uint { WM_MOUSELAST = 0x020D }
 enum : uint { WHEEL_DELTA = 120 }
 // #define GET_WHEEL_DELTA_WPARAM(wParam) ((short)HIWORD(wParam))
 
-enum : uint { WHEEL_PAGESCROLL = UINT_MAX }
+enum : uint { WHEEL_PAGESCROLL = uint.max }
 // #endif /* _WIN32_WINNT >= 0x0400 */
 
 // #if(_WIN32_WINNT >= 0x0500)
@@ -2182,11 +2182,13 @@ enum : uint { CF_GDIOBJLAST = 0x03FF }
 
 // #endif /* !NOCLIPBOARD */
 
-alias TRUE FVIRTKEY;
+//alias true FVIRTKEY;
 enum : uint { FNOINVERT = 0x02 }
 enum : uint { FSHIFT = 0x04 }
 enum : uint { FCONTROL = 0x08 }
 enum : uint { FALT = 0x10 }
+
+alias HANDLE HHOOK, HMONITOR, HWINEVENTHOOK;
 
 struct tagACCEL {
 // #ifndef _MAC

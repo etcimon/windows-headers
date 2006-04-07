@@ -1,7 +1,7 @@
 // Converted from w32api\winerror.h, Mar 2006.
 // Public domain.
 
-/* Comments from the Mingw header: 
+/* Comments from the Mingw header:
  * WAIT_TIMEOUT is also defined in winbase.h
  */
 
@@ -1037,7 +1037,7 @@ enum : uint {
 	ERROR_EFS_VERSION_NOT_SUPPORT, // = 6016
 	ERROR_NO_BROWSER_SERVERS_FOUND = 6118,
 	SCHED_E_SERVICE_NOT_LOCALSYSTEM = 6200,
-	
+
 	ERROR_CTX_WINSTATION_NAME_INVALID = 7001,
 	ERROR_CTX_INVALID_PD,
 	ERROR_CTX_PD_NOT_FOUND,
@@ -1078,7 +1078,7 @@ enum : uint {
 	ERROR_CTX_SHADOW_NOT_RUNNING,
 	ERROR_CTX_SHADOW_ENDED_BY_MODE_CHANGE,
 	ERROR_ACTIVATION_COUNT_EXCEEDED, // = 7059
-	
+
 	FRS_ERR_INVALID_API_SEQUENCE = 8001,
 	FRS_ERR_STARTING_SERVICE,
 	FRS_ERR_STOPPING_SERVICE,
@@ -1559,8 +1559,8 @@ enum : uint {
 	DNS_ERROR_DP_NOT_ENLISTED,
 	DNS_ERROR_DP_ALREADY_ENLISTED,
 	DNS_ERROR_DP_NOT_AVAILABLE, // = 9905
-	
-	
+
+
 	WSABASEERR = 10000,
 	WSAEINTR = 10004,
 	WSAEBADF = 10009,
@@ -1651,8 +1651,8 @@ enum : uint {
 	WSA_QOS_ESDMODEOBJ,
 	WSA_QOS_ESHAPERATEOBJ,
 	WSA_QOS_RESERVED_PETYPE, // = 11031
-	
-	
+
+
 	ERROR_IPSEC_QM_POLICY_EXISTS = 13000,
 	ERROR_IPSEC_QM_POLICY_NOT_FOUND,
 	ERROR_IPSEC_QM_POLICY_IN_USE,
@@ -1843,10 +1843,10 @@ enum : uint {
 	ERROR_SXS_INVALID_ASSEMBLY_IDENTITY_ATTRIBUTE_NAME // = 14080
 }
 
-enum : HRESULT  {	
+enum : HRESULT  {
 	S_OK                                  = 0x00000000,
 	S_FALSE                               = 0x00000001,
-	
+
 	NOERROR                               = 0x00000000,
 
 	E_PENDING                             = 0x8000000A,
@@ -1874,7 +1874,7 @@ enum : HRESULT  {
 	CO_E_INIT_SCM_MAP_VIEW_OF_FILE        = 0x80004010,
 	CO_E_INIT_SCM_EXEC_FAILURE            = 0x80004011,
 	CO_E_INIT_ONLY_SINGLE_THREADED        = 0x80004012,
-	
+
 	RPC_E_CALL_REJECTED                   = 0x80010001,
 	RPC_E_CALL_CANCELED                   = 0x80010002,
 	RPC_E_CANTPOST_INSENDCALL             = 0x80010003,
@@ -1910,7 +1910,7 @@ enum : HRESULT  {
 	RPC_E_WRONG_THREAD                    = 0x8001010E,
 	RPC_E_THREAD_NOT_INIT                 = 0x8001010F,
 	RPC_E_UNEXPECTED                      = 0x8001FFFF,
-	
+
 	DISP_E_UNKNOWNINTERFACE               = 0x80020001,
 	DISP_E_MEMBERNOTFOUND                 = 0x80020003,
 	DISP_E_PARAMNOTFOUND                  = 0x80020004,
@@ -1928,7 +1928,7 @@ enum : HRESULT  {
 	DISP_E_BADCALLEE                      = 0x80020010,
 	DISP_E_NOTACOLLECTION                 = 0x80020011,
 	DISP_E_DIVBYZERO                      = 0x80020012,
-	
+
 	TYPE_E_BUFFERTOOSMALL                 = 0x80028016,
 	TYPE_E_INVDATAREAD                    = 0x80028018,
 	TYPE_E_UNSUPFORMAT                    = 0x80028019,
@@ -1954,7 +1954,7 @@ enum : HRESULT  {
 	TYPE_E_CANTLOADLIBRARY                = 0x80029C4A,
 	TYPE_E_INCONSISTENTPROPFUNCS          = 0x80029C83,
 	TYPE_E_CIRCULARTYPE                   = 0x80029C84,
-	
+
 	STG_E_INVALIDFUNCTION                 = 0x80030001,
 	STG_E_FILENOTFOUND                    = 0x80030002,
 	STG_E_PATHNOTFOUND                    = 0x80030003,
@@ -1989,7 +1989,7 @@ enum : HRESULT  {
 	STG_E_NOTFILEBASEDSTORAGE             = 0x80030107,
 	STG_E_EXTANTMARSHALLINGS              = 0x80030108,
 	STG_S_CONVERTED                       = 0x00030200,
-	
+
 	OLE_E_FIRST                           = 0x80040000,
 	OLE_S_FIRST                           = 0x00040000,
 	OLE_E_OLEVERB                         = 0x80040000,
@@ -2014,7 +2014,7 @@ enum : HRESULT  {
 	OLE_E_NOT_INPLACEACTIVE               = 0x80040010,
 	OLE_E_CANTCONVERT                     = 0x80040011,
 	OLE_E_NOSTORAGE                       = 0x80040012,
-	
+
 	DV_E_FORMATETC                        = 0x80040064,
 	DV_E_DVTARGETDEVICE                   = 0x80040065,
 	DV_E_STGMEDIUM                        = 0x80040066,
@@ -2025,9 +2025,9 @@ enum : HRESULT  {
 	DV_E_DVASPECT                         = 0x8004006B,
 	DV_E_DVTARGETDEVICE_SIZE              = 0x8004006C,
 	DV_E_NOIVIEWOBJECT                    = 0x8004006D,
-	
+
 	OLE_E_LAST                            = 0x800400FF,
-	OLE_S_LAST                            = 0x000400FF,	
+	OLE_S_LAST                            = 0x000400FF,
 	DRAGDROP_E_FIRST                      = 0x80040100,
 	DRAGDROP_S_FIRST                      = 0x00040100,
 	DRAGDROP_E_NOTREGISTERED              = 0x80040100,
@@ -2058,7 +2058,7 @@ enum : HRESULT  {
 	VIEW_E_DRAW                           = 0x80040140,
 	VIEW_S_ALREADY_FROZEN                 = 0x00040140,
 	VIEW_E_LAST                           = 0x8004014F,
-	VIEW_S_LAST                           = 0x0004014F,	
+	VIEW_S_LAST                           = 0x0004014F,
 	REGDB_E_FIRST                         = 0x80040150,
 	REGDB_S_FIRST                         = 0x00040150,
 	REGDB_E_READREGDB                     = 0x80040150,
@@ -2068,7 +2068,7 @@ enum : HRESULT  {
 	REGDB_E_CLASSNOTREG                   = 0x80040154,
 	REGDB_E_IIDNOTREG                     = 0x80040155,
 	REGDB_E_LAST                          = 0x8004015F,
-	REGDB_S_LAST                          = 0x0004015F,	
+	REGDB_S_LAST                          = 0x0004015F,
 	CACHE_E_FIRST                         = 0x80040170,
 	CACHE_S_FIRST                         = 0x00040170,
 	CACHE_E_NOCACHE_UPDATED               = 0x80040170,
@@ -2076,7 +2076,7 @@ enum : HRESULT  {
 	CACHE_S_SAMECACHE                     = 0x00040171,
 	CACHE_S_SOMECACHES_NOTUPDATED         = 0x00040172,
 	CACHE_E_LAST                          = 0x8004017F,
-	CACHE_S_LAST                          = 0x0004017F,	
+	CACHE_S_LAST                          = 0x0004017F,
 	OLEOBJ_E_FIRST                        = 0x80040180,
 	OLEOBJ_S_FIRST                        = 0x00040180,
 	OLEOBJ_E_NOVERBS                      = 0x80040180,
@@ -2085,7 +2085,7 @@ enum : HRESULT  {
 	OLEOBJ_S_CANNOT_DOVERB_NOW            = 0x00040181,
 	OLEOBJ_S_INVALIDHWND                  = 0x00040182,
 	OLEOBJ_E_LAST                         = 0x8004018F,
-	OLEOBJ_S_LAST                         = 0x0004018F,	
+	OLEOBJ_S_LAST                         = 0x0004018F,
 	CLIENTSITE_E_FIRST                    = 0x80040190,
 	CLIENTSITE_S_FIRST                    = 0x00040190,
 	CLIENTSITE_E_LAST                     = 0x8004019F,
@@ -2167,7 +2167,7 @@ enum : HRESULT  {
 	CO_E_LAST                             = 0x800401FF,
 	CO_S_LAST                             = 0x000401FF,
 	CO_E_RELEASED                         = 0x800401FF,
-	
+
 	CO_E_CLASS_CREATE_FAILED              = 0x80080001,
 	CO_E_SCM_ERROR                        = 0x80080002,
 	CO_E_SCM_RPC_FAILURE                  = 0x80080003,
@@ -2180,7 +2180,7 @@ enum : HRESULT  {
 	MEM_E_INVALID_LINK                    = 0x80080010,
 	MEM_E_INVALID_SIZE                    = 0x80080011,
 	CO_S_NOTALLINTERFACES                 = 0x00080012,
-	
+
 	NTE_BAD_UID                           = 0x80090001,
 	NTE_BAD_HASH                          = 0x80090002,
 	NTE_BAD_KEY                           = 0x80090003,
@@ -2218,7 +2218,7 @@ enum : HRESULT  {
 }
 
 
-enum : uint {
+enum : bool {
 	SEVERITY_SUCCESS = 0,
 	SEVERITY_ERROR = 1
 }
@@ -2282,12 +2282,12 @@ ushort SCODE_SEVERITY(SCODE r)
 	return (r>>31) & 0x1;
 }
 
-HRESULT MAKE_HRESULT(uint s, uint f, uint c)
+HRESULT MAKE_HRESULT(bool s, uint f, uint c)
 {
 	return (s << 31) | (f << 16) | c;
 }
 
-SCODE MAKE_SCODE(uint s, uint f, uint c)
+SCODE MAKE_SCODE(bool s, uint f, uint c)
 {
 	return (s << 31) | (f << 16) | c;
 }
