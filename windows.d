@@ -33,9 +33,8 @@ import win32.lzexpand;
 //import win32.nb30;
 //import win32.rpc;
 //import win32.shellapi;
-//import win32.winperf;
-//#ifndef NOGDI
-//import win32.commdlg;
+import win32.winperf;
+import win32.commdlg;
 //import win32.winspool;
 /+
 #if (_WIN32_WINNT >= 0x0400)
