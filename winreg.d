@@ -139,7 +139,6 @@ extern (Windows) {
 
 version (Unicode) {
 	alias VALENTW VALENT;
-	alias VALENTW* PVALENT;
 	alias AbortSystemShutdownW AbortSystemShutdown;
 	alias InitiateSystemShutdownW InitiateSystemShutdown;
 	alias RegConnectRegistryW RegConnectRegistry;
@@ -167,7 +166,6 @@ version (Unicode) {
 	}
 } else {
 	alias VALENTA VALENT;
-	alias VALENTA* PVALENT;
 	alias AbortSystemShutdownA AbortSystemShutdown;
 	alias InitiateSystemShutdownA InitiateSystemShutdown;
 	alias RegConnectRegistryA RegConnectRegistry;
@@ -194,3 +192,5 @@ version (Unicode) {
 		alias RegSetValueA RegSetValue;
 	}
 }
+
+alias VALENT* PVALENT;

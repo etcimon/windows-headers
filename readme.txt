@@ -130,7 +130,7 @@ For type-generic macros, use a template.
 
 Don't just leave the macro expansion verbatim; make some effort to make it look more like a function definition by:
 * removing pointless parentheses and casts
-* using line breaks and indentation as you might normally would when writing a function
+* using line breaks and indentation as you might normally when writing a function
 
 
 10. Remove leftover preprocessor directives

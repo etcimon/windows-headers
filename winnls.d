@@ -14,7 +14,7 @@ private import win32.w32api, win32.basetsd, win32.windef, win32.winbase;
 
 alias DWORD LCTYPE, CALTYPE, CALID, LGRPID, GEOID, GEOTYPE, GEOCLASS;
 
-// FIXME: check types of some constants
+// FIXME: check types of constants
 
 const size_t
 	MAX_DEFAULTCHAR =  2,
@@ -688,7 +688,7 @@ extern (Windows) {
 	BOOL SetUserGeoID(GEOID);
 	int WideCharToMultiByte(UINT, DWORD, LPCWSTR, int, LPSTR, int, LPCSTR,
 	  LPBOOL);
-	
+
 	static if (WINVER >= 0x410) {
 		BOOL EnumCalendarInfoExA(CALINFO_ENUMPROCEXA, LCID, CALID, CALTYPE);
 		BOOL EnumCalendarInfoExW(CALINFO_ENUMPROCEXW, LCID, CALID, CALTYPE);
@@ -696,7 +696,7 @@ extern (Windows) {
 		BOOL EnumDateFormatsExW(DATEFMT_ENUMPROCEXW, LCID, DWORD);
 		BOOL IsValidLanguageGroup(LGRPID, DWORD);
 	}
-	
+
 	static if (WINVER >= 0x500) {
 		LANGID GetSystemDefaultUILanguage();
 		LANGID GetUserDefaultUILanguage();
@@ -756,7 +756,7 @@ version (Unicode) {
 		alias EnumCalendarInfoExW EnumCalendarInfoEx;
 		alias EnumDateFormatsExW EnumDateFormatsEx;
 	}
-	
+
 	static if (_WIN32_WINNT_ONLY && WINVER >= 0x500) {
 		alias EnumSystemLanguageGroupsW EnumSystemLanguageGroups;
 		alias EnumLanguageGroupLocalesW EnumLanguageGroupLocales;
@@ -803,7 +803,7 @@ version (Unicode) {
 		alias EnumCalendarInfoExA EnumCalendarInfoEx;
 		alias EnumDateFormatsExA EnumDateFormatsEx;
 	}
-	
+
 	static if (_WIN32_WINNT_ONLY && WINVER >= 0x500) {
 		alias EnumSystemLanguageGroupsA EnumSystemLanguageGroups;
 		alias EnumLanguageGroupLocalesA EnumLanguageGroupLocales;
