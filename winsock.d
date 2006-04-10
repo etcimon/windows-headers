@@ -19,7 +19,7 @@ module win32.winsock;
 
 // FIXME: check types of constants
 
-import win32.windows;
+import win32.windef;
 
 alias char u_char;
 alias ushort u_short;

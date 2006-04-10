@@ -36,6 +36,9 @@ import win32.shellapi;
 import win32.winperf;
 import win32.commdlg;
 //import win32.winspool;
+
+import win32.winsock;
+
 /+
 #if (_WIN32_WINNT >= 0x0400)
 #include <winsock2.h>
