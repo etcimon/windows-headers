@@ -22,7 +22,7 @@ extern (Windows) {
 	HRESULT DXTraceW (char*, DWORD, HRESULT, WCHAR*, BOOL);
 }
 
-version (UNICODE) {
+version (Unicode) {
 	alias DXGetErrorString8W DXGetErrorString8;
 	alias DXGetErrorDescription8W DXGetErrorDescription8;
 	alias DXTraceW DXTrace;
@@ -33,7 +33,7 @@ version (UNICODE) {
 }
 
 debug {
-	version (UNICODE) {
+	version (Unicode) {
 		HRESULT DXTRACE_MSG (WCHAR* str) {
 			return DXTrace(__FILE__, cast(DWORD)__LINE__, 0, str, FALSE);
 		}
@@ -59,7 +59,7 @@ debug {
 		}
 	}
 } else {
-	version (UNICODE) {
+	version (Unicode) {
 		HRESULT DXTRACE_MSG (WCHAR* str) {
 			return 0;
 		}
