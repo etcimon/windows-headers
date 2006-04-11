@@ -3,10 +3,8 @@
 
 module win32.wingdi;
 private import win32.w32api;
-import win32.winver;
-import win32.windef;
-
-const int _WIN32_WINNT=0x0500;
+private import win32.winver;
+private import win32.windef;
 
 enum {
     BI_RGB=0,

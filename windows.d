@@ -35,7 +35,7 @@ import win32.nb30;
 import win32.shellapi;
 import win32.winperf;
 import win32.commdlg;
-//import win32.winspool;
+import win32.winspool;
 
 import win32.winsock;
 
