@@ -1019,7 +1019,7 @@ HICON ImageList_ExtractIcon(HINSTANCE hi, HIMAGELIST himl, int i) {
 	return ImageList_GetIcon(himl, i, 0);
 }
 
-HIMAGELIST ImageList_LoadBitmap(HINSTANCE hi, LPCSTR lpbmp, int cx,
+HIMAGELIST ImageList_LoadBitmap(HINSTANCE hi, LPCTSTR lpbmp, int cx,
 	  int cGrow, COLORREF crMask) {
 	return ImageList_LoadImage(hi, lpbmp, cx, cGrow, crMask,
 	  IMAGE_BITMAP, 0);
