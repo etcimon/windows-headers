@@ -29,7 +29,7 @@ import win32.ddeml;
 import win32.dlgs;
 import win32.imm;
 import win32.lzexpand;
-//import win32.mmsystem;
+import win32.mmsystem;
 import win32.nb30;
 //import win32.rpc;
 import win32.shellapi;
