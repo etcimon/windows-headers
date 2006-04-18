@@ -1,5 +1,14 @@
 // Converted from w32api\winuser.h
 
+// The following macros were for win16 only, and are not included in this file:
+//#define EnumTaskWindows(h,f,p) EnumThreadWindows((DWORD)h,f,p)
+//#define PostAppMessageA(t,m,w,l) PostThreadMessageA((DWORD)t,m,w,l)
+//#define PostAppMessageW(t,m,w,l) PostThreadMessageW((DWORD)t,m,w,l)
+//#define GetSysModalWindow() (NULL)
+//#define SetSysModalWindow(h) (NULL)
+//#define GetWindowTask(hWnd) ((HANDLE)GetWindowThreadProcessId(hWnd, NULL))
+//#define DefHookProc(c,p,lp,h) CallNextHookEx((HHOOK)*h,c,p,lp)
+
 module win32.winuser;
 
 private import win32.w32api;
@@ -7,11 +16,12 @@ private import win32.winbase;
 private import win32.wingdi;
 private import win32.windef; // for HMONITOR
 
-LPTSTR MAKEINTATOM(int i) {
-	return cast(LPTSTR)(i);
+template MAKEINTATOM_T (int i)
+{
+	const LPTSTR MAKEINTATOM_T = cast(LPTSTR)(i);
 }
 
-const WC_DIALOG = MAKEINTATOM(cast(short)0x8002);
+const WC_DIALOG = MAKEINTATOM_T!(0x8002);
 
 const FALT=16;
 const FCONTROL=8;
@@ -585,9 +595,9 @@ const SB_TOP=6;
 
 //MACRO #define IS_INTRESOURCE(i) (((ULONG_PTR)(i) >> 16) == 0)
 
-LPTSTR MAKEINTRESOURCE(WORD i)
+template MAKEINTRESOURCE_T (WORD i)
 {
-	return cast(LPTSTR)(i);
+	const LPTSTR MAKEINTRESOURCE_T = cast(LPTSTR)(i);
 }
 
 LPSTR MAKEINTRESOURCEA(WORD i)
@@ -600,32 +610,32 @@ LPWSTR MAKEINTRESOURCEW(WORD i)
 	return cast(LPWSTR)(i);
 }
 
-const RT_CURSOR = MAKEINTRESOURCE(1);
-const RT_BITMAP=MAKEINTRESOURCE(2);
-const RT_ICON=MAKEINTRESOURCE(3);
-const RT_MENU=MAKEINTRESOURCE(4);
-const RT_DIALOG=MAKEINTRESOURCE(5);
-const RT_STRING=MAKEINTRESOURCE(6);
-const RT_FONTDIR=MAKEINTRESOURCE(7);
-const RT_FONT = MAKEINTRESOURCE(8);
-const RT_ACCELERATOR=MAKEINTRESOURCE(9);
-const RT_RCDATA=MAKEINTRESOURCE(10);
-const RT_MESSAGETABLE=MAKEINTRESOURCE(11);
+const RT_CURSOR = MAKEINTRESOURCE_T!(1);
+const RT_BITMAP=MAKEINTRESOURCE_T!(2);
+const RT_ICON=MAKEINTRESOURCE_T!(3);
+const RT_MENU=MAKEINTRESOURCE_T!(4);
+const RT_DIALOG=MAKEINTRESOURCE_T!(5);
+const RT_STRING=MAKEINTRESOURCE_T!(6);
+const RT_FONTDIR=MAKEINTRESOURCE_T!(7);
+const RT_FONT = MAKEINTRESOURCE_T!(8);
+const RT_ACCELERATOR=MAKEINTRESOURCE_T!(9);
+const RT_RCDATA=MAKEINTRESOURCE_T!(10);
+const RT_MESSAGETABLE=MAKEINTRESOURCE_T!(11);
 
-const RT_GROUP_CURSOR=MAKEINTRESOURCE(12);
-const RT_GROUP_ICON=MAKEINTRESOURCE(14);
-const RT_VERSION=MAKEINTRESOURCE(16);
-const RT_DLGINCLUDE=MAKEINTRESOURCE(17);
-const RT_PLUGPLAY=MAKEINTRESOURCE(19);
-const RT_VXD=MAKEINTRESOURCE(20);
-const RT_ANICURSOR=MAKEINTRESOURCE(21);
-const RT_ANIICON=MAKEINTRESOURCE(22);
-const RT_HTML=MAKEINTRESOURCE(23);
-const RT_MANIFEST=MAKEINTRESOURCE(24);
+const RT_GROUP_CURSOR=MAKEINTRESOURCE_T!(12);
+const RT_GROUP_ICON=MAKEINTRESOURCE_T!(14);
+const RT_VERSION=MAKEINTRESOURCE_T!(16);
+const RT_DLGINCLUDE=MAKEINTRESOURCE_T!(17);
+const RT_PLUGPLAY=MAKEINTRESOURCE_T!(19);
+const RT_VXD=MAKEINTRESOURCE_T!(20);
+const RT_ANICURSOR=MAKEINTRESOURCE_T!(21);
+const RT_ANIICON=MAKEINTRESOURCE_T!(22);
+const RT_HTML=MAKEINTRESOURCE_T!(23);
+const RT_MANIFEST=MAKEINTRESOURCE_T!(24);
 
-const CREATEPROCESS_MANIFEST_RESOURCE_ID=MAKEINTRESOURCE(1);
-const ISOLATIONAWARE_MANIFEST_RESOURCE_ID=MAKEINTRESOURCE(2);
-const ISOLATIONAWARE_NOSTATICIMPORT_MANIFEST_RESOURCE_ID=MAKEINTRESOURCE(3);
+const CREATEPROCESS_MANIFEST_RESOURCE_ID=MAKEINTRESOURCE_T!(1);
+const ISOLATIONAWARE_MANIFEST_RESOURCE_ID=MAKEINTRESOURCE_T!(2);
+const ISOLATIONAWARE_NOSTATICIMPORT_MANIFEST_RESOURCE_ID=MAKEINTRESOURCE_T!(3);
 
 const EWX_FORCE=4;
 const EWX_LOGOFF=0;
@@ -663,28 +673,28 @@ const GCL_MENUNAME=(-8);
 const GCL_STYLE=(-26);
 const GCL_WNDPROC=(-24);
 
-const IDC_ARROW=MAKEINTRESOURCE(32512);
-const IDC_IBEAM=MAKEINTRESOURCE(32513);
-const IDC_WAIT=MAKEINTRESOURCE(32514);
-const IDC_CROSS=MAKEINTRESOURCE(32515);
-const IDC_UPARROW=MAKEINTRESOURCE(32516);
-const IDC_SIZENWSE=MAKEINTRESOURCE(32642);
-const IDC_SIZENESW=MAKEINTRESOURCE(32643);
-const IDC_SIZEWE=MAKEINTRESOURCE(32644);
-const IDC_SIZENS=MAKEINTRESOURCE(32645);
-const IDC_SIZEALL=MAKEINTRESOURCE(32646);
-const IDC_NO=MAKEINTRESOURCE(32648);
-const IDC_HAND=MAKEINTRESOURCE(32649);
-const IDC_APPSTARTING=MAKEINTRESOURCE(32650);
-const IDC_HELP=MAKEINTRESOURCE(32651);
-const IDC_ICON=MAKEINTRESOURCE(32641);
-const IDC_SIZE=MAKEINTRESOURCE(32640);
-const IDI_APPLICATION=MAKEINTRESOURCE(32512);
-const IDI_HAND=MAKEINTRESOURCE(32513);
-const IDI_QUESTION=MAKEINTRESOURCE(32514);
-const IDI_EXCLAMATION=MAKEINTRESOURCE(32515);
-const IDI_ASTERISK=MAKEINTRESOURCE(32516);
-const IDI_WINLOGO=MAKEINTRESOURCE(32517);
+const IDC_ARROW=MAKEINTRESOURCE_T!(32512);
+const IDC_IBEAM=MAKEINTRESOURCE_T!(32513);
+const IDC_WAIT=MAKEINTRESOURCE_T!(32514);
+const IDC_CROSS=MAKEINTRESOURCE_T!(32515);
+const IDC_UPARROW=MAKEINTRESOURCE_T!(32516);
+const IDC_SIZENWSE=MAKEINTRESOURCE_T!(32642);
+const IDC_SIZENESW=MAKEINTRESOURCE_T!(32643);
+const IDC_SIZEWE=MAKEINTRESOURCE_T!(32644);
+const IDC_SIZENS=MAKEINTRESOURCE_T!(32645);
+const IDC_SIZEALL=MAKEINTRESOURCE_T!(32646);
+const IDC_NO=MAKEINTRESOURCE_T!(32648);
+const IDC_HAND=MAKEINTRESOURCE_T!(32649);
+const IDC_APPSTARTING=MAKEINTRESOURCE_T!(32650);
+const IDC_HELP=MAKEINTRESOURCE_T!(32651);
+const IDC_ICON=MAKEINTRESOURCE_T!(32641);
+const IDC_SIZE=MAKEINTRESOURCE_T!(32640);
+const IDI_APPLICATION=MAKEINTRESOURCE_T!(32512);
+const IDI_HAND=MAKEINTRESOURCE_T!(32513);
+const IDI_QUESTION=MAKEINTRESOURCE_T!(32514);
+const IDI_EXCLAMATION=MAKEINTRESOURCE_T!(32515);
+const IDI_ASTERISK=MAKEINTRESOURCE_T!(32516);
+const IDI_WINLOGO=MAKEINTRESOURCE_T!(32517);
 const IDI_WARNING=IDI_EXCLAMATION;
 const IDI_ERROR=IDI_HAND;
 const IDI_INFORMATION=IDI_ASTERISK;
@@ -3570,7 +3580,8 @@ alias CharPrevA AnsiPrev;
 
 //MACRO #define POINTTOPOINTS(p) ((POINTS)MAKELONG((p).x,(p).y))
 
-extern (Windows):
+extern (Windows) {
+
 HKL ActivateKeyboardLayout(HKL,UINT);
 BOOL AdjustWindowRect(LPRECT,DWORD,BOOL);
 BOOL AdjustWindowRectEx(LPRECT,DWORD,BOOL,DWORD);
@@ -3646,7 +3657,6 @@ BOOL CloseWindow(HWND);
 BOOL CloseWindowStation(HWINSTA);
 int CopyAcceleratorTableA(HACCEL,LPACCEL,int);
 int CopyAcceleratorTableW(HACCEL,LPACCEL,int);
-//MACRO #define CopyCursor(c) ((HCURSOR)CopyIcon((HICON)(c)))
 
 HICON CopyIcon(HICON);
 HANDLE CopyImage(HANDLE,UINT,int,int,UINT);
@@ -3665,28 +3675,6 @@ HWND CreateDialogParamW(HINSTANCE,LPCWSTR,HWND,DLGPROC,LPARAM);
 HWND CreateDialogIndirectParamA(HINSTANCE,LPCDLGTEMPLATE,HWND,DLGPROC,LPARAM);
 HWND CreateDialogIndirectParamW(HINSTANCE,LPCDLGTEMPLATE,HWND,DLGPROC,LPARAM);
 
-// Macros:
-
-HWND CreateDialogA(HINSTANCE h,LPCSTR n,HWND w,DLGPROC f)
-{
-	return CreateDialogParamA(h, n, w, f, 0);
-}
-
-HWND CreateDialogW(HINSTANCE h,LPCSTR n,HWND w,DLGPROC f)
-{
-	return CreateDialogParamW(h, n, w, f, 0);
-}
-
-HWND CreateDialogIndirectA(HINSTANCE h,LPCDLGTEMPLATE t,HWND w ,DLGPROC f)
-{
-	return CreateDialogIndirectParamA(h, t, w, f, 0);
-}
-
-HWND CreateDialogIndirectW(HINSTANCE h,LPCDLGTEMPLATE t,HWND w ,DLGPROC f)
-{
-	return CreateDialogIndirectParamW(h, t, w, f, 0);
-}
-
 HICON CreateIcon(HINSTANCE,int,int,BYTE,BYTE, BYTE*, BYTE*);
 HICON CreateIconFromResource(PBYTE,DWORD,BOOL,DWORD);
 HICON CreateIconFromResourceEx(PBYTE,DWORD,BOOL,DWORD,int,int,UINT);
@@ -3699,17 +3687,6 @@ HMENU CreatePopupMenu();
 HWND CreateWindowExA(DWORD,LPCSTR,LPCSTR,DWORD,int,int,int,int,HWND,HMENU,HINSTANCE,LPVOID);
 HWND CreateWindowExW(DWORD,LPCWSTR,LPCWSTR,DWORD,int,int,int,int,HWND,HMENU,HINSTANCE,LPVOID);
 
-
-HWND CreateWindowA(LPCSTR a,LPCSTR b,DWORD c,int d,int e,int f,int g,HWND h,HMENU i,HINSTANCE j,LPVOID k)
-{
-	return CreateWindowExA(0,a,b,c,d,e,f,g,h,i,j,k);
-}
-
-HWND CreateWindowW(LPCSTR a,LPCSTR b,DWORD c,int d,int e,int f,int g,HWND h,HMENU i,HINSTANCE j,LPVOID k)
-{
-	return CreateWindowExW(0,a,b,c,d,e,f,g,h,i,j,k);
-}
-
 HWINSTA CreateWindowStationA(LPSTR,DWORD,DWORD,LPSECURITY_ATTRIBUTES);
 HWINSTA CreateWindowStationW(LPWSTR,DWORD,DWORD,LPSECURITY_ATTRIBUTES);
 LRESULT DefDlgProcA(HWND,UINT,WPARAM,LPARAM);
@@ -3717,7 +3694,6 @@ LRESULT DefDlgProcW(HWND,UINT,WPARAM,LPARAM);
 HDWP DeferWindowPos(HDWP,HWND,HWND,int,int,int,int,UINT);
 LRESULT DefFrameProcA(HWND,HWND,UINT,WPARAM,LPARAM);
 LRESULT DefFrameProcW(HWND,HWND,UINT,WPARAM,LPARAM);
-//MACRO #define DefHookProc(c,p,lp,h) CallNextHookEx((HHOOK)*h,c,p,lp)
 
 LRESULT DefMDIChildProcA(HWND,UINT,WPARAM,LPARAM);
 LRESULT DefMDIChildProcW(HWND,UINT,WPARAM,LPARAM);
@@ -3740,6 +3716,43 @@ int DialogBoxParamW(HINSTANCE,LPCWSTR,HWND,DLGPROC,LPARAM);
 int DialogBoxIndirectParamA(HINSTANCE,LPCDLGTEMPLATE,HWND,DLGPROC,LPARAM);
 int DialogBoxIndirectParamW(HINSTANCE,LPCDLGTEMPLATE,HWND,DLGPROC,LPARAM);
 
+} // extern (Windows)
+
+// Macros:
+
+//MACRO #define CopyCursor(c) ((HCURSOR)CopyIcon((HICON)(c)))
+
+HWND CreateDialogA(HINSTANCE h,LPCSTR n,HWND w,DLGPROC f)
+{
+	return CreateDialogParamA(h, n, w, f, 0);
+}
+
+HWND CreateDialogW(HINSTANCE h,LPCWSTR n,HWND w,DLGPROC f)
+{
+	return CreateDialogParamW(h, n, w, f, 0);
+}
+
+HWND CreateDialogIndirectA(HINSTANCE h,LPCDLGTEMPLATE t,HWND w ,DLGPROC f)
+{
+	return CreateDialogIndirectParamA(h, t, w, f, 0);
+}
+
+HWND CreateDialogIndirectW(HINSTANCE h,LPCDLGTEMPLATE t,HWND w ,DLGPROC f)
+{
+	return CreateDialogIndirectParamW(h, t, w, f, 0);
+}
+
+
+HWND CreateWindowA(LPCSTR a,LPCSTR b,DWORD c,int d,int e,int f,int g,HWND h,HMENU i,HINSTANCE j,LPVOID k)
+{
+	return CreateWindowExA(0,a,b,c,d,e,f,g,h,i,j,k);
+}
+
+HWND CreateWindowW(LPCWSTR a,LPCWSTR b,DWORD c,int d,int e,int f,int g,HWND h,HMENU i,HINSTANCE j,LPVOID k)
+{
+	return CreateWindowExW(0,a,b,c,d,e,f,g,h,i,j,k);
+}
+
 int DialogBoxA(HINSTANCE i,LPCSTR t,HWND p,DLGPROC f)
 {
 	return DialogBoxParamA(i,t,p,f,0);
@@ -3760,6 +3773,10 @@ int DialogBoxIndirectW(HINSTANCE i,LPCDLGTEMPLATE t,HWND p,DLGPROC f)
 	return DialogBoxIndirectParamW(i,t,p,f,0);
 }
 
+//MACRO #define ExitWindows(r,c) ExitWindowsEx(EWX_LOGOFF,0)
+//MACRO #define GetNextWindow(h,c) GetWindow(h,c)
+
+extern (Windows):
 LONG DispatchMessageA( MSG*);
 LONG DispatchMessageW( MSG*);
 int DlgDirListA(HWND,LPSTR,int,int,UINT);
@@ -3819,14 +3836,12 @@ int EnumPropsA(HWND,PROPENUMPROCA);
 int EnumPropsW(HWND,PROPENUMPROCW);
 int EnumPropsExA(HWND,PROPENUMPROCEXA,LPARAM);
 int EnumPropsExW(HWND,PROPENUMPROCEXW,LPARAM);
-//MACRO #define EnumTaskWindows(h,f,p) EnumThreadWindows((DWORD)h,f,p)
 
 BOOL EnumThreadWindows(DWORD,WNDENUMPROC,LPARAM);
 BOOL EnumWindows(WNDENUMPROC,LPARAM);
 BOOL EnumWindowStationsA(WINSTAENUMPROCA,LPARAM);
 BOOL EnumWindowStationsW(WINSTAENUMPROCW,LPARAM);
 BOOL EqualRect(LPCRECT,LPCRECT);
-//MACRO #define ExitWindows(r,c) ExitWindowsEx(EWX_LOGOFF,0)
 
 BOOL ExitWindowsEx(UINT,DWORD);
 HWND FindWindowA(LPCSTR,LPCSTR);
@@ -3915,7 +3930,6 @@ int GetMouseMovePointsEx(UINT,LPMOUSEMOVEPOINT,LPMOUSEMOVEPOINT,int,DWORD);
 }
 HWND GetNextDlgGroupItem(HWND,HWND,BOOL);
 HWND GetNextDlgTabItem(HWND,HWND,BOOL);
-//MACRO #define GetNextWindow(h,c) GetWindow(h,c)
 
 HWND GetOpenClipboardWindow();
 HWND GetParent(HWND);
@@ -3940,7 +3954,6 @@ HWND GetShellWindow();
 HMENU GetSubMenu(HMENU,int);
 DWORD GetSysColor(int);
 HBRUSH GetSysColorBrush(int);
-//MACRO #define GetSysModalWindow() (NULL)
 
 HMENU GetSystemMenu(HWND,BOOL);
 int GetSystemMetrics(int);
@@ -3971,7 +3984,6 @@ BOOL GetWindowExtEx(HDC,LPSIZE);
 BOOL GetWindowPlacement(HWND,WINDOWPLACEMENT*);
 BOOL GetWindowRect(HWND,LPRECT);
 int GetWindowRgn(HWND,HRGN);
-//MACRO #define GetWindowTask(hWnd) ((HANDLE)GetWindowThreadProcessId(hWnd, NULL))
 
 int GetWindowTextA(HWND,LPSTR,int);
 int GetWindowTextLengthA(HWND);
@@ -4127,9 +4139,6 @@ void PostQuitMessage(int);
 BOOL PostThreadMessageA(DWORD,UINT,WPARAM,LPARAM);
 BOOL PostThreadMessageW(DWORD,UINT,WPARAM,LPARAM);
 
-// These were win16 only.
-//MACRO #define PostAppMessageA(t,m,w,l) PostThreadMessageA((DWORD)t,m,w,l)
-//MACRO #define PostAppMessageW(t,m,w,l) PostThreadMessageW((DWORD)t,m,w,l)
 
 static if (_WIN32_WINNT >= 0x0501) {
 BOOL PrintWindow(HWND,HDC,UINT);
@@ -4219,7 +4228,6 @@ int SetScrollInfo(HWND,int,LPCSCROLLINFO,BOOL);
 int SetScrollPos(HWND,int,int,BOOL);
 BOOL SetScrollRange(HWND,int,int,int,BOOL);
 BOOL SetSysColors(int, INT *, COLORREF *);
-//MACRO #define SetSysModalWindow(h) (NULL)
 
 BOOL SetSystemCursor(HCURSOR,DWORD);
 BOOL SetThreadDesktop(HDESK);
@@ -4316,11 +4324,11 @@ int wsprintfA(LPSTR,LPCSTR,...);
 int wsprintfW(LPWSTR,LPCWSTR,...);
 }
 
-/*
-// FIXME: Shouldn't be necessary for D.
-int wvsprintfA(LPSTR,LPCSTR, va_list arglist);
-int wvsprintfW(LPWSTR,LPCWSTR,va_list arglist);
-*/
+// These shouldn't be necessary for D.
+typedef char * va_list_;
+int wvsprintfA(LPSTR,LPCSTR, va_list_ arglist);
+int wvsprintfW(LPWSTR,LPCWSTR,va_list_ arglist);
+
 
 static if ((_WIN32_WINNT >= 0x0500) || (_WIN32_WINDOWS >= 0x0490)) {
 BOOL AllowSetForegroundWindow(DWORD);
@@ -4334,6 +4342,7 @@ BOOL UpdateLayeredWindow(HWND,HDC,POINT*,SIZE*,HDC,POINT*,COLORREF,BLENDFUNCTION
 static if (_WIN32_WINNT >= 0x0501) {
 BOOL GetLayeredWindowAttributes(HWND,COLORREF*,BYTE*,DWORD*);
 }
+
 
 // -----
 // Aliases for Unicode or Ansi
@@ -4501,7 +4510,7 @@ alias VkKeyScanW VkKeyScan;
 alias VkKeyScanExW VkKeyScanEx;
 alias WinHelpW WinHelp;
 alias wsprintfW wsprintf;
-//alias wvsprintfW wvsprintf;
+alias wvsprintfW wvsprintf;
 
 alias ChangeDisplaySettingsW ChangeDisplaySettings;
 alias ChangeDisplaySettingsExW ChangeDisplaySettingsEx;
@@ -4676,7 +4685,7 @@ alias VkKeyScanA VkKeyScan;
 alias VkKeyScanExA VkKeyScanEx;
 alias WinHelpA WinHelp;
 alias wsprintfA wsprintf;
-//alias wvsprintfA wvsprintf;
+alias wvsprintfA wvsprintf;
 
 alias ChangeDisplaySettingsA ChangeDisplaySettings;
 alias ChangeDisplaySettingsExA ChangeDisplaySettingsEx;

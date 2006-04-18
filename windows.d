@@ -11,6 +11,7 @@
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 */
+module win32.windows;
 
 import win32.windef;
 import win32.wincon;
