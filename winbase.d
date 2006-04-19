@@ -88,8 +88,6 @@ version(UseNtoSKernel){}else {
 +/
 
 
-const SP_SERIALCOMM = 1;
-
 // ----
 // COMMPROP structure, used by GetCommProperties()
 
@@ -179,6 +177,8 @@ enum {
 	PARITY_SPACE = 4096
 }
 
+// used by dwServiceMask
+const SP_SERIALCOMM = 1;
 
 struct COMMPROP{
 	WORD	wPacketLength;
@@ -583,7 +583,7 @@ const MAXIMUM_SUSPEND_COUNT=0x7F;
 const WAIT_OBJECT_0=0;
 const WAIT_ABANDONED_0=128;
 
-const WAIT_TIMEOUT=258;  /* also in winerror.h */
+//const WAIT_TIMEOUT=258;  /* also in winerror.h */
 
 enum : DWORD {
 	WAIT_IO_COMPLETION = 0xC0,
@@ -854,7 +854,7 @@ struct BY_HANDLE_FILE_INFORMATION {
 alias BY_HANDLE_FILE_INFORMATION* LPBY_HANDLE_FILE_INFORMATION;
 
 struct DCB {
-	DWORD DCBlength;
+	DWORD DCBlength = DCB.sizeof;
 	DWORD BaudRate;
 /+
 	DWORD fBinary:1;              /* Binary Mode (skip EOF check)    */
@@ -901,7 +901,6 @@ struct DCB {
 	byte fRtsControl()     { return (_bf & (4096+8192))>>12; }
 	bool fAbortOnError()   { return cast(bool) (_bf & 16384); }
 
-
 	WORD wReserved;
 	WORD XonLim;
 	WORD XoffLim;
@@ -917,7 +916,7 @@ struct DCB {
 }
 alias DCB * LPDCB;
 
-struct COMMCONFIG{
+struct COMMCONFIG {
 	DWORD dwSize;
 	WORD  wVersion;
 	WORD  wReserved;
@@ -1493,8 +1492,7 @@ LPTSTR MAKEINTATOM(short i) {
 	return cast(LPTSTR)(i);
 }
 
-extern (Windows):
-
+extern (Windows) {
 
  BOOL AccessCheck(PSECURITY_DESCRIPTOR,HANDLE,DWORD,PGENERIC_MAPPING,PPRIVILEGE_SET,PDWORD,PDWORD,PBOOL);
  BOOL AccessCheckAndAuditAlarmA(LPCSTR,LPVOID,LPSTR,LPSTR,PSECURITY_DESCRIPTOR,DWORD,PGENERIC_MAPPING,BOOL,PDWORD,PBOOL,PBOOL);
@@ -2466,6 +2464,7 @@ static if (_WIN32_WINNT >= 0x0500) {
  BOOL MapUserPhysicalPages(PVOID,ULONG_PTR,PULONG_PTR);
  BOOL MapUserPhysicalPagesScatter(PVOID*,ULONG_PTR,PULONG_PTR);
 }
+} // extern(Windows)
 
 // ------
 // Aliases for ASCII or Unicode versions
