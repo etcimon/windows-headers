@@ -6,7 +6,7 @@
 module win32.winnt;
 private import win32.w32api;
 import win32.windef;
-//import win32.winerror;
+import win32.winerror;
 
 alias void VOID;
 alias char CHAR;

@@ -57,7 +57,7 @@ alias ubyte BYTE;
 alias ubyte* PBYTE, LPBYTE;
 alias uint DWORD, UINT, COLORREF;
 alias uint* PDWORD, LPDWORD, PUINT, LPUINT;
-alias int WINBOOL, BOOL, INT, HFILE;
+alias int WINBOOL, BOOL, INT, LONG, HFILE;
 alias int* PWINBOOL, LPWINBOOL, PBOOL, LPBOOL, PINT, LPINT, LPLONG;
 alias float FLOAT;
 alias float* PFLOAT;
