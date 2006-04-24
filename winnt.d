@@ -1,7 +1,7 @@
 // Converted from w32api\winnt.h
 // Public domain.
 
-// Needs fixes in many places!
+// FIXME: Two bitfields and a macro need to be fixed.
 
 module win32.winnt;
 private import win32.w32api;
@@ -22,7 +22,7 @@ alias ULONG* PULONG;
 alias char* PSZ;
 alias void* PVOID, LPVOID;
 
-/* FIXME for __WIN64 */
+/* FIXME(MinGW) for __WIN64 */
 alias void* PVOID64;
 
 alias wchar WCHAR;
@@ -531,14 +531,14 @@ enum {
 	
 	SUBLANG_ITALIAN = 0x01,
 	SUBLANG_ITALIAN_SWISS = 0x02,	
-	SUBLANG_KASHMIRI_INDIA = 0x02,   // FIXME: Looks like an error!
+	SUBLANG_KASHMIRI_INDIA = 0x02,
 	SUBLANG_KASHMIRI_SASIA = 0x02,	
 	SUBLANG_KOREAN = 0x01,
 	SUBLANG_LITHUANIAN = 0x01,	
 	SUBLANG_MALAY_MALAYSIA = 0x01,
 	SUBLANG_MALAY_BRUNEI_DARUSSALAM = 0x02,	
 	
-	SUBLANG_NEPALI_INDIA = 0x02,   // FIXME: Check this.
+	SUBLANG_NEPALI_INDIA = 0x02,
 	
 	SUBLANG_NORWEGIAN_BOKMAL = 0x01,
 	SUBLANG_NORWEGIAN_NYNORSK = 0x02,
@@ -546,7 +546,7 @@ enum {
 	SUBLANG_PORTUGUESE = 0x01,
 	SUBLANG_PORTUGUESE_BRAZILIAN = 0x02,
 	
-	SUBLANG_SERBIAN_LATIN = 0x02,     // FIXME: Check this
+	SUBLANG_SERBIAN_LATIN = 0x02,
 	SUBLANG_SERBIAN_CYRILLIC = 0x03,
 	
 	SUBLANG_SPANISH = 0x01,
@@ -639,7 +639,8 @@ enum {
 const MIN_ACL_REVISION=2;
 const MAX_ACL_REVISION=4;
 
-// FIXME: These aren't necessary for D.
+/+
+// These aren't necessary for D.
 const MINCHAR=0x80;
 const MAXCHAR=0x7f;
 const MINSHORT=0x8000;
@@ -649,6 +650,7 @@ const MAXLONG=0x7fffffff;
 const MAXBYTE=0xff;
 const MAXWORD=0xffff;
 const MAXDWORD=0xffffffff;
++/
 
 const PROCESSOR_INTEL_386=386;
 const PROCESSOR_INTEL_486=486;
@@ -1478,7 +1480,6 @@ struct ACL_SIZE_INFORMATION{
 	DWORD   AclBytesFree;
 }
 
-/* FIXME: add more machines */
 version(X86) {
 
 const SIZE_OF_80387_REGISTERS=80;
@@ -2543,6 +2544,7 @@ struct FPO_DATA{
 	DWORD cbProcSize;
 	DWORD cdwLocals;
 	WORD cdwParams;
+	WORD bitField_FixForD; // FIXME
 /* FIXME
 	WORD cbProlog:8;
 	WORD cbRegs:3;
@@ -2823,7 +2825,7 @@ struct JOBOBJECT_JOBSET_INFORMATION{
 }
 alias JOBOBJECT_JOBSET_INFORMATION * PJOBOBJECT_JOBSET_INFORMATION;
 
-/* Fixme: Making these defines conditional on WINVER will break ddk includes */
+/* MinGW: Making these defines conditional on WINVER will break ddk includes */
 //static if (WINVER >= 0x0500) {
 
 align(4):
