@@ -20,8 +20,9 @@ const size_t
 	MAX_DEFAULTCHAR =  2,
 	MAX_LEADBYTES   = 12;
 
-const LOCALE_USE_CP_ACP    = 0x40000000;
-const LOCALE_RETURN_NUMBER = 0x20000000;
+const LCTYPE
+	LOCALE_USE_CP_ACP    = 0x40000000,
+	LOCALE_RETURN_NUMBER = 0x20000000;
 
 enum : LCTYPE {
 	LOCALE_ILANGUAGE = 1,
@@ -168,11 +169,10 @@ enum : DWORD {
 }
 
 enum : DWORD {
-	LCID_INSTALLED = 1,
-	LCID_SUPPORTED = 2
+	LCID_INSTALLED       = 1,
+	LCID_SUPPORTED       = 2,
+	LCID_ALTERNATE_SORTS = 4
 }
-
-const LCID_ALTERNATE_SORTS = 4;
 
 const DWORD
 	MAP_FOLDCZONE   =  16,
@@ -255,6 +255,7 @@ const DWORD
 	WC_DEFAULTCHAR    =  64,
 	WC_COMPOSITECHECK = 512;
 
+// The type of these could not be determined from the MSDN site
 enum {
 	CTRY_DEFAULT            =   0,
 	CTRY_DOMINICAN_REPUBLIC =   1,
@@ -370,7 +371,7 @@ enum {
 	CTRY_KYRGYZSTAN         = 996
 }
 
-enum {
+enum : CALTYPE {
 	CAL_ICALINTVALUE = 1,
 	CAL_SCALNAME,
 	CAL_IYEAROFFSETRANGE,
@@ -420,7 +421,7 @@ enum {
 }
 
 
-enum {
+enum : CALTYPE {
 	CAL_GREGORIAN = 1,
 	CAL_GREGORIAN_US,
 	CAL_JAPAN,
@@ -441,7 +442,7 @@ enum : int {
 	CSTR_GREATER_THAN
 }
 
-enum {
+enum : DWORD {
 	LGRPID_INSTALLED = 1,
 	LGRPID_SUPPORTED
 }
@@ -485,7 +486,7 @@ static if (WINVER >= 0x500) {
 	const DWORD MAP_EXPAND_LIGATURES = 0x2000;
 	const DWORD WC_NO_BEST_FIT_CHARS = 1024;
 
-	enum {
+	enum : CALTYPE {
 		CAL_SYEARMONTH       = 47,
 		CAL_ITWODIGITYEARMAX = 48,
 		CAL_NOUSEROVERRIDE   = LOCALE_NOUSEROVERRIDE,

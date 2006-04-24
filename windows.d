@@ -13,6 +13,7 @@
 */
 module win32.windows;
 
+import win32.w32api;
 import win32.windef;
 import win32.wincon;
 import win32.winbase;
@@ -21,7 +22,7 @@ import win32.winuser;
 import win32.winnls;
 import win32.winver;
 import win32.winnetwk;
-import win32.winsvc;
+static if (_WIN32_WINNT_ONLY) import win32.winsvc;
 
 //#ifndef WIN32_LEAN_AND_MEAN
 import win32.cderr;

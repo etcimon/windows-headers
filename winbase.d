@@ -5,6 +5,7 @@ module win32.winbase;
 import win32.winver;
 import win32.windef;
 private import win32.w32api;
+private import win32.winnt;
 
 // FIXME:
 alias void va_list;

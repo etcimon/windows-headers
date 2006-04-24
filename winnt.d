@@ -11,28 +11,27 @@ import win32.winerror;
 alias void VOID;
 alias char CHAR;
 alias short SHORT;
-alias int LONG;
 alias char CCHAR;
-alias CCHAR * PCCHAR;
+alias CCHAR* PCCHAR;
 alias ubyte UCHAR;
-alias UCHAR * PUCHAR;
+alias UCHAR* PUCHAR;
 alias ushort USHORT;
-alias USHORT * PUSHORT;
+alias USHORT* PUSHORT;
 alias uint ULONG;
-alias ULONG *PULONG;
-alias char * PSZ;
-alias void * PVOID, LPVOID;
+alias ULONG* PULONG;
+alias char* PSZ;
+alias void* PVOID, LPVOID;
 
 /* FIXME for __WIN64 */
-alias void * PVOID64;
+alias void* PVOID64;
 
 alias wchar WCHAR;
-alias WCHAR * PWCHAR, LPWCH, PWCH, LPWSTR, PWSTR;
-alias CHAR * PCHAR, LPCH, PCH, LPSTR, PSTR;
+alias WCHAR* PWCHAR, LPWCH, PWCH, LPWSTR, PWSTR;
+alias CHAR* PCHAR, LPCH, PCH, LPSTR, PSTR;
 
 // const versions
-alias WCHAR * LPCWCH, PCWCH, LPCWSTR, PCWSTR;
-alias CHAR *LPCCH, PCSTR, LPCSTR;
+alias WCHAR* LPCWCH, PCWCH, LPCWSTR, PCWSTR;
+alias CHAR* LPCCH, PCSTR, LPCSTR;
 
 version(Unicode) {
 alias WCHAR TCHAR;
@@ -43,15 +42,15 @@ alias CHAR _TCHAR;
 }
 
 alias TCHAR TBYTE;
-alias TCHAR * PTCH, PTBYTE;
-alias TCHAR * LPTCH, PTSTR, LPTSTR, LP, PTCHAR, LPCTSTR;
+alias TCHAR* PTCH, PTBYTE;
+alias TCHAR* LPTCH, PTSTR, LPTSTR, LP, PTCHAR, LPCTSTR;
 
-alias SHORT *PSHORT;
-alias LONG *PLONG;
+alias SHORT* PSHORT;
+alias LONG* PLONG;
 
-typedef void * HANDLE;
+typedef void* HANDLE;
 
-alias HANDLE *PHANDLE, LPHANDLE;
+alias HANDLE* PHANDLE, LPHANDLE;
 alias DWORD LCID;
 alias PDWORD PLCID;
 alias WORD LANGID;
@@ -60,14 +59,14 @@ alias long LONGLONG;
 alias ulong DWORDLONG;
 
 alias DWORDLONG ULONGLONG;
-alias LONGLONG *PLONGLONG;
-alias DWORDLONG * PDWORDLONG, PULONGLONG;
+alias LONGLONG* PLONGLONG;
+alias DWORDLONG* PDWORDLONG, PULONGLONG;
 alias LONGLONG USN;
 
-const char ANSI_NULL='\0';
-const wchar UNICODE_NULL= '\0';
+const char ANSI_NULL = '\0';
+const wchar UNICODE_NULL = '\0';
 alias bool BOOLEAN;
-alias bool *PBOOLEAN;
+alias bool* PBOOLEAN;
 
 alias BYTE FCHAR;
 alias WORD FSHORT;
@@ -2825,7 +2824,7 @@ struct JOBOBJECT_JOBSET_INFORMATION{
 alias JOBOBJECT_JOBSET_INFORMATION * PJOBOBJECT_JOBSET_INFORMATION;
 
 /* Fixme: Making these defines conditional on WINVER will break ddk includes */
-static if (WINVER >= 0x0500) {
+//static if (WINVER >= 0x0500) {
 
 align(4):
 
@@ -3031,7 +3030,7 @@ enum POWER_INFORMATION_LEVEL{
 }
 
 static if (_WIN32_WINNT >= 0x0500) {
-alias LONG function (PEXCEPTION_POINTERS)  PVECTORED_EXCEPTION_HANDLER;
+	alias LONG function (PEXCEPTION_POINTERS)  PVECTORED_EXCEPTION_HANDLER;
 }
 //#if 1 /* (WIN32_WINNT >= 0x0500) */
 struct SYSTEM_POWER_INFORMATION{
@@ -3045,77 +3044,77 @@ alias SYSTEM_POWER_INFORMATION * PSYSTEM_POWER_INFORMATION;
 
 static if (_WIN32_WINNT >= 0x0501) {
 
-enum HEAP_INFORMATION_CLASS{
-	HeapCompatibilityInformation
-}
+	enum HEAP_INFORMATION_CLASS{
+		HeapCompatibilityInformation
+	}
 
-enum ACTIVATION_CONTEXT_INFO_CLASS{
-	ActivationContextBasicInformation = 1,
-	ActivationContextDetailedInformation,
-	AssemblyDetailedInformationInActivationContext,
-	FileInformationInAssemblyOfAssemblyInActivationContext
-}
+	enum ACTIVATION_CONTEXT_INFO_CLASS{
+		ActivationContextBasicInformation = 1,
+		ActivationContextDetailedInformation,
+		AssemblyDetailedInformationInActivationContext,
+		FileInformationInAssemblyOfAssemblyInActivationContext
+	}
 
-struct ACTIVATION_CONTEXT_ASSEMBLY_DETAILED_INFORMATION{
-	DWORD ulFlags;
-	DWORD ulEncodedAssemblyIdentityLength;
-	DWORD ulManifestPathType;
-	DWORD ulManifestPathLength;
-	LARGE_INTEGER liManifestLastWriteTime;
-	DWORD ulPolicyPathType;
-	DWORD ulPolicyPathLength;
-	LARGE_INTEGER liPolicyLastWriteTime;
-	DWORD ulMetadataSatelliteRosterIndex;
-	DWORD ulManifestVersionMajor;
-	DWORD ulManifestVersionMinor;
-	DWORD ulPolicyVersionMajor;
-	DWORD ulPolicyVersionMinor;
-	DWORD ulAssemblyDirectoryNameLength;
-	PCWSTR lpAssemblyEncodedAssemblyIdentity;
-	PCWSTR lpAssemblyManifestPath;
-	PCWSTR lpAssemblyPolicyPath;
-	PCWSTR lpAssemblyDirectoryName;
-}
-alias ACTIVATION_CONTEXT_ASSEMBLY_DETAILED_INFORMATION *
-	PACTIVATION_CONTEXT_ASSEMBLY_DETAILED_INFORMATION,
-	PCACTIVATION_CONTEXT_ASSEMBLY_DETAILED_INFORMATION;
+	struct ACTIVATION_CONTEXT_ASSEMBLY_DETAILED_INFORMATION{
+		DWORD ulFlags;
+		DWORD ulEncodedAssemblyIdentityLength;
+		DWORD ulManifestPathType;
+		DWORD ulManifestPathLength;
+		LARGE_INTEGER liManifestLastWriteTime;
+		DWORD ulPolicyPathType;
+		DWORD ulPolicyPathLength;
+		LARGE_INTEGER liPolicyLastWriteTime;
+		DWORD ulMetadataSatelliteRosterIndex;
+		DWORD ulManifestVersionMajor;
+		DWORD ulManifestVersionMinor;
+		DWORD ulPolicyVersionMajor;
+		DWORD ulPolicyVersionMinor;
+		DWORD ulAssemblyDirectoryNameLength;
+		PCWSTR lpAssemblyEncodedAssemblyIdentity;
+		PCWSTR lpAssemblyManifestPath;
+		PCWSTR lpAssemblyPolicyPath;
+		PCWSTR lpAssemblyDirectoryName;
+	}
+	alias ACTIVATION_CONTEXT_ASSEMBLY_DETAILED_INFORMATION *
+		PACTIVATION_CONTEXT_ASSEMBLY_DETAILED_INFORMATION,
+		PCACTIVATION_CONTEXT_ASSEMBLY_DETAILED_INFORMATION;
 
-struct ACTIVATION_CONTEXT_DETAILED_INFORMATION{
-	DWORD dwFlags;
-	DWORD ulFormatVersion;
-	DWORD ulAssemblyCount;
-	DWORD ulRootManifestPathType;
-	DWORD ulRootManifestPathChars;
-	DWORD ulRootConfigurationPathType;
-	DWORD ulRootConfigurationPathChars;
-	DWORD ulAppDirPathType;
-	DWORD ulAppDirPathChars;
-	PCWSTR lpRootManifestPath;
-	PCWSTR lpRootConfigurationPath;
-	PCWSTR lpAppDirPath;
-}
-alias ACTIVATION_CONTEXT_DETAILED_INFORMATION *
-	PACTIVATION_CONTEXT_DETAILED_INFORMATION,
-	PCACTIVATION_CONTEXT_DETAILED_INFORMATION;
+	struct ACTIVATION_CONTEXT_DETAILED_INFORMATION{
+		DWORD dwFlags;
+		DWORD ulFormatVersion;
+		DWORD ulAssemblyCount;
+		DWORD ulRootManifestPathType;
+		DWORD ulRootManifestPathChars;
+		DWORD ulRootConfigurationPathType;
+		DWORD ulRootConfigurationPathChars;
+		DWORD ulAppDirPathType;
+		DWORD ulAppDirPathChars;
+		PCWSTR lpRootManifestPath;
+		PCWSTR lpRootConfigurationPath;
+		PCWSTR lpAppDirPath;
+	}
+	alias ACTIVATION_CONTEXT_DETAILED_INFORMATION *
+		PACTIVATION_CONTEXT_DETAILED_INFORMATION,
+		PCACTIVATION_CONTEXT_DETAILED_INFORMATION;
 
-struct ACTIVATION_CONTEXT_QUERY_INDEX{
-	ULONG ulAssemblyIndex;
-	ULONG ulFileIndexInAssembly;
-}
-alias ACTIVATION_CONTEXT_QUERY_INDEX *
-	PACTIVATION_CONTEXT_QUERY_INDEX,
-	PCACTIVATION_CONTEXT_QUERY_INDEX;
+	struct ACTIVATION_CONTEXT_QUERY_INDEX{
+		ULONG ulAssemblyIndex;
+		ULONG ulFileIndexInAssembly;
+	}
+	alias ACTIVATION_CONTEXT_QUERY_INDEX *
+		PACTIVATION_CONTEXT_QUERY_INDEX,
+		PCACTIVATION_CONTEXT_QUERY_INDEX;
 
-struct ASSEMBLY_FILE_DETAILED_INFORMATION{
-	DWORD ulFlags;
-	DWORD ulFilenameLength;
-	DWORD ulPathLength;
-	PCWSTR lpFileName;
-	PCWSTR lpFilePath;
-}
-alias ASSEMBLY_FILE_DETAILED_INFORMATION *
-	PASSEMBLY_FILE_DETAILED_INFORMATION,
-	PCASSEMBLY_FILE_DETAILED_INFORMATION;
+	struct ASSEMBLY_FILE_DETAILED_INFORMATION{
+		DWORD ulFlags;
+		DWORD ulFilenameLength;
+		DWORD ulPathLength;
+		PCWSTR lpFileName;
+		PCWSTR lpFilePath;
+	}
+	alias ASSEMBLY_FILE_DETAILED_INFORMATION *
+		PASSEMBLY_FILE_DETAILED_INFORMATION,
+		PCASSEMBLY_FILE_DETAILED_INFORMATION;
 
 }// #endif /* (WIN32_WINNT >= 0x0501) */
 
@@ -3159,7 +3158,7 @@ alias ADMINISTRATOR_POWER_POLICY * PADMINISTRATOR_POWER_POLICY;
 
 align:
 
-}//#endif /* WINVER >= 0x0500 */
+//}//#endif /* WINVER >= 0x0500 */
 
 static if (_WIN32_WINNT >= 0x0500) {
 	alias void function (PVOID,BOOLEAN) WAITORTIMERCALLBACKFUNC;

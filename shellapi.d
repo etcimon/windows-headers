@@ -12,8 +12,6 @@ module win32.shellapi;
 
 private import win32.w32api, win32.windef;
 
-// FIXME: check types of constants
-
 enum : UINT {
 	ABE_LEFT,
 	ABE_TOP,
@@ -21,7 +19,7 @@ enum : UINT {
 	ABE_BOTTOM // = 3
 }
 
-enum {
+enum : UINT {
 	ABS_AUTOHIDE    = 1,
 	ABS_ALWAYSONTOP
 }
@@ -56,7 +54,12 @@ enum : DWORD {
 	ABM_WINDOWPOSCHANGED // = 9
 }
 
-enum {
+// FIXME: is the value correct?
+static if (WINVER >= 0x501) {
+	const DWORD ABM_SETSTATE = 10;
+}
+
+enum : UINT {
 	ABN_STATECHANGE,
 	ABN_POSCHANGED,
 	ABN_FULLSCREENAPP,
@@ -93,7 +96,7 @@ static if (_WIN32_IE >= 0x600) {
 }
 
 static if (_WIN32_IE >= 0x500) {
-	enum {
+	enum : DWORD {
 		NIIF_NONE,
 		NIIF_INFO,
 		NIIF_WARNING,
@@ -102,16 +105,15 @@ static if (_WIN32_IE >= 0x500) {
 }
 
 static if (_WIN32_IE >= 0x600) {
-	enum {
+	enum : DWORD {
 		NIIF_ICON_MASK = 15,
 		NIIF_NOSOUND
 	}
 }
 
-enum {
-	NIS_HIDDEN = 1,
-	NIS_SHAREDICON
-}
+const DWORD
+	NIS_HIDDEN     = 1,
+	NIS_SHAREDICON = 2;
 
 const HINSTANCE
 	SE_ERR_FNF             = cast(HANDLE)  2,
@@ -147,6 +149,7 @@ const FILEOP_FLAGS
 	FOF_NOERRORUI             = 0x0400,
 	FOF_NOCOPYSECURITYATTRIBS = 0x0800;
 
+// these are not documented on the MSDN site
 enum {
 	PO_DELETE     = 19,
 	PO_RENAME     = 20,

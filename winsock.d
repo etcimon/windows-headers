@@ -17,8 +17,6 @@ module win32.winsock;
   Portions Copyright (c) 1993 by Digital Equipment Corporation.
  */
 
-// FIXME: check types of constants
-
 import win32.windef;
 
 alias char u_char;
@@ -28,7 +26,7 @@ alias uint u_int, u_long, SOCKET;
 const size_t FD_SETSIZE = 64;
 
 /* shutdown() how types */
-enum {
+enum : int {
 	SD_RECEIVE,
 	SD_SEND,
 	SD_BOTH
@@ -127,7 +125,7 @@ struct LINGER {
 #define SIOCATMARK	_IOR('s',  7, u_long)
 +/
 
-enum {
+enum : DWORD {
 	FIONBIO    = 0x8004667E,
 	FIONREAD   = 0x4004667F,
 	FIOASYNC   = 0x8004667D,
@@ -158,7 +156,7 @@ struct PROTOENT {
 	short  p_proto;
 }
 
-enum {
+enum : int {
 	IPPROTO_IP   =   0,
 	IPPROTO_ICMP =   1,
 	IPPROTO_IGMP =   2,
@@ -172,6 +170,7 @@ enum {
 	IPPROTO_MAX  = 256
 }
 
+// These are not documented on the MSDN site
 enum {
 	IPPORT_ECHO        =    7,
 	IPPORT_DISCARD     =    9,
@@ -200,6 +199,7 @@ enum {
 	IPPORT_RESERVED    = 1024
 }
 
+// These are not documented on the MSDN site
 enum {
 	IMPLINK_IP        = 155,
 	IMPLINK_LOWEXPER  = 156,
@@ -214,6 +214,7 @@ struct IN_ADDR {
 	}
 }
 
+// These are not documented on the MSDN site
 bool IN_CLASSA(int i) {
 	return (i & 0x80000000) == 0;
 }
@@ -227,7 +228,7 @@ bool IN_CLASSB(int i) {
 	return (i & 0xC0000000) == 0x80000000;
 }
 
-const IN_CLASSB_NET	   = 0xffff0000;
+const IN_CLASSB_NET    = 0xffff0000;
 const IN_CLASSB_NSHIFT = 16;
 const IN_CLASSB_HOST   = 0x0000ffff;
 const IN_CLASSB_MAX    = 65536;
@@ -268,13 +269,11 @@ struct WSADATA {
 }
 alias WSADATA* LPWSADATA;
 
-/+
-#define IP_OPTIONS	1
-#define SO_DEBUG	1
-+/
+// This is not documented on the MSDN site
+const IP_OPTIONS = 1;
 
-
-const u_int
+const int
+	SO_DEBUG       =   1,
 	SO_ACCEPTCONN  =   2,
 	SO_REUSEADDR   =   4,
 	SO_KEEPALIVE   =   8,
@@ -285,7 +284,7 @@ const u_int
 	SO_OOBINLINE   = 256,
 	SO_DONTLINGER  = ~SO_LINGER;
 
-enum {
+enum : int {
 	SO_SNDBUF = 0x1001,
 	SO_RCVBUF,
 	SO_SNDLOWAT,
@@ -301,14 +300,15 @@ enum {
  * They will cause errors or unexpected results if used with the
  * (gs)etsockopts exported from the WinSock 2 lib, ws2_32.dll. Refer ws2tcpip.h.
  */
-enum {
+enum : int {
 	IP_MULTICAST_IF = 2,
 	IP_MULTICAST_TTL,
 	IP_MULTICAST_LOOP,
 	IP_ADD_MEMBERSHIP,
-	IP_DROP_MEMBERSHIP,
+	IP_DROP_MEMBERSHIP
 }
 
+// These are not documented on the MSDN site
 const IP_DEFAULT_MULTICAST_TTL  =  1;
 const IP_DEFAULT_MULTICAST_LOOP =  1;
 const IP_MAX_MEMBERSHIPS        = 20;
@@ -322,7 +322,7 @@ const SOCKET INVALID_SOCKET = uint.max;
 
 const SOCKET_ERROR = -1;
 
-enum {
+enum : int {
 	SOCK_STREAM = 1,
 	SOCK_DGRAM,
 	SOCK_RAW,
@@ -330,9 +330,9 @@ enum {
 	SOCK_SEQPACKET
 }
 
-const TCP_NODELAY = 0x0001;
+const int TCP_NODELAY = 1;
 
-enum {
+enum : int {
 	AF_UNSPEC,
 	AF_UNIX,
 	AF_INET,
@@ -372,7 +372,7 @@ struct sockproto {
 	u_short sp_protocol;
 }
 
-enum {
+enum : int {
 	PF_UNSPEC    = AF_UNSPEC,
 	PF_UNIX      = AF_UNIX,
 	PF_INET      = AF_INET,
@@ -401,8 +401,9 @@ enum {
 	PF_MAX       = AF_MAX
 }
 
-const SOL_SOCKET = 0xffff;
-const SOMAXCONN  =      5;
+const int SOL_SOCKET = 0xFFFF;
+
+const int SOMAXCONN = 5;
 
 const MSG_OOB       =      1;
 const MSG_PEEK      =      2;
@@ -419,7 +420,7 @@ const FD_ACCEPT  =  8;
 const FD_CONNECT = 16;
 const FD_CLOSE   = 32;
 
-enum {
+enum : int {
 	WSABASEERR         = 10000,
 	WSAEINTR           = 10004,
 	WSAEBADF           = 10009,
@@ -477,7 +478,7 @@ enum {
 
 alias WSAGetLastError h_errno;
 
-enum {
+enum : int {
 	HOST_NOT_FOUND = WSAHOST_NOT_FOUND,
 	TRY_AGAIN      = WSATRY_AGAIN,
 	NO_RECOVERY    = WSANO_RECOVERY,

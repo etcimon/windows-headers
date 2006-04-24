@@ -10,9 +10,17 @@
 \***********************************************************************/
 module win32.winsvc;
 
+private import win32.w32api;
+
+static if (!_WIN32_WINNT_ONLY) {
+	pragma(msg, "win32.winsvc is available only if version WindowsNTonly,
+WindowsXP or Windows2003 is set");
+	static assert (false);
+}
+
 private import win32.windef;
 
-// FIXME: check types of constants and Windows version support
+// FIXME: check Windows version support
 
 const TCHAR[]
 	SERVICES_ACTIVE_DATABASE = "ServicesActive",
@@ -86,9 +94,18 @@ const DWORD
 	SERVICE_USER_DEFINED_CONTROL = 0x0100,
 	SERVICE_ALL_ACCESS           = 0x01FF | STANDARD_RIGHTS_REQUIRED;
 
+// This is not documented on the MSDN site
 const SERVICE_RUNS_IN_SYSTEM_PROCESS = 1;
-const SERVICE_CONFIG_DESCRIPTION     = 1;
-const SERVICE_CONFIG_FAILURE_ACTIONS = 2;
+
+enum : DWORD {
+	SERVICE_CONFIG_DESCRIPTION         = 1,
+	SERVICE_CONFIG_FAILURE_ACTIONS,
+	SERVICE_CONFIG_DELAYED_AUTO_START_INFO,
+	SERVICE_CONFIG_FAILURE_ACTIONS_FLAG,
+	SERVICE_CONFIG_SERVICE_SID_INFO,
+	SERVICE_CONFIG_REQUIRED_PRIVILEGES_INFO,
+	SERVICE_CONFIG_PRESHUTDOWN_INFO // = 7
+}
 
 struct SERVICE_STATUS {
 	DWORD dwServiceType;
@@ -100,27 +117,6 @@ struct SERVICE_STATUS {
 	DWORD dwWaitHint;
 }
 alias SERVICE_STATUS* LPSERVICE_STATUS;
-
-struct SERVICE_STATUS_PROCESS {
-	DWORD dwServiceType;
-	DWORD dwCurrentState;
-	DWORD dwControlsAccepted;
-	DWORD dwWin32ExitCode;
-	DWORD dwServiceSpecificExitCode;
-	DWORD dwCheckPoint;
-	DWORD dwWaitHint;
-	DWORD dwProcessId;
-	DWORD dwServiceFlags;
-}
-alias SERVICE_STATUS_PROCESS* LPSERVICE_STATUS_PROCESS;
-
-enum SC_STATUS_TYPE {
-	SC_STATUS_PROCESS_INFO = 0
-}
-
-enum SC_ENUM_TYPE {
-	SC_ENUM_PROCESS_INFO = 0
-}
 
 struct ENUM_SERVICE_STATUSA {
 	LPSTR          lpServiceName;
@@ -135,20 +131,6 @@ struct ENUM_SERVICE_STATUSW {
 	SERVICE_STATUS ServiceStatus;
 }
 alias ENUM_SERVICE_STATUSW* LPENUM_SERVICE_STATUSW;
-
-struct ENUM_SERVICE_STATUS_PROCESSA {
-	LPSTR                  lpServiceName;
-	LPSTR                  lpDisplayName;
-	SERVICE_STATUS_PROCESS ServiceStatusProcess;
-}
-alias ENUM_SERVICE_STATUS_PROCESSA* LPENUM_SERVICE_STATUS_PROCESSA;
-
-struct ENUM_SERVICE_STATUS_PROCESSW {
-	LPWSTR                 lpServiceName;
-	LPWSTR                 lpDisplayName;
-	SERVICE_STATUS_PROCESS ServiceStatusProcess;
-}
-alias ENUM_SERVICE_STATUS_PROCESSW* LPENUM_SERVICE_STATUS_PROCESSW;
 
 struct QUERY_SERVICE_CONFIGA {
 	DWORD dwServiceType;
@@ -217,54 +199,89 @@ extern (Windows) {
 	alias DWORD function(DWORD, DWORD, LPVOID, LPVOID) LPHANDLER_FUNCTION_EX;
 }
 
-struct SERVICE_DESCRIPTIONA {
-	LPSTR lpDescription;
-}
-alias SERVICE_DESCRIPTIONA* LPSERVICE_DESCRIPTIONA;
+static if (_WIN32_WINNT >= 0x500) {
+	struct SERVICE_STATUS_PROCESS {
+		DWORD dwServiceType;
+		DWORD dwCurrentState;
+		DWORD dwControlsAccepted;
+		DWORD dwWin32ExitCode;
+		DWORD dwServiceSpecificExitCode;
+		DWORD dwCheckPoint;
+		DWORD dwWaitHint;
+		DWORD dwProcessId;
+		DWORD dwServiceFlags;
+	}
+	alias SERVICE_STATUS_PROCESS* LPSERVICE_STATUS_PROCESS;
 
-struct SERVICE_DESCRIPTIONW {
-	LPWSTR lpDescription;
-}
-alias SERVICE_DESCRIPTIONW* LPSERVICE_DESCRIPTIONW;
+	enum SC_STATUS_TYPE {
+		SC_STATUS_PROCESS_INFO = 0
+	}
 
-enum SC_ACTION_TYPE {
-	SC_ACTION_NONE,
-	SC_ACTION_RESTART,
-	SC_ACTION_REBOOT,
-	SC_ACTION_RUN_COMMAND
-}
+	enum SC_ENUM_TYPE {
+		SC_ENUM_PROCESS_INFO = 0
+	}
 
-struct SC_ACTION {
-	SC_ACTION_TYPE Type;
-	DWORD          Delay;
-}
-alias SC_ACTION* LPSC_ACTION;
+	struct ENUM_SERVICE_STATUS_PROCESSA {
+		LPSTR                  lpServiceName;
+		LPSTR                  lpDisplayName;
+		SERVICE_STATUS_PROCESS ServiceStatusProcess;
+	}
+	alias ENUM_SERVICE_STATUS_PROCESSA* LPENUM_SERVICE_STATUS_PROCESSA;
 
-struct SERVICE_FAILURE_ACTIONSA {
-	DWORD      dwResetPeriod;
-	LPSTR      lpRebootMsg;
-	LPSTR      lpCommand;
-	DWORD      cActions;
-	SC_ACTION* lpsaActions;
-}
-alias SERVICE_FAILURE_ACTIONSA* LPSERVICE_FAILURE_ACTIONSA;
+	struct ENUM_SERVICE_STATUS_PROCESSW {
+		LPWSTR                 lpServiceName;
+		LPWSTR                 lpDisplayName;
+		SERVICE_STATUS_PROCESS ServiceStatusProcess;
+	}
+	alias ENUM_SERVICE_STATUS_PROCESSW* LPENUM_SERVICE_STATUS_PROCESSW;
 
-struct SERVICE_FAILURE_ACTIONSW {
-	DWORD      dwResetPeriod;
-	LPWSTR     lpRebootMsg;
-	LPWSTR     lpCommand;
-	DWORD      cActions;
-	SC_ACTION* lpsaActions;
+	struct SERVICE_DESCRIPTIONA {
+		LPSTR lpDescription;
+	}
+	alias SERVICE_DESCRIPTIONA* LPSERVICE_DESCRIPTIONA;
+	
+	struct SERVICE_DESCRIPTIONW {
+		LPWSTR lpDescription;
+	}
+	alias SERVICE_DESCRIPTIONW* LPSERVICE_DESCRIPTIONW;
+
+	enum SC_ACTION_TYPE {
+		SC_ACTION_NONE,
+		SC_ACTION_RESTART,
+		SC_ACTION_REBOOT,
+		SC_ACTION_RUN_COMMAND
+	}
+
+	struct SC_ACTION {
+		SC_ACTION_TYPE Type;
+		DWORD          Delay;
+	}
+	alias SC_ACTION* LPSC_ACTION;
+
+	struct SERVICE_FAILURE_ACTIONSA {
+		DWORD      dwResetPeriod;
+		LPSTR      lpRebootMsg;
+		LPSTR      lpCommand;
+		DWORD      cActions;
+		SC_ACTION* lpsaActions;
+	}
+	alias SERVICE_FAILURE_ACTIONSA* LPSERVICE_FAILURE_ACTIONSA;
+	
+	struct SERVICE_FAILURE_ACTIONSW {
+		DWORD      dwResetPeriod;
+		LPWSTR     lpRebootMsg;
+		LPWSTR     lpCommand;
+		DWORD      cActions;
+		SC_ACTION* lpsaActions;
+	}
+	alias SERVICE_FAILURE_ACTIONSW* LPSERVICE_FAILURE_ACTIONSW;
 }
-alias SERVICE_FAILURE_ACTIONSW* LPSERVICE_FAILURE_ACTIONSW;
 
 extern (Windows) {
 	BOOL ChangeServiceConfigA(SC_HANDLE, DWORD, DWORD, DWORD, LPCSTR,
 	  LPCSTR, LPDWORD, LPCSTR, LPCSTR, LPCSTR, LPCSTR);
 	BOOL ChangeServiceConfigW(SC_HANDLE, DWORD, DWORD, DWORD, LPCWSTR,
 	  LPCWSTR, LPDWORD, LPCWSTR, LPCWSTR, LPCWSTR, LPCWSTR);
-	BOOL ChangeServiceConfig2A(SC_HANDLE, DWORD, LPVOID);
-	BOOL ChangeServiceConfig2W(SC_HANDLE, DWORD, LPVOID);
 	BOOL CloseServiceHandle(SC_HANDLE);
 	BOOL ControlService(SC_HANDLE, DWORD, LPSERVICE_STATUS);
 	SC_HANDLE CreateServiceA(SC_HANDLE, LPCSTR, LPCSTR, DWORD, DWORD,
@@ -280,10 +297,6 @@ extern (Windows) {
 	  DWORD, PDWORD, PDWORD, PDWORD);
 	BOOL EnumServicesStatusW(SC_HANDLE, DWORD, DWORD, LPENUM_SERVICE_STATUSW,
 	  DWORD, PDWORD, PDWORD, PDWORD);
-	BOOL EnumServicesStatusExA(SC_HANDLE, SC_ENUM_TYPE, DWORD, DWORD, LPBYTE,
-	  DWORD, LPDWORD, LPDWORD, LPDWORD, LPCSTR);
-	BOOL EnumServicesStatusExW(SC_HANDLE, SC_ENUM_TYPE, DWORD, DWORD, LPBYTE,
-	  DWORD, LPDWORD, LPDWORD, LPDWORD, LPCWSTR);
 	BOOL GetServiceDisplayNameA(SC_HANDLE, LPCSTR, LPSTR, PDWORD);
 	BOOL GetServiceDisplayNameW(SC_HANDLE, LPCWSTR, LPWSTR, PDWORD);
 	BOOL GetServiceKeyNameA(SC_HANDLE, LPCSTR, LPSTR, PDWORD);
@@ -298,8 +311,6 @@ extern (Windows) {
 	  PDWORD);
 	BOOL QueryServiceConfigW(SC_HANDLE, LPQUERY_SERVICE_CONFIGW, DWORD,
 	  PDWORD);
-	BOOL QueryServiceConfig2A(SC_HANDLE, DWORD, LPBYTE, DWORD, LPDWORD);
-	BOOL QueryServiceConfig2W(SC_HANDLE, DWORD, LPBYTE, DWORD, LPDWORD);
 	BOOL QueryServiceLockStatusA(SC_HANDLE, LPQUERY_SERVICE_LOCK_STATUSA,
 	  DWORD, PDWORD);
 	BOOL QueryServiceLockStatusW(SC_HANDLE, LPQUERY_SERVICE_LOCK_STATUSW,
@@ -307,87 +318,115 @@ extern (Windows) {
 	BOOL QueryServiceObjectSecurity(SC_HANDLE, SECURITY_INFORMATION,
 	  PSECURITY_DESCRIPTOR, DWORD, LPDWORD);
 	BOOL QueryServiceStatus(SC_HANDLE, LPSERVICE_STATUS);
-	BOOL QueryServiceStatusEx(SC_HANDLE, SC_STATUS_TYPE, LPBYTE, DWORD,
-	  LPDWORD);
 	SERVICE_STATUS_HANDLE RegisterServiceCtrlHandlerA(LPCSTR,
 	  LPHANDLER_FUNCTION);
 	SERVICE_STATUS_HANDLE RegisterServiceCtrlHandlerW(LPCWSTR,
 	  LPHANDLER_FUNCTION);
-	SERVICE_STATUS_HANDLE RegisterServiceCtrlHandlerExA(LPCSTR,
-	  LPHANDLER_FUNCTION_EX, LPVOID);
-	SERVICE_STATUS_HANDLE RegisterServiceCtrlHandlerExW(LPCWSTR,
-	  LPHANDLER_FUNCTION_EX, LPVOID);
 	BOOL SetServiceObjectSecurity(SC_HANDLE, SECURITY_INFORMATION,
 	  PSECURITY_DESCRIPTOR);
 	BOOL SetServiceStatus(SERVICE_STATUS_HANDLE, LPSERVICE_STATUS);
 	BOOL StartServiceA(SC_HANDLE, DWORD, LPCSTR*);
+	BOOL StartServiceW(SC_HANDLE, DWORD, LPCWSTR*);
 	BOOL StartServiceCtrlDispatcherA(LPSERVICE_TABLE_ENTRYA);
 	BOOL StartServiceCtrlDispatcherW(LPSERVICE_TABLE_ENTRYW);
-	BOOL StartServiceW(SC_HANDLE, DWORD, LPCWSTR*);
 	BOOL UnlockServiceDatabase(SC_LOCK);
+
+	static if (_WIN32_WINNT >= 0x500) {
+		BOOL EnumServicesStatusExA(SC_HANDLE, SC_ENUM_TYPE, DWORD, DWORD, LPBYTE,
+		  DWORD, LPDWORD, LPDWORD, LPDWORD, LPCSTR);
+		BOOL EnumServicesStatusExW(SC_HANDLE, SC_ENUM_TYPE, DWORD, DWORD, LPBYTE,
+		  DWORD, LPDWORD, LPDWORD, LPDWORD, LPCWSTR);
+		BOOL QueryServiceConfig2A(SC_HANDLE, DWORD, LPBYTE, DWORD, LPDWORD);
+		BOOL QueryServiceConfig2W(SC_HANDLE, DWORD, LPBYTE, DWORD, LPDWORD);
+		BOOL QueryServiceStatusEx(SC_HANDLE, SC_STATUS_TYPE, LPBYTE, DWORD,
+		  LPDWORD);
+		SERVICE_STATUS_HANDLE RegisterServiceCtrlHandlerExA(LPCSTR,
+		  LPHANDLER_FUNCTION_EX, LPVOID);
+		SERVICE_STATUS_HANDLE RegisterServiceCtrlHandlerExW(LPCWSTR,
+		  LPHANDLER_FUNCTION_EX, LPVOID);
+	}
+	
+	static if (_WIN32_WINNT >= 0x501) {
+		BOOL ChangeServiceConfig2A(SC_HANDLE, DWORD, LPVOID);
+		BOOL ChangeServiceConfig2W(SC_HANDLE, DWORD, LPVOID);
+	}
 }
 
 version (Unicode) {
 	alias ENUM_SERVICE_STATUSW ENUM_SERVICE_STATUS;
-	alias ENUM_SERVICE_STATUS_PROCESSW ENUM_SERVICE_STATUS_PROCESS;
-	alias LPENUM_SERVICE_STATUS_PROCESSW LPENUM_SERVICE_STATUS_PROCESS;
 	alias QUERY_SERVICE_CONFIGW QUERY_SERVICE_CONFIG;
 	alias QUERY_SERVICE_LOCK_STATUSW QUERY_SERVICE_LOCK_STATUS;
-	alias SERVICE_TABLE_ENTRYW SERVICE_TABLE_ENTRY;
 	alias LPSERVICE_MAIN_FUNCTIONW LPSERVICE_MAIN_FUNCTION;
-	alias SERVICE_DESCRIPTIONW SERVICE_DESCRIPTION;
-	alias LPSERVICE_DESCRIPTIONW LPSERVICE_DESCRIPTION;
-	alias SERVICE_FAILURE_ACTIONSW SERVICE_FAILURE_ACTIONS;
-	alias LPSERVICE_FAILURE_ACTIONSW LPSERVICE_FAILURE_ACTIONS;
+	alias SERVICE_TABLE_ENTRYW SERVICE_TABLE_ENTRY;
 	alias ChangeServiceConfigW ChangeServiceConfig;
-	alias ChangeServiceConfig2W ChangeServiceConfig2;
 	alias CreateServiceW CreateService;
 	alias EnumDependentServicesW EnumDependentServices;
 	alias EnumServicesStatusW EnumServicesStatus;
-	alias EnumServicesStatusExW EnumServicesStatusEx ;
 	alias GetServiceDisplayNameW GetServiceDisplayName;
 	alias GetServiceKeyNameW GetServiceKeyName;
 	alias OpenSCManagerW OpenSCManager;
 	alias OpenServiceW OpenService;
 	alias QueryServiceConfigW QueryServiceConfig;
-	alias QueryServiceConfig2W QueryServiceConfig2;
 	alias QueryServiceLockStatusW QueryServiceLockStatus;
 	alias RegisterServiceCtrlHandlerW RegisterServiceCtrlHandler;
-	alias RegisterServiceCtrlHandlerExW RegisterServiceCtrlHandlerEx;
 	alias StartServiceW StartService;
 	alias StartServiceCtrlDispatcherW StartServiceCtrlDispatcher;
+
+	static if (_WIN32_WINNT >= 0x500) {
+		alias ENUM_SERVICE_STATUS_PROCESSW ENUM_SERVICE_STATUS_PROCESS;
+		alias SERVICE_DESCRIPTIONW SERVICE_DESCRIPTION;
+		alias SERVICE_FAILURE_ACTIONSW SERVICE_FAILURE_ACTIONS;
+		alias EnumServicesStatusExW EnumServicesStatusEx;
+		alias QueryServiceConfig2W QueryServiceConfig2;
+		alias RegisterServiceCtrlHandlerExW RegisterServiceCtrlHandlerEx;	
+	}
+
+	static if (_WIN32_WINNT >= 0x501) {
+		alias ChangeServiceConfig2W ChangeServiceConfig2;
+	}
+	
 } else {
 	alias ENUM_SERVICE_STATUSA ENUM_SERVICE_STATUS;
-	alias ENUM_SERVICE_STATUS_PROCESSA ENUM_SERVICE_STATUS_PROCESS;
-	alias LPENUM_SERVICE_STATUS_PROCESSA LPENUM_SERVICE_STATUS_PROCESS;
 	alias QUERY_SERVICE_CONFIGA QUERY_SERVICE_CONFIG;
 	alias QUERY_SERVICE_LOCK_STATUSA QUERY_SERVICE_LOCK_STATUS;
-	alias SERVICE_TABLE_ENTRYA SERVICE_TABLE_ENTRY;
 	alias LPSERVICE_MAIN_FUNCTIONA LPSERVICE_MAIN_FUNCTION;
-	alias SERVICE_DESCRIPTIONA SERVICE_DESCRIPTION;
-	alias LPSERVICE_DESCRIPTIONA LPSERVICE_DESCRIPTION;
-	alias SERVICE_FAILURE_ACTIONSA SERVICE_FAILURE_ACTIONS;
-	alias LPSERVICE_FAILURE_ACTIONSA LPSERVICE_FAILURE_ACTIONS;
+	alias SERVICE_TABLE_ENTRYA SERVICE_TABLE_ENTRY;
 	alias ChangeServiceConfigA ChangeServiceConfig;
-	alias ChangeServiceConfig2A ChangeServiceConfig2;
 	alias CreateServiceA CreateService;
 	alias EnumDependentServicesA EnumDependentServices;
 	alias EnumServicesStatusA EnumServicesStatus;
-	alias EnumServicesStatusExA EnumServicesStatusEx ;
 	alias GetServiceDisplayNameA GetServiceDisplayName;
 	alias GetServiceKeyNameA GetServiceKeyName;
 	alias OpenSCManagerA OpenSCManager;
 	alias OpenServiceA OpenService;
 	alias QueryServiceConfigA QueryServiceConfig;
-	alias QueryServiceConfig2A QueryServiceConfig2;
 	alias QueryServiceLockStatusA QueryServiceLockStatus;
 	alias RegisterServiceCtrlHandlerA RegisterServiceCtrlHandler;
-	alias RegisterServiceCtrlHandlerExA RegisterServiceCtrlHandlerEx;
 	alias StartServiceA StartService;
 	alias StartServiceCtrlDispatcherA StartServiceCtrlDispatcher;
+
+	static if (_WIN32_WINNT >= 0x500) {
+		alias ENUM_SERVICE_STATUS_PROCESSA ENUM_SERVICE_STATUS_PROCESS;
+		alias SERVICE_DESCRIPTIONA SERVICE_DESCRIPTION;
+		alias SERVICE_FAILURE_ACTIONSA SERVICE_FAILURE_ACTIONS;
+		alias EnumServicesStatusExA EnumServicesStatusEx;
+		alias QueryServiceConfig2A QueryServiceConfig2;
+		alias RegisterServiceCtrlHandlerExA RegisterServiceCtrlHandlerEx;	
+	}
+
+	static if (_WIN32_WINNT >= 0x501) {
+		alias ChangeServiceConfig2A ChangeServiceConfig2;
+	}
+	
 }
 
 alias ENUM_SERVICE_STATUS* LPENUM_SERVICE_STATUS;
 alias QUERY_SERVICE_CONFIG* LPQUERY_SERVICE_CONFIG;
 alias QUERY_SERVICE_LOCK_STATUS* LPQUERY_SERVICE_LOCK_STATUS;
 alias SERVICE_TABLE_ENTRY* LPSERVICE_TABLE_ENTRY;
+
+static if (_WIN32_WINNT >= 0x500) {
+	alias ENUM_SERVICE_STATUS_PROCESS* LPENUM_SERVICE_STATUS_PROCESS;
+	alias SERVICE_DESCRIPTION* LPSERVICE_DESCRIPTION;
+	alias SERVICE_FAILURE_ACTIONS* LPSERVICE_FAILURE_ACTIONS;
+}

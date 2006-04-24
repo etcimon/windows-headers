@@ -4105,10 +4105,10 @@ int MessageBoxIndirectA(MSGBOXPARAMSA*);
 int MessageBoxIndirectW(MSGBOXPARAMSW*);
 BOOL ModifyMenuA(HMENU,UINT,UINT,UINT,LPCSTR);
 BOOL ModifyMenuW(HMENU,UINT,UINT,UINT,LPCWSTR);
-static if ((_WIN32_WINNT >= 0x0500) || (_WIN32_WINDOWS >= 0x0410)) {
-HMONITOR MonitorFromPoint(POINT,DWORD);
-HMONITOR MonitorFromRect(LPCRECT,DWORD);
-HMONITOR MonitorFromWindow(HWND,DWORD);
+static if (WINVER >= 0x0410) {
+	HMONITOR MonitorFromPoint(POINT,DWORD);
+	HMONITOR MonitorFromRect(LPCRECT,DWORD);
+	HMONITOR MonitorFromWindow(HWND,DWORD);
 }
 void mouse_event(DWORD,DWORD,DWORD,DWORD,ULONG_PTR);
 BOOL MoveWindow(HWND,int,int,int,int,BOOL);
