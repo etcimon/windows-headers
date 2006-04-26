@@ -3578,14 +3578,16 @@ alias CharLowerA AnsiLower;
 alias CharLowerBuffA AnsiLowerBuff;
 alias CharNextA AnsiNext;
 alias CharPrevA AnsiPrev;
+
 //MACRO #define MAKELPARAM(l,h) ((LPARAM)MAKELONG(l,h))
-
 //MACRO #define MAKEWPARAM(l,h) ((WPARAM)MAKELONG(l,h))
-
 //MACRO #define MAKELRESULT(l,h) ((LRESULT)MAKELONG(l,h))
 
-//MACRO #define POINTSTOPOINT(p,ps) { (p).x=LOWORD(*(DWORD *)&ps); (p).y=HIWORD(*(DWORD *)&ps); }
+alias MAKEWORD MAKEWPARAM;
+alias MAKELONG MAKELPARAM;
+alias MAKELONG MAKELRESULT;
 
+//MACRO #define POINTSTOPOINT(p,ps) { (p).x=LOWORD(*(DWORD *)&ps); (p).y=HIWORD(*(DWORD *)&ps); }
 //MACRO #define POINTTOPOINTS(p) ((POINTS)MAKELONG((p).x,(p).y))
 
 extern (Windows) {
