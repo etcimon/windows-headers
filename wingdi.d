@@ -1,5 +1,12 @@
-// Converted from w32api\wingdi.h, Mar 2006.
-// Public domain.
+/***********************************************************************\
+*                               wingdi.d                               *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 
 module win32.wingdi;
 private import win32.w32api;

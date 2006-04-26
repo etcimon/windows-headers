@@ -1,4 +1,12 @@
-// Converted from w32api\rpcdce.h
+/***********************************************************************\
+*                                rpcdce.d                               *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 // TODO: I think MinGW got this wrong. RPC_UNICODE_SUPPORTED should be replaced aliases for version(Unicode)
 
 module win32.rpcdce;

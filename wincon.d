@@ -1,10 +1,17 @@
-// Converted from MinGW w32api/wincon.h
-// Public domain.
+/***********************************************************************\
+*                                wincon.d                               *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 
 module win32.wincon;
 
 private import win32.w32api;
-import win32.windef;
+private import win32.windef;
 
 enum {
 	FOREGROUND_BLUE      = 1,

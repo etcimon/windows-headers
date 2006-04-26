@@ -1,4 +1,12 @@
-// Converted from w32api\mmsystem.h
+/***********************************************************************\
+*                               mmsystem.d                              *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 
 // The #defines MAKEFOURCC, mmioFOURCC, sndAlias are used to define compile-time constants,
 // so they are implemented as templates.

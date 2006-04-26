@@ -1,6 +1,14 @@
-// Converted from w32api\lzexpand.h
-
+/***********************************************************************\
+*                               lzexpand.d                              *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 module win32.lzexpand;
+
 import win32.windef;
 import win32.winbase;
 

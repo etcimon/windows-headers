@@ -1,6 +1,12 @@
-/* Converted from MinGW w32api/basetyps.h
-   Public domain.
-*/
+/***********************************************************************\
+*                               basetyps.d                              *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 module win32.basetyps;
 private import win32.windef;
 

@@ -1,6 +1,15 @@
-// Converted from w32api\imm.h
+/***********************************************************************\
+*                                 imm.d                                 *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 
 module win32.imm;
+
 private import win32.w32api;
 import win32.windef;
 import win32.wingdi;

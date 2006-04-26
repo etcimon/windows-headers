@@ -1,5 +1,12 @@
-// Converted from w32api\winnt.h
-// Public domain.
+/***********************************************************************\
+*                                winnt.d                                *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 
 // FIXME: Two bitfields and a macro need to be fixed.
 
@@ -1368,6 +1375,8 @@ const IO_REPARSE_TAG_MOUNT_POINT=0xA0000003;
 alias DWORD ACCESS_MASK;
 alias ACCESS_MASK *PACCESS_MASK;
 
+import win32.basetyps;
+/* also in win32.basetyps
 struct GUID{
 	uint  Data1;
 	ushort Data2;
@@ -1375,7 +1384,7 @@ struct GUID{
 	ubyte  Data4[8];
 }
 alias GUID * REFGUID, LPGUID;
-
+*/
 const LUID SYSTEM_LUID = { QuadPart:999 };
 
 struct GENERIC_MAPPING{

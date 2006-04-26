@@ -1,4 +1,12 @@
-// Converted from w32api\winuser.h
+/***********************************************************************\
+*                               winuser.d                               *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 
 // The following macros were for win16 only, and are not included in this file:
 //#define EnumTaskWindows(h,f,p) EnumThreadWindows((DWORD)h,f,p)

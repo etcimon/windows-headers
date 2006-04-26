@@ -1,6 +1,16 @@
-// Converted from w32api\rpcdcep.h
+/***********************************************************************\
+*                               rpcdcep.d                               *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
+
 // TODO: Need to fix versioning for systems that don't have Unicode.
 module win32.rpcdcep;
+
 private import win32.windef;
 private import win32.basetyps;
 

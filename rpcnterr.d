@@ -1,6 +1,14 @@
-// Converted from w32api\rpcnterr.h
-
+/***********************************************************************\
+*                              rpcnterr.d                               *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 module win32.rpcnterr;
+
 import win32.winerror;
 
 enum : uint {

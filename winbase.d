@@ -1,7 +1,14 @@
-// Converted from MINGW w32api\winbase.h
-// Public domain.
-
+/***********************************************************************\
+*                               winbase.d                               *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 module win32.winbase;
+
 import win32.winver;
 import win32.windef;
 private import win32.w32api;

@@ -1,4 +1,12 @@
-// Converted from w32api\winspool.h
+/***********************************************************************\
+*                              winspool.d                               *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 module win32.winspool;
 private import win32.w32api;
 private import win32.windef;

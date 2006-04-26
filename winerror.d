@@ -1,5 +1,12 @@
-// Converted from w32api\winerror.h, Mar 2006.
-// Public domain.
+/***********************************************************************\
+*                              winerror.d                               *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 
 /* Comments from the Mingw header:
  * WAIT_TIMEOUT is also defined in winbase.h
