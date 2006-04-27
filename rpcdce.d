@@ -178,8 +178,8 @@ alias I_RPC_HANDLE *RPC_EP_INQ_HANDLE;
 extern (Windows) {
 alias int function(RPC_BINDING_HANDLE,uint,RPC_STATUS*) RPC_MGMT_AUTHORIZATION_FN;
 }
-// FIXME:
-version(all) { // #ifdef RPC_UNICODE_SUPPORTED
+
+static if(_WIN32_WINNT_ONLY) {
 
 struct RPC_PROTSEQ_VECTORA{
 	uint Count;
@@ -319,12 +319,13 @@ alias RpcEpRegisterA RpcEpRegister;
 alias DceErrorInqTextA DceErrorInqText;
 }//#endif /* UNICODE */
 
-} else { /* RPC_UNICODE_SUPPORTED */
+} else { // _WIN32_WINNT_ONLY
+
 struct RPC_PROTSEQ_VECTOR{
 	uint Count;
 	ubyte* Protseq[1];
 }
-
+// versions without Unicode.
 RPC_STATUS RpcBindingFromStringBinding(char *,RPC_BINDING_HANDLE *);
 RPC_STATUS RpcBindingToStringBinding(RPC_BINDING_HANDLE,char **);
 RPC_STATUS RpcStringBindingCompose(char *,char *,char *,char *,char *,char **);
@@ -353,7 +354,8 @@ RPC_STATUS RpcEpRegisterNoReplace(RPC_IF_HANDLE,RPC_BINDING_VECTOR*,UUID_VECTOR*
 RPC_STATUS RpcEpRegister(RPC_IF_HANDLE,RPC_BINDING_VECTOR*,UUID_VECTOR*,char *);
 RPC_STATUS DceErrorInqText(RPC_STATUS,char *);
 RPC_STATUS RpcMgmtEpEltInqNext(RPC_EP_INQ_HANDLE,RPC_IF_ID *,RPC_BINDING_HANDLE *,char **);
-}//#endif /* RPC_UNICODE_SUPPORTED */
+}// _WIN32_WINNT_ONLY
+
 
 RPC_STATUS RpcBindingCopy(RPC_BINDING_HANDLE,RPC_BINDING_HANDLE*);
 RPC_STATUS RpcBindingFree(RPC_BINDING_HANDLE*);

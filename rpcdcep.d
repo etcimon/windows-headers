@@ -8,9 +8,9 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 
-// TODO: Need to fix versioning for systems that don't have Unicode.
 module win32.rpcdcep;
 
+private import win32.w32api;
 private import win32.windef;
 private import win32.basetyps;
 
@@ -123,7 +123,7 @@ HANDLE  I_RpcGetCurrentCallHandle();
 int  I_RpcGetAssociationContext(void**);
 int  I_RpcSetAssociationContext(void*);
 
-version (all) { // FIXME:  #ifdef __RPC_NT__
+static if (_WIN32_WINNT_ONLY) {
 int I_RpcNsBindingSetEntryName(HANDLE,uint,wchar*);
 int I_RpcBindingInqDynamicEndpoint(HANDLE, wchar**);
 } else {
