@@ -4,6 +4,8 @@ module win32.commctrl;
 // by Y.Tomino (demoonlit@inter7.jp)
 // Tidied up by Stewart Gordon
 
+import win32.windef;
+import win32.winbase;
 import win32.winuser;
 alias LPTBSAVEPARAMW LPTBSAVEPARAMSW;
 alias PCCOMBOEXITEMA PCCOMBOBOXEXITEMA;
