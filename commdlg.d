@@ -1,6 +1,15 @@
-// Converted from w32api\commdlg.h
+/***********************************************************************\
+*                               commdlg.d                               *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 
 module win32.commdlg;
+
 private import win32.w32api;
 import win32.windef;
 import win32.wingdi; // for LPLOGFONTA
@@ -504,11 +513,7 @@ struct PRINTDLGW{
 alias PRINTDLGW * LPPRINTDLGW;
 
 static if (WINVER >= 0x0500) {
-// FIXME: Is this correct????
-//import win32.unknwn;/* for LPUNKNOWN  */
-import std.c.windows.com;
-alias IUnknown * LPUNKNOWN;
-
+import win32.unknwn;/* for LPUNKNOWN  */
 import win32.prsht;/* for HPROPSHEETPAGE  */
 
 struct PRINTPAGERANGE{
@@ -601,15 +606,7 @@ HRESULT PrintDlgExW(LPPRINTDLGEXW);
 }
 
 version(Unicode) {
-/+
-alias LBSELCHSTRINGW LBSELCHSTRING;
-alias SHAREVISTRINGW SHAREVISTRING;
-alias FILEOKSTRINGW FILEOKSTRING;
-alias COLOROKSTRINGW COLOROKSTRING;
-alias SETRGBSTRINGW SETRGBSTRING;
-alias HELPMSGSTRINGW HELPMSGSTRING;
-alias FINDMSGSTRINGW FINDMSGSTRING;
-+/
+
 alias CHOOSECOLORW CHOOSECOLOR;
 alias CHOOSEFONTW CHOOSEFONT;
 alias FINDREPLACEW FINDREPLACE;
@@ -637,15 +634,6 @@ alias PrintDlgExW PrintDlgEx;
 
 } else { /* UNICODE */
 
-/+
-alias LBSELCHSTRINGA LBSELCHSTRING;
-alias SHAREVISTRINGA SHAREVISTRING;
-alias FILEOKSTRINGA FILEOKSTRING;
-alias COLOROKSTRINGA COLOROKSTRING;
-alias SETRGBSTRINGA SETRGBSTRING;
-alias HELPMSGSTRINGA HELPMSGSTRING;
-alias FINDMSGSTRINGA FINDMSGSTRING;
-+/
 alias CHOOSECOLORA CHOOSECOLOR;
 alias CHOOSEFONTA CHOOSEFONT;
 alias FINDREPLACEA FINDREPLACE;

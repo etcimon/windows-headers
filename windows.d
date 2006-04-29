@@ -1,3 +1,12 @@
+/***********************************************************************\
+*                               windows.d                               *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 /*
     Translated from win32apis/windows.h
 	windows.h - main header file for the Win32 API
@@ -22,7 +31,18 @@ import win32.winuser;
 import win32.winnls;
 import win32.winver;
 import win32.winnetwk;
-static if (_WIN32_WINNT_ONLY) import win32.winsvc;
+
+// We can't use static if for imports, build gets confused.
+// static if (_WIN32_WINNT_ONLY) import win32.winsvc;
+version (Windows2003) {
+	import win32.winsvc;
+} else version (WindowsXP) { 
+	import win32.winsvc;
+} else version (Windows2000) {
+	import win32.winsvc;
+} else version (WindowsNTonly) {
+	import win32.winsvc;
+}
 
 //#ifndef WIN32_LEAN_AND_MEAN
 import win32.cderr;

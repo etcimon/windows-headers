@@ -565,5 +565,4 @@ alias TIMEVAL* PTIMEVAL, LPTIMEVAL;
  * the mswsock extensions.
  */
 
-// FIXME: reinstate once mswsock is translated
-//import win32.mswsock;
+import win32.mswsock;

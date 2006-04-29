@@ -15,8 +15,8 @@ import win32.rpcndr;
 private import win32.windef;
 private import win32.cguid; // for GUID_NULL
 
-const IID_NULL   = GUID_NULL;
-const CLSID_NULL = GUID_NULL;
+alias GUID_NULL IID_NULL;
+alias GUID_NULL CLSID_NULL;
 //MACRO #define CBPCLIPDATA(d) ((d).cbSize-sizeof((d).ulClipFmt))
 
 const BYTE DECIMAL_NEG = 0x80;
