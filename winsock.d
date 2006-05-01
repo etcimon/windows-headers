@@ -17,6 +17,15 @@ module win32.winsock;
   Portions Copyright (c) 1993 by Digital Equipment Corporation.
  */
 
+// Prevent winsock2 from being imported, and tell mswsock which of us
+// it needs to import.
+version(Win32_Winsock2) {
+    pragma(msg, "Cannot use both win32.winsock and win32.winsock2.");
+    static assert(0);
+}
+
+version = Win32_Winsock;
+
 import win32.windef;
 
 alias char u_char;
