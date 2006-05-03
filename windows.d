@@ -74,5 +74,5 @@ import win32.winsock;
 #endif /*  (_WIN32_WINNT >= 0x0400) */
 +/
 
-//import win32.ole2;
+import win32.ole2;
 // #endif /* WIN32_LEAN_AND_MEAN */

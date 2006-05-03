@@ -11,9 +11,11 @@
 //       Macros need to be converted.
 const __RPCNDR_H_VERSION__= 450;
 
+import win32.rpc;
 import win32.rpcnsip;
 import win32.objfwd;
-private import win32.rpc;
+private import win32.rpcdce;
+private import win32.unknwn;
 
 //MACRO #define MIDL_INTERFACE(x) struct
 

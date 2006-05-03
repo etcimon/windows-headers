@@ -16,8 +16,6 @@ private import win32.w32api;
 public import win32.rpcdcep;
 
 alias UUID uuid_t;
-alias RPC_BINDING_HANDLE rpc_binding_handle_t;
-alias RPC_BINDING_VECTOR rpc_binding_vector_t;
 alias UUID_VECTOR uuid_vector_t;
 
 alias void RPC_MGR_EPV;
@@ -95,10 +93,15 @@ const RPC_C_AUTHZ_DEFAULT=0xFFFFFFFF;
 
 alias I_RPC_HANDLE RPC_BINDING_HANDLE;
 alias RPC_BINDING_HANDLE handle_t;
+
 struct RPC_BINDING_VECTOR{
 	uint Count;
 	RPC_BINDING_HANDLE BindingH[1];
 }
+
+alias RPC_BINDING_HANDLE rpc_binding_handle_t;
+alias RPC_BINDING_VECTOR rpc_binding_vector_t;
+
 
 struct UUID_VECTOR{
 	uint Count;
