@@ -8,7 +8,6 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 /*
-	Translated from win32apis/windows.h
 	windows.h - main header file for the Win32 API
 
 	Written by Anders Norlander <anorland@hem2.passagen.se>

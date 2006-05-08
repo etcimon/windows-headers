@@ -86,15 +86,9 @@ struct FLAGGED_WORD_BLOB{
 	ushort asData[1];
 }
 
-//[Yes] #ifndef OLE2ANSI
 alias WCHAR OLECHAR;
 alias LPWSTR LPOLESTR;
 alias LPCWSTR LPCOLESTR;
-//MACRO #define OLESTR(s) L##s
-//[No] #else
-//[No] typedef char OLECHAR;
-//[No] typedef LPSTR LPOLESTR;
-//[No] typedef LPCSTR LPCOLESTR;
 
 alias ushort VARTYPE;
 alias short VARIANT_BOOL;
@@ -105,9 +99,9 @@ const VARIANT_BOOL VARIANT_FALSE = 0;
 alias OLECHAR *BSTR;
 alias FLAGGED_WORD_BLOB *wireBSTR;
 alias BSTR * LPBSTR;
-alias LONG SCODE;
+//alias LONG SCODE; // also in winerror
 
-// Shouldn't these should be handles?
+// DAC: Shouldn't these should be handles?
 typedef void * HCONTEXT;
 typedef void *HMETAFILEPICT;
 
