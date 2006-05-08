@@ -5,3 +5,4 @@ import win32.setupapi;
 
 import win32.dxerr8;
 import win32.dxerr9;
+import win32.oleacc;
