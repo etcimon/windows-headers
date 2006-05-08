@@ -880,8 +880,8 @@ struct DCB {
 	DWORD fAbortOnError:1;        /* Abort all reads and writes on Error */
 	DWORD fDummy2:17;             /* Reserved                        */
 +/
-    uint _bf;
-    void fBinary(bool f)         { _bf = (_bf & ~1) | f ; }
+	uint _bf;
+	void fBinary(bool f)         { _bf = (_bf & ~1) | f; }
 	void fParity(bool f)         { _bf = (_bf & ~2) | (f<<1); }
 	void fOutxCtsFlow(bool f)    { _bf = (_bf & ~4)| (f<<2); }
 	void fOutxDsrFlow(bool f)    { _bf = (_bf & ~8) | (f<<3);}

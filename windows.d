@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 /*
-    Translated from win32apis/windows.h
+	Translated from win32apis/windows.h
 	windows.h - main header file for the Win32 API
 
 	Written by Anders Norlander <anorland@hem2.passagen.se>
@@ -37,8 +37,6 @@ import win32.winnetwk;
 version (Windows2003) {
 	import win32.winsvc;
 } else version (WindowsXP) { 
-	import win32.winsvc;
-} else version (Windows2000) {
 	import win32.winsvc;
 } else version (WindowsNTonly) {
 	import win32.winsvc;
