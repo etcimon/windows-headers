@@ -57,9 +57,9 @@ const COM_RIGHTS_SAFE_FOR_SCRIPTING = 2;
 const STGOPTIONS_VERSION = 2;
 
 enum STGFMT {
-	STGFMT_STORAGE = 0, 
-	STGFMT_FILE = 3, 
-	STGFMT_ANY = 4, 
+	STGFMT_STORAGE = 0,
+	STGFMT_FILE = 3,
+	STGFMT_ANY = 4,
 	STGFMT_DOCFILE = 5
 }
 
@@ -76,8 +76,9 @@ enum REGCLS {
 	REGCLS_MULTI_SEPARATE = 2
 }
 
-BOOL IsEqualGUID(REFGUID rguid1, REFGUID rguid2)
-	{ return !memcmp(&rguid1, &rguid2, sizeof(GUID)); }
+BOOL IsEqualGUID(GUID rguid1, GUID rguid2) {
+	return rguid1 == rguid2;
+}
 
 alias IsEqualGUID IsEqualIID;
 alias IsEqualGUID IsEqualCLSID;

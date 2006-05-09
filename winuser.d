@@ -2263,7 +2263,7 @@ static if (_WIN32_WINNT >= 0x0501) {
 const ICON_SMALL2=2;
 }
 
-const HBITMAP 
+const HBITMAP
 	HBMMENU_CALLBACK = cast(HBITMAP)-1,
 	HBMMENU_SYSTEM = cast(HBITMAP)1,
 	HBMMENU_MBAR_RESTORE = cast(HBITMAP)2,
@@ -4329,8 +4329,8 @@ BOOL WinHelpA(HWND,LPCSTR,UINT,DWORD);
 BOOL WinHelpW(HWND,LPCWSTR,UINT,DWORD);
 
 extern (C) {
-int wsprintfA(LPSTR,LPCSTR,...);
-int wsprintfW(LPWSTR,LPCWSTR,...);
+	int wsprintfA(LPSTR,LPCSTR,...);
+	int wsprintfW(LPWSTR,LPCWSTR,...);
 }
 
 // These shouldn't be necessary for D.

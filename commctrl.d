@@ -629,7 +629,7 @@ align:
 
 // General stuff
 // -------------
-alias LONG HRESULT;
+//alias LONG HRESULT;
 
 extern(Windows) export void InitCommonControls();
 
