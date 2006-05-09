@@ -751,10 +751,20 @@ alias ICreateErrorInfo *LPCREATEERRORINFO;
 alias ISupportErrorInfo *LPSUPPORTERRORINFO;
 alias IRecordInfo *LPRECORDINFO;
 
-/+
- // DAC: TODO: I don't think these really belong in this file. The interfaces are not declared in this file.
+
+ // DAC: TODO: why aren't these defined anywhere in MinGW?
+ 
+extern interface ICreateTypeInfo;
+extern interface ICreateTypeInfo2;
+extern interface ICreateTypeLib;
+extern interface ICreateTypeLib2;
+
 alias ICreateTypeInfo *LPCREATETYPEINFO;
 alias ICreateTypeInfo2 *LPCREATETYPEINFO2;
 alias ICreateTypeLib *LPCREATETYPELIB;
 alias ICreateTypeLib2 *LPCREATETYPELIB2;
-+/
+/*
+alias ICreateTypeInfo2 *LPCREATETYPEINFO2;
+alias ICreateTypeLib *LPCREATETYPELIB;
+alias ICreateTypeLib2 *LPCREATETYPELIB2;
+*/
