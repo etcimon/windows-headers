@@ -11,7 +11,7 @@
 module win32.aclui;
 
 import win32.objbase, win32.commctrl, win32.accctrl;
-
+private import win32.winuser;
 
 struct SI_OBJECT_INFO {
 	DWORD     dwFlags;
