@@ -13,13 +13,11 @@ module win32.rpcndr;
 //       Macros need to be converted.
 const __RPCNDR_H_VERSION__= 450;
 
-import win32.rpc;
+private import win32.rpc;
 import win32.rpcnsip;
-import win32.objfwd;
+private import win32.objidl; // for IRpcChannelBuffer, IRpcStubBuffer
 private import win32.rpcdce;
 private import win32.unknwn;
-
-//MACRO #define MIDL_INTERFACE(x) struct
 
 const uint NDR_CHAR_REP_MASK      = 0xF,
 	NDR_INT_REP_MASK              = 0xF0,
@@ -345,8 +343,8 @@ struct MIDL_FORMAT_STRING{
 }
 
 extern (Windows) {
-alias void function (PMIDL_STUB_MESSAGE) STUB_THUNK;
-alias int function() SERVER_ROUTINE;
+	alias void function (PMIDL_STUB_MESSAGE) STUB_THUNK;
+	alias int function() SERVER_ROUTINE;
 }
 struct MIDL_SERVER_INFO {
 	PMIDL_STUB_DESC pStubDesc;

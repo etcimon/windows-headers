@@ -14,6 +14,7 @@ import win32.objbase;
 import win32.olectlid;
 import win32.oleauto;
 import win32.oleidl;
+private import win32.winuser; // for LPMSG
 
 
 const E_DRAW = VIEW_E_DRAW;

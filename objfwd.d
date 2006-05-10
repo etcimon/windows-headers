@@ -8,8 +8,10 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.objfwd;
-private import win32.basetyps;
+private import win32.objidl;
 
+/+
+// Forward declararions are not necessary in D.
 extern(Windows){
 	interface IMoniker;
 	interface IStream;
@@ -25,6 +27,7 @@ extern(Windows){
 	interface IAdviseSink2;
 	interface IDataObject;
 	interface IDataAdviseHolder;
+	
 	interface IEnumMoniker;
 	interface IEnumFORMATETC;
 	interface IEnumSTATDATA;
@@ -41,10 +44,7 @@ extern(Windows){
 	interface IROTData;
 	interface IPersistFile;
 	interface IRootStorage;
-	interface IRpcChannelBuffer;
-	interface IRpcProxyBuffer;
-	interface IRpcStubBuffer;
-	interface IPropertyStorage;
+	interface IPropertyStorage;	
 	interface IEnumSTATPROPSETSTG;
 	interface IPropertySetStorage;
 	interface IClientSecurity;
@@ -53,8 +53,11 @@ extern(Windows){
 	interface IFillLockBytes;
 	interface IProgressNotify;
 	interface ILayoutStorage;
+	interface IRpcProxyBuffer;
+	interface IRpcChannelBuffer;
+	interface IRpcStubBuffer;
 }
-
++/
 alias IMoniker * LPMONIKER;
 alias IStream * LPSTREAM;
 alias IMarshal * LPMARSHAL;
