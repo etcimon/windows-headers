@@ -81,7 +81,12 @@ A few structs use bit fields.  Because D doesn't have bit fields, they must be s
 Some structs end with a one-element array, designed to be followed immediately in memory by more elements of the same type.  Name such struct members with a leading underscore, and use a property getter to return just the pointer in order to prevent bounds checking.
 
 
-4. Consolidate aliases
+4. COM interfaces
+
+Translate DECLARE_INTERFACE constructions into D interfaces.  See unknwn.d for an example.  The macros used to access interface functions become unnecessary and may therefore be removed.
+
+
+5. Consolidate aliases
 
 Declare type aliases as aliases, not typedefs.  The only exception is
 
@@ -92,21 +97,21 @@ since handles aren't interchangeable with pointers.  Define all specific handle 
 Where multiple aliases for the same type appear in the same module (or logical section thereof), consolidate them into a single alias declaration.  For structs, these should be placed immediately below the struct definition.
 
 
-5. Declare functions as extern (Windows)
+6. Declare functions as extern (Windows)
 
 Remove attributes such as WINAPI from function prototypes, replacing them with extern (Windows).  Where several functions are declared together, use an extern (Windows) attribute block.
 
 This doesn't apply to macros converted to functions (see below).
 
 
-6. Consolidate ANSI/Unicode selection into version blocks
+7. Consolidate ANSI/Unicode selection into version blocks
 
 Where #ifdef UNICODE is used to select A/W versions of functions and other identifiers, replace with version (Unicode).  Use only aliases, rather than enums or const declarations, within these version blocks.  These should be defined in one place at the end of each module, or at the end of some logical section within the module.  Consolidate any aliases of these aliases into the alias declarations within these version blocks.
 
 As an exception, reduce string constants to a single declaration of type TCHAR[], bypassing the need to put such a constant in a version block.
 
 
-7. Translate conditional compilation based on Windows version support
+8. Translate conditional compilation based on Windows version support
 
 Every module that uses this conditional compilation must privately import win32.w32api, which defines the constants used to set the minimum version of Windows an application supports.
 
@@ -115,14 +120,14 @@ Unlike with the C headers, the programmer is expected to specify both the minimu
 Rather than relying on the conditionals in the MinGW headers, it is a good idea to look on http://msdn.microsoft.com/ to see which Windows versions support each entity that is CC'd.
 
 
-8. Other conditional compilation
+9. Other conditional compilation
 
 Use the built-in version (Win32) and version (Win64) to deal with _WIN64 conditional blocks.
 
 For other #ifdefs designed to be specified by the programmer, leave the directive in, commented out.  This is pending decision on which to include and which to leave out, and how to name them.
 
 
-9. Convert function-like macros to functions
+10. Convert function-like macros to functions
 
 Use the appropriate parameter and return types.  If necessary, consult the API docs to find out what these are.  (Watch out for parameters that are documented as LPSTR but should actually be LPTSTR!)
 
@@ -133,12 +138,21 @@ Don't just leave the macro expansion verbatim; make some effort to make it look 
 * using line breaks and indentation as you might normally when writing a function
 
 
-10. Remove leftover preprocessor directives
+11. Remove leftover preprocessor directives
 
 Remove any preprocessor directives, such as #if..#elseif..#endif and any #defines, that have been deemed unnecessary.
 
 
-11. Section heading comments (optional)
+12. Whitespace conventions
+
+Declare pointers D-style, i.e. a space after the '*', no space before.
+
+Function definitions, struct/enum definitions, etc. should be separated by a blank line.  Exceptions: One-line functions (such as bitfield setters/getters) may be placed together without intervening blank lines.  Alias declarations of a struct or enum follow its definition without a blank line, and have a blank line below them.
+
+Always indent the contents of a { ... } block of any kind by one tab character below the level of that in which it is contained.
+
+
+13. Section heading comments (optional)
 
 Comments may be used to create logical section headings within a module.  They shall look like this:
 
@@ -146,15 +160,28 @@ Comments may be used to create logical section headings within a module.  They s
 // --------------
 
 
-12. Deprecate functions (optional)
+14. Deprecate functions (optional)
 
 If you discover when reading the documentation for a function, structure, etc. that it is intended only for compatibility with 16-bit Windows versions, you may mark it as deprecated.  Group deprecated function prototypes within a block under a deprecated attribute block.  Be sure to deprecate the ANSI/Unicode aliases as well.
 
 Although bothering with this is optional for the time being, it is preferred that if you do it at all, then you check the whole module for deprecated structures and functions.
 
 
-13. Always check that the translated module compiles
+15. Always check that the translated module compiles
 
 After translating, compile the module to check for errors.
 
 Sometimes there will be errors due to undefined types or other identifiers.  These compiled in C because of the nature of C preprocessor macros, but fail in D where they are treated symbolically.  To deal with this, use a private import.
+
+It is a good idea to try compiling under all meaningful configurations of Windows versions:
+
+* none specified (equivalent to Windows 95/NT 4)
+* -version=Windows98
+* -version=WindowsME
+* -version=WindowsNTonly
+* -version=Windows2000
+* -version=Windows98 -version=Windows2000
+* -version=WindowsME -version=Windows2000
+* -version=WindowsNTonly -version=Windows2000
+* -version=WindowsXP
+* -version=Windows2003

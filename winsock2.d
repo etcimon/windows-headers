@@ -906,11 +906,10 @@ alias CSADDR_INFO* PCSADDR_INFO, LPCSADDR_INFO;
 
 //#endif
 
-// DK: I get the funny feeling that that last one should be a pointer...
-// it's not much of a list if it's only got one element...
 struct SOCKET_ADDRESS_LIST {
     INT               iAddressCount;
-    SOCKET_ADDRESS[1] Address;
+    SOCKET_ADDRESS[1] _Address;
+    SOCKET_ADDRESS* Address() { return _Address.ptr; }
 }
 
 alias SOCKET_ADDRESS_LIST* LPSOCKET_ADDRESS_LIST;

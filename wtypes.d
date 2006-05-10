@@ -96,14 +96,11 @@ alias VARIANT_BOOL _VARIANT_BOOL;
 const VARIANT_BOOL VARIANT_TRUE = -1; // 0xffff;
 const VARIANT_BOOL VARIANT_FALSE = 0;
 
-alias OLECHAR *BSTR;
-alias FLAGGED_WORD_BLOB *wireBSTR;
-alias BSTR * LPBSTR;
+alias OLECHAR* BSTR;
+alias FLAGGED_WORD_BLOB* wireBSTR;
+alias BSTR* LPBSTR;
 //alias LONG SCODE; // also in winerror
-
-// DAC: Shouldn't these should be handles?
-typedef void * HCONTEXT;
-typedef void *HMETAFILEPICT;
+alias HANDLE HCONTEXT, HMETAFILEPICT;
 
 union CY {
 	struct {
