@@ -112,3 +112,8 @@ struct POINTS {
 	SHORT y;
 }
 alias POINTS* PPOINTS, LPPOINTS;
+
+enum : BOOL {
+	FALSE = 0,
+	TRUE = 1,
+}

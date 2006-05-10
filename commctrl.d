@@ -4847,7 +4847,9 @@ BOOL ListView_SortItems(HWND w, PFNLVCOMPARE f, LPARAM l) {
 }
 
 void ListView_SetItemPosition32(HWND w, int i, int x, int y) {
-	POINT p = {x, y};
+	POINT p;
+	p.x = x;
+	p.y = y;
 	SendMessage(w, LVM_SETITEMPOSITION32, i, cast(LPARAM)&p);
 }
 
@@ -4868,6 +4870,12 @@ BOOL ListView_GetISearchString(HWND w, LPSTR lpsz) {
 } 
 
 static if (_WIN32_WINNT >= 0x0501) {
+	enum {
+		CBM_FIRST        = 0x1700,
+		CB_SETMINVISIBLE = CBM_FIRST + 1,
+		CB_GETMINVISIBLE = CBM_FIRST + 2
+	}
+	
 	BOOL ComboBox_SetMinVisible(HWND w, INT i) {
 		return cast(BOOL)SendMessage(w, CB_SETMINVISIBLE, cast(WPARAM)i, 0);
 	}
@@ -5126,7 +5134,7 @@ HTREEITEM TreeView_GetParent(HWND w, HTREEITEM i) {
 }
 
 HTREEITEM TreeView_GetFirstVisible(HWND w) {
-	return TreeView_GetNextItem(w, NULL, TVGN_FIRSTVISIBLE);
+	return TreeView_GetNextItem(w, null, TVGN_FIRSTVISIBLE);
 }
 
 HTREEITEM TreeView_GetNextVisible(HWND w, HTREEITEM i) {
@@ -5138,15 +5146,15 @@ HTREEITEM TreeView_GetPrevVisible(HWND w, HTREEITEM i) {
 }
 
 HTREEITEM TreeView_GetSelection(HWND w) {
-	return TreeView_GetNextItem(w, NULL, TVGN_CARET);
+	return TreeView_GetNextItem(w, null, TVGN_CARET);
 }
 
 HTREEITEM TreeView_GetDropHilight(HTREEITEM w) {
-	return TreeView_GetNextItem(w, NULL, TVGN_DROPHILITE);
+	return TreeView_GetNextItem(w, null, TVGN_DROPHILITE);
 }
 
 HTREEITEM TreeView_GetRoot(HWND w) {
-	return TreeView_GetNextItem(w, NULL, TVGN_ROOT);
+	return TreeView_GetNextItem(w, null, TVGN_ROOT);
 }
 
 BOOL TreeView_Select(HWND w, HTREEITEM i, UINT c) {
@@ -5423,7 +5431,7 @@ static if (_WIN32_IE >= 0x0400) {
 	}
 
 	HTREEITEM TreeView_GetLastVisible(HWND w) {
-		return TreeView_GetNextItem(w, NULL, TVGN_LASTVISIBLE);
+		return TreeView_GetNextItem(w, null, TVGN_LASTVISIBLE);
 	}
 }
 

@@ -7,6 +7,8 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
+module win32.rpcndr;
+
 // TODO: Bitfields in MIDL_STUB_MESSAGE.
 //       Macros need to be converted.
 const __RPCNDR_H_VERSION__= 450;
