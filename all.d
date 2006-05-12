@@ -13,3 +13,5 @@ import win32.cplext;
 import win32.custcntl;
 import win32.oleacc;
 import win32.ocidl;
+import win32.olectl;
+import win32.oledlg;
