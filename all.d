@@ -15,3 +15,6 @@ import win32.oleacc;
 import win32.ocidl;
 import win32.olectl;
 import win32.oledlg;
+
+import win32.shldisp;
+import win32.shlobj;
