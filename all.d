@@ -18,3 +18,5 @@ import win32.oledlg;
 
 import win32.shldisp;
 import win32.shlobj;
+import win32.regstr;
+import win32.richole;
