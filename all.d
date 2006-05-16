@@ -20,3 +20,7 @@ import win32.shldisp;
 import win32.shlobj;
 import win32.regstr;
 import win32.richole;
+import win32.tmschema;
+import win32.servprov;
+import win32.exdisp;
+import win32.mshtml;
