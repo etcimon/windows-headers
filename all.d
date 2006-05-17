@@ -24,3 +24,13 @@ import win32.tmschema;
 import win32.servprov;
 import win32.exdisp;
 import win32.mshtml;
+
+import win32.lmcons;
+import win32.lmconfig;
+import win32.lmapibuf;
+import win32.lmat;
+import win32.lmbrowsr;
+import win32.lmalert;
+import win32.lmchdev;
+import win32.lmrepl;
+import win32.lmerrlog;
