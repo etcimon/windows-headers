@@ -1,4 +1,12 @@
-// Converted from w32api\lmcons.h
+/***********************************************************************\
+*                                lmcons.d                               *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 module win32.lmcons;
 private import win32.windef;
 private import win32.lmerr; // for NERR_BASE

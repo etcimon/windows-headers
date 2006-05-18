@@ -1,4 +1,12 @@
-// Converted from w32api\lmalert.h
+/***********************************************************************\
+*                               lmalert.d                               *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 module win32.lmalert;
 private import win32.lmcons;
 private import win32.windef;

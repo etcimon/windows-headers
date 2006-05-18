@@ -1,3 +1,12 @@
+/***********************************************************************\
+*                              lmconfig.d                               *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 module win32.lmconfig;
 private import win32.windef;
 private import win32.lmcons;
