@@ -28,3 +28,4 @@ import win32.mshtml;
 import win32.lm;
 
 import win32.lmbrowsr;
+import win32.shlwapi;

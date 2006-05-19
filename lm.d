@@ -7,7 +7,16 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
+
 module win32.lm;
+
+version (WindowsXP) {
+ version = WIN32_WINNT_ONLY;
+} else version(Windows2000) {
+ version = WIN32_WINNT_ONLY;
+} else version (Windows2003) {
+ version = WIN32_WINNT_ONLY;
+}
 
 import win32.lmcons;
 import win32.lmaccess;
@@ -26,6 +35,9 @@ import win32.lmuse;
 import win32.lmerrlog;
 import win32.lmsvc;
 import win32.lmsname; // in MinGW, this was publicly included by lm.lmsvc
+
+version (WIN32_WINNT_ONLY) {
 import win32.lmwksta;
-//import win32.lmserver;
+import win32.lmserver;
+}
 import win32.lmstats;

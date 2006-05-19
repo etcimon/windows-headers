@@ -12,6 +12,8 @@ private import win32.lmcons;
 import win32.lmuseflg;
 private import win32.windef;
 
+pragma(lib, "Netapi32.lib");
+
 enum {
 	WKSTA_COMPUTERNAME_PARMNUM     = 1,
 	WKSTA_LANGROUP_PARMNUM,     // = 2

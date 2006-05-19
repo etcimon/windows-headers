@@ -11,6 +11,16 @@ module win32.lmshare;
 import win32.lmcons;
 private import win32.windef;
 
+/*
+private import win32.w32api;
+static if (_WIN32_WINNT_ONLY) {
+	pragma(lib, "Netapi.lib");
+} else {
+// only for WinME, 98, 95.
+	pragma(lib, "svrapi.lib")
+}
+*/
+
 const SHARE_NETNAME_PARMNUM      = 1;
 const SHARE_TYPE_PARMNUM         = 3;
 const SHARE_REMARK_PARMNUM       = 4;

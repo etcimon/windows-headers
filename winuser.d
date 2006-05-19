@@ -417,31 +417,31 @@ const WS_EX_TOPMOST=8;
 const WS_EX_TRANSPARENT=32;
 const WS_EX_WINDOWEDGE=256;
 
-const WINSTA_ACCESSCLIPBOARD=4;
-const WINSTA_ACCESSGLOBALATOMS=32;
-const WINSTA_CREATEDESKTOP=8;
-const WINSTA_ENUMDESKTOPS=1;
-const WINSTA_ENUMERATE=256;
-const WINSTA_EXITWINDOWS=64;
-const WINSTA_READATTRIBUTES=2;
-const WINSTA_READSCREEN=512;
-const WINSTA_WRITEATTRIBUTES=16;
+const WINSTA_ENUMDESKTOPS      = 1;
+const WINSTA_READATTRIBUTES    = 2;
+const WINSTA_ACCESSCLIPBOARD   = 4;
+const WINSTA_CREATEDESKTOP     = 8;
+const WINSTA_WRITEATTRIBUTES   = 16;
+const WINSTA_ACCESSGLOBALATOMS = 32;
+const WINSTA_EXITWINDOWS       = 64;
+const WINSTA_ENUMERATE         = 256;
+const WINSTA_READSCREEN        = 512;
 
-const DDL_READWRITE=0;
-const DDL_READONLY=1;
-const DDL_HIDDEN=2;
-const DDL_SYSTEM=4;
-const DDL_DIRECTORY=16;
-const DDL_ARCHIVE=32;
-const DDL_POSTMSGS=8192;
-const DDL_DRIVES=16384;
-const DDL_EXCLUSIVE=32768;
+const DDL_READWRITE = 0;
+const DDL_READONLY  = 1;
+const DDL_HIDDEN    = 2;
+const DDL_SYSTEM    = 4;
+const DDL_DIRECTORY = 16;
+const DDL_ARCHIVE   = 32;
+const DDL_POSTMSGS  = 8192;
+const DDL_DRIVES    = 16384;
+const DDL_EXCLUSIVE = 32768;
 
-const DC_ACTIVE=0x00000001;
-const DC_SMALLCAP=0x00000002;
-const DC_ICON=0x00000004;
-const DC_TEXT=0x00000008;
-const DC_INBUTTON=0x00000010;
+const DC_ACTIVE   = 0x00000001;
+const DC_SMALLCAP = 0x00000002;
+const DC_ICON     = 0x00000004;
+const DC_TEXT     = 0x00000008;
+const DC_INBUTTON = 0x00000010;
 
 static if (WINVER >= 0x0500) {
 const DC_GRADIENT=0x00000020;
@@ -468,15 +468,15 @@ const EDGE_SUNKEN = BDR_SUNKENOUTER|BDR_SUNKENINNER;
 const EDGE_ETCHED = BDR_SUNKENOUTER|BDR_RAISEDINNER;
 const EDGE_BUMP   = BDR_RAISEDOUTER|BDR_SUNKENINNER;
 
-const BF_LEFT=1;
-const BF_TOP=2;
-const BF_RIGHT=4;
-const BF_BOTTOM=8;
-const BF_TOPLEFT     = BF_TOP|BF_LEFT;
-const BF_TOPRIGHT    = BF_TOP|BF_RIGHT;
-const BF_BOTTOMLEFT  = BF_BOTTOM|BF_LEFT;
-const BF_BOTTOMRIGHT = BF_BOTTOM|BF_RIGHT;
-const BF_RECT        = BF_LEFT|BF_TOP|BF_RIGHT|BF_BOTTOM ;
+const BF_LEFT                    = 1;
+const BF_TOP                     = 2;
+const BF_RIGHT                   = 4;
+const BF_BOTTOM                  = 8;
+const BF_TOPLEFT                 = BF_TOP|BF_LEFT;
+const BF_TOPRIGHT                = BF_TOP|BF_RIGHT;
+const BF_BOTTOMLEFT              = BF_BOTTOM|BF_LEFT;
+const BF_BOTTOMRIGHT             = BF_BOTTOM|BF_RIGHT;
+const BF_RECT                    = BF_LEFT|BF_TOP|BF_RIGHT|BF_BOTTOM ;
 const BF_DIAGONAL                = 16;
 const BF_DIAGONAL_ENDTOPRIGHT    = BF_DIAGONAL|BF_TOP|BF_RIGHT;
 const BF_DIAGONAL_ENDTOPLEFT     = BF_DIAGONAL|BF_TOP|BF_LEFT;
@@ -3591,9 +3591,6 @@ extern (Windows) {
 HKL ActivateKeyboardLayout(HKL,UINT);
 BOOL AdjustWindowRect(LPRECT,DWORD,BOOL);
 BOOL AdjustWindowRectEx(LPRECT,DWORD,BOOL,DWORD);
-static if (_WIN32_WINNT >= 0x0500) {
-BOOL AnimateWindow(HWND,DWORD,DWORD);
-}
 BOOL AnyPopup();
 BOOL AppendMenuA(HMENU,UINT,UINT_PTR,LPCSTR);
 BOOL AppendMenuW(HMENU,UINT,UINT_PTR,LPCWSTR);
@@ -3602,18 +3599,6 @@ BOOL AttachThreadInput(DWORD,DWORD,BOOL);
 HDWP BeginDeferWindowPos(int);
 HDC BeginPaint(HWND,LPPAINTSTRUCT);
 BOOL BringWindowToTop(HWND);
-static if (_WIN32_WINDOWS == 0x400) {
-// On Win95, there's only one version.
-int BroadcastSystemMessage(DWORD,LPDWORD,UINT,WPARAM,LPARAM);
-}
-static if (_WIN32_WINNT >= 0x0400) {
-int BroadcastSystemMessageA(DWORD,LPDWORD,UINT,WPARAM,LPARAM);
-int BroadcastSystemMessageW(DWORD,LPDWORD,UINT,WPARAM,LPARAM);
-}
-static if (_WIN32_WINNT >= 0x0501) {
-int BroadcastSystemMessageExA(DWORD,LPDWORD,UINT,WPARAM,LPARAM,PBSMINFO);
-int BroadcastSystemMessageExW(DWORD,LPDWORD,UINT,WPARAM,LPARAM,PBSMINFO);
-}
 BOOL CallMsgFilterA(LPMSG,INT);
 BOOL CallMsgFilterW(LPMSG,INT);
 LRESULT CallNextHookEx(HHOOK,int,WPARAM,LPARAM);
@@ -3703,9 +3688,6 @@ LRESULT DefFrameProcW(HWND,HWND,UINT,WPARAM,LPARAM);
 
 LRESULT DefMDIChildProcA(HWND,UINT,WPARAM,LPARAM);
 LRESULT DefMDIChildProcW(HWND,UINT,WPARAM,LPARAM);
-static if (_WIN32_WINNT >= 0x0501) {
-LRESULT DefRawInputProc(PRAWINPUT*,INT,UINT);
-}
 LRESULT DefWindowProcA(HWND,UINT,WPARAM,LPARAM);
 LRESULT DefWindowProcW(HWND,UINT,WPARAM,LPARAM);
 BOOL DeleteMenu(HMENU,UINT,UINT);
@@ -3821,23 +3803,13 @@ BOOL EndDeferWindowPos(HDWP);
 BOOL EndDialog(HWND,int);
 BOOL EndMenu();
 BOOL EndPaint(HWND, PAINTSTRUCT*);
-static if (_WIN32_WINNT >= 0x0500) {
-BOOL EndTask(HWND,BOOL,BOOL);
-}
 BOOL EnumChildWindows(HWND,ENUMWINDOWSPROC,LPARAM);
 UINT EnumClipboardFormats(UINT);
 BOOL EnumDesktopsA(HWINSTA,DESKTOPENUMPROCA,LPARAM);
 BOOL EnumDesktopsW(HWINSTA,DESKTOPENUMPROCW,LPARAM);
 BOOL EnumDesktopWindows(HDESK,ENUMWINDOWSPROC,LPARAM);
-static if (WINVER >= 0x0410) {
-BOOL EnumDisplayMonitors(HDC,LPCRECT,MONITORENUMPROC,LPARAM);
-}
 BOOL EnumDisplaySettingsA(LPCSTR,DWORD,PDEVMODEA);
 BOOL EnumDisplaySettingsW(LPCWSTR,DWORD,PDEVMODEW);
-static if ((_WIN32_WINNT >= 0x0500) || (_WIN32_WINDOWS >= 0x0410)) {
-BOOL EnumDisplaySettingsExA(LPCSTR,DWORD,LPDEVMODEA,DWORD);
-BOOL EnumDisplaySettingsExW(LPCWSTR,DWORD,LPDEVMODEW,DWORD);
-}
 
 BOOL EnumDisplayDevicesA(LPCSTR,DWORD,PDISPLAY_DEVICEA,DWORD);
 BOOL EnumDisplayDevicesW(LPCWSTR,DWORD,PDISPLAY_DEVICEW,DWORD);
@@ -3859,9 +3831,7 @@ HWND FindWindowExA(HWND,HWND,LPCSTR,LPCSTR);
 HWND FindWindowExW(HWND,HWND,LPCWSTR,LPCWSTR);
 HWND FindWindowW(LPCWSTR,LPCWSTR);
 BOOL FlashWindow(HWND,BOOL);
-static if ((_WIN32_WINNT >= 0x0500) || (_WIN32_WINDOWS >= 0x0410)) {
-BOOL FlashWindowEx(PFLASHWINFO);
-}
+
 int FrameRect(HDC,LPCRECT,HBRUSH);
 BOOL FrameRgn(HDC,HRGN,HBRUSH,int,int);
 HWND GetActiveWindow();
@@ -3884,9 +3854,6 @@ HANDLE GetClipboardData(UINT);
 int GetClipboardFormatNameA(UINT,LPSTR,int);
 int GetClipboardFormatNameW(UINT,LPWSTR,int);
 HWND GetClipboardOwner();
-static if ((_WIN32_WINNT >= 0x0500) || (_WIN32_WINDOWS >= 0x0410)) {
-DWORD GetClipboardSequenceNumber();
-}
 HWND GetClipboardViewer();
 BOOL GetClipCursor(LPRECT);
 BOOL GetCursorPos(LPPOINT);
@@ -3902,9 +3869,7 @@ UINT GetDlgItemTextW(HWND,int,LPWSTR,int);
 UINT GetDoubleClickTime();
 HWND GetFocus();
 HWND GetForegroundWindow();
-static if (_WIN32_WINNT >= 0x0500) {
-DWORD GetGuiResources(HANDLE,DWORD);
-}
+
 BOOL GetIconInfo(HICON,PICONINFO);
 BOOL GetInputState();
 UINT GetKBCodePage();
@@ -3935,9 +3900,7 @@ BOOL GetMessageW(LPMSG,HWND,UINT,UINT);
 LONG GetMessageExtraInfo();
 DWORD GetMessagePos();
 LONG GetMessageTime();
-static if ((_WIN32_WINNT >= 0x0500) || (_WIN32_WINDOWS >= 0x0490)) {
-int GetMouseMovePointsEx(UINT,LPMOUSEMOVEPOINT,LPMOUSEMOVEPOINT,int,DWORD);
-}
+
 HWND GetNextDlgGroupItem(HWND,HWND,BOOL);
 HWND GetNextDlgTabItem(HWND,HWND,BOOL);
 
@@ -3946,21 +3909,12 @@ HWND GetParent(HWND);
 int GetPriorityClipboardFormat(UINT*,int);
 HANDLE GetPropA(HWND,LPCSTR);
 HANDLE GetPropW(HWND,LPCWSTR);
-static if (_WIN32_WINNT >= 0x0501) {
-UINT GetRawInputBuffer(PRAWINPUT,PUINT,UINT);
-UINT GetRawInputData(HRAWINPUT,UINT,LPVOID,PUINT,UINT);
-UINT GetRawInputDeviceInfoA(HANDLE,UINT,LPVOID,PUINT);
-UINT GetRawInputDeviceInfoW(HANDLE,UINT,LPVOID,PUINT);
-UINT GetRawInputDeviceList(PRAWINPUTDEVICELIST,PUINT,UINT);
-UINT GetRegisteredRawInputDevices(PRAWINPUTDEVICE,PUINT,UINT);
-}
+
 DWORD GetQueueStatus(UINT);
 BOOL GetScrollInfo(HWND,int,LPSCROLLINFO);
 int GetScrollPos(HWND,int);
 BOOL GetScrollRange(HWND,int,LPINT,LPINT);
-static if (_WIN32_WINNT >= 0x0500) {
-HWND GetShellWindow();
-}
+
 HMENU GetSubMenu(HMENU,int);
 DWORD GetSysColor(int);
 HBRUSH GetSysColorBrush(int);
@@ -3971,14 +3925,6 @@ DWORD GetTabbedTextExtentA(HDC,LPCSTR,int,int,LPINT);
 DWORD GetTabbedTextExtentW(HDC,LPCWSTR,int,int,LPINT);
 LONG GetWindowLongA(HWND,int);
 LONG GetWindowLongW(HWND,int);
-
-version (Win64) {
-LONG_PTR GetWindowLongPtrA(HWND,int);
-LONG_PTR GetWindowLongPtrW(HWND,int);
-} else {
-alias GetWindowLongA GetWindowLongPtrA;
-alias GetWindowLongW GetWindowLongPtrW;
-}
 
 HDESK GetThreadDesktop(DWORD);
 HWND GetTopWindow(HWND);
@@ -3993,7 +3939,6 @@ HDC GetWindowDC(HWND);
 BOOL GetWindowPlacement(HWND,WINDOWPLACEMENT*);
 BOOL GetWindowRect(HWND,LPRECT);
 int GetWindowRgn(HWND,HRGN);
-
 int GetWindowTextA(HWND,LPSTR,int);
 int GetWindowTextLengthA(HWND);
 int GetWindowTextLengthW(HWND);
@@ -4003,23 +3948,13 @@ BOOL GetAltTabInfoA(HWND,int,PALTTABINFO,LPSTR,UINT);
 BOOL GetAltTabInfoW(HWND,int,PALTTABINFO,LPWSTR,UINT);
 BOOL GetComboBoxInfo(HWND,PCOMBOBOXINFO);
 BOOL GetCursorInfo(PCURSORINFO);
-static if (WINVER >= 0x0500) {
-BOOL GetGUIThreadInfo(DWORD,LPGUITHREADINFO);
-}
 BOOL GetLastInputInfo(PLASTINPUTINFO);
 DWORD GetListBoxInfo(HWND);
 BOOL GetMenuBarInfo(HWND,LONG,LONG,PMENUBARINFO);
 BOOL GetMenuInfo(HMENU,LPMENUINFO);
-static if (_WIN32_WINNT >= 0x0500) {
-BOOL GetProcessDefaultLayout(DWORD*);
-}
 BOOL GetScrollBarInfo(HWND,LONG,PSCROLLBARINFO);
 BOOL GetTitleBarInfo(HWND,PTITLEBARINFO);
 BOOL GetWindowInfo(HWND,PWINDOWINFO);
-static if (WINVER >=0x410) {
-BOOL GetMonitorInfoA(HMONITOR,LPMONITORINFO);
-BOOL GetMonitorInfoW(HMONITOR,LPMONITORINFO);
-}
 UINT GetWindowModuleFileNameA(HWND,LPSTR,UINT);
 UINT GetWindowModuleFileNameW(HWND,LPWSTR,UINT);
 BOOL GrayStringA(HDC,HBRUSH,GRAYSTRINGPROC,LPARAM,int,int,int,int,int);
@@ -4028,9 +3963,6 @@ BOOL HideCaret(HWND);
 BOOL HiliteMenuItem(HWND,HMENU,UINT,UINT);
 BOOL InflateRect(LPRECT,int,int);
 BOOL InSendMessage();
-static if ((_WIN32_WINNT >= 0x0500) || (_WIN32_WINDOWS >= 0x0410)) {
-DWORD InSendMessageEx(LPVOID);
-}
 BOOL InsertMenuA(HMENU,UINT,UINT,UINT,LPCSTR);
 BOOL InsertMenuW(HMENU,UINT,UINT,UINT,LPCWSTR);
 BOOL InsertMenuItemA(HMENU,UINT,BOOL,LPCMENUITEMINFOA);
@@ -4053,12 +3985,6 @@ BOOL IsClipboardFormatAvailable(UINT);
 BOOL IsDialogMessageA(HWND,LPMSG);
 BOOL IsDialogMessageW(HWND,LPMSG);
 UINT IsDlgButtonChecked(HWND,int);
-static if (_WIN32_WINNT >= 0x0501) {
-BOOL IsGUIThread(BOOL);
-}
-static if (_WIN32_WINNT >= 0x0500) {
-BOOL IsHungAppWindow(HWND);
-}
 BOOL IsIconic(HWND);
 BOOL IsMenu(HMENU);
 BOOL IsRectEmpty(LPCRECT);
@@ -4066,9 +3992,6 @@ BOOL IsWindow(HWND);
 BOOL IsWindowEnabled(HWND);
 BOOL IsWindowUnicode(HWND);
 BOOL IsWindowVisible(HWND);
-static if (_WIN32_WINNT >= 0x0501) {
-BOOL IsWinEventHookInstalled(DWORD);
-}
 BOOL IsZoomed(HWND);
 void keybd_event(BYTE,BYTE,DWORD,DWORD);
 BOOL KillTimer(HWND,UINT);
@@ -4093,9 +4016,6 @@ HMENU LoadMenuW(HINSTANCE,LPCWSTR);
 int LoadStringA(HINSTANCE,UINT,LPSTR,int);
 int LoadStringW(HINSTANCE,UINT,LPWSTR,int);
 BOOL LockWindowUpdate(HWND);
-static if (_WIN32_WINNT >= 0x0500) {
-BOOL LockWorkStation();
-}
 int LookupIconIdFromDirectory(PBYTE,BOOL);
 int LookupIconIdFromDirectoryEx(PBYTE,BOOL,int,int,UINT);
 BOOL MapDialogRect(HWND,LPRECT);
@@ -4114,18 +4034,10 @@ int MessageBoxIndirectA(MSGBOXPARAMSA*);
 int MessageBoxIndirectW(MSGBOXPARAMSW*);
 BOOL ModifyMenuA(HMENU,UINT,UINT,UINT,LPCSTR);
 BOOL ModifyMenuW(HMENU,UINT,UINT,UINT,LPCWSTR);
-static if (WINVER >= 0x0410) {
-	HMONITOR MonitorFromPoint(POINT,DWORD);
-	HMONITOR MonitorFromRect(LPCRECT,DWORD);
-	HMONITOR MonitorFromWindow(HWND,DWORD);
-}
 void mouse_event(DWORD,DWORD,DWORD,DWORD,ULONG_PTR);
 BOOL MoveWindow(HWND,int,int,int,int,BOOL);
 DWORD MsgWaitForMultipleObjects(DWORD, HANDLE*,BOOL,DWORD,DWORD);
 DWORD MsgWaitForMultipleObjectsEx(DWORD, HANDLE*,DWORD,DWORD,DWORD);
-static if (WINVER >= 0x0500) {
-void NotifyWinEvent(DWORD,HWND,LONG,LONG);
-}
 DWORD OemKeyScan(WORD);
 BOOL OemToCharA(LPCSTR,LPSTR);
 BOOL OemToCharBuffA(LPCSTR,LPSTR,DWORD);
@@ -4147,11 +4059,6 @@ BOOL PostMessageW(HWND,UINT,WPARAM,LPARAM);
 void PostQuitMessage(int);
 BOOL PostThreadMessageA(DWORD,UINT,WPARAM,LPARAM);
 BOOL PostThreadMessageW(DWORD,UINT,WPARAM,LPARAM);
-
-
-static if (_WIN32_WINNT >= 0x0501) {
-BOOL PrintWindow(HWND,HDC,UINT);
-}
 BOOL PtInRect(LPCRECT,POINT);
 HWND RealChildWindowFromPoint(HWND,POINT);
 UINT RealGetWindowClassA(HWND,LPSTR,UINT);
@@ -4163,14 +4070,7 @@ ATOM RegisterClassExA(WNDCLASSEXA*);
 ATOM RegisterClassExW(WNDCLASSEXW*);
 UINT RegisterClipboardFormatA(LPCSTR);
 UINT RegisterClipboardFormatW(LPCWSTR);
-static if (WINVER >= 0x0500) {
-HDEVNOTIFY RegisterDeviceNotificationA(HANDLE,LPVOID,DWORD);
-HDEVNOTIFY RegisterDeviceNotificationW(HANDLE,LPVOID,DWORD);
-}
 BOOL RegisterHotKey(HWND,int,UINT,UINT);
-static if (_WIN32_WINNT >= 0x0501) {
-BOOL RegisterRawInputDevices(PCRAWINPUTDEVICE,UINT,UINT);
-}
 UINT RegisterWindowMessageA(LPCSTR);
 UINT RegisterWindowMessageW(LPCWSTR);
 BOOL ReleaseCapture();
@@ -4185,9 +4085,6 @@ BOOL ScrollWindow(HWND,int,int,LPCRECT,LPCRECT);
 int ScrollWindowEx(HWND,int,int,LPCRECT,LPCRECT,HRGN,LPRECT,UINT);
 LONG SendDlgItemMessageA(HWND,int,UINT,WPARAM,LPARAM);
 LONG SendDlgItemMessageW(HWND,int,UINT,WPARAM,LPARAM);
-static if (_WIN32_WINNT >= 0x0403) {
-UINT SendInput(UINT,LPINPUT,int);
-}
 LRESULT SendMessageA(HWND,UINT,WPARAM,LPARAM);
 BOOL SendMessageCallbackA(HWND,UINT,WPARAM,LPARAM,SENDASYNCPROC,DWORD);
 BOOL SendMessageCallbackW(HWND,UINT,WPARAM,LPARAM,SENDASYNCPROC,DWORD);
@@ -4225,9 +4122,6 @@ BOOL SetMenuItemInfoW( HMENU,UINT,BOOL,LPCMENUITEMINFOW);
 LPARAM SetMessageExtraInfo(LPARAM);
 BOOL SetMessageQueue(int);
 HWND SetParent(HWND,HWND);
-static if (_WIN32_WINNT >= 0x0500) {
-BOOL SetProcessDefaultLayout(DWORD);
-}
 BOOL SetProcessWindowStation(HWINSTA);
 BOOL SetPropA(HWND,LPCSTR,HANDLE);
 BOOL SetPropW(HWND,LPCWSTR,HANDLE);
@@ -4237,28 +4131,15 @@ int SetScrollInfo(HWND,int,LPCSCROLLINFO,BOOL);
 int SetScrollPos(HWND,int,int,BOOL);
 BOOL SetScrollRange(HWND,int,int,int,BOOL);
 BOOL SetSysColors(int, INT *, COLORREF *);
-
 BOOL SetSystemCursor(HCURSOR,DWORD);
 BOOL SetThreadDesktop(HDESK);
 UINT SetTimer(HWND,UINT,UINT,TIMERPROC);
 BOOL SetUserObjectInformationA(HANDLE,int,PVOID,DWORD);
 BOOL SetUserObjectInformationW(HANDLE,int,PVOID,DWORD);
 BOOL SetUserObjectSecurity(HANDLE,PSECURITY_INFORMATION,PSECURITY_DESCRIPTOR);
-static if (WINVER >= 0x0500) {
-HWINEVENTHOOK SetWinEventHook(UINT,UINT,HMODULE,WINEVENTPROC,DWORD,DWORD,UINT);
-}
 BOOL SetWindowContextHelpId(HWND,DWORD);
 LONG SetWindowLongA(HWND,int,LONG);
 LONG SetWindowLongW(HWND,int,LONG);
-
-version (Win64) {
-LONG_PTR SetWindowLongPtrA(HWND,int,LONG_PTR);
-LONG_PTR SetWindowLongPtrW(HWND,int,LONG_PTR);
-} else {
-alias SetWindowLongA SetWindowLongPtrA;
-alias SetWindowLongW SetWindowLongPtrW;
-}
-
 BOOL SetWindowPlacement(HWND hWnd, WINDOWPLACEMENT*);
 BOOL SetWindowPos(HWND,HWND,int,int,int,int,UINT);
 int SetWindowRgn(HWND,HRGN,BOOL);
@@ -4278,9 +4159,6 @@ BOOL ShowWindowAsync(HWND,int);
 BOOL SubtractRect(LPRECT,LPCRECT,LPCRECT);
 BOOL SwapMouseButton(BOOL);
 BOOL SwitchDesktop(HDESK);
-static if (_WIN32_WINNT >= 0x0500) {
-void SwitchToThisWindow(HWND,BOOL);
-}
 BOOL SystemParametersInfoA(UINT,UINT,PVOID,UINT);
 BOOL SystemParametersInfoW(UINT,UINT,PVOID,UINT);
 LONG TabbedTextOutA(HDC,int,int,LPCSTR,int,int,LPINT,int);
@@ -4299,21 +4177,12 @@ BOOL TranslateMDISysAccel(HWND,LPMSG);
 BOOL TranslateMessage( MSG*);
 BOOL UnhookWindowsHook(int,HOOKPROC);
 BOOL UnhookWindowsHookEx(HHOOK);
-static if (WINVER >= 0x0500) {
-BOOL UnhookWinEvent(HWINEVENTHOOK);
-}
 BOOL UnionRect(LPRECT,LPCRECT,LPCRECT);
 BOOL UnloadKeyboardLayout(HKL);
 BOOL UnregisterClassA(LPCSTR,HINSTANCE);
 BOOL UnregisterClassW(LPCWSTR,HINSTANCE);
-static if (WINVER >= 0x0500) {
-BOOL UnregisterDeviceNotification(HANDLE);
-}
 BOOL UnregisterHotKey(HWND,int);
 BOOL UpdateWindow(HWND);
-static if (_WIN32_WINNT >= 0x0500) {
-BOOL UserHandleGrantAccess(HANDLE,HANDLE,BOOL);
-}
 BOOL ValidateRect(HWND,LPCRECT);
 BOOL ValidateRgn(HWND,HRGN);
 SHORT VkKeyScanA(CHAR);
@@ -4338,18 +4207,91 @@ typedef char * va_list_;
 int wvsprintfA(LPSTR,LPCSTR, va_list_ arglist);
 int wvsprintfW(LPWSTR,LPCWSTR,va_list_ arglist);
 
+static if (_WIN32_WINDOWS == 0x400) {
+// On Win95, there's only one version.
+int BroadcastSystemMessage(DWORD,LPDWORD,UINT,WPARAM,LPARAM);
+}
+static if (_WIN32_WINNT >= 0x0400) {
+int BroadcastSystemMessageA(DWORD,LPDWORD,UINT,WPARAM,LPARAM);
+int BroadcastSystemMessageW(DWORD,LPDWORD,UINT,WPARAM,LPARAM);
+}
+static if (_WIN32_WINNT >= 0x0501) {
+int BroadcastSystemMessageExA(DWORD,LPDWORD,UINT,WPARAM,LPARAM,PBSMINFO);
+int BroadcastSystemMessageExW(DWORD,LPDWORD,UINT,WPARAM,LPARAM,PBSMINFO);
+}
 
+static if (_WIN32_WINNT >= 0x0403) {
+UINT SendInput(UINT,LPINPUT,int);
+}
+static if (_WIN32_WINNT >= 0x0500) {
+BOOL AnimateWindow(HWND,DWORD,DWORD);
+BOOL EndTask(HWND,BOOL,BOOL);
+DWORD GetGuiResources(HANDLE,DWORD);
+HWND GetShellWindow();
+BOOL GetProcessDefaultLayout(DWORD*);
+BOOL IsHungAppWindow(HWND);
+BOOL LockWorkStation();
+HDEVNOTIFY RegisterDeviceNotificationA(HANDLE,LPVOID,DWORD);
+HDEVNOTIFY RegisterDeviceNotificationW(HANDLE,LPVOID,DWORD);
+BOOL SetProcessDefaultLayout(DWORD);
+void SwitchToThisWindow(HWND,BOOL);
+BOOL SetLayeredWindowAttributes(HWND,COLORREF,BYTE,DWORD);
+BOOL UpdateLayeredWindow(HWND,HDC,POINT*,SIZE*,HDC,POINT*,COLORREF,BLENDFUNCTION*,DWORD);
+BOOL UserHandleGrantAccess(HANDLE,HANDLE,BOOL);
+}
+static if (_WIN32_WINNT >= 0x0501) {
+UINT GetRawInputBuffer(PRAWINPUT,PUINT,UINT);
+UINT GetRawInputData(HRAWINPUT,UINT,LPVOID,PUINT,UINT);
+UINT GetRawInputDeviceInfoA(HANDLE,UINT,LPVOID,PUINT);
+UINT GetRawInputDeviceInfoW(HANDLE,UINT,LPVOID,PUINT);
+UINT GetRawInputDeviceList(PRAWINPUTDEVICELIST,PUINT,UINT);
+UINT GetRegisteredRawInputDevices(PRAWINPUTDEVICE,PUINT,UINT);
+LRESULT DefRawInputProc(PRAWINPUT*,INT,UINT);
+BOOL RegisterRawInputDevices(PCRAWINPUTDEVICE,UINT,UINT);
+
+BOOL IsGUIThread(BOOL);
+BOOL IsWinEventHookInstalled(DWORD);
+BOOL PrintWindow(HWND,HDC,UINT);
+BOOL GetLayeredWindowAttributes(HWND,COLORREF*,BYTE*,DWORD*);
+}
+static if (WINVER >= 0x0410) {
+	BOOL EnumDisplayMonitors(HDC,LPCRECT,MONITORENUMPROC,LPARAM);
+	BOOL GetMonitorInfoA(HMONITOR,LPMONITORINFO);
+	BOOL GetMonitorInfoW(HMONITOR,LPMONITORINFO);
+	HMONITOR MonitorFromPoint(POINT,DWORD);
+	HMONITOR MonitorFromRect(LPCRECT,DWORD);
+	HMONITOR MonitorFromWindow(HWND,DWORD);
+}
+static if (WINVER >= 0x0500) {
+BOOL GetGUIThreadInfo(DWORD,LPGUITHREADINFO);
+void NotifyWinEvent(DWORD,HWND,LONG,LONG);
+HWINEVENTHOOK SetWinEventHook(UINT,UINT,HMODULE,WINEVENTPROC,DWORD,DWORD,UINT);
+BOOL UnhookWinEvent(HWINEVENTHOOK);
+BOOL UnregisterDeviceNotification(HANDLE);
+}
+static if ((_WIN32_WINNT >= 0x0500) || (_WIN32_WINDOWS >= 0x0410)) {
+BOOL EnumDisplaySettingsExA(LPCSTR,DWORD,LPDEVMODEA,DWORD);
+BOOL EnumDisplaySettingsExW(LPCWSTR,DWORD,LPDEVMODEW,DWORD);
+BOOL FlashWindowEx(PFLASHWINFO);
+DWORD GetClipboardSequenceNumber();
+DWORD InSendMessageEx(LPVOID);
+}
 static if ((_WIN32_WINNT >= 0x0500) || (_WIN32_WINDOWS >= 0x0490)) {
 BOOL AllowSetForegroundWindow(DWORD);
 BOOL LockSetForegroundWindow(UINT);
+int GetMouseMovePointsEx(UINT,LPMOUSEMOVEPOINT,LPMOUSEMOVEPOINT,int,DWORD);
 }
-static if (_WIN32_WINNT >= 0x0500) {
-BOOL SetLayeredWindowAttributes(HWND,COLORREF,BYTE,DWORD);
-BOOL UpdateLayeredWindow(HWND,HDC,POINT*,SIZE*,HDC,POINT*,COLORREF,BLENDFUNCTION*,DWORD);
 
-}
-static if (_WIN32_WINNT >= 0x0501) {
-BOOL GetLayeredWindowAttributes(HWND,COLORREF*,BYTE*,DWORD*);
+version (Win64) {
+LONG_PTR GetWindowLongPtrA(HWND,int);
+LONG_PTR GetWindowLongPtrW(HWND,int);
+LONG_PTR SetWindowLongPtrA(HWND,int,LONG_PTR);
+LONG_PTR SetWindowLongPtrW(HWND,int,LONG_PTR);
+} else {
+alias GetWindowLongA GetWindowLongPtrA;
+alias GetWindowLongW GetWindowLongPtrW;
+alias SetWindowLongA SetWindowLongPtrA;
+alias SetWindowLongW SetWindowLongPtrW;
 }
 
 
