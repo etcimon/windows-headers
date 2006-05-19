@@ -211,6 +211,24 @@ struct NUMPARSE {
 
 align:
 
+
+
+ // DAC: In MinGW, these were declared but not defined in oaidl.
+ // The SDK docs suggest they belong in this file instead.
+
+deprecated {  // not actually deprecated, but they aren't converted yet.
+interface ICreateTypeInfo {};
+interface ICreateTypeInfo2 {};
+interface ICreateTypeLib {};
+interface ICreateTypeLib2 {};
+}
+
+alias ICreateTypeInfo *LPCREATETYPEINFO;
+alias ICreateTypeInfo2 *LPCREATETYPEINFO2;
+alias ICreateTypeLib *LPCREATETYPELIB;
+alias ICreateTypeLib2 *LPCREATETYPELIB2;
+
+
 extern (Windows) {
 
 BSTR SysAllocString( OLECHAR*);

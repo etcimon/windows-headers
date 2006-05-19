@@ -7,8 +7,11 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
-// Note: USER_POSIX_ID_PARMNUM and GROUP_POSIX_ID_PARMNUM aren't in MinGW or in the Platform SDK docs,
-// so they have been dropped from this file.
+/**
+ Changes relative to MinGW:
+	USER_POSIX_ID_PARMNUM and GROUP_POSIX_ID_PARMNUM aren't in MinGW or in the Platform SDK docs,
+ so they have been dropped from this file.
+*/
 
 module win32.lmaccess;
 private import win32.windef;

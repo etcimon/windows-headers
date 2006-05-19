@@ -7,8 +7,6 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
-// TODO: Sort out LPCREATETYPEINFO etc.
-
 module win32.oaidl;
 
 private import win32.basetyps;
@@ -750,21 +748,3 @@ alias IEnumVARIANT *LPENUMVARIANT;
 alias ICreateErrorInfo *LPCREATEERRORINFO;
 alias ISupportErrorInfo *LPSUPPORTERRORINFO;
 alias IRecordInfo *LPRECORDINFO;
-
-
- // DAC: TODO: why aren't these defined anywhere in MinGW?
- 
-extern interface ICreateTypeInfo;
-extern interface ICreateTypeInfo2;
-extern interface ICreateTypeLib;
-extern interface ICreateTypeLib2;
-
-alias ICreateTypeInfo *LPCREATETYPEINFO;
-alias ICreateTypeInfo2 *LPCREATETYPEINFO2;
-alias ICreateTypeLib *LPCREATETYPELIB;
-alias ICreateTypeLib2 *LPCREATETYPELIB2;
-/*
-alias ICreateTypeInfo2 *LPCREATETYPEINFO2;
-alias ICreateTypeLib *LPCREATETYPELIB;
-alias ICreateTypeLib2 *LPCREATETYPELIB2;
-*/

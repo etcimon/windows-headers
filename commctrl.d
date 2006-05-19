@@ -4619,7 +4619,7 @@ extern (Windows) {
 		HIMAGELIST ImageList_Duplicate(HIMAGELIST himl);
 	}
 	
-	void InitCommonControls(void);
+	void InitCommonControls();
 	
 	static if (_WIN32_IE >= 0x0300) {
 		BOOL InitCommonControlsEx(LPINITCOMMONCONTROLSEX);
