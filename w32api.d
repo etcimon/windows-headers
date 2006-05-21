@@ -75,7 +75,7 @@ version (IE6) {
 } else version (IE4) {
 	const uint _WIN32_IE = 0x400;
 } else version (IE3) {
-	const uint _WIN32_IE = 0x400;
+	const uint _WIN32_IE = 0x300;
 } else static if (WINVER >= 0x410) {
 	const uint _WIN32_IE = 0x400;
 } else {

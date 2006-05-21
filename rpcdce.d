@@ -15,6 +15,8 @@ private import win32.w32api;
 
 public import win32.rpcdcep;
 
+// FIXME: clean up Windows version support
+
 alias UUID uuid_t;
 alias UUID_VECTOR uuid_vector_t;
 

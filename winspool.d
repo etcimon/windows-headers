@@ -13,6 +13,8 @@ private import win32.windef;
 private import win32.wingdi;
 private import win32.winbase; // for SYSTEMTIME
 
+// FIXME: clean up Windows version support
+
 const DI_CHANNEL=1;
 const DI_CHANNEL_WRITE=2;
 const DI_READ_SPOOL_JOB=3;

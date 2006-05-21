@@ -91,8 +91,8 @@ enum COINIT {
 }
 
 enum STDMSHLFLAGS {
-    SMEXF_SERVER  = 0x01,
-    SMEXF_HANDLER = 0x02
+	SMEXF_SERVER  = 0x01,
+	SMEXF_HANDLER = 0x02
 }
 
 extern(Windows) {

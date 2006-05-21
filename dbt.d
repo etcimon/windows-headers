@@ -12,6 +12,8 @@ module win32.dbt;
 
 private import win32.windef, win32.w32api;
 
+// FIXME: clean up Windows version support
+
 enum : DWORD {
 	DBT_NO_DISK_SPACE           = 0x47,
 	DBT_CONFIGMGPRIVATE         = 0x7FFF,
@@ -114,7 +116,7 @@ struct DEV_BROADCAST_PORT_A {
 	DWORD dbcp_reserved;
 	char _dbcp_name[1];
 	char* dbcp_name() { return _dbcp_name.ptr; }
-} 
+}
 alias DEV_BROADCAST_PORT_A* PDEV_BROADCAST_PORT_A;
 
 struct DEV_BROADCAST_PORT_W {
@@ -156,9 +158,9 @@ static if ((_WIN32_WINDOWS >= 0x0410) || (_WIN32_WINNT >= 0x0500)) {
 		GUID  dbcc_classguid;
 		char  _dbcc_name[1];
 		char* dbcc_name() { return _dbcc_name.ptr; }
-	} 
+	}
 	alias DEV_BROADCAST_DEVICEINTERFACE_A* PDEV_BROADCAST_DEVICEINTERFACE_A;
-	
+
 	struct DEV_BROADCAST_DEVICEINTERFACE_W {
 		DWORD dbcc_size = DEV_BROADCAST_DEVICEINTERFACE_W.sizeof;
 		DWORD dbcc_devicetype;
@@ -168,14 +170,14 @@ static if ((_WIN32_WINDOWS >= 0x0410) || (_WIN32_WINNT >= 0x0500)) {
 		WCHAR* dbcc_name() { return _dbcc_name.ptr; }
 	}
 	alias DEV_BROADCAST_DEVICEINTERFACE_W* PDEV_BROADCAST_DEVICEINTERFACE_W;
-	
+
 	version (Unicode) {
 		alias DEV_BROADCAST_DEVICEINTERFACE_W DEV_BROADCAST_DEVICEINTERFACE;
 	} else {
 		alias DEV_BROADCAST_DEVICEINTERFACE_A DEV_BROADCAST_DEVICEINTERFACE;
 	}
 	alias DEV_BROADCAST_DEVICEINTERFACE* PDEV_BROADCAST_DEVICEINTERFACE;
-	
+
 	struct DEV_BROADCAST_HANDLE {
 		DWORD  dbch_size = DEV_BROADCAST_HANDLE.sizeof;
 		DWORD  dbch_devicetype;

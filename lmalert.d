@@ -13,7 +13,7 @@ private import win32.windef;
 
 
 const TCHAR[]
-	ALERTER_MAILSLOT     = "\\\\.\\MAILSLOT\\Alerter",
+	ALERTER_MAILSLOT     = `\\.\MAILSLOT\Alerter`,
 	ALERT_PRINT_EVENT    = "PRINTING",
 	ALERT_MESSAGE_EVENT  = "MESSAGE",
 	ALERT_ERRORLOG_EVENT = "ERRORLOG",

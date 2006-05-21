@@ -32,7 +32,7 @@ version (Unicode) {
 	alias DXTraceA DXTrace;
 }
 
-debug {
+debug (dxerr) {
 	version (Unicode) {
 		HRESULT DXTRACE_MSG (WCHAR* str) {
 			return DXTrace(__FILE__, cast(DWORD)__LINE__, 0, str, FALSE);

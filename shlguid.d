@@ -12,6 +12,8 @@ module win32.shlguid;
 private import win32.basetyps;
 private import win32.w32api;
 
+// FIXME: clean up Windows version support
+
 // I think this is just a helper macro for other win32 headers?
 //MACRO #define DEFINE_SHLGUID(n,l,w1,w2) DEFINE_GUID(n,l,w1,w2,0xC0,0,0,0,0,0,0,0x46)
 
@@ -78,16 +80,15 @@ extern (C) {
 	extern GUID CLSID_ACListISF;
 	extern GUID IID_IACList;
 
-static if (_WIN32_IE >= 0x400 || _WIN32_WINNT >= 0x500) {
-	extern GUID IID_IPersistFolder2;
-}
+	static if (_WIN32_IE >= 0x400 || _WIN32_WINNT >= 0x500) {
+		extern GUID IID_IPersistFolder2;
+	}
 
-static if (_WIN32_WINNT >= 0x0500) {
-	extern GUID IID_IPersistFolder3;
-	extern GUID IID_IShellFolder2;
-	extern GUID IID_IFileSystemBindData;
-}
-
+	static if (_WIN32_WINNT >= 0x0500) {
+		extern GUID IID_IPersistFolder3;
+		extern GUID IID_IShellFolder2;
+		extern GUID IID_IFileSystemBindData;
+	}
 }
 
 alias IID_IShellBrowser SID_SShellBrowser;

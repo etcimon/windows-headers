@@ -14,6 +14,8 @@ import win32.windef;
 private import win32.w32api;
 private import win32.winnt;
 
+// FIXME: clean up Windows version support
+
 // FIXME:
 alias void va_list;
 
@@ -895,7 +897,7 @@ struct DCB {
 	void fRtsControl(byte x)     { _bf = (_bf & ~(4096+8192)) | (x<<12); }
 	void fAbortOnError(bool f)   { _bf = (_bf & ~16384) | (f<<14); }
 
-    bool fBinary()         { return cast(bool) (_bf & 1); }
+	bool fBinary()         { return cast(bool) (_bf & 1); }
 	bool fParity()         { return cast(bool) (_bf & 2); }
 	bool fOutxCtsFlow()    { return cast(bool) (_bf & 4); }
 	bool fOutxDsrFlow()    { return cast(bool) (_bf & 8); }

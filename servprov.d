@@ -12,13 +12,9 @@ private import win32.unknwn;
 private import win32.wtypes;
 
 extern (C) {
-extern IID IID_IServiceProvider;
+	extern IID IID_IServiceProvider;
 }
 
-interface IServiceProvider : public IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT QueryService(REFGUID,REFIID,void**);
+interface IServiceProvider : public IUnknown {
+	HRESULT QueryService(REFGUID, REFIID, void**);
 }

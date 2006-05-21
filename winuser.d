@@ -24,6 +24,8 @@ private import win32.winbase;
 private import win32.wingdi;
 private import win32.windef; // for HMONITOR
 
+// FIXME: clean up Windows version support
+
 template MAKEINTATOM_T (int i)
 {
 	const LPTSTR MAKEINTATOM_T = cast(LPTSTR)(i);

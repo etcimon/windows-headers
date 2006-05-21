@@ -13,6 +13,8 @@ module win32.wincon;
 private import win32.w32api;
 private import win32.windef;
 
+// FIXME: clean up Windows version support
+
 enum {
 	FOREGROUND_BLUE      = 1,
 	FOREGROUND_GREEN     = 2,
@@ -140,7 +142,7 @@ struct KEY_EVENT_RECORD {
 		CHAR AsciiChar;
 	}
 	DWORD dwControlKeyState;
-} 
+}
 
 struct MOUSE_EVENT_RECORD {
 	COORD dwMousePosition;

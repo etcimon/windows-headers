@@ -19,8 +19,11 @@ private import win32.winnetwk; // for NETRESOURCE
 import win32.ole2;
 import win32.shlguid;
 import win32.shellapi;
-align(1) :
 import win32.commctrl;
+
+// FIXME: clean up Windows version support
+
+align(1):
 
 const BIF_RETURNONLYFSDIRS = 1;
 const BIF_DONTGOBELOWDOMAIN = 2;
@@ -234,7 +237,7 @@ const TCHAR []
 	CFSTR_FILENAMEMAPW      = "FileNameMapW",
 	CFSTR_FILEDESCRIPTORW   = "FileGroupDescriptorW",
 	CFSTR_INETURLW          = "UniformResourceLocatorW";
-	
+
 version(Unicode) {
 	alias CFSTR_FILENAMEW CFSTR_FILENAME;
 	alias CFSTR_FILENAMEMAPW CFSTR_FILENAMEMAP;
@@ -612,22 +615,22 @@ static if (_WIN32_IE >= 0x0500) {
 		WCHAR wszUrl[2084];
 	}
 	alias EXTRASEARCH* LPEXTRASEARCH;
-	
+
 	alias DWORD SHCOLSTATEF;
-	
+
 	struct SHCOLUMNID {
 		GUID fmtid;
 		DWORD pid;
 	}
 	alias SHCOLUMNID* LPSHCOLUMNID, LPCSHCOLUMNID;
-	
+
 	struct SHELLDETAILS {
 		int fmt;
 		int cxChar;
 		STRRET str;
 	}
 	alias SHELLDETAILS* LPSHELLDETAILS;
-	
+
 	struct PERSIST_FOLDER_TARGET_INFO
 	{
 		LPITEMIDLIST pidlTargetFolder;
@@ -636,7 +639,7 @@ static if (_WIN32_IE >= 0x0500) {
 		DWORD dwAttributes;
 		int csidl;
 	}
-	
+
 	enum SHGFP_TYPE {
 		SHGFP_TYPE_CURRENT = 0,
 		SHGFP_TYPE_DEFAULT = 1,
@@ -697,7 +700,7 @@ static if (_WIN32_IE >= 0x0500) {
 		WCHAR wszFolder[MAX_PATH];
 	}
 	alias SHCOLUMNINIT* LPSHCOLUMNINIT, LPCSHCOLUMNINIT;
-	
+
 	struct SHCOLUMNDATA {
 		ULONG dwFlags;
 		DWORD dwFileAttributes;
@@ -707,10 +710,10 @@ static if (_WIN32_IE >= 0x0500) {
 	}
 	alias SHCOLUMNDATA* LPSHCOLUMNDATA, LPCSHCOLUMNDATA;
 	align:
-	
+
 	const MAX_COLUMN_NAME_LEN = 80;
 	const MAX_COLUMN_DESC_LEN = 128;
-	
+
 	align(1):
 	struct SHCOLUMNINFO {
 		SHCOLUMNID scid;
@@ -723,7 +726,7 @@ static if (_WIN32_IE >= 0x0500) {
 	}
 	alias SHCOLUMNINFO* LPSHCOLUMNINFO, LPCSHCOLUMNINFO;
 	align:
-	
+
 	enum SHCOLSTATE {
 		SHCOLSTATE_TYPE_STR      = 0x00000001,
 		SHCOLSTATE_TYPE_INT      = 0x00000002,
@@ -736,7 +739,7 @@ static if (_WIN32_IE >= 0x0500) {
 		SHCOLSTATE_HIDDEN        = 0x00000100,
 		SHCOLSTATE_PREFER_VARCMP = 0x00000200
 	}
-	
+
 	interface IColumnProvider : public IUnknown
 	{
 		HRESULT QueryInterface(REFIID,PVOID*);
@@ -1138,7 +1141,7 @@ struct SHELLFLAGSTATE {
 	BOOL fShowInfoTip : 1;
 	BOOL fHideIcons : 1;
 	UINT fRestFlags : 3;
-*/	
+*/
 }
 alias SHELLFLAGSTATE* LPSHELLFLAGSTATE;
 
@@ -1200,7 +1203,7 @@ static if (_WIN32_WINNT >= 0x0500) {/* W2K */
 		BOOL fStartPanelOn : 1;
 		BOOL fShowStartPage : 1;
 		UINT fSpareFlags : 13;
-*/		
+*/
 	}
 	alias SHELLSTATE* LPSHELLSTATE;
 }
@@ -1215,7 +1218,7 @@ static if (_WIN32_IE >= 0x0500) {
 	}
 	alias SHDRAGIMAGE* LPSHDRAGIMAGE;
 	align:
-	
+
 	interface IDragSourceHelper : public IUnknown
 	{
 		HRESULT QueryInterface(REFIID riid, void **ppv);
@@ -1224,7 +1227,7 @@ static if (_WIN32_IE >= 0x0500) {
 		HRESULT InitializeFromBitmap(LPSHDRAGIMAGE pshdi, IDataObject* pDataObject);
 		HRESULT InitializeFromWindow(HWND hwnd, POINT* ppt, IDataObject* pDataObject);
 	}
-	
+
 	interface IDropTargetHelper : public IUnknown
 	{
 		HRESULT QueryInterface(REFIID riid, void** ppv);
@@ -1298,7 +1301,7 @@ static if (_WIN32_WINNT >= 0x0500) {/* W2K */
 	LPITEMIDLIST ILGetNext(LPCITEMIDLIST);
 	UINT ILGetSize(LPCITEMIDLIST);
 	void ILFree(LPITEMIDLIST);
-	
+
 	HRESULT SHCoCreateInstance(LPCWSTR,REFCLSID,IUnknown*,REFIID,void**);
 }
 

@@ -14,6 +14,8 @@ private import win32.oleidl;
 private import win32.objidl;
 private import win32.oaidl;
 
+// FIXME: remove inherited methods from interface definitions
+
 const OLECMDERR_E_UNKNOWNGROUP = -2147221244;
 const OLECMDERR_E_CANCELED     = -2147221245;
 const OLECMDERR_E_NOHELP       = -2147221246;

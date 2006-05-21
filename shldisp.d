@@ -12,24 +12,14 @@ private import win32.unknwn;
 
 const ACO_AUTOSUGGEST = 0x01;
 
-interface IAutoComplete : public IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT Init(HWND,IUnknown*,LPCOLESTR,LPCOLESTR);
+interface IAutoComplete : public IUnknown {
+	HRESULT Init(HWND, IUnknown*, LPCOLESTR, LPCOLESTR);
 	HRESULT Enable(BOOL);
-};
-alias IAutoComplete *LPAUTOCOMPLETE;
+}
+alias IAutoComplete* LPAUTOCOMPLETE;
 
-interface IAutoComplete2 : public IAutoComplete
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT Init(HWND,IUnknown*,LPCOLESTR,LPCOLESTR);
-	HRESULT Enable(BOOL);
+interface IAutoComplete2 : public IAutoComplete {
 	HRESULT SetOptions(DWORD);
 	HRESULT GetOptions(DWORD*);
-};
-alias IAutoComplete2 *LPAUTOCOMPLETE2;
+}
+alias IAutoComplete2* LPAUTOCOMPLETE2;

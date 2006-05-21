@@ -12,6 +12,8 @@ module win32.mswsock;
 
 private import win32.w32api;
 
+// FIXME: clean up Windows version support
+
 import win32.winbase;
 import win32.windef;
 
@@ -46,7 +48,7 @@ static if( _WIN32_WINNT > 0x400 )
 		SO_CONNOPTLEN   = 0x7005,
 		SO_DISCDATALEN  = 0x7006,
 		SO_DISCOPTLEN   = 0x7007,
-		
+
 		/* WinNT4:
 		   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/socket_options.htm */
 		SO_UPDATE_ACCEPT_CONTENT = 0x700B,
@@ -57,13 +59,13 @@ static if( WINVER > 0x400 )
 		/* Win95+, WinNT4+ but apparently shouldn't used: mark as deprecated?
 		   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/socket_options.htm */
 		SO_OPENTYPE     = 0x7008,
-		
+
 		/* Win95+; these two are passed to the SO_OPENTYPE option as arguments,
 		   so would they be deprecated as well?
 		   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/socket_options.htm */
 		SO_SYNCHRONOUS_ALERT    = 0x10,
 		SO_SYNCHRONOUS_NONALERT = 0x20,
-		
+
 		/* Win95:
 		   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/socket_options.htm */
 		SO_CONNECT_TIME          = 0x700C,
@@ -104,7 +106,7 @@ extern(Windows) {
 	static if( _WIN32_WINDOWS > 0x400 || _WIN32_WINNT > 0x351 )
 	{
 		/* Win95+, WinNT3.51+
-		   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/wsarecvex_2.htm */	
+		   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/wsarecvex_2.htm */
 		int WSARecvEx(SOCKET, char*, int, int*);
 
 		/* Win95+, WinNT3.51+
@@ -117,7 +119,7 @@ extern(Windows) {
 		/* WinNT3.51+
 		   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/transmitfile_2.htm */
 		BOOL TransmitFile(SOCKET, HANDLE, DWORD, DWORD, LPOVERLAPPED, LPTRANSMIT_FILE_BUFFERS, DWORD);
-		
+
 		/* WinNT3.51+
 		   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/acceptex_2.htm */
 		BOOL AcceptEx(SOCKET, SOCKET, PVOID, DWORD, DWORD, DWORD, LPDWORD, LPOVERLAPPED);
@@ -134,7 +136,7 @@ version(Win32_Winsock2) {
             TP_ELEMENT_MEMORY = 2,
             TP_ELEMENT_EOP    = 4
         }
-        
+
         /* WinXP+, Srv2k3+
            ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/transmit_packets_element_2.htm */
         struct TRANSMIT_PACKETS_ELEMENT {
@@ -148,7 +150,7 @@ version(Win32_Winsock2) {
                 PVOID pBuffer;
             }
         }
-        
+
         /* WinXP+, Server2003+:
            ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/wsamsg_2.htm */
         struct WSAMSG {
@@ -159,9 +161,9 @@ version(Win32_Winsock2) {
             WSABUF     Control;
             DWORD      dwFlags;
         }
-        
+
         alias WSAMSG* PWSAMSG, LPWSAMSG;
-        
+
         /* According to MSDN docs, the WSAMSG.Control buffer starts with a
            cmsghdr header of the following form.  See also RFC 2292. */
         /* DK: Confirmed.  So I suppose these should get the same version as
@@ -190,7 +192,7 @@ version(Win32_Winsock2) {
             /* WinXP+, Srv2k3+
                ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/disconnectex_2.htm */
             BOOL DisconnectEx(SOCKET, LPOVERLAPPED, DWORD, DWORD);
-            
+
             /* WinXP+, Srv2k3+
                ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/wsarecvmsg_2.htm */
             int WSARecvMsg(SOCKET, LPWSAMSG, LPDWORD, LPWSAOVERLAPPED, LPWSAOVERLAPPED_COMPLETION_ROUTINE);

@@ -16,39 +16,30 @@ private import win32.wtypes;
 
 
 enum BrowserNavConstants {
-	navOpenInNewWindow = 0x1,
-	navNoHistory = 0x2,
-	navNoReadFromCache = 0x4,
-	navNoWriteTocache = 0x8,
+	navOpenInNewWindow = 0x01,
+	navNoHistory       = 0x02,
+	navNoReadFromCache = 0x04,
+	navNoWriteTocache  = 0x08,
 	navAllowAutosearch = 0x10,
-	navBrowserBar = 0x20,
-	navHyperLink = 0x40
+	navBrowserBar      = 0x20,
+	navHyperLink       = 0x40
 }
 
 extern (C) {
-extern CLSID CLSID_WebBrowser;
-extern IID DIID_DWebBrowserEvents;
-extern IID IID_IWebBrowser;
-extern IID IID_IWebBrowserApp;
-extern IID IID_IWebBrowser2;
-extern IID DIID_DWebBrowserEvents2;
+	extern CLSID CLSID_WebBrowser;
+	extern IID DIID_DWebBrowserEvents;
+	extern IID IID_IWebBrowser;
+	extern IID IID_IWebBrowserApp;
+	extern IID IID_IWebBrowser2;
+	extern IID DIID_DWebBrowserEvents2;
 }
 
-interface IWebBrowser : public IDispatch
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT GetTypeInfoCount(UINT*);
-	HRESULT GetTypeInfo(UINT,LCID,LPTYPEINFO*);
-	HRESULT GetIDsOfNames(REFIID,LPOLESTR*,UINT,LCID,DISPID*);
-	HRESULT Invoke(DISPID,REFIID,LCID,WORD,DISPPARAMS*,VARIANT*,EXCEPINFO*,UINT*);
-
+interface IWebBrowser : public IDispatch {
 	HRESULT GoBack();
 	HRESULT GoForward();
 	HRESULT GoHome();
 	HRESULT GoSearch();
-	HRESULT Navigate(BSTR,VARIANT*,VARIANT*,VARIANT*,VARIANT*);
+	HRESULT Navigate(BSTR, VARIANT*, VARIANT*, VARIANT*, VARIANT*);
 	HRESULT Refresh();
 	HRESULT Refresh2(VARIANT*);
 	HRESULT Stop();
@@ -71,46 +62,11 @@ interface IWebBrowser : public IDispatch
 	HRESULT get_Busy(VARIANT_BOOL*);
 }
 
-interface IWebBrowserApp : public IWebBrowser
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT GetTypeInfoCount(UINT*);
-	HRESULT GetTypeInfo(UINT,LCID,LPTYPEINFO*);
-	HRESULT GetIDsOfNames(REFIID,LPOLESTR*,UINT,LCID,DISPID*);
-	HRESULT Invoke(DISPID,REFIID,LCID,WORD,DISPPARAMS*,VARIANT*,EXCEPINFO*,UINT*);
-
-	HRESULT GoBack();
-	HRESULT GoForward();
-	HRESULT GoHome();
-	HRESULT GoSearch();
-	HRESULT Navigate(BSTR,VARIANT*,VARIANT*,VARIANT*,VARIANT*);
-	HRESULT Refresh();
-	HRESULT Refresh2(VARIANT*);
-	HRESULT Stop();
-	HRESULT get_Application(IDispatch**);
-	HRESULT get_Parent(IDispatch**);
-	HRESULT get_Container(IDispatch**);
-	HRESULT get_Document(IDispatch**);
-	HRESULT get_TopLevelContainer(VARIANT_BOOL*);
-	HRESULT get_Type(BSTR*);
-	HRESULT get_Left(long*);
-	HRESULT put_Left(long);
-	HRESULT get_Top(long*);
-	HRESULT put_Top(long);
-	HRESULT get_Width(long*);
-	HRESULT put_Width(long);
-	HRESULT get_Height(long*);
-	HRESULT put_Height(long);
-	HRESULT get_LocationName(BSTR*);
-	HRESULT get_LocationURL(BSTR*);
-	HRESULT get_Busy(VARIANT_BOOL*);
-
+interface IWebBrowserApp : public IWebBrowser {
 	HRESULT Quit();
-	HRESULT ClientToWindow(int*,int*);
-	HRESULT PutProperty(BSTR,VARIANT);
-	HRESULT GetProperty(BSTR,VARIANT*);
+	HRESULT ClientToWindow(int*, int*);
+	HRESULT PutProperty(BSTR, VARIANT);
+	HRESULT GetProperty(BSTR, VARIANT*);
 	HRESULT get_Name(BSTR*);
 	HRESULT get_HWND(long*);
 	HRESULT get_FullName(BSTR*);
@@ -129,67 +85,11 @@ interface IWebBrowserApp : public IWebBrowser
 	HRESULT put_FullScreen(VARIANT_BOOL);
 }
 
-interface IWebBrowser2 : public IWebBrowserApp
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT GetTypeInfoCount(UINT*);
-	HRESULT GetTypeInfo(UINT,LCID,LPTYPEINFO*);
-	HRESULT GetIDsOfNames(REFIID,LPOLESTR*,UINT,LCID,DISPID*);
-	HRESULT Invoke(DISPID,REFIID,LCID,WORD,DISPPARAMS*,VARIANT*,EXCEPINFO*,UINT*);
-
-	HRESULT GoBack();
-	HRESULT GoForward();
-	HRESULT GoHome();
-	HRESULT GoSearch();
-	HRESULT Navigate(BSTR,VARIANT*,VARIANT*,VARIANT*,VARIANT*);
-	HRESULT Refresh();
-	HRESULT Refresh2(VARIANT*);
-	HRESULT Stop();
-	HRESULT get_Application(IDispatch**);
-	HRESULT get_Parent(IDispatch**);
-	HRESULT get_Container(IDispatch**);
-	HRESULT get_Document(IDispatch**);
-	HRESULT get_TopLevelContainer(VARIANT_BOOL*);
-	HRESULT get_Type(BSTR*);
-	HRESULT get_Left(long*);
-	HRESULT put_Left(long);
-	HRESULT get_Top(long*);
-	HRESULT put_Top(long);
-	HRESULT get_Width(long*);
-	HRESULT put_Width(long);
-	HRESULT get_Height(long*);
-	HRESULT put_Height(long);
-	HRESULT get_LocationName(BSTR*);
-	HRESULT get_LocationURL(BSTR*);
-	HRESULT get_Busy(VARIANT_BOOL*);
-
-	HRESULT Quit();
-	HRESULT ClientToWindow(int*,int*);
-	HRESULT PutProperty(BSTR,VARIANT);
-	HRESULT GetProperty(BSTR,VARIANT*);
-	HRESULT get_Name(BSTR*);
-	HRESULT get_HWND(long*);
-	HRESULT get_FullName(BSTR*);
-	HRESULT get_Path(BSTR*);
-	HRESULT get_Visible(VARIANT_BOOL*);
-	HRESULT put_Visible(VARIANT_BOOL);
-	HRESULT get_StatusBar(VARIANT_BOOL*);
-	HRESULT put_StatusBar(VARIANT_BOOL);
-	HRESULT get_StatusText(BSTR*);
-	HRESULT put_StatusText(BSTR);
-	HRESULT get_ToolBar(int*);
-	HRESULT put_ToolBar(int);
-	HRESULT get_MenuBar(VARIANT_BOOL*);
-	HRESULT put_MenuBar(VARIANT_BOOL);
-	HRESULT get_FullScreen(VARIANT_BOOL*);
-	HRESULT put_FullScreen(VARIANT_BOOL);
-
-	HRESULT Navigate2(VARIANT*,VARIANT*,VARIANT*,VARIANT*,VARIANT*);
-	HRESULT QueryStatusWB(OLECMDID,OLECMDF*);
-	HRESULT ExecWB(OLECMDID,OLECMDEXECOPT,VARIANT*,VARIANT*);
-	HRESULT ShowBrowserBar(VARIANT*,VARIANT*,VARIANT*);
+interface IWebBrowser2 : public IWebBrowserApp {
+	HRESULT Navigate2(VARIANT*, VARIANT*, VARIANT*, VARIANT*, VARIANT*);
+	HRESULT QueryStatusWB(OLECMDID, OLECMDF*);
+	HRESULT ExecWB(OLECMDID, OLECMDEXECOPT, VARIANT*, VARIANT*);
+	HRESULT ShowBrowserBar(VARIANT*, VARIANT*, VARIANT*);
 	HRESULT get_ReadyState(READYSTATE*);
 	HRESULT get_Offline(VARIANT_BOOL*);
 	HRESULT put_Offline(VARIANT_BOOL);
@@ -207,27 +107,18 @@ interface IWebBrowser2 : public IWebBrowserApp
 	HRESULT put_Resizable(VARIANT_BOOL);
 }
 
-interface DWebBrowserEvents2 : public IDispatch
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT GetTypeInfoCount(UINT*);
-	HRESULT GetTypeInfo(UINT,LCID,LPTYPEINFO*);
-	HRESULT GetIDsOfNames(REFIID,LPOLESTR*,UINT,LCID,DISPID*);
-	HRESULT Invoke(DISPID,REFIID,LCID,WORD,DISPPARAMS*,VARIANT*,EXCEPINFO*,UINT*);
-
+interface DWebBrowserEvents2 : public IDispatch {
 	void StatusTextChange(BSTR);
-	void ProgressChange(long,long);
-	void CommandStateChange(long,VARIANT_BOOL);
+	void ProgressChange(long, long);
+	void CommandStateChange(long, VARIANT_BOOL);
 	void DownloadBegin();
 	void DownloadComplete();
 	void TitleChange(BSTR);
 	void PropertyChange(BSTR);
-	void BeforeNavigate2(IDispatch*,VARIANT*,VARIANT*,VARIANT*,VARIANT*,VARIANT*,VARIANT_BOOL*);
-	void NewWindow2(IDispatch**,VARIANT_BOOL*);
-	void NavigateComplete(IDispatch*,VARIANT*);
-	void DocumentComplete(IDispatch*,VARIANT*);
+	void BeforeNavigate2(IDispatch*, VARIANT*, VARIANT*, VARIANT*, VARIANT*, VARIANT*, VARIANT_BOOL*);
+	void NewWindow2(IDispatch**, VARIANT_BOOL*);
+	void NavigateComplete(IDispatch*, VARIANT*);
+	void DocumentComplete(IDispatch*, VARIANT*);
 	void OnQuit();
 	void OnVisible(VARIANT_BOOL);
 	void OnToolBar(VARIANT_BOOL);
@@ -240,8 +131,8 @@ interface DWebBrowserEvents2 : public IDispatch
 	void WindowSetTop(long);
 	void WindowSetWidth(long);
 	void WindowSetHeight(long);
-	void WindowClosing(VARIANT_BOOL,VARIANT_BOOL*);
-	void ClientToHostWindow(long*,long*);
+	void WindowClosing(VARIANT_BOOL, VARIANT_BOOL*);
+	void ClientToHostWindow(long*, long*);
 	void SetSecureLockIcon(long);
 	void FileDownload(VARIANT_BOOL*);
 }

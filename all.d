@@ -11,6 +11,7 @@ import win32.comcat;
 import win32.cpl;
 import win32.cplext;
 import win32.custcntl;
+import win32.d3d9;
 import win32.oleacc;
 import win32.ocidl;
 import win32.olectl;
