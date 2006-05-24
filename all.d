@@ -1,4 +1,5 @@
 // Used only for testing -- imports all windows headers.
+import win32.core;
 import win32.windows;
 import win32.commctrl;
 import win32.setupapi;
