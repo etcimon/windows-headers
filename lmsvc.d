@@ -7,6 +7,7 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
+// FIXME: Is this file deprecated? All of the functions are only for Win16.
 /**
   Changes relative to MinGW:
   lmsname is not imported publicly (instead, win32.lm imports it directly).
@@ -139,10 +140,12 @@ struct SERVICE_INFO_2{
 alias SERVICE_INFO_2* PSERVICE_INFO_2, LPSERVICE_INFO_2;
 
 extern (Windows) {
+deprecated {
 NET_API_STATUS NetServiceControl(LPCWSTR,LPCWSTR,DWORD,DWORD,PBYTE*);
 NET_API_STATUS NetServiceEnum(LPCWSTR,DWORD,PBYTE*,DWORD,PDWORD,PDWORD,PDWORD);
 NET_API_STATUS NetServiceGetInfo(LPCWSTR,LPCWSTR,DWORD,PBYTE*);
 NET_API_STATUS NetServiceInstall(LPCWSTR,LPCWSTR,DWORD,LPCWSTR*,PBYTE*);
+}
 }
 //MACRO #define SERVICE_IP_CODE(t,n) ((long)SERVICE_IP_QUERY_HINT|(long)(n|(t<<SERVICE_IP_WAITTIME_SHIFT)))
 //MACRO #define SERVICE_CCP_CODE(t,n) ((long)SERVICE_CCP_QUERY_HINT|(long)(n|(t<<SERVICE_IP_WAITTIME_SHIFT)))

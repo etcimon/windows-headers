@@ -12,9 +12,10 @@
 // so they are implemented as templates.
 
 module win32.mmsystem;
+pragma(lib, "winmm.lib");
 private import win32.w32api;
-import win32.winver;
-import win32.windef;
+private import win32.winver;
+private import win32.windef;
 
 align(1):
 

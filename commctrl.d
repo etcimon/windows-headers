@@ -9,6 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.commctrl;
+pragma(lib, "comctl32.lib");
 
 private import win32.w32api;
 private import win32.windef;

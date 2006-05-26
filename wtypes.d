@@ -17,13 +17,9 @@ private import win32.cguid; // for GUID_NULL
 
 alias GUID_NULL IID_NULL;
 alias GUID_NULL CLSID_NULL;
-//MACRO #define CBPCLIPDATA(d) ((d).cbSize-sizeof((d).ulClipFmt))
 
-const BYTE DECIMAL_NEG = 0x80;
-//MACRO #define DECIMAL_SETZERO(d) {(d).Lo64=(d).Hi32=(d).signscale=0;}
-
-const ROTFLAGS_REGISTRATIONKEEPSALIVE=0x01;
-const ROTFLAGS_ALLOWANYCLIENT=0x02;
+const ROTFLAGS_REGISTRATIONKEEPSALIVE = 0x01;
+const ROTFLAGS_ALLOWANYCLIENT         = 0x02;
 
  /* also in winsock2.h */
 struct BLOB{ 
@@ -33,33 +29,33 @@ struct BLOB{
 alias BLOB * PBLOB, LPBLOB;
 
 enum DVASPECT{
-	DVASPECT_CONTENT=1,
-	DVASPECT_THUMBNAIL=2,
-	DVASPECT_ICON=4,
-	DVASPECT_DOCPRINT=8
+	DVASPECT_CONTENT   = 1,
+	DVASPECT_THUMBNAIL = 2,
+	DVASPECT_ICON      = 4,
+	DVASPECT_DOCPRINT  = 8
 }
 
 enum DVASPECT2{
-	DVASPECT_OPAQUE=16,
-	DVASPECT_TRANSPARENT=32
+	DVASPECT_OPAQUE      = 16,
+	DVASPECT_TRANSPARENT = 32
 }
 
 enum STATFLAG{
-	STATFLAG_DEFAULT=0,
-	STATFLAG_NONAME=1
+	STATFLAG_DEFAULT = 0,
+	STATFLAG_NONAME  = 1
 }
 
 enum MEMCTX{
-	MEMCTX_LOCAL=0,
+	MEMCTX_LOCAL = 0,
 	MEMCTX_TASK,
 	MEMCTX_SHARED,
 	MEMCTX_MACSYSTEM,
-	MEMCTX_UNKNOWN=-1,
-	MEMCTX_SAME=-2
+	MEMCTX_UNKNOWN = -1,
+	MEMCTX_SAME = -2
 }
 
 enum MSHCTX{
-	MSHCTX_LOCAL=0,
+	MSHCTX_LOCAL = 0,
 	MSHCTX_NOSHAREDMEM,
 	MSHCTX_DIFFERENTMACHINE,
 	MSHCTX_INPROC,
@@ -117,6 +113,8 @@ struct  BSTRBLOB {
 }
 alias BSTRBLOB * LPBSTRBLOB;
 
+// Used only in the PROPVARIANT structure
+// According to the 2003 SDK, this should be in propidl.h, not here.
 struct CLIPDATA{
 	ULONG cbSize;
 	int ulClipFmt;
@@ -152,7 +150,7 @@ enum VARENUM {
 	VT_VARIANT,
 	VT_UNKNOWN,
 	VT_DECIMAL,
-	VT_I1=16,
+	VT_I1 = 16,
 	VT_UI1,
 	VT_UI2,
 	VT_UI4,
@@ -168,10 +166,10 @@ enum VARENUM {
 	VT_USERDEFINED,
 	VT_LPSTR,
 	VT_LPWSTR,
-	VT_RECORD=36,
-	VT_INT_PTR=37,
-	VT_UINT_PTR=38,
-	VT_FILETIME=64,
+	VT_RECORD   = 36,
+	VT_INT_PTR  = 37,
+	VT_UINT_PTR = 38,
+	VT_FILETIME = 64,
 	VT_BLOB,
 	VT_STREAM,
 	VT_STORAGE,
@@ -212,12 +210,14 @@ struct HYPER_SIZEDARR{
 
 alias double DOUBLE;
 
+
 struct DECIMAL{
 	USHORT wReserved;
 	union {
 		struct {
-			BYTE scale;
-			BYTE sign;
+			ubyte scale; // valid values are 0 to 28
+			ubyte sign; // 0 for positive, DECIMAL_NEG for negatives.
+			const ubyte DECIMAL_NEG = 0x80;
 		}
 		USHORT signscale;
 	}
@@ -229,4 +229,6 @@ struct DECIMAL{
 		}
 		ULONGLONG Lo64;
 	}
+	// #define DECIMAL_SETZERO(d) {(d).Lo64=(d).Hi32=(d).signscale=0;}
+	void setZero() { Lo64 = 0; Hi32 = 0; signscale = 0; }
 }

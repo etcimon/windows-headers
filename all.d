@@ -33,3 +33,4 @@ import win32.lmbrowsr;
 
 import win32.sql;
 import win32.sqlext;
+import win32.sqlucode;

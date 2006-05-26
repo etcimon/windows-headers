@@ -12,6 +12,7 @@ module win32.wincon;
 
 private import win32.w32api;
 private import win32.windef;
+pragma(lib, "kernel32.lib");
 
 // FIXME: clean up Windows version support
 

@@ -9,6 +9,7 @@
 \***********************************************************************/
 
 module win32.oleacc;
+pragma(lib, "oleacc.lib");
 private import win32.oaidl;
 private import win32.wtypes;
 

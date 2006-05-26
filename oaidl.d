@@ -7,8 +7,6 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
-// TODO: Sort out LPCREATETYPEINFO etc.
-
 module win32.oaidl;
 
 private import win32.basetyps;

@@ -15,24 +15,8 @@
    creating a circular dependency!
 */
 module win32.sqlext;
-pragma(msg, "sqlext: Some code needs to be moved to sqlucode");
-/* Moved to sqlucode 
-static if (ODBCVER <= 0x0300) {
-const SQL_UNICODE=-95;
-const SQL_UNICODE_VARCHAR=-96;
-const SQL_UNICODE_LONGVARCHAR=-97;
-const SQL_UNICODE_CHAR=SQL_UNICODE;
-} else {
-const SQL_UNICODE=SQL_WCHAR;
-const SQL_UNICODE_VARCHAR=SQL_WVARCHAR;
-const SQL_UNICODE_LONGVARCHAR=SQL_WLONGVARCHAR;
-const SQL_UNICODE_CHAR=SQL_WCHAR;
-}
-*/
-
 import win32.sql;
 private import win32.windef;
-
 
 const SQL_SPEC_MAJOR = 3;
 const SQL_SPEC_MINOR = 51;
@@ -241,6 +225,7 @@ const SQL_DATABASE_NAME = 16;/* deprecated */
 
 const SQL_DEFAULT_PARAM = -5;
 const SQL_DELETE = 3;
+
 const SQL_DRIVER_COMPLETE = 1;
 const SQL_DRIVER_COMPLETE_REQUIRED = 3;
 const SQL_DRIVER_HDBC = 3;
@@ -252,9 +237,10 @@ const SQL_DRIVER_NOPROMPT = 0;
 const SQL_DRIVER_ODBC_VER = 77;
 const SQL_DRIVER_PROMPT = 2;
 const SQL_DRIVER_VER = 7;
+
 const SQL_DTC_ENLIST_EXPENSIVE = 1;
-const SQL_DTC_TRANSITION_COST = 1750;
 const SQL_DTC_UNENLIST_EXPENSIVE = 2;
+const SQL_DTC_TRANSITION_COST = 1750;
 const SQL_ENSURE = 1;
 const SQL_ENTIRE_ROWSET = 0;
 const SQL_EXPRESSIONS_IN_ORDERBY = 27;

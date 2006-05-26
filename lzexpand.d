@@ -8,9 +8,9 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.lzexpand;
-
-import win32.windef;
-import win32.winbase;
+pragma(lib, "lz32.lib");
+private import win32.windef;
+private import win32.winbase;
 
 enum : LONG {
 	LZERROR_BADINHANDLE  = -1,

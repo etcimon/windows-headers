@@ -10,9 +10,9 @@
 // TODO: I think MinGW got this wrong. RPC_UNICODE_SUPPORTED should be replaced aliases for version(Unicode)
 
 module win32.rpcdce;
-import win32.basetyps;
+pragma(lib, "Rpcrt4.lib");
+private import win32.basetyps;
 private import win32.w32api;
-
 public import win32.rpcdcep;
 
 // FIXME: clean up Windows version support
@@ -21,20 +21,29 @@ alias UUID uuid_t;
 alias UUID_VECTOR uuid_vector_t;
 
 alias void RPC_MGR_EPV;
-const RPC_C_BINDING_INFINITE_TIMEOUT=10;
-const RPC_C_BINDING_MIN_TIMEOUT=0;
-const RPC_C_BINDING_DEFAULT_TIMEOUT=5;
-const RPC_C_BINDING_MAX_TIMEOUT=9;
+// for RpcMgmtSetComTimeout()
+enum : uint {
+	RPC_C_BINDING_MIN_TIMEOUT      = 0,
+	RPC_C_BINDING_DEFAULT_TIMEOUT  = 5,
+	RPC_C_BINDING_MAX_TIMEOUT      = 9,
+	RPC_C_BINDING_INFINITE_TIMEOUT = 10
+}
+
 const RPC_C_CANCEL_INFINITE_TIMEOUT= -1;
 const RPC_C_LISTEN_MAX_CALLS_DEFAULT=1234;
 const RPC_C_PROTSEQ_MAX_REQS_DEFAULT=10;
 const RPC_C_BIND_TO_ALL_NICS=1;
 const RPC_C_USE_INTERNET_PORT=1;
 const RPC_C_USE_INTRANET_PORT=2;
-const RPC_C_STATS_CALLS_IN=0;
-const RPC_C_STATS_CALLS_OUT=1;
-const RPC_C_STATS_PKTS_IN=2;
-const RPC_C_STATS_PKTS_OUT=3;
+
+// for RPC_STATS_VECTOR, used by RpcMgmyInqStats
+enum : uint {
+	RPC_C_STATS_CALLS_IN  = 0,
+	RPC_C_STATS_CALLS_OUT,
+	RPC_C_STATS_PKTS_IN,
+	RPC_C_STATS_PKTS_OUT
+}
+
 const RPC_IF_AUTOLISTEN=0x0001;
 const RPC_IF_OLE=2;
 const RPC_C_MGMT_INQ_IF_IDS=0;
@@ -42,15 +51,24 @@ const RPC_C_MGMT_INQ_PRINC_NAME=1;
 const RPC_C_MGMT_INQ_STATS=2;
 const RPC_C_MGMT_IS_SERVER_LISTEN=3;
 const RPC_C_MGMT_STOP_SERVER_LISTEN=4;
-const RPC_C_EP_ALL_ELTS=0;
-const RPC_C_EP_MATCH_BY_IF=1;
-const RPC_C_EP_MATCH_BY_OBJ=2;
-const RPC_C_EP_MATCH_BY_BOTH=3;
-const RPC_C_VERS_ALL=1;
-const RPC_C_VERS_COMPATIBLE=2;
-const RPC_C_VERS_EXACT=3;
-const RPC_C_VERS_MAJOR_ONLY=4;
-const RPC_C_VERS_UPTO=5;
+
+// Inquiry Type for RpcMgmtEpEltInqBegin()
+enum : uint {
+	RPC_C_EP_ALL_ELTS = 0,
+	RPC_C_EP_MATCH_BY_IF,
+	RPC_C_EP_MATCH_BY_OBJ,
+	RPC_C_EP_MATCH_BY_BOTH
+}
+
+// for RpcMgmtEpEltInqNext()
+enum : uint {
+	RPC_C_VERS_ALL = 1,
+	RPC_C_VERS_COMPATIBLE,
+	RPC_C_VERS_EXACT,
+	RPC_C_VERS_MAJOR_ONLY,
+	RPC_C_VERS_UPTO
+}
+
 const DCE_C_ERROR_STRING_LEN=256;
 const RPC_C_PARM_MAX_PACKET_LENGTH=1;
 const RPC_C_PARM_BUFFER_LENGTH=2;
@@ -254,6 +272,11 @@ RPC_STATUS DceErrorInqTextA(RPC_STATUS,char *);
 RPC_STATUS DceErrorInqTextW(RPC_STATUS,wchar *);
 RPC_STATUS RpcMgmtEpEltInqNextA(RPC_EP_INQ_HANDLE,RPC_IF_ID*,RPC_BINDING_HANDLE*,UUID*,char **);
 RPC_STATUS RpcMgmtEpEltInqNextW(RPC_EP_INQ_HANDLE,RPC_IF_ID*,RPC_BINDING_HANDLE*,UUID*,wchar **);
+
+// MinGW erroneously had these in rpc.h
+RPC_STATUS RpcImpersonateClient(RPC_BINDING_HANDLE);
+RPC_STATUS RpcRevertToSelf();
+
 }
 
 version(Unicode) {

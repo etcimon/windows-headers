@@ -8,6 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.lmrepl;
+pragma(lib, "netapi32.lib");
 private import win32.lmcons;
 private import win32.windef;
 

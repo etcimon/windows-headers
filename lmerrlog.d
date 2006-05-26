@@ -7,6 +7,7 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
+// COMMENT: This appears to be only for Win16. All functions are deprecated.
 module win32.lmerrlog;
 private import win32.lmcons;
 private import win32.windef;
@@ -210,7 +211,9 @@ struct ERROR_LOG{
 alias ERROR_LOG* PERROR_LOG, LPERROR_LOG;
 
 extern (Windows) {
+deprecated {
 NET_API_STATUS NetErrorLogClear(LPCWSTR,LPCWSTR,LPBYTE);
 NET_API_STATUS NetErrorLogRead(LPCWSTR,LPWSTR,LPHLOG,DWORD,LPDWORD,DWORD,DWORD,LPBYTE*,DWORD,LPDWORD,LPDWORD);
 NET_API_STATUS NetErrorLogWrite(LPBYTE,DWORD,LPCWSTR,LPBYTE,DWORD,LPBYTE,DWORD,LPBYTE);
+}
 }

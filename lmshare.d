@@ -11,11 +11,12 @@ module win32.lmshare;
 import win32.lmcons;
 private import win32.windef;
 
-/*
+
 private import win32.w32api;
 static if (_WIN32_WINNT_ONLY) {
-	pragma(lib, "Netapi.lib");
-} else {
+	pragma(lib, "netapi.lib");
+}
+/* else {
 // only for WinME, 98, 95.
 	pragma(lib, "svrapi.lib")
 }

@@ -9,8 +9,8 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.setupapi;
-
-import win32.w32api;
+pragma(lib, "setupapi.lib");
+private import win32.w32api;
 private import win32.windef;
 private import win32.winbase; // for SYSTEMTIME
 private import win32.commctrl;

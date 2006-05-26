@@ -12,6 +12,7 @@ module win32.wingdi;
 private import win32.w32api;
 private import win32.winver;
 private import win32.windef;
+pragma(lib, "gdi32.lib");
 
 // FIXME: clean up Windows version support
 

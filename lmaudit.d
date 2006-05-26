@@ -7,6 +7,7 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
+// COMMENT: This file may be deprecated.
 module win32.lmaudit;
 private import win32.lmcons;
 private import win32.windef;
@@ -264,9 +265,11 @@ struct AE_GENERIC{
 alias AE_GENERIC* PAE_GENERIC, LPAE_GENERIC;
 
 extern (Windows) {
+deprecated {
 NET_API_STATUS NetAuditClear(LPCWSTR,LPCWSTR,LPCWSTR);
 NET_API_STATUS NetAuditRead(LPTSTR,LPTSTR,LPHLOG,DWORD,PDWORD,DWORD,DWORD,PBYTE*,DWORD,PDWORD,PDWORD);
 NET_API_STATUS NetAuditWrite(DWORD,PBYTE,DWORD,LPTSTR,PBYTE);
+}
 }
 
 /+

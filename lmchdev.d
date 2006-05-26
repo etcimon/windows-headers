@@ -7,6 +7,8 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
+
+// COMMENT: This file might be deprecated.
 module win32.lmchdev;
 private import win32.lmcons;
 private import win32.windef;

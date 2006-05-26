@@ -8,6 +8,7 @@
 \***********************************************************************/
 module win32.winsock2;
 
+pragma(lib, "Ws2_32.lib");
 /*
   Definitions for winsock 2
 

@@ -3188,5 +3188,6 @@ static if (_WIN32_WINNT >= 0x0500) {
 	ULONGLONG VerSetConditionMask(ULONGLONG,DWORD,BYTE);
 }
 
+//TODO: These are actually macros, and were introduced with Win98.
 PVOID GetCurrentFiber();
 PVOID GetFiberData();

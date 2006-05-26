@@ -9,6 +9,7 @@
 \***********************************************************************/
 
 module win32.imm;
+pragma(lib, "imm32.lib");
 
 private import win32.w32api;
 import win32.windef;

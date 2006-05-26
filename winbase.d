@@ -13,6 +13,7 @@ import win32.winver;
 import win32.windef;
 private import win32.w32api;
 private import win32.winnt;
+pragma(lib, "kernel32.lib");
 
 // FIXME: clean up Windows version support
 

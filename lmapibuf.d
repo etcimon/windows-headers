@@ -8,6 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.lmapibuf;
+pragma(lib, "netapi32.lib");
 private import win32.windef;
 private import win32.lmcons;
 

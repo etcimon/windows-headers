@@ -11,6 +11,7 @@
 module win32.winsvc;
 
 private import win32.w32api;
+pragma(lib, "advapi.lib");
 
 static if (!_WIN32_WINNT_ONLY) {
 	pragma(msg, "win32.winsvc is available only if version WindowsNTonly,

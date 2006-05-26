@@ -2,13 +2,16 @@
 *                                rpcnsi.d                               *
 *                                                                       *
 *                       Windows API header module                       *
+*                     RPC Name Service (RpcNs APIs)                     *
 *                                                                       *
 *                 Translated from MinGW Windows headers                 *
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.rpcnsi;
+pragma(lib, "rpcns4.lib");
 private import win32.w32api;
+private import win32.basetyps;
 private import win32.rpcdcep;
 private import win32.rpcnsi;
 private import win32.rpcdce;

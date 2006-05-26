@@ -9,6 +9,7 @@
 \***********************************************************************/
 // D Conversion Note: DESC_CHAR is defined as TCHAR.
 module win32.lmremutl;
+pragma(lib, "netapi32.lib");
 private import win32.lmcons;
 private import win32.windef;
 

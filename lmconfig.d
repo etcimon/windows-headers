@@ -7,9 +7,12 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
+// All functions in this file are deprecated!
 module win32.lmconfig;
 private import win32.windef;
 private import win32.lmcons;
+
+deprecated {
 
 struct CONFIG_INFO_0 {
 	LPWSTR cfgi0_key;
@@ -22,4 +25,5 @@ extern (Windows) {
 	NET_API_STATUS NetConfigGetAll(LPCWSTR, LPCWSTR, PBYTE*);
 	NET_API_STATUS NetConfigSet(LPCWSTR, LPCWSTR, LPCWSTR, DWORD, DWORD,
 	  PBYTE, DWORD);
+}
 }

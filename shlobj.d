@@ -10,6 +10,7 @@
 // TODO: fix bitfields
 // TODO: CMIC_VALID_SEE_FLAGS
 module win32.shlobj;
+pragma(lib, "shell32.lib");
 private import win32.w32api;
 private import win32.unknwn;
 private import win32.winuser;

@@ -14,6 +14,7 @@
 */
 
 module win32.lmaccess;
+pragma(lib, "netapi32.lib");
 private import win32.windef;
 private import win32.lmcons;
 

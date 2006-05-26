@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.prsht;
-
+pragma(lib, "comctl32.lib");
 private import win32.w32api;
 private import win32.windef; 
 private import win32.winuser;

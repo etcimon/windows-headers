@@ -9,6 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.aclui;
+pragma(lib, "aclui.lib");
 
 import win32.objbase, win32.commctrl, win32.accctrl;
 private import win32.winuser;

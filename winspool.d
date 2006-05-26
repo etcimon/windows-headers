@@ -13,6 +13,8 @@ private import win32.windef;
 private import win32.wingdi;
 private import win32.winbase; // for SYSTEMTIME
 
+pragma(lib, "winspool.lib");
+
 // FIXME: clean up Windows version support
 
 const DI_CHANNEL=1;

@@ -10,7 +10,8 @@
 module win32.shldisp;
 private import win32.unknwn;
 
-const ACO_AUTOSUGGEST = 0x01;
+// options for IAutoComplete2
+const DWORD ACO_AUTOSUGGEST = 0x01;
 
 interface IAutoComplete : public IUnknown {
 	HRESULT Init(HWND, IUnknown*, LPCOLESTR, LPCOLESTR);

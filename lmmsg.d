@@ -8,8 +8,11 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.lmmsg;
+pragma(lib, "netapi32.lib");
 private import win32.lmcons;
 private import win32.windef;
+
+// NOTE: Requires Windows XP or later
 
 const MSGNAME_NOT_FORWARDED  = 0;
 const MSGNAME_FORWARDED_TO   = 4;

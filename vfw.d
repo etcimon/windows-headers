@@ -1,6 +1,8 @@
 // Converted from w32api\vfw.h
 module win32.vfw;
 
+pragma(lib, "vfw32.lib");
+
 private import win32.windows;
 private import win32.mmsystem;
 private import ole2;

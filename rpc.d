@@ -11,6 +11,10 @@
 /* Moved to rpcdecp (duplicate definition).
 typedef void *I_RPC_HANDLE;
 alias long RPC_STATUS;
+// Moved to rpcdce:
+RpcImpersonateClient
+RpcRevertToSelf
+
 */
 
 module win32.rpc;
@@ -27,7 +31,5 @@ import win32.rpcnterr;
 import win32.winerror;
 
 extern (Windows) {
-RPC_STATUS RpcImpersonateClient(RPC_BINDING_HANDLE);
-RPC_STATUS RpcRevertToSelf();
 int I_RpcMapWin32Status(RPC_STATUS);
 }

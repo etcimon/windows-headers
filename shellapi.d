@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.shellapi;
-
+pragma(lib, "shell32.lib");
 private import win32.w32api, win32.windef;
 
 enum : UINT {
