@@ -17,14 +17,13 @@ module win32.winsock;
   Portions Copyright (c) 1993 by Digital Equipment Corporation.
  */
 
-// Prevent winsock2 from being imported, and tell mswsock which of us
-// it needs to import.
+// DRK: This module should not be included if -version=Win32_Winsock2 has
+// been set.  If it has, assert.  I think it's better that way then letting
+// the user believe that it's worked.
 version(Win32_Winsock2) {
-    pragma(msg, "Cannot use both win32.winsock and win32.winsock2.");
-    static assert(0);
+	pragma(msg, "Cannot use win32.winsock with Win32_Winsock2 defined.");
+	static assert(false);
 }
-
-version = Win32_Winsock;
 
 import win32.windef;
 

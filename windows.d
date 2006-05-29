@@ -56,7 +56,12 @@ import win32.winperf;
 import win32.commdlg;
 import win32.winspool;
 
-import win32.winsock;
+// Select correct version of winsock.  Importing the incorrect
+// module will cause a static assert to prevent problems later on.
+version( Win32_Winsock2 )
+	import win32.winsock2;
+else
+	import win32.winsock;
 
 /+
 #if (_WIN32_WINNT >= 0x0400)

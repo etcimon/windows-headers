@@ -17,16 +17,12 @@ private import win32.w32api;
 import win32.winbase;
 import win32.windef;
 
-// Select which winsock version to pull in
-version(Win32_Winsock)
-    import win32.winsock;
-else version(Win32_Winsock2)
-    import win32.winsock2;
-else {
-    pragma(msg, "Warning: please import either win32.winsock or win32.winsock2 "
-            "before importing win32.mswsock.  Defaulting to win32.winsock2.");
-    import win32.winsock2;
-}
+// Pull in Winsock2 if the user has put "Win32_Winsock2" on the compile
+// line; otherwise, default to Winsock1.
+version(Win32_Winsock2)
+	import win32.winsock2;
+else
+	import win32.winsock;
 
 static if( _WIN32_WINNT > 0x500 )
 	enum {
@@ -127,76 +123,76 @@ extern(Windows) {
 }
 
 version(Win32_Winsock2) {
-    static if( _WIN32_WINNT > 0x501 )
-    {
-        /* These appear to be constants for the TRANSMIT_PACKETS_ELEMENT structure
-           below, so I've given them the same minimum version */
-        enum {
-            TP_ELEMENT_FILE   = 1,
-            TP_ELEMENT_MEMORY = 2,
-            TP_ELEMENT_EOP    = 4
-        }
+	static if( _WIN32_WINNT > 0x501 )
+	{
+		/* These appear to be constants for the TRANSMIT_PACKETS_ELEMENT structure
+		   below, so I've given them the same minimum version */
+		enum {
+		TP_ELEMENT_FILE   = 1,
+		TP_ELEMENT_MEMORY = 2,
+		TP_ELEMENT_EOP    = 4
+		}
 
-        /* WinXP+, Srv2k3+
-           ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/transmit_packets_element_2.htm */
-        struct TRANSMIT_PACKETS_ELEMENT {
-            ULONG dwElFlags;
-            ULONG cLength;
-            union {
-                struct {
-                    LARGE_INTEGER nFileOffset;
-                    HANLDE        hFile;
-                }
-                PVOID pBuffer;
-            }
-        }
+		/* WinXP+, Srv2k3+
+		   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/transmit_packets_element_2.htm */
+		struct TRANSMIT_PACKETS_ELEMENT {
+		ULONG dwElFlags;
+		ULONG cLength;
+		union {
+		struct {
+		LARGE_INTEGER nFileOffset;
+		HANLDE        hFile;
+		}
+		PVOID pBuffer;
+		}
+		}
 
-        /* WinXP+, Server2003+:
-           ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/wsamsg_2.htm */
-        struct WSAMSG {
-            LPSOCKADDR name;
-            INT        namelen;
-            LPWSABUF   lpBuffers;
-            DWORD      dwBufferCount;
-            WSABUF     Control;
-            DWORD      dwFlags;
-        }
+		/* WinXP+, Server2003+:
+		   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/wsamsg_2.htm */
+		struct WSAMSG {
+		LPSOCKADDR name;
+		INT        namelen;
+		LPWSABUF   lpBuffers;
+		DWORD      dwBufferCount;
+		WSABUF     Control;
+		DWORD      dwFlags;
+		}
 
-        alias WSAMSG* PWSAMSG, LPWSAMSG;
+		alias WSAMSG* PWSAMSG, LPWSAMSG;
 
-        /* According to MSDN docs, the WSAMSG.Control buffer starts with a
-           cmsghdr header of the following form.  See also RFC 2292. */
-        /* DK: Confirmed.  So I suppose these should get the same version as
-           WSAMSG... */
-        struct WSACMSGHDR {
-            UINT cmsg_len;
-            INT  cmsg_level;
-            INT  cmsg_type;
-            /* followed by UCHAR cmsg_data[]; */
-        }
+		/* According to MSDN docs, the WSAMSG.Control buffer starts with a
+		   cmsghdr header of the following form.  See also RFC 2292. */
+		/* DK: Confirmed.  So I suppose these should get the same version as
+		   WSAMSG... */
+		struct WSACMSGHDR {
+		UINT cmsg_len;
+		INT  cmsg_level;
+		INT  cmsg_type;
+		/* followed by UCHAR cmsg_data[]; */
+		}
 
-        /* TODO: Standard Posix.1g macros as per RFC 2292, with WSA_uglification. */
-        /* DK: MinGW doesn't define these, and neither does the MSDN docs.  Might have
-           to actually look up RFC 2292... */
-        /+
-        #if 0
-        #define WSA_CMSG_FIRSTHDR(mhdr)
-        #define WSA_CMSG_NXTHDR(mhdr, cmsg)
-        #define WSA_CMSG_SPACE(length)
-        #define WSA_CMSG_LEN(length)
-        #endif
-        +/
+		/* TODO: Standard Posix.1g macros as per RFC 2292, with WSA_uglification. */
+		/* DK: MinGW doesn't define these, and neither does the MSDN docs.  Might have
+		   to actually look up RFC 2292... */
+		/+
+		#if 0
+		#define WSA_CMSG_FIRSTHDR(mhdr)
+		#define WSA_CMSG_NXTHDR(mhdr, cmsg)
+		#define WSA_CMSG_SPACE(length)
+		#define WSA_CMSG_LEN(length)
+		#endif
+		+/
 
-        extern(Windows)
-        {
-            /* WinXP+, Srv2k3+
-               ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/disconnectex_2.htm */
-            BOOL DisconnectEx(SOCKET, LPOVERLAPPED, DWORD, DWORD);
+		extern(Windows)
+		{
+		/* WinXP+, Srv2k3+
+		   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/disconnectex_2.htm */
+		BOOL DisconnectEx(SOCKET, LPOVERLAPPED, DWORD, DWORD);
 
-            /* WinXP+, Srv2k3+
-               ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/wsarecvmsg_2.htm */
-            int WSARecvMsg(SOCKET, LPWSAMSG, LPDWORD, LPWSAOVERLAPPED, LPWSAOVERLAPPED_COMPLETION_ROUTINE);
-        }
-    }
+		/* WinXP+, Srv2k3+
+		   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/wsarecvmsg_2.htm */
+		int WSARecvMsg(SOCKET, LPWSAMSG, LPDWORD, LPWSAOVERLAPPED, LPWSAOVERLAPPED_COMPLETION_ROUTINE);
+		}
+	}
 }
 

@@ -20,21 +20,20 @@ pragma(lib, "Ws2_32.lib");
   Portions Copyright (c) 1993 by Digital Equipment Corporation.
  */
 
-// Prevent winsock from being imported, and tell mswsock which of us
-// it needs to import.
-version(Win32_Winsock) {
-    pragma(msg, "Cannot use both win32.winsock and win32.winsock2.");
-    static assert(0);
+// DRK: This module should not be included if -version=Win32_Winsock2 has
+// not been set.  If it has, assert.  I think it's better this way then
+// letting the user believe that it's worked.
+version(Win32_Winsock2) {}
+else {
+    pragma(msg, "Cannot use win32.winsock2 without "
+			~ "Win32_Winsock2 defined.");
+    static assert(false);
 }
-
-version = Win32_Winsock2;
 
 import win32.winbase;
 import win32.windef;
 
-// NOTE: This header is NOT to be inluded with winsock.  I'm not sure how
-// we should go about this (perhaps a version identifier?).  For now,
-// just ignore the problem.
+// NOTE: This header is NOT to be inluded with winsock.
 alias char u_char;
 alias ushort u_short;
 alias uint u_int, u_long, SOCKET;
@@ -95,6 +94,14 @@ alias __WSAFDIsSet FD_ISSET;
 struct TIMEVAL {
 	long tv_sec;
 	long tv_usec;
+
+	int opCmp(TIMEVAL tv) {
+		if (tv_sec < tv.tv_sec)   return -1;
+		if (tv_sec > tv.tv_sec)   return  1;
+		if (tv_usec < tv.tv_usec) return -1;
+		if (tv_usec > tv.tv_usec) return  1;
+		return 0;
+	}
 }
 
 bool timerisset(TIMEVAL* tvp)
@@ -102,6 +109,13 @@ bool timerisset(TIMEVAL* tvp)
 	return tvp.tv_sec || tvp.tv_usec;
 }
 
+/+
+/* DRK: These have been commented out because it was felt that using
+ * omCmp on the TIMEVAL struct was cleaner.  Still, perhaps these should
+ * be enabled under a version tag for compatibility's sake?
+ * If it is decided that it's just ugly and unwanted, then feel free to
+ * delete this section :)
+ */
 int timercmp(TIMEVAL* tvp, TIMEVAL* uvp) {
 	return tvp.tv_sec != uvp.tv_sec ?
 	    (tvp.tv_sec < uvp.tv_sec ? -1 :
@@ -114,7 +128,7 @@ int timercmp(TIMEVAL* tvp, TIMEVAL* uvp, int function(long,long) cmp) {
 	return tvp.tv_sec != uvp.tv_sec ?
 	    cmp(tvp.tv_sec, uvp.tv_sec) :
 	    cmp(tvp.tv_usec, uvp.tv_usec);
-}
+}+/
 
 void timerclear(TIMEVAL* tvp) {
 	tvp.tv_sec = tvp.tv_usec = 0;
