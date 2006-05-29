@@ -13,6 +13,21 @@ private import win32.unknwn;
 private import win32.wtypes;
 private import win32.oaidl;
 
+// These are used in this file, but not defined in MinGW.
+interface IHTMLStyleSheet {};
+interface IHTMLLocation {};
+interface IHTMLFramesCollection {};
+interface IHTMLStyleSheetsCollection {};
+interface IHTMLStyle {};
+interface IHTMLFiltersCollection {};
+interface IOmHistory {};
+interface IOmNavigator {};
+interface IHTMLImageElementFactory {};
+interface IHTMLEventObj {};
+interface IHTMLScreen {};
+interface IHTMLOptionElementFactory {};
+
+
 extern (C) {
 extern IID IID_IHTMLLinkElement;
 extern IID IID_IHTMLImgElement;
@@ -30,20 +45,6 @@ extern IID IID_IHTMLFrameBase3;
 extern IID IID_IHTMLBodyElement;
 extern IID IID_IHTMLBodyElement2;
 }
-
-// These are used in this file, but not defined in MinGW.
-interface IHTMLStyleSheet;
-interface IHTMLLocation;
-interface IHTMLFramesCollection;
-interface IHTMLStyleSheetsCollection;
-interface IHTMLStyle;
-interface IHTMLFiltersCollection;
-interface IOmHistory;
-interface IOmNavigator;
-interface IHTMLImageElementFactory;
-interface IHTMLEventObj;
-interface IHTMLScreen;
-interface IHTMLOptionElementFactory;
 
 
 interface IHTMLLinkElement : public IDispatch

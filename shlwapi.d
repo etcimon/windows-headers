@@ -152,21 +152,21 @@ BOOL IntlStrEqNIW(LPCWSTR pStr1, LPCWSTR pStr2, int nChar)
 
 BOOL UrlIsFileUrlA(LPCSTR pszURL)
 {
-	return UrlIsA(pzURL, URLIS_FILEURL);
+	return UrlIsA(pszURL, URLIS.URLIS_FILEURL);
 }
 
 BOOL UrlIsFileUrlW(LPCWSTR pszURL)
 {
-	return UrlIsW(pzURL, URLIS_FILEURL);
+	return UrlIsW(pszURL, URLIS.URLIS_FILEURL);
 }
 
 HRESULT UrlUnescapeInPlaceA(LPSTR pszUrl,DWORD dwFlags)
 {
-	return UrlUnescapeA(pszUrl, NULL, NULL, dwFlags | URL_UNESCAPE_INPLACE);
+	return UrlUnescapeA(pszUrl, null, null, dwFlags | URL_UNESCAPE_INPLACE);
 }
 HRESULT UrlUnescapeInPlaceW(LPWSTR pszUrl,DWORD dwFlags)
 {
-	return UrlUnescapeW(pszUrl, NULL, NULL, dwFlags | URL_UNESCAPE_INPLACE);
+	return UrlUnescapeW(pszUrl, null, null, dwFlags | URL_UNESCAPE_INPLACE);
 }
 
 extern (Windows):
