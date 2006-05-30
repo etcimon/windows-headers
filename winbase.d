@@ -7,34 +7,14 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
-module win32.winbase;
 
-import win32.winver;
-import win32.windef;
-private import win32.w32api;
-private import win32.winnt;
-
-pragma(lib, "kernel32.lib");
-
-// FIXME: clean up Windows version support
-
-// FIXME:
-alias void va_list;
-
-/*
+/**
+Translation Notes:
 The following macros are obsolete, and have no effect.
 
-//MACRO #define LockSegment(w) GlobalFix((HANDLE)(w))
-//MACRO #define MakeProcInstance(p,i) (p)
-//MACRO #define UnlockResource(h) (h)
-//MACRO #define UnlockSegment(w) GlobalUnfix((HANDLE)(w))
-//MACRO #define FreeModule(m) FreeLibrary(m)
-//MACRO #define FreeProcInstance(p) (void)(p)
-//MACRO #define GetFreeSpace(w) (0x100000L)
-//MACRO #define DefineHandleTable(w) ((w),TRUE)
-//MACRO #define SetSwapAreaSize(w) (w)
-//[Ignore] #define LimitEmsPages(n)
-//[Ignore] #define Yield()
+LockSegment(w), MakeProcInstance(p,i), UnlockResource(h), UnlockSegment(w)
+FreeModule(m), FreeProcInstance(p), GetFreeSpace(w), DefineHandleTable(w)
+SetSwapAreaSize(w), LimitEmsPages(n), Yield()
 
 // The following Win16 functions are obselete in Win32.
 
@@ -52,9 +32,9 @@ The following macros are obsolete, and have no effect.
  VOID GlobalUnfix(HGLOBAL);
  BOOL GlobalUnWire(HGLOBAL);
  PVOID GlobalWire(HGLOBAL);
- SIZE_T LocalCompact(UINT);// Obsolete: Has no effect.
- UINT LocalFlags(HLOCAL);// Obsolete: Has no effect.
- SIZE_T LocalShrink(HLOCAL,UINT);// Obsolete: Has no effect.
+ SIZE_T LocalCompact(UINT);
+ UINT LocalFlags(HLOCAL);
+ SIZE_T LocalShrink(HLOCAL,UINT);
 
 // These are not required for DMD.
 
@@ -67,6 +47,19 @@ The following macros are obsolete, and have no effect.
 int wWinMain(HINSTANCE,HINSTANCE,LPWSTR,int);
 
 */
+module win32.winbase;
+
+import win32.winver;
+import win32.windef;
+private import win32.w32api;
+private import win32.winnt;
+
+pragma(lib, "kernel32.lib");
+
+// FIXME: clean up Windows version support
+// FIXME:
+alias void va_list;
+
 
 /+
 //--------------------------------------
@@ -98,7 +91,6 @@ version(UseNtoSKernel){}else {
 } // #endif /*  __USE_NTOSKRNL__ */
 //--------------------------------------
 +/
-
 
 // ----
 // COMMPROP structure, used by GetCommProperties()
@@ -178,7 +170,7 @@ enum : DWORD {
 	DATABITS_16X = 32
 }
 
-enum {
+enum : WORD {
 	STOPBITS_10  = 1,
 	STOPBITS_15  = 2,
 	STOPBITS_20  = 4,
@@ -192,7 +184,7 @@ enum {
 // used by dwServiceMask
 const SP_SERIALCOMM = 1;
 
-struct COMMPROP{
+struct COMMPROP {
 	WORD	wPacketLength;
 	WORD	wPacketVersion;
 	DWORD	dwServiceMask;
@@ -366,7 +358,8 @@ enum : DWORD  {
 
 const CONSOLE_TEXTMODE_BUFFER = 1;
 
-enum {
+// CreateFile()
+enum : DWORD {
 	CREATE_NEW = 1,
 	CREATE_ALWAYS,
 	OPEN_EXISTING,
@@ -374,7 +367,8 @@ enum {
 	TRUNCATE_EXISTING
 }
 
-enum {
+// CreateFile()
+enum : DWORD {
 	FILE_FLAG_WRITE_THROUGH      = 0x80000000,
 	FILE_FLAG_OVERLAPPED         = 1073741824,
 	FILE_FLAG_NO_BUFFERING       = 536870912,
@@ -386,6 +380,18 @@ enum {
 	FILE_FLAG_OPEN_REPARSE_POINT = 2097152,
 	FILE_FLAG_OPEN_NO_RECALL     = 1048576
 }
+
+// for CreateFile()
+const DWORD
+	SECURITY_ANONYMOUS        = (SECURITY_IMPERSONATION_LEVEL.SecurityAnonymous<<16),
+	SECURITY_IDENTIFICATION   = (SECURITY_IMPERSONATION_LEVEL.SecurityIdentification<<16),
+	SECURITY_IMPERSONATION    = (SECURITY_IMPERSONATION_LEVEL.SecurityImpersonation<<16),
+	SECURITY_DELEGATION       = (SECURITY_IMPERSONATION_LEVEL.SecurityDelegation<<16),
+	SECURITY_CONTEXT_TRACKING = 0x40000,
+	SECURITY_EFFECTIVE_ONLY   = 0x80000,
+	SECURITY_SQOS_PRESENT     = 0x100000,
+	SECURITY_VALID_SQOS_FLAGS = 0x1F0000;
+
 
 static if (_WIN32_WINNT >= 0x0500) {
 	const FILE_FLAG_FIRST_PIPE_INSTANCE = 524288;
@@ -454,14 +460,17 @@ const GET_TAPE_DRIVE_INFORMATION = 1;
 const SET_TAPE_MEDIA_INFORMATION = 0;
 const SET_TAPE_DRIVE_INFORMATION = 1;
 
-const THREAD_PRIORITY_ABOVE_NORMAL = 1;
-const THREAD_PRIORITY_BELOW_NORMAL = -1;
-const THREAD_PRIORITY_HIGHEST      = 2;
-const THREAD_PRIORITY_IDLE         = -15;
-const THREAD_PRIORITY_LOWEST       = -2;
-const THREAD_PRIORITY_NORMAL       = 0;
-const THREAD_PRIORITY_TIME_CRITICAL= 15;
-const THREAD_PRIORITY_ERROR_RETURN = 2147483647;
+// SetThreadPriority()/GetThreadPriority()
+const int
+	THREAD_PRIORITY_ABOVE_NORMAL  = 1,
+	THREAD_PRIORITY_BELOW_NORMAL  = -1,
+	THREAD_PRIORITY_HIGHEST       = 2,
+	THREAD_PRIORITY_IDLE          = -15,
+	THREAD_PRIORITY_LOWEST        = -2,
+	THREAD_PRIORITY_NORMAL        = 0,
+	THREAD_PRIORITY_TIME_CRITICAL = 15;
+	
+const int THREAD_PRIORITY_ERROR_RETURN = 2147483647;
 
 const TIME_ZONE_ID_UNKNOWN  = 0;
 const TIME_ZONE_ID_STANDARD = 1;
@@ -525,7 +534,8 @@ const LHND = 66;
 const NONZEROLHND = 2;
 const NONZEROLPTR = 0;
 
-enum {
+// used in EXCEPTION_RECORD
+enum : DWORD {
 	STATUS_WAIT_0           = 0,
 	STATUS_ABANDONED_WAIT_0 = 0x80,
 	STATUS_USER_APC         = 0xC0,
@@ -586,36 +596,58 @@ enum {
 	EXCEPTION_INVALID_HANDLE           = STATUS_INVALID_HANDLE
 }
 
-const PROCESS_HEAP_REGION=1;
-const PROCESS_HEAP_UNCOMMITTED_RANGE=2;
-const PROCESS_HEAP_ENTRY_BUSY=4;
-const PROCESS_HEAP_ENTRY_MOVEABLE=16;
-const PROCESS_HEAP_ENTRY_DDESHARE=32;
+// for PROCESS_HEAP_ENTRY
+const WORD
+	PROCESS_HEAP_REGION            = 1,
+	PROCESS_HEAP_UNCOMMITTED_RANGE = 2,
+	PROCESS_HEAP_ENTRY_BUSY        = 4,
+	PROCESS_HEAP_ENTRY_MOVEABLE    = 16,
+	PROCESS_HEAP_ENTRY_DDESHARE    = 32;
 
-const DONT_RESOLVE_DLL_REFERENCES=1;
+// for LoadLibraryEx()
+const DWORD 
+	DONT_RESOLVE_DLL_REFERENCES   = 1, // not for WinME and earlier
+	LOAD_LIBRARY_AS_DATAFILE      = 2,
+	LOAD_WITH_ALTERED_SEARCH_PATH = 8,
+	LOAD_IGNORE_CODE_AUTHZ_LEVEL  = 0x10; // only for XP and later
 
-const LOAD_LIBRARY_AS_DATAFILE=2;
-const LOAD_WITH_ALTERED_SEARCH_PATH=8;
+// for LockFile()
+const DWORD
+	LOCKFILE_FAIL_IMMEDIATELY = 1,
+	LOCKFILE_EXCLUSIVE_LOCK   = 2;
 
-const LOCKFILE_FAIL_IMMEDIATELY=1;
-const LOCKFILE_EXCLUSIVE_LOCK=2;
+// for LogonUser()
+enum : DWORD {
+	LOGON32_LOGON_INTERACTIVE = 2,
+	LOGON32_LOGON_BATCH       = 4,
+	LOGON32_LOGON_SERVICE     = 5
+	// TODO(D): More values from MSDN
+	//LOGON32_LOGON_NETWORK
+	//LOGON32_LOGON_NETWORK_CLEARTEXT
+	//LOGON32_LOGON_NEW_CREDENTIALS
+	//LOGON32_LOGON_UNLOCK
+}
 
-const LOGON32_PROVIDER_DEFAULT=0;
-const LOGON32_PROVIDER_WINNT35=1;
-const LOGON32_LOGON_INTERACTIVE=2;
-const LOGON32_LOGON_BATCH=4;
-const LOGON32_LOGON_SERVICE=5;
+// for LogonUser()
+enum : DWORD {
+	LOGON32_PROVIDER_DEFAULT  = 0,
+	LOGON32_PROVIDER_WINNT35  = 1
+	//LOGON32_PROVIDER_WINNT40 = ?
+	//LOGON32_PROVIDER_WINNT50 = ?
+}
 
-const MOVEFILE_REPLACE_EXISTING=1;
-const MOVEFILE_COPY_ALLOWED=2;
-const MOVEFILE_DELAY_UNTIL_REBOOT=4;
-const MOVEFILE_WRITE_THROUGH=8;
+// for MoveFileEx()
+const DWORD 
+	MOVEFILE_REPLACE_EXISTING   = 1,
+	MOVEFILE_COPY_ALLOWED       = 2,
+	MOVEFILE_DELAY_UNTIL_REBOOT = 4,
+	MOVEFILE_WRITE_THROUGH      = 8;
 
-const MAXIMUM_WAIT_OBJECTS=64;
-const MAXIMUM_SUSPEND_COUNT=0x7F;
+const MAXIMUM_WAIT_OBJECTS  = 64;
+const MAXIMUM_SUSPEND_COUNT = 0x7F;
 
-const WAIT_OBJECT_0=0;
-const WAIT_ABANDONED_0=128;
+const WAIT_OBJECT_0    = 0;
+const WAIT_ABANDONED_0 = 128;
 
 //const WAIT_TIMEOUT=258;  /* also in winerror.h */
 
@@ -625,47 +657,40 @@ enum : DWORD {
 	WAIT_FAILED        = 0xFFFFFFFF
 }
 
-const PURGE_TXABORT=1;
-const PURGE_RXABORT=2;
-const PURGE_TXCLEAR=4;
-const PURGE_RXCLEAR=8;
+// PurgeComm()
+const DWORD
+	PURGE_TXABORT = 1,
+	PURGE_RXABORT = 2,
+	PURGE_TXCLEAR = 4,
+	PURGE_RXCLEAR = 8;
 
-const EVENTLOG_SUCCESS=0;
-const EVENTLOG_SEQUENTIAL_READ=1;
-const EVENTLOG_SEEK_READ=2;
-const EVENTLOG_FORWARDS_READ=4;
-const EVENTLOG_BACKWARDS_READ=8;
+// ReadEventLog()
+const DWORD 
+	EVENTLOG_SEQUENTIAL_READ = 1,
+	EVENTLOG_SEEK_READ       = 2,
+	EVENTLOG_FORWARDS_READ   = 4,
+	EVENTLOG_BACKWARDS_READ  = 8;
 
-const EVENTLOG_ERROR_TYPE=1;
-const EVENTLOG_WARNING_TYPE=2;
-const EVENTLOG_INFORMATION_TYPE=4;
-const EVENTLOG_AUDIT_SUCCESS=8;
-const EVENTLOG_AUDIT_FAILURE=16;
+// ReportEvent()
+enum : WORD {
+	EVENTLOG_SUCCESS          = 0,
+	EVENTLOG_ERROR_TYPE       = 1,
+	EVENTLOG_WARNING_TYPE     = 2,
+	EVENTLOG_INFORMATION_TYPE = 4,
+	EVENTLOG_AUDIT_SUCCESS    = 8,
+	EVENTLOG_AUDIT_FAILURE    = 16
+}
 
-const EV_RXCHAR=1;
-const EV_RXFLAG=2;
-const EV_TXEMPTY=4;
-const EV_CTS=8;
-const EV_DSR=16;
-const EV_RLSD=32;
-const EV_BREAK=64;
-const EV_ERR=128;
-const EV_RING=256;
-const EV_PERR=512;
-const EV_RX80FULL=1024;
-const EV_EVENT1=2048;
-const EV_EVENT2=4096;
-
-enum {
+// FormatMessage()
+const DWORD
 	FORMAT_MESSAGE_ALLOCATE_BUFFER = 256,
 	FORMAT_MESSAGE_IGNORE_INSERTS  = 512,
 	FORMAT_MESSAGE_FROM_STRING     = 1024,
 	FORMAT_MESSAGE_FROM_HMODULE    = 2048,
 	FORMAT_MESSAGE_FROM_SYSTEM     = 4096,
-	FORMAT_MESSAGE_ARGUMENT_ARRAY  = 8192
-}
+	FORMAT_MESSAGE_ARGUMENT_ARRAY  = 8192;
 
-const FORMAT_MESSAGE_MAX_WIDTH_MASK = 255;
+const DWORD FORMAT_MESSAGE_MAX_WIDTH_MASK = 255;
 
 /* also in ddk/ntapi.h */
 enum {
@@ -682,12 +707,12 @@ enum {
 	SLE_WARNING
 }
 
-const SHUTDOWN_NORETRY=1;
+const SHUTDOWN_NORETRY = 1;
 
 enum {
-	EXCEPTION_EXECUTE_HANDLER = 1,
+	EXCEPTION_EXECUTE_HANDLER    = 1,
 	EXCEPTION_CONTINUE_EXECUTION = -1,
-	EXCEPTION_CONTINUE_SEARCH = 0
+	EXCEPTION_CONTINUE_SEARCH    = 0
 }
 
 enum  : ATOM {
@@ -698,11 +723,7 @@ enum  : ATOM {
 const IGNORE = 0;
 const INFINITE = 0xFFFFFFFF;
 
-// -----
-// RS232
-
-
-
+// EscapeCommFunction()
 enum {
 	SETXOFF = 1,
 	SETXON,
@@ -714,21 +735,47 @@ enum {
 	CLRBREAK = 9
 }
 
-enum {
+
+// for SetCommMask()
+const DWORD
+	EV_RXCHAR   = 1,
+	EV_RXFLAG   = 2,
+	EV_TXEMPTY  = 4,
+	EV_CTS      = 8,
+	EV_DSR      = 16,
+	EV_RLSD     = 32,
+	EV_BREAK    = 64,
+	EV_ERR      = 128,
+	EV_RING     = 256,
+	EV_PERR     = 512,
+	EV_RX80FULL = 1024,
+	EV_EVENT1   = 2048,
+	EV_EVENT2   = 4096;
+
+// GetCommModemStatus()
+const DWORD 
+	MS_CTS_ON  = 16,
+	MS_DSR_ON  = 32,
+	MS_RING_ON = 64,
+	MS_RLSD_ON = 128;
+
+
+// DCB
+enum : BYTE {
 	NOPARITY = 0,
 	ODDPARITY,
 	EVENPARITY,
 	MARKPARITY,
 	SPACEPARITY
 }
-
-enum {
-	ONESTOPBIT=0,
+// DCB
+enum : BYTE {
+	ONESTOPBIT = 0,
 	ONE5STOPBITS,
 	TWOSTOPBITS
 }
-
-enum {
+// DCB
+enum : DWORD {
 	CBR_110    = 110,
 	CBR_300    = 300,
 	CBR_600    = 600,
@@ -745,18 +792,14 @@ enum {
 	CBR_128000 = 128000,
 	CBR_256000 = 256000
 }
-
-const MS_CTS_ON=16;
-const MS_DSR_ON=32;
-const MS_RING_ON=64;
-const MS_RLSD_ON=128;
-
+// DCB, 2-bit bitfield
 enum {
 	DTR_CONTROL_DISABLE = 0,
 	DTR_CONTROL_ENABLE,
 	DTR_CONTROL_HANDSHAKE
 }
 
+// DCB, 2-bit bitfield
 enum {
 	RTS_CONTROL_DISABLE = 0,
 	RTS_CONTROL_ENABLE,
@@ -764,11 +807,9 @@ enum {
 	RTS_CONTROL_TOGGLE,
 }
 
-//-------
-//
-
-enum {
-	BACKUP_INVALID=0,
+// WIN32_STREAM_ID
+enum : DWORD {
+	BACKUP_INVALID = 0,
 	BACKUP_DATA,
 	BACKUP_EA_DATA,
 	BACKUP_SECURITY_DATA,
@@ -780,14 +821,16 @@ enum {
 	BACKUP_SPARSE_BLOCK
 }
 
-enum {
+// WIN32_STREAM_ID
+enum : DWORD {
 	STREAM_NORMAL_ATTRIBUTE    = 0,
 	STREAM_MODIFIED_WHEN_READ  = 1,
 	STREAM_CONTAINS_SECURITY   = 2,
 	STREAM_CONTAINS_PROPERTIES = 4
 }
 
-enum {
+// STARTUPINFO
+const DWORD
 	STARTF_USESHOWWINDOW    = 1,
 	STARTF_USESIZE          = 2,
 	STARTF_USEPOSITION      = 4,
@@ -797,8 +840,7 @@ enum {
 	STARTF_FORCEONFEEDBACK  = 64,
 	STARTF_FORCEOFFFEEDBACK = 128,
 	STARTF_USESTDHANDLES    = 256,
-	STARTF_USEHOTKEY        = 512
-}
+	STARTF_USEHOTKEY        = 512;
 
 enum {
 	TC_NORMAL  = 0,
@@ -825,39 +867,38 @@ enum {
 	BATTERY_LIFE_UNKNOWN       = 0xFFFFFFFF
 }
 
-const DDD_RAW_TARGET_PATH=1;
-const DDD_REMOVE_DEFINITION=2;
-const DDD_EXACT_MATCH_ON_REMOVE=4;
+// DefineDosDevice
+const DWORD
+	DDD_RAW_TARGET_PATH       = 1,
+	DDD_REMOVE_DEFINITION     = 2,
+	DDD_EXACT_MATCH_ON_REMOVE = 4;
 
-const HINSTANCE_ERROR=32;
-
-const SECURITY_ANONYMOUS        = (SECURITY_IMPERSONATION_LEVEL.SecurityAnonymous<<16);
-const SECURITY_IDENTIFICATION   = (SECURITY_IMPERSONATION_LEVEL.SecurityIdentification<<16);
-const SECURITY_IMPERSONATION    = (SECURITY_IMPERSONATION_LEVEL.SecurityImpersonation<<16);
-const SECURITY_DELEGATION       = (SECURITY_IMPERSONATION_LEVEL.SecurityDelegation<<16);
-const SECURITY_CONTEXT_TRACKING = 0x40000;
-const SECURITY_EFFECTIVE_ONLY   = 0x80000;
-const SECURITY_SQOS_PRESENT     = 0x100000;
-const SECURITY_VALID_SQOS_FLAGS = 0x1F0000;
+const HINSTANCE_ERROR = 32;
 
 const INVALID_FILE_SIZE = 0xFFFFFFFF;
 
 const DWORD TLS_OUT_OF_INDEXES = 0xFFFFFFFF;
 
 static if (_WIN32_WINNT >= 0x0501) {
-	const ACTCTX_FLAG_PROCESSOR_ARCHITECTURE_VALID = 0x00000001;
-	const ACTCTX_FLAG_LANGID_VALID                 = 0x00000002;
-	const ACTCTX_FLAG_ASSEMBLY_DIRECTORY_VALID     = 0x00000004;
-	const ACTCTX_FLAG_RESOURCE_NAME_VALID          = 0x00000008;
-	const ACTCTX_FLAG_SET_PROCESS_DEFAULT          = 0x00000010;
-	const ACTCTX_FLAG_APPLICATION_NAME_VALID       = 0x00000020;
-	const ACTCTX_FLAG_HMODULE_VALID                = 0x00000080;
+	// for ACTCTX
+	const DWORD
+		ACTCTX_FLAG_PROCESSOR_ARCHITECTURE_VALID = 0x00000001,
+		ACTCTX_FLAG_LANGID_VALID                 = 0x00000002,
+		ACTCTX_FLAG_ASSEMBLY_DIRECTORY_VALID     = 0x00000004,
+		ACTCTX_FLAG_RESOURCE_NAME_VALID          = 0x00000008,
+		ACTCTX_FLAG_SET_PROCESS_DEFAULT          = 0x00000010,
+		ACTCTX_FLAG_APPLICATION_NAME_VALID       = 0x00000020,
+		ACTCTX_FLAG_HMODULE_VALID                = 0x00000080;
 
-	const DEACTIVATE_ACTCTX_FLAG_FORCE_EARLY_DEACTIVATION = 0x00000001;
-	const FIND_ACTCTX_SECTION_KEY_RETURN_HACTCTX          = 0x00000001;
-	const QUERY_ACTCTX_FLAG_USE_ACTIVE_ACTCTX             = 0x00000004;
-	const QUERY_ACTCTX_FLAG_ACTCTX_IS_HMODULE             = 0x00000008;
-	const QUERY_ACTCTX_FLAG_ACTCTX_IS_ADDRESS             = 0x00000010;
+	// DeactivateActCtx()
+	const DWORD DEACTIVATE_ACTCTX_FLAG_FORCE_EARLY_DEACTIVATION = 0x00000001;
+	// FindActCtxSectionString()
+	const DWORD FIND_ACTCTX_SECTION_KEY_RETURN_HACTCTX          = 0x00000001;
+	// QueryActCtxW()
+	const DWORD
+		QUERY_ACTCTX_FLAG_USE_ACTIVE_ACTCTX             = 0x00000004,
+		QUERY_ACTCTX_FLAG_ACTCTX_IS_HMODULE             = 0x00000008,
+		QUERY_ACTCTX_FLAG_ACTCTX_IS_ADDRESS             = 0x00000010;
 }
 
 static if (_WIN32_WINNT >= 0x0500) {
@@ -1428,70 +1469,69 @@ struct WIN_CERTIFICATE{
 }
 alias WIN_CERTIFICATE * LPWIN_CERTIFICATE;
 
+static if (_WIN32_WINNT >= 0x0500) {	
+	enum COMPUTER_NAME_FORMAT{
+		ComputerNameNetBIOS,
+		ComputerNameDnsHostname,
+		ComputerNameDnsDomain,
+		ComputerNameDnsFullyQualified,
+		ComputerNamePhysicalNetBIOS,
+		ComputerNamePhysicalDnsHostname,
+		ComputerNamePhysicalDnsDomain,
+		ComputerNamePhysicalDnsFullyQualified,
+		ComputerNameMax
+	}
+	
+}
+
 static if (_WIN32_WINNT >= 0x0501) {
-
-struct ACTCTXA{
-	ULONG cbSize;
-	DWORD dwFlags;
-	LPCSTR lpSource;
-	USHORT wProcessorArchitecture;
-	LANGID wLangId;
-	LPCSTR lpAssemblyDirectory;
-	LPCSTR lpResourceName;
-	LPCSTR lpApplicationName;
-	HMODULE hModule;
-}
-alias  ACTCTXA *PACTCTXA, PCACTCTXA;
-
-struct ACTCTXW{
-	ULONG cbSize;
-	DWORD dwFlags;
-	LPCWSTR lpSource;
-	USHORT wProcessorArchitecture;
-	LANGID wLangId;
-	LPCWSTR lpAssemblyDirectory;
-	LPCWSTR lpResourceName;
-	LPCWSTR lpApplicationName;
-	HMODULE hModule;
-}
-alias ACTCTXW *PACTCTXW, PCACTCTXW;
-
-struct ACTCTX_SECTION_KEYED_DATA{
-	ULONG cbSize;
-	ULONG ulDataFormatVersion;
-	PVOID lpData;
-	ULONG ulLength;
-	PVOID lpSectionGlobalData;
-	ULONG ulSectionGlobalDataLength;
-	PVOID lpSectionBase;
-	ULONG ulSectionTotalLength;
-	HANDLE hActCtx;
-	HANDLE ulAssemblyRosterIndex;
-}
-alias ACTCTX_SECTION_KEYED_DATA * PACTCTX_SECTION_KEYED_DATA, PCACTCTX_SECTION_KEYED_DATA;
-
-enum MEMORY_RESOURCE_NOTIFICATION_TYPE {
-	LowMemoryResourceNotification,
-	HighMemoryResourceNotification
-}
-
+	
+	struct ACTCTXA{
+		ULONG cbSize;
+		DWORD dwFlags;
+		LPCSTR lpSource;
+		USHORT wProcessorArchitecture;
+		LANGID wLangId;
+		LPCSTR lpAssemblyDirectory;
+		LPCSTR lpResourceName;
+		LPCSTR lpApplicationName;
+		HMODULE hModule;
+	}
+	alias  ACTCTXA *PACTCTXA, PCACTCTXA;
+	
+	struct ACTCTXW{
+		ULONG cbSize;
+		DWORD dwFlags;
+		LPCWSTR lpSource;
+		USHORT wProcessorArchitecture;
+		LANGID wLangId;
+		LPCWSTR lpAssemblyDirectory;
+		LPCWSTR lpResourceName;
+		LPCWSTR lpApplicationName;
+		HMODULE hModule;
+	}
+	alias ACTCTXW *PACTCTXW, PCACTCTXW;
+	
+	struct ACTCTX_SECTION_KEYED_DATA{
+		ULONG cbSize;
+		ULONG ulDataFormatVersion;
+		PVOID lpData;
+		ULONG ulLength;
+		PVOID lpSectionGlobalData;
+		ULONG ulSectionGlobalDataLength;
+		PVOID lpSectionBase;
+		ULONG ulSectionTotalLength;
+		HANDLE hActCtx;
+		HANDLE ulAssemblyRosterIndex;
+	}
+	alias ACTCTX_SECTION_KEYED_DATA * PACTCTX_SECTION_KEYED_DATA, PCACTCTX_SECTION_KEYED_DATA;
+	
+	enum MEMORY_RESOURCE_NOTIFICATION_TYPE {
+		LowMemoryResourceNotification,
+		HighMemoryResourceNotification
+	}
+	
 }/* (_WIN32_WINNT >= 0x0501) */
-
-static if (_WIN32_WINNT >= 0x0500) {
-
-enum COMPUTER_NAME_FORMAT{
-	ComputerNameNetBIOS,
-	ComputerNameDnsHostname,
-	ComputerNameDnsDomain,
-	ComputerNameDnsFullyQualified,
-	ComputerNamePhysicalNetBIOS,
-	ComputerNamePhysicalDnsHostname,
-	ComputerNamePhysicalDnsDomain,
-	ComputerNamePhysicalDnsFullyQualified,
-	ComputerNameMax
-}
-
-}
 
 static if ((_WIN32_WINNT >= 0x0500) || (_WIN32_WINDOWS >= 0x0410)) {
 	alias DWORD EXECUTION_STATE;
@@ -1629,7 +1669,6 @@ alias RtlZeroMemory ZeroMemory;
  void DebugBreak();
  BOOL DefineDosDeviceA(DWORD,LPCSTR,LPCSTR);
  BOOL DefineDosDeviceW(DWORD,LPCWSTR,LPCWSTR);
-
  BOOL DeleteAce(PACL,DWORD);
  ATOM DeleteAtom(ATOM);
  void DeleteCriticalSection(PCRITICAL_SECTION);
@@ -1660,17 +1699,13 @@ alias RtlZeroMemory ZeroMemory;
  BOOL EqualSid(PSID,PSID);
  DWORD EraseTape(HANDLE,DWORD,BOOL);
  BOOL EscapeCommFunction(HANDLE,DWORD);
-
  void ExitProcess(UINT); // Never returns
  void ExitThread(DWORD); // Never returns
-
  DWORD ExpandEnvironmentStringsA(LPCSTR,LPSTR,DWORD);
  DWORD ExpandEnvironmentStringsW(LPCWSTR,LPWSTR,DWORD);
-
  void FatalAppExitA(UINT,LPCSTR);
  void FatalAppExitW(UINT,LPCWSTR);
  void FatalExit(int);
-
  BOOL FileEncryptionStatusA(LPCSTR,LPDWORD);
  BOOL FileEncryptionStatusW(LPCWSTR,LPDWORD);
  BOOL FileTimeToDosDateTime(FILETIME *,LPWORD,LPWORD);
@@ -1740,7 +1775,6 @@ alias GetTickCount GetCurrentTime;
  BOOL GetDiskFreeSpaceW(LPCWSTR,PDWORD,PDWORD,PDWORD,PDWORD);
  BOOL GetDiskFreeSpaceExA(LPCSTR,PULARGE_INTEGER,PULARGE_INTEGER,PULARGE_INTEGER);
  BOOL GetDiskFreeSpaceExW(LPCWSTR,PULARGE_INTEGER,PULARGE_INTEGER,PULARGE_INTEGER);
-
  UINT GetDriveTypeA(LPCSTR);
  UINT GetDriveTypeW(LPCWSTR);
  LPSTR GetEnvironmentStrings();
@@ -1760,7 +1794,6 @@ alias GetTickCount GetCurrentTime;
  DWORD GetFileSize(HANDLE,PDWORD);
  BOOL GetFileTime(HANDLE,LPFILETIME,LPFILETIME,LPFILETIME);
  DWORD GetFileType(HANDLE);
-
  DWORD GetFullPathNameA(LPCSTR,DWORD,LPSTR,LPSTR*);
  DWORD GetFullPathNameW(LPCWSTR,DWORD,LPWSTR,LPWSTR*);
  BOOL GetHandleInformation(HANDLE,PDWORD);
@@ -1901,7 +1934,6 @@ SIZE_T HeapCompact(HANDLE,DWORD);
  DWORD SetCriticalSectionSpinCount(LPCRITICAL_SECTION,DWORD);
  BOOL InitializeSecurityDescriptor(PSECURITY_DESCRIPTOR,DWORD);
  BOOL InitializeSid (PSID,PSID_IDENTIFIER_AUTHORITY,BYTE);
-
  BOOL IsBadCodePtr(FARPROC);
  BOOL IsBadHugeReadPtr(PCVOID,UINT);
  BOOL IsBadHugeWritePtr(PVOID,UINT);
@@ -1917,7 +1949,6 @@ SIZE_T HeapCompact(HANDLE,DWORD);
  BOOL IsValidSecurityDescriptor(PSECURITY_DESCRIPTOR);
  BOOL IsValidSid(PSID);
  void LeaveCriticalSection(LPCRITICAL_SECTION);
-
  HINSTANCE LoadLibraryA(LPCSTR);
  HINSTANCE LoadLibraryExA(LPCSTR,HANDLE,DWORD);
  HINSTANCE LoadLibraryExW(LPCWSTR,HANDLE,DWORD);
@@ -1963,7 +1994,6 @@ SIZE_T HeapCompact(HANDLE,DWORD);
  int lstrlenW(LPCWSTR);
 
  BOOL MakeAbsoluteSD(PSECURITY_DESCRIPTOR,PSECURITY_DESCRIPTOR,PDWORD,PACL,PDWORD,PACL,PDWORD,PSID,PDWORD,PSID,PDWORD);
-
  BOOL MakeSelfRelativeSD(PSECURITY_DESCRIPTOR,PSECURITY_DESCRIPTOR,PDWORD);
  VOID MapGenericMask(PDWORD,PGENERIC_MAPPING);
  PVOID MapViewOfFile(HANDLE,DWORD,DWORD,DWORD,DWORD);
@@ -2452,15 +2482,12 @@ static if ((_WIN32_WINNT >= 0x0500) || (_WIN32_WINDOWS >= 0x0410)) {
 static if (_WIN32_WINNT >= 0x0500) {
 	alias CreateHardLinkW CreateHardLink;
 	alias CreateJobObjectW CreateJobObject;
-
 	alias DeleteVolumeMountPointW DeleteVolumeMountPoint;
 	alias DnsHostnameToComputerNameW DnsHostnameToComputerName;
-
 	alias FindFirstVolumeW FindFirstVolume;
 	alias FindFirstVolumeMountPointW FindFirstVolumeMountPoint;
 	alias FindNextVolumeW FindNextVolume;
 	alias FindNextVolumeMountPointW FindNextVolumeMountPoint;
-
 	alias GetSystemWindowsDirectoryW GetSystemWindowsDirectory;
 	alias ReplaceFileW ReplaceFile;
 	alias GetModuleHandleExW GetModuleHandleEx;
@@ -2640,11 +2667,9 @@ static if (_WIN32_WINNT >= 0x0500) {
 	alias CreateJobObjectA CreateJobObject;
 	alias DeleteVolumeMountPointA DeleteVolumeMountPoint;
 	alias DnsHostnameToComputerNameA DnsHostnameToComputerName;
-
 	alias GetModuleHandleExA GetModuleHandleEx;
 	alias GetSystemWindowsDirectoryA GetSystemWindowsDirectory;
 	alias ReplaceFileA ReplaceFile;
-
 	alias FindFirstVolumeA FindFirstVolume;
 	alias FindNextVolumeA FindNextVolume;
 	alias FindFirstVolumeMountPointA FindFirstVolumeMountPoint;
