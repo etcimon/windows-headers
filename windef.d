@@ -11,7 +11,7 @@
 module win32.windef;
 
 import win32.winnt;
-private import win32.w32api, win32.basetsd;
+private import win32.w32api;
 
 const size_t MAX_PATH = 260;
 
@@ -50,6 +50,11 @@ template min(T) {
 		return a < b ? a : b;
 	}
 }
+
+alias ushort USHORT;
+alias USHORT* PUSHORT;
+alias uint ULONG;
+alias ULONG* PULONG;
 
 alias ushort WORD, ATOM;
 alias ushort* PWORD, LPWORD;

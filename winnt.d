@@ -13,7 +13,7 @@
 
 module win32.winnt;
 private import win32.w32api;
-import win32.windef;
+private import win32.windef;
 import win32.winerror;
 
 alias void VOID;
@@ -23,10 +23,6 @@ alias char CCHAR;
 alias CCHAR* PCCHAR;
 alias ubyte UCHAR;
 alias UCHAR* PUCHAR;
-alias ushort USHORT;
-alias USHORT* PUSHORT;
-alias uint ULONG;
-alias ULONG* PULONG;
 alias char* PSZ;
 alias void* PVOID, LPVOID;
 
@@ -2672,15 +2668,14 @@ struct REPARSE_GUID_DATA_BUFFER {
 	WORD   Reserved;
 	GUID   ReparseGuid;
 	struct GenericReparseBuffer {
-		BYTE   DataBuffer[1];
+		BYTE DataBuffer[1];
 	}
 }
 alias REPARSE_GUID_DATA_BUFFER * PREPARSE_GUID_DATA_BUFFER;
 
-// FIXME: Not sure if these give the correct values! Possible D bug.
 const REPARSE_DATA_BUFFER_HEADER_SIZE = REPARSE_DATA_BUFFER.u.GenericReparseBuffer.DataBuffer.offsetof;
-const REPARSE_GUID_DATA_BUFFER_HEADER_SIZE = REPARSE_GUID_DATA_BUFFER.GenericReparseBuffer.DataBuffer.offsetof;
-const MAXIMUM_REPARSE_DATA_BUFFER_SIZE=16384;
+const size_t REPARSE_GUID_DATA_BUFFER_HEADER_SIZE = REPARSE_GUID_DATA_BUFFER.GenericReparseBuffer.DataBuffer.offsetof;
+const MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384;
 
 
 struct REPARSE_POINT_INFORMATION {
