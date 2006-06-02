@@ -15,6 +15,13 @@ module win32.winnt;
 private import win32.w32api;
 private import win32.windef;
 import win32.winerror;
+import win32.basetsd;
+
+/* Translation Notes:
+The following macros are unneeded for D:
+FIELD_OFFSET(t,f), CONTAINING_RECORD(address, type, field)
+*/
+
 
 alias void VOID;
 alias char CHAR;
@@ -72,8 +79,6 @@ alias bool* PBOOLEAN;
 alias BYTE FCHAR;
 alias WORD FSHORT;
 alias DWORD FLONG;
-
-import win32.basetsd;
 
 const ACE_OBJECT_TYPE_PRESENT=0x00000001;
 const ACE_INHERITED_OBJECT_TYPE_PRESENT=0x00000002;
@@ -385,7 +390,8 @@ const SE_GROUP_USE_FOR_DENY_ONLY=16;
 const SE_GROUP_LOGON_ID=3221225472U;
 const SE_GROUP_RESOURCE=536870912;
 
-enum {
+// Primary language identifiers
+enum : USHORT {
 	LANG_NEUTRAL = 0x00,
 	LANG_ARABIC = 0x01,
 	LANG_BULGARIAN = 0x02,
@@ -469,7 +475,8 @@ enum {
 	LANG_INVARIANT = 0x7f
 }
 
-enum {
+// Sublanguage identifiers
+enum : USHORT {
 	SUBLANG_NEUTRAL = 0x00,
 	SUBLANG_DEFAULT = 0x01,
 	SUBLANG_SYS_DEFAULT = 0x02,
@@ -583,21 +590,24 @@ enum {
 
 const NLS_VALID_LOCALE_MASK=1048575;
 
-const SORT_DEFAULT=0;
-const SORT_JAPANESE_XJIS=0;
-const SORT_JAPANESE_UNICODE=1;
-const SORT_CHINESE_BIG5=0;
-const SORT_CHINESE_PRCP=0;
-const SORT_CHINESE_UNICODE=1;
-const SORT_CHINESE_PRC=2;
-const SORT_CHINESE_BOPOMOFO=3;
-const SORT_KOREAN_KSC=0;
-const SORT_KOREAN_UNICODE=1;
-const SORT_GERMAN_PHONE_BOOK=1;
-const SORT_HUNGARIAN_DEFAULT=0;
-const SORT_HUNGARIAN_TECHNICAL=1;
-const SORT_GEORGIAN_TRADITIONAL=0;
-const SORT_GEORGIAN_MODERN=1;
+// Sorting identifiers
+enum : WORD {
+	SORT_DEFAULT              = 0,
+	SORT_JAPANESE_XJIS        = 0,
+	SORT_JAPANESE_UNICODE     = 1,
+	SORT_CHINESE_BIG5         = 0,
+	SORT_CHINESE_PRCP         = 0,
+	SORT_CHINESE_UNICODE      = 1,
+	SORT_CHINESE_PRC          = 2,
+	SORT_CHINESE_BOPOMOFO     = 3,	
+	SORT_KOREAN_KSC           = 0,
+	SORT_KOREAN_UNICODE       = 1,
+	SORT_GERMAN_PHONE_BOOK    = 1,
+	SORT_HUNGARIAN_DEFAULT    = 0,
+	SORT_HUNGARIAN_TECHNICAL  = 1,
+	SORT_GEORGIAN_TRADITIONAL = 0,
+	SORT_GEORGIAN_MODERN      = 1
+}
 
 //MACRO #define MAKELANGID(p,s)	((((WORD)(s))<<10)|(WORD)(p))
 
