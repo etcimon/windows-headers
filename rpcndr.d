@@ -113,7 +113,7 @@ const cbNDRContext=20;
 //MACRO #define NdrFcLong(s) (unsigned char)(s & 0xff), (unsigned char)((s & 0x0000ff00) >> 8), (unsigned char)((s & 0x00ff0000) >> 16), (unsigned char)(s >> 24)
 
 alias void * NDR_CCONTEXT;
-struct tagNDR_SCONTEXT{
+struct tagNDR_SCONTEXT {
 	void *pad[2];
 	void *userContext;
 }
@@ -121,7 +121,7 @@ alias tagNDR_SCONTEXT * NDR_SCONTEXT;
 
 alias void function (void*) NDR_RUNDOWN;
 
-struct SCONTEXT_QUEUE{
+struct SCONTEXT_QUEUE {
 	uint NumberOfObjects;
 	NDR_SCONTEXT *ArrayOfObjects;
 }
@@ -182,7 +182,7 @@ void  tree_peek_ndr(PRPC_MESSAGE,ubyte**,char*,ubyte);
 void * midl_allocate(int);
 
 align(4):
-struct MIDL_STUB_MESSAGE{
+struct MIDL_STUB_MESSAGE {
 	PRPC_MESSAGE RpcMsg;
 	ubyte *Buffer;
 	ubyte *BufferStart;
@@ -237,13 +237,13 @@ align:
 
 alias void* function (void*) GENERIC_BINDING_ROUTINE;
 alias void function (void*,ubyte*) GENERIC_UNBIND_ROUTINE;
-struct GENERIC_BINDING_ROUTINE_PAIR{
+struct GENERIC_BINDING_ROUTINE_PAIR {
 	GENERIC_BINDING_ROUTINE pfnBind;
 	GENERIC_UNBIND_ROUTINE pfnUnbind;
 }
 alias GENERIC_BINDING_ROUTINE_PAIR * PGENERIC_BINDING_ROUTINE_PAIR;
 
-struct GENERIC_BINDING_INFO{
+struct GENERIC_BINDING_INFO {
 	void *pObj;
 	uint Size;
 	GENERIC_BINDING_ROUTINE pfnBind;
@@ -252,7 +252,7 @@ struct GENERIC_BINDING_INFO{
 alias GENERIC_BINDING_INFO * PGENERIC_BINDING_INFO;
 
 alias void function(PMIDL_STUB_MESSAGE) XMIT_HELPER_ROUTINE;
-struct XMIT_ROUTINE_QUINTUPLE{
+struct XMIT_ROUTINE_QUINTUPLE {
 	XMIT_HELPER_ROUTINE pfnTranslateToXmit;
 	XMIT_HELPER_ROUTINE pfnTranslateFromXmit;
 	XMIT_HELPER_ROUTINE pfnFreeXmit;
@@ -260,12 +260,12 @@ struct XMIT_ROUTINE_QUINTUPLE{
 }
 alias XMIT_ROUTINE_QUINTUPLE * PXMIT_ROUTINE_QUINTUPLE;
 
-struct MALLOC_FREE_STRUCT{
+struct MALLOC_FREE_STRUCT {
 	void* function (uint) pfnAllocate;
 	void function (void*) pfnFree;
 }
 
-struct COMM_FAULT_OFFSETS{
+struct COMM_FAULT_OFFSETS {
 	short CommOffset;
 	short FaultOffset;
 }
@@ -275,7 +275,7 @@ alias ubyte * function (uint *,ubyte *,void *) USER_MARSHAL_MARSHALLING_ROUTINE;
 alias ubyte * function (uint *,ubyte *,void *) USER_MARSHAL_UNMARSHALLING_ROUTINE;
 alias void function (uint *,void *) USER_MARSHAL_FREEING_ROUTINE;
 
-struct USER_MARSHAL_ROUTINE_QUADRUPLE{
+struct USER_MARSHAL_ROUTINE_QUADRUPLE {
 	USER_MARSHAL_SIZING_ROUTINE pfnBufferSize;
 	USER_MARSHAL_MARSHALLING_ROUTINE pfnMarshall;
 	USER_MARSHAL_UNMARSHALLING_ROUTINE pfnUnmarshall;
@@ -284,7 +284,7 @@ struct USER_MARSHAL_ROUTINE_QUADRUPLE{
 
 alias void function () NDR_NOTIFY_ROUTINE;
 
-enum IDL_CS_CONVERT{
+enum IDL_CS_CONVERT {
 	IDL_CS_NO_CONVERT,
 	IDL_CS_IN_PLACE_CONVERT,
 	IDL_CS_NEW_BUFFER_CONVERT
@@ -295,19 +295,19 @@ alias void function (RPC_BINDING_HANDLE,uint,void*,uint,byte*,uint*,error_status
 alias void function (RPC_BINDING_HANDLE,uint,byte*,uint,uint,void*,uint*,error_status_t*) CS_TYPE_FROM_NETCS_ROUTINE;
 alias void function (RPC_BINDING_HANDLE,int,uint*,uint*,uint*,error_status_t*) CS_TAG_GETTING_ROUTINE;
 
-struct NDR_CS_SIZE_CONVERT_ROUTINES{
+struct NDR_CS_SIZE_CONVERT_ROUTINES {
 	CS_TYPE_NET_SIZE_ROUTINE pfnNetSize;
 	CS_TYPE_TO_NETCS_ROUTINE pfnToNetCs;
 	CS_TYPE_LOCAL_SIZE_ROUTINE pfnLocalSize;
 	CS_TYPE_FROM_NETCS_ROUTINE pfnFromNetCs;
 }
 
-struct NDR_CS_ROUTINES{
+struct NDR_CS_ROUTINES {
 	NDR_CS_SIZE_CONVERT_ROUTINES *pSizeConvertRoutines;
 	CS_TAG_GETTING_ROUTINE *pTagGettingRoutines;
 }
 
-struct MIDL_STUB_DESC{
+struct MIDL_STUB_DESC {
 	void* RpcInterfaceInformation;
 	void* function(uint) pfnAllocate;
 	void function (void*) pfnFree;
@@ -337,7 +337,7 @@ alias  MIDL_STUB_DESC * PMIDL_STUB_DESC;
 
 alias void * PMIDL_XMIT_TYPE;
 
-struct MIDL_FORMAT_STRING{
+struct MIDL_FORMAT_STRING {
 	short Pad;
 	ubyte Format[1];
 }
@@ -355,7 +355,7 @@ struct MIDL_SERVER_INFO {
 }
 alias MIDL_SERVER_INFO * PMIDL_SERVER_INFO;
 
-struct MIDL_STUBLESS_PROXY_INFO{
+struct MIDL_STUBLESS_PROXY_INFO {
 	PMIDL_STUB_DESC pStubDesc;
 	PFORMAT_STRING ProcFormatString;
 	ushort *FormatStringOffset;
@@ -379,7 +379,7 @@ struct FULL_PTR_TO_REFID_ELEMENT {
 }
 alias FULL_PTR_TO_REFID_ELEMENT * PFULL_PTR_TO_REFID_ELEMENT;
 
-struct FULL_PTR_XLAT_TABLES{
+struct FULL_PTR_XLAT_TABLES {
 	struct RefIdToPointer {
 		void **XlatTable;
 		ubyte *StateTable;

@@ -137,9 +137,9 @@ enum EXTCONN {
 }
 
 struct MULTI_QI {
-	IID* pIID;
+	IID*      pIID;
 	IUnknown* pItf;
-	HRESULT	hr;
+	HRESULT   hr;
 }
 
 struct AUTH_IDENTITY {

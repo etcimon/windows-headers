@@ -7,9 +7,9 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
-
 module win32.oleacc;
 pragma(lib, "oleacc.lib");
+
 private import win32.oaidl;
 private import win32.wtypes;
 
@@ -170,7 +170,7 @@ interface IAccessible : public IDispatch
 	HRESULT GetTypeInfo(UINT,LCID,LPTYPEINFO*);
 	HRESULT GetIDsOfNames(REFIID,LPOLESTR*,UINT,LCID,DISPID*);
 	HRESULT Invoke(DISPID,REFIID,LCID,WORD,DISPPARAMS*,VARIANT*,EXCEPINFO*,UINT*);
-	
+
 	HRESULT get_accParent(IDispatch**);
 	HRESULT get_accChildCount(int*);
 	HRESULT get_accChild(VARIANT, IDispatch **);
@@ -185,13 +185,13 @@ interface IAccessible : public IDispatch
 	HRESULT get_accFocus(VARIANT*);
 	HRESULT get_accSelection(VARIANT*);
 	HRESULT get_accDefaultAction(VARIANT, BSTR*);
-	
+
 	HRESULT accSelect(int, VARIANT);
 	HRESULT accLocation(int*, int*, int*, int*, VARIANT);
 	HRESULT accNavigate(int, VARIANT, VARIANT*);
 	HRESULT accHitTest(int, int, VARIANT*);
 	HRESULT accDoDefaultAction(VARIANT);
-	
+
 	HRESULT put_accName(VARIANT, BSTR);
 	HRESULT put_accValue(VARIANT, BSTR);
 }

@@ -68,7 +68,7 @@ version (Unicode) {
 		const bool _WIN32_USE_UNICODE = true;
 	} else {
 		const bool _WIN32_USE_UNICODE = false;
-	}	
+	}
 } else {
 		const bool _WIN32_USE_UNICODE = false;
 }

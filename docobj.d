@@ -69,14 +69,14 @@ enum OLECMDEXECOPT {
 	OLECMDEXECOPT_SHOWHELP = 3
 }
 
-struct OLECMDTEXT{
+struct OLECMDTEXT {
 	DWORD cmdtextf;
 	ULONG cwActual;
 	ULONG cwBuf;
 	wchar rgwz[1];
 }
 
-struct OLECMD{
+struct OLECMD {
 	ULONG cmdID;
 	DWORD cmdf;
 }

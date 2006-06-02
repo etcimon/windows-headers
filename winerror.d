@@ -1865,7 +1865,7 @@ enum : HRESULT  {
 	E_HANDLE                               = 0x80070006,
 	E_OUTOFMEMORY                          = 0x8007000E,
 	E_INVALIDARG                           = 0x80070057,
-	E_UNEXPECTED	                       = 0x8000FFFF,
+	E_UNEXPECTED                           = 0x8000FFFF,
 
 	CO_E_INIT_TLS                          = 0x80004006,
 	CO_E_INIT_SHARED_ALLOCATOR             = 0x80004007,

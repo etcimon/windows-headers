@@ -22,26 +22,18 @@
 module win32.windows;
 
 import win32.w32api;
-import win32.windef;
-import win32.wincon;
-import win32.winbase;
-import win32.wingdi;
-import win32.winuser;
-import win32.winnls;
-import win32.winver;
-import win32.winnetwk;
+import win32.core;
 
 // We can't use static if for imports, build gets confused.
 // static if (_WIN32_WINNT_ONLY) import win32.winsvc;
 version (Windows2003) {
 	import win32.winsvc;
-} else version (WindowsXP) { 
+} else version (WindowsXP) {
 	import win32.winsvc;
 } else version (WindowsNTonly) {
 	import win32.winsvc;
 }
 
-//#ifndef WIN32_LEAN_AND_MEAN
 import win32.cderr;
 import win32.dde;
 import win32.ddeml;
@@ -58,7 +50,7 @@ import win32.winspool;
 
 // Select correct version of winsock.  Importing the incorrect
 // module will cause a static assert to prevent problems later on.
-version( Win32_Winsock2 )
+version (Win32_Winsock2)
 	import win32.winsock2;
 else
 	import win32.winsock;
@@ -77,4 +69,3 @@ else
 +/
 
 import win32.ole2;
-// #endif /* WIN32_LEAN_AND_MEAN */

@@ -12,7 +12,7 @@ private import win32.objidl;
 
 /+
 // Forward declararions are not necessary in D.
-extern(Windows){
+extern(Windows) {
 	interface IMoniker;
 	interface IStream;
 	interface IMarshal;

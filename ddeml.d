@@ -74,8 +74,8 @@ enum : UINT {
 }
 
 /+
-#define TIMEOUT_ASYNC	0xFFFFFFFF
-#define QID_SYNC	0xFFFFFFFF
+#define TIMEOUT_ASYNC  0xFFFFFFFF
+#define QID_SYNC       0xFFFFFFFF
 +/
 
 enum : UINT {
@@ -195,8 +195,8 @@ extern (Windows) alias HDDEDATA
   function(UINT, UINT, HCONV, HSZ, HSZ, HDDEDATA, DWORD, DWORD) PFNCALLBACK;
 
 struct HSZPAIR {
-	HSZ	hszSvc;
-	HSZ	hszTopic;
+	HSZ hszSvc;
+	HSZ hszTopic;
 }
 alias HSZPAIR* PHSZPAIR;
 

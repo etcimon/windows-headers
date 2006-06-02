@@ -7,15 +7,14 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
-
 module win32.lm;
 
-version (WindowsXP) {
- version = WIN32_WINNT_ONLY;
-} else version(Windows2000) {
- version = WIN32_WINNT_ONLY;
-} else version (Windows2003) {
- version = WIN32_WINNT_ONLY;
+version (Windows2003) {
+	version = WIN32_WINNT_ONLY;
+} else version (WindowsXP) {
+	version = WIN32_WINNT_ONLY;
+} else version(WindowsNTonly) {
+	version = WIN32_WINNT_ONLY;
 }
 
 import win32.lmcons;
@@ -31,8 +30,8 @@ import win32.lmrepl;
 import win32.lmuse;
 
 version (WIN32_WINNT_ONLY) {
-import win32.lmwksta;
-import win32.lmserver;
+	import win32.lmwksta;
+	import win32.lmserver;
 }
 import win32.lmstats;
 

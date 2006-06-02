@@ -28,7 +28,7 @@ enum : DWORD {
 }
 
 enum : DWORD {
-	REG_CREATED_NEW_KEY	    = 1,
+	REG_CREATED_NEW_KEY = 1,
 	REG_OPENED_EXISTING_KEY
 }
 

@@ -609,7 +609,7 @@ extern(Pascal) {
 	int setsockopt(SOCKET, int, int, char*, int);
 	int shutdown(SOCKET, int);
 	SOCKET socket(int, int, int);
-	
+
 	alias typeof(&accept) LPFN_ACCEPT;
 	alias typeof(&bind) LPFN_BIND;
 	alias typeof(&closesocket) LPFN_CLOSESOCKET;
@@ -686,7 +686,7 @@ extern(Pascal) {
 	HANDLE WSAAsyncGetHostByAddr(HWND, u_int, char*, int, int, char*, int);
 	int WSACancelAsyncRequest(HANDLE);
 	int WSAAsyncSelect(SOCKET, HWND, u_int, long);
-	
+
 	alias typeof(&WSAAsyncGetServByName) LPFN_WSAAsyncGetServByName;
 	alias typeof(&WSAAsyncGetServByPort) LPFN_WSAASYNCGETSERVBYPORT;
 	alias typeof(&WSAAsyncGetProtoByName) LPFN_WSAASYNCGETPROTOBYNAME;
@@ -818,7 +818,7 @@ struct FLOWSPEC {
 	uint        PeakBandwidth;
 	uint        Latency;
 	uint        DelayVariation;
-	SERVICETYPE	ServiceType;
+	SERVICETYPE ServiceType;
 	uint        MaxSduSize;
 	uint        MinimumPolicedSize;
 }
@@ -856,7 +856,7 @@ enum {
 
 struct WSANETWORKEVENTS {
 	int lNetworkEvents;
-	int	iErrorCode[FD_MAX_EVENTS];
+	int[FD_MAX_EVENTS] iErrorCode;
 }
 
 alias WSANETWORKEVENTS* LPWSANETWORKEVENTS;
@@ -1295,8 +1295,8 @@ const int SIO_ADDRESS_LIST_CHANGE            = _WSAIO!(IOC_WS2,23);
 const int SIO_QUERY_TARGET_PNP_HANDLE        = _WSAIOR!(IOC_WS2,24);
 const int SIO_NSP_NOTIFY_CHANGE              = _WSAIOW!(IOC_WS2,25);
 
-const int TH_NETDEV	= 0x00000001;
-const int TH_TAPI   = 0x00000002;
+const int TH_NETDEV = 1;
+const int TH_TAPI   = 2;
 
 // TODO: The below was declared with "WINAPI" linkage; is this correct?
 extern(Windows) {
@@ -1350,7 +1350,7 @@ extern(Windows) {
 	INT WSAStringToAddressA(LPSTR, INT, LPWSAPROTOCOL_INFOA, LPSOCKADDR, LPINT);
 	INT WSAStringToAddressW(LPWSTR, INT, LPWSAPROTOCOL_INFOW, LPSOCKADDR, LPINT);
 	DWORD WSAWaitForMultipleEvents(DWORD, WSAEVENT*, BOOL, DWORD, BOOL);
-	
+
 	alias typeof(&WSAAccept) LPFN_WSAACCEPT;
 	alias typeof(&WSAAddressToStringA) LPFN_WSAADDRESSTOSTRINGA;
 	alias typeof(&WSAAddressToStringW) LPFN_WSAADDRESSTOSTRINGW;
@@ -1454,4 +1454,3 @@ version(Unicode) {
 	alias WSAStringToAddressA WSAStringToAddress;
 	alias WSASetServiceA WSASetService;
 }
-

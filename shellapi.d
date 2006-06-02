@@ -10,6 +10,7 @@
 \***********************************************************************/
 module win32.shellapi;
 pragma(lib, "shell32.lib");
+
 private import win32.w32api, win32.windef;
 
 enum : UINT {
@@ -82,10 +83,10 @@ static if (_WIN32_IE >= 0x500) {
 }
 
 const UINT
-	NIF_MESSAGE = 0x00000001,
-	NIF_ICON    = 0x00000002,
-	NIF_TIP	    = 0x00000004,
-	NIF_STATE   = 0x00000008;
+	NIF_MESSAGE = 1,
+	NIF_ICON    = 2,
+	NIF_TIP     = 4,
+	NIF_STATE   = 8;
 
 static if (_WIN32_IE >= 0x500) {
 	const UINT NIF_INFO = 0x00000010;

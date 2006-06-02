@@ -315,21 +315,21 @@ const DWORD
 // ----
 
 const DWORD
-    BLACKNESS  = 0x42,
-    NOTSRCERASE= 0x1100A6,
-    NOTSRCCOPY = 0x330008,
-    SRCERASE   = 0x440328,
-    DSTINVERT  = 0x550009,
-    PATINVERT  = 0x5A0049,
-    SRCINVERT  = 0x660046,
-    SRCAND     = 0x8800C6,
-    MERGEPAINT = 0xBB0226,
-    MERGECOPY  = 0xC000CA,
-    SRCCOPY    = 0xCC0020,
-    SRCPAINT   = 0xEE0086,
-    PATCOPY    = 0xF00021,
-    PATPAINT   = 0xFB0A09,
-    WHITENESS  = 0xFF0062;
+    BLACKNESS   = 0x42,
+    NOTSRCERASE = 0x1100A6,
+    NOTSRCCOPY  = 0x330008,
+    SRCERASE    = 0x440328,
+    DSTINVERT   = 0x550009,
+    PATINVERT   = 0x5A0049,
+    SRCINVERT   = 0x660046,
+    SRCAND      = 0x8800C6,
+    MERGEPAINT  = 0xBB0226,
+    MERGECOPY   = 0xC000CA,
+    SRCCOPY     = 0xCC0020,
+    SRCPAINT    = 0xEE0086,
+    PATCOPY     = 0xF00021,
+    PATPAINT    = 0xFB0A09,
+    WHITENESS   = 0xFF0062;
 
 // GetROP2(), SetROP2()
 enum : int {
@@ -712,7 +712,6 @@ const DWORD
 	PS_ENDCAP_MASK   = 3840,
 	PS_TYPE_MASK     = 983040;
 
-
 // ---
 // DeviceCapabilities()
 
@@ -863,7 +862,7 @@ enum : int {
 	RASTERCAPS      = 38,
 	ASPECTX         = 40,
 	ASPECTY         = 42,
-	ASPECTXY        = 44,	
+	ASPECTXY        = 44,
 	LOGPIXELSX      = 88,
 	LOGPIXELSY      = 90,
 	SIZEPALETTE     = 104,
@@ -1015,7 +1014,7 @@ enum : UINT {
 
 enum : int {
 	GM_COMPATIBLE = 1,
-	GM_ADVANCED   = 2
+	GM_ADVANCED
 }
 
 enum : int {
@@ -1084,7 +1083,7 @@ enum : UINT {
 }
 
 // SetTextAlign()
-const UINT 
+const UINT
 	TA_TOP        = 0,
 	TA_CENTER     = 6,
 	TA_BOTTOM     = 8,
@@ -1146,11 +1145,11 @@ enum : int {
 // ----
 // Escape() return codes
 enum : int {
-    SP_ERROR= -1,
-    SP_OUTOFDISK= -4,
-    SP_OUTOFMEMORY= -5,
-    SP_USERABORT=-3,
-    SP_APPABORT=-2
+    SP_ERROR       = -1,
+    SP_APPABORT    = -2,
+    SP_USERABORT   = -3,
+    SP_OUTOFDISK   = -4,
+    SP_OUTOFMEMORY = -5
 }
 
 // Escape(), ExtEscape()
@@ -1160,7 +1159,7 @@ const int
 
 // Escape(), ExtEscape()
 // Most of the following are deprecated (Win16 only)
-const int 
+enum : int {
 	NEWFRAME      = 1,
 	ABORTDOC      = 2,
 	NEXTBAND      = 3,
@@ -1233,7 +1232,8 @@ const int
 	DOWNLOADHEADER = 4111,
 	CLOSECHANNEL = 4112,
 	POSTSCRIPT_PASSTHROUGH  = 4115,
-	ENCAPSULATED_POSTSCRIPT = 4116;
+	ENCAPSULATED_POSTSCRIPT = 4116
+}
 
 // ----
 
@@ -1246,6 +1246,8 @@ const QDI_DIBTOSCREEN = 4;
 const QDI_STRETCHDIB  = 8;
 
 const SP_NOTREPORTED=0x4000;
+
+const PR_JOBSTATUS=0;
 
 const ASPECT_FILTERING=1;
 
@@ -1635,9 +1637,9 @@ static if (_WIN32_WINNT >= 0x0500) {
 // ----------
 
 struct ABC {
-    int abcA;
+    int  abcA;
     UINT abcB;
-    int abcC;
+    int  abcC;
 }
 alias ABC* LPABC;
 
@@ -1649,23 +1651,22 @@ struct ABCFLOAT {
 alias ABCFLOAT* LPABCFLOAT;
 
 struct BITMAP {
-    LONG	bmType;
-    LONG	bmWidth;
-    LONG	bmHeight;
-    LONG	bmWidthBytes;
-    WORD	bmPlanes;
-    WORD	bmBitsPixel;
-    LPVOID	bmBits;
+    LONG   bmType;
+    LONG   bmWidth;
+    LONG   bmHeight;
+    LONG   bmWidthBytes;
+    WORD   bmPlanes;
+    WORD   bmBitsPixel;
+    LPVOID bmBits;
 }
-alias BITMAP* PBITMAP;
-alias BITMAP* LPBITMAP;
+alias BITMAP* PBITMAP, LPBITMAP;
 
 struct BITMAPCOREHEADER {
-    DWORD	bcSize;
-    WORD	bcWidth;
-    WORD	bcHeight;
-    WORD	bcPlanes;
-    WORD	bcBitCount;
+    DWORD bcSize;
+    WORD  bcWidth;
+    WORD  bcHeight;
+    WORD  bcPlanes;
+    WORD  bcBitCount;
 }
 alias BITMAPCOREHEADER* PBITMAPCOREHEADER, LPBITMAPCOREHEADER;
 
@@ -1679,49 +1680,49 @@ alias RGBTRIPLE* LPRGBTRIPLE;
 
 align(2):
 struct BITMAPFILEHEADER {
-    WORD	bfType;
-    DWORD	bfSize;
-    WORD	bfReserved1;
-    WORD	bfReserved2;
-    DWORD	bfOffBits;
+    WORD  bfType;
+    DWORD bfSize;
+    WORD  bfReserved1;
+    WORD  bfReserved2;
+    DWORD bfOffBits;
 }
-alias BITMAPFILEHEADER* PBITMAPFILEHEADER, LPBITMAPFILEHEADER;
+alias BITMAPFILEHEADER* LPBITMAPFILEHEADER, PBITMAPFILEHEADER;
 
 align:
 
 struct BITMAPCOREINFO {
-    BITMAPCOREHEADER	bmciHeader;
-    RGBTRIPLE	bmciColors[1];
-};
-alias  BITMAPCOREINFO* PBITMAPCOREINFO, LPBITMAPCOREINFO;
+    BITMAPCOREHEADER bmciHeader;
+    RGBTRIPLE[1]     bmciColors;
+}
+alias BITMAPCOREINFO* LPBITMAPCOREINFO, PBITMAPCOREINFO;
 
 struct BITMAPINFOHEADER {
-    DWORD	biSize;
-    LONG	biWidth;
-    LONG	biHeight;
-    WORD	biPlanes;
-    WORD	biBitCount;
-    DWORD	biCompression;
-    DWORD	biSizeImage;
-    LONG	biXPelsPerMeter;
-    LONG	biYPelsPerMeter;
-    DWORD	biClrUsed;
-    DWORD	biClrImportant;
-};
+    DWORD biSize;
+    LONG  biWidth;
+    LONG  biHeight;
+    WORD  biPlanes;
+    WORD  biBitCount;
+    DWORD biCompression;
+    DWORD biSizeImage;
+    LONG  biXPelsPerMeter;
+    LONG  biYPelsPerMeter;
+    DWORD biClrUsed;
+    DWORD biClrImportant;
+}
 
-alias BITMAPINFOHEADER* PBITMAPINFOHEADER, LPBITMAPINFOHEADER;
+alias BITMAPINFOHEADER* LPBITMAPINFOHEADER, PBITMAPINFOHEADER;
 
 struct RGBQUAD {
-    BYTE	rgbBlue;
-    BYTE	rgbGreen;
-    BYTE	rgbRed;
-    BYTE	rgbReserved;
+    BYTE rgbBlue;
+    BYTE rgbGreen;
+    BYTE rgbRed;
+    BYTE rgbReserved;
 };
 alias RGBQUAD* LPRGBQUAD;
 
 struct BITMAPINFO {
     BITMAPINFOHEADER bmiHeader;
-    RGBQUAD bmiColors[1];
+    RGBQUAD[1]       bmiColors;
 };
 alias BITMAPINFO* PBITMAPINFO, LPBITMAPINFO;
 
@@ -1745,33 +1746,32 @@ struct CIEXYZTRIPLE {
 alias CIEXYZTRIPLE* LPCIEXYZTRIPLE;
 
 struct BITMAPV4HEADER {
-    DWORD	bV4Size;
-    LONG	bV4Width;
-    LONG	bV4Height;
-    WORD	bV4Planes;
-    WORD	bV4BitCount;
-    DWORD	bV4V4Compression;
-    DWORD	bV4SizeImage;
-    LONG	bV4XPelsPerMeter;
-    LONG	bV4YPelsPerMeter;
-    DWORD	bV4ClrUsed;
-    DWORD	bV4ClrImportant;
-    DWORD	bV4RedMask;
-    DWORD	bV4GreenMask;
-    DWORD	bV4BlueMask;
-    DWORD	bV4AlphaMask;
-    DWORD	bV4CSType;
+    DWORD        bV4Size;
+    LONG         bV4Width;
+    LONG         bV4Height;
+    WORD         bV4Planes;
+    WORD         bV4BitCount;
+    DWORD        bV4V4Compression;
+    DWORD        bV4SizeImage;
+    LONG         bV4XPelsPerMeter;
+    LONG         bV4YPelsPerMeter;
+    DWORD        bV4ClrUsed;
+    DWORD        bV4ClrImportant;
+    DWORD        bV4RedMask;
+    DWORD        bV4GreenMask;
+    DWORD        bV4BlueMask;
+    DWORD        bV4AlphaMask;
+    DWORD        bV4CSType;
     CIEXYZTRIPLE bV4Endpoints;
-    DWORD	bV4GammaRed;
-    DWORD	bV4GammaGreen;
-    DWORD	bV4GammaBlue;
+    DWORD        bV4GammaRed;
+    DWORD        bV4GammaGreen;
+    DWORD        bV4GammaBlue;
 }
-alias BITMAPV4HEADER* LPBITMAPV4HEADER;
-alias BITMAPV4HEADER* PBITMAPV4HEADER;
+alias BITMAPV4HEADER* LPBITMAPV4HEADER, PBITMAPV4HEADER;
 
 struct FONTSIGNATURE {
-    DWORD	fsUsb[4];
-    DWORD	fsCsb[2];
+    DWORD[4] fsUsb;
+    DWORD[2] fsCsb;
 }
 alias FONTSIGNATURE* LPFONTSIGNATURE;
 
@@ -1782,19 +1782,19 @@ struct CHARSETINFO {
 }
 alias CHARSETINFO* LPCHARSETINFO;
 
-struct  COLORADJUSTMENT {
-    WORD	caSize;
-    WORD	caFlags;
-    WORD	caIlluminantIndex;
-    WORD	caRedGamma;
-    WORD	caGreenGamma;
-    WORD	caBlueGamma;
-    WORD	caReferenceBlack;
-    WORD	caReferenceWhite;
-    SHORT	caContrast;
-    SHORT	caBrightness;
-    SHORT	caColorfulness;
-    SHORT	caRedGreenTint;
+struct COLORADJUSTMENT {
+    WORD  caSize;
+    WORD  caFlags;
+    WORD  caIlluminantIndex;
+    WORD  caRedGamma;
+    WORD  caGreenGamma;
+    WORD  caBlueGamma;
+    WORD  caReferenceBlack;
+    WORD  caReferenceWhite;
+    SHORT caContrast;
+    SHORT caBrightness;
+    SHORT caColorfulness;
+    SHORT caRedGreenTint;
 }
 alias COLORADJUSTMENT* LPCOLORADJUSTMENT;
 
@@ -1946,73 +1946,72 @@ struct PANOSE {
 }
 
 struct LOGFONTA {
-    LONG	lfHeight;
-    LONG	lfWidth;
-    LONG	lfEscapement;
-    LONG	lfOrientation;
-    LONG	lfWeight;
-    BYTE	lfItalic;
-    BYTE	lfUnderline;
-    BYTE	lfStrikeOut;
-    BYTE	lfCharSet;
-    BYTE	lfOutPrecision;
-    BYTE	lfClipPrecision;
-    BYTE	lfQuality;
-    BYTE	lfPitchAndFamily;
-    CHAR	lfFaceName[LF_FACESIZE];
+    LONG lfHeight;
+    LONG lfWidth;
+    LONG lfEscapement;
+    LONG lfOrientation;
+    LONG lfWeight;
+    BYTE lfItalic;
+    BYTE lfUnderline;
+    BYTE lfStrikeOut;
+    BYTE lfCharSet;
+    BYTE lfOutPrecision;
+    BYTE lfClipPrecision;
+    BYTE lfQuality;
+    BYTE lfPitchAndFamily;
+    CHAR[LF_FACESIZE] lfFaceName;
 }
-alias LOGFONTA* PLOGFONTA;
-alias LOGFONTA* LPLOGFONTA;
+alias LOGFONTA* PLOGFONTA, LPLOGFONTA;
 
 struct LOGFONTW {
-    LONG	lfHeight;
-    LONG	lfWidth;
-    LONG	lfEscapement;
-    LONG	lfOrientation;
-    LONG	lfWeight;
-    BYTE	lfItalic;
-    BYTE	lfUnderline;
-    BYTE	lfStrikeOut;
-    BYTE	lfCharSet;
-    BYTE	lfOutPrecision;
-    BYTE	lfClipPrecision;
-    BYTE	lfQuality;
-    BYTE	lfPitchAndFamily;
-    WCHAR	lfFaceName[LF_FACESIZE];
+    LONG lfHeight;
+    LONG lfWidth;
+    LONG lfEscapement;
+    LONG lfOrientation;
+    LONG lfWeight;
+    BYTE lfItalic;
+    BYTE lfUnderline;
+    BYTE lfStrikeOut;
+    BYTE lfCharSet;
+    BYTE lfOutPrecision;
+    BYTE lfClipPrecision;
+    BYTE lfQuality;
+    BYTE lfPitchAndFamily;
+    WCHAR[LF_FACESIZE] lfFaceName;
 }
 alias LOGFONTW* PLOGFONTW, LPLOGFONTW;
 
 struct EXTLOGFONTA {
-    LOGFONTA	elfLogFont;
-    BYTE	elfFullName[LF_FULLFACESIZE];
-    BYTE	elfStyle[LF_FACESIZE];
-    DWORD	elfVersion;
-    DWORD	elfStyleSize;
-    DWORD	elfMatch;
-    DWORD	elfReserved;
-    BYTE	elfVendorId[ELF_VENDOR_SIZE];
-    DWORD	elfCulture;
-    PANOSE	elfPanose;
+    LOGFONTA              elfLogFont;
+    BYTE[LF_FULLFACESIZE] elfFullName;
+    BYTE[LF_FACESIZE]     elfStyle;
+    DWORD                 elfVersion;
+    DWORD                 elfStyleSize;
+    DWORD                 elfMatch;
+    DWORD                 elfReserved;
+    BYTE[ELF_VENDOR_SIZE] elfVendorId;
+    DWORD                 elfCulture;
+    PANOSE                elfPanose;
 }
 alias EXTLOGFONTA* PEXTLOGFONTA, LPEXTLOGFONTA;
 
 struct EXTLOGFONTW {
-    LOGFONTW	elfLogFont;
-    WCHAR	elfFullName[LF_FULLFACESIZE];
-    WCHAR	elfStyle[LF_FACESIZE];
-    DWORD	elfVersion;
-    DWORD	elfStyleSize;
-    DWORD	elfMatch;
-    DWORD	elfReserved;
-    BYTE	elfVendorId[ELF_VENDOR_SIZE];
-    DWORD	elfCulture;
-    PANOSE	elfPanose;
+    LOGFONTW               elfLogFont;
+    WCHAR[LF_FULLFACESIZE] elfFullName;
+    WCHAR[LF_FACESIZE]     elfStyle;
+    DWORD                  elfVersion;
+    DWORD                  elfStyleSize;
+    DWORD                  elfMatch;
+    DWORD                  elfReserved;
+    BYTE[ELF_VENDOR_SIZE]  elfVendorId;
+    DWORD                  elfCulture;
+    PANOSE                 elfPanose;
 }
 alias EXTLOGFONTW* PEXTLOGFONTW, LPEXTLOGFONTW;
 
 struct LOGPEN {
-    UINT lopnStyle;
-    POINT lopnWidth;
+    UINT     lopnStyle;
+    POINT    lopnWidth;
     COLORREF lopnColor;
 }
 alias LOGPEN* PLOGPEN, LPLOGPEN;
@@ -2026,29 +2025,24 @@ struct EMR {
 alias EMR* PEMR;
 
 struct EMRANGLEARC {
-    EMR emr;
+    EMR    emr;
     POINTL ptlCenter;
-    DWORD nRadius;
-    FLOAT eStartAngle;
-    FLOAT eSweepAngle;
+    DWORD  nRadius;
+    FLOAT  eStartAngle;
+    FLOAT  eSweepAngle;
 }
 alias EMRANGLEARC* PEMRANGLEARC;
 
 struct EMRARC {
-    EMR emr;
-    RECTL rclBox;
+    EMR    emr;
+    RECTL  rclBox;
     POINTL ptlStart;
     POINTL ptlEnd;
 }
-alias EMRARC* PEMRARC;
-typedef EMRARC EMRARCTO;
-alias EMRARC* PEMRARCTO;
-typedef EMRARC EMRCHORD;
-alias EMRARC* PEMRCHORD;
-typedef EMRARC EMRPIE;
-alias EMRARC* PEMRPIE;
+alias EMRARC EMRARCTO, EMRCHORD, EMRPIE;
+alias EMRARC* PEMRARC, PEMRARCTO, PEMRCHORD, PEMRPIE;
 
-struct  XFORM {
+struct XFORM {
     FLOAT eM11;
     FLOAT eM12;
     FLOAT eM21;
@@ -2056,46 +2050,43 @@ struct  XFORM {
     FLOAT eDx;
     FLOAT eDy;
 }
-alias XFORM* PXFORM;
-alias XFORM* LPXFORM;
+alias XFORM* PXFORM, LPXFORM;
 
 struct EMRBITBLT {
-    EMR emr;
-    RECTL rclBounds;
-    LONG xDest;
-    LONG yDest;
-    LONG cxDest;
-    LONG cyDest;
-    DWORD dwRop;
-    LONG xSrc;
-    LONG ySrc;
-    XFORM xformSrc;
+    EMR      emr;
+    RECTL    rclBounds;
+    LONG     xDest;
+    LONG     yDest;
+    LONG     cxDest;
+    LONG     cyDest;
+    DWORD    dwRop;
+    LONG     xSrc;
+    LONG     ySrc;
+    XFORM    xformSrc;
     COLORREF crBkColorSrc;
-    DWORD iUsageSrc;
-    DWORD offBmiSrc;
-    DWORD offBitsSrc;
-    DWORD cbBitsSrc;
+    DWORD    iUsageSrc;
+    DWORD    offBmiSrc;
+    DWORD    offBitsSrc;
+    DWORD    cbBitsSrc;
 }
 alias EMRBITBLT* PEMRBITBLT;
 
 struct LOGBRUSH {
-    UINT lbStyle;
+    UINT     lbStyle;
     COLORREF lbColor;
-    LONG lbHatch;
+    LONG     lbHatch;
 }
-alias LOGBRUSH* PLOGBRUSH, LPLOGBRUSH;
-typedef LOGBRUSH PATTERN;
-alias LOGBRUSH* PPATTERN, LPPATTERN;
+alias LOGBRUSH PATTERN;
+alias LOGBRUSH* PLOGBRUSH, LPLOGBRUSH, PPATTERN, LPPATTERN;
 
 struct EMRCREATEBRUSHINDIRECT {
-    EMR emr;
-    DWORD ihBrush;
+    EMR      emr;
+    DWORD    ihBrush;
     LOGBRUSH lb;
 }
 alias EMRCREATEBRUSHINDIRECT* PEMRCREATEBRUSHINDIRECT;
 
-alias LONG LCSCSTYPE;
-alias LONG LCSGAMUTMATCH;
+alias LONG LCSCSTYPE, LCSGAMUTMATCH;
 
 struct LOGCOLORSPACEA {
     DWORD lcsSignature;
@@ -2271,10 +2262,8 @@ struct EMREXTTEXTOUTA {
     FLOAT eyScale;
     EMRTEXT emrtext;
 }
-alias EMREXTTEXTOUTA* PEMREXTTEXTOUTA;
-
 alias EMREXTTEXTOUTA EMREXTTEXTOUTW;
-alias EMREXTTEXTOUTA* PEMREXTTEXTOUTW;
+alias EMREXTTEXTOUTA* PEMREXTTEXTOUTA, PEMREXTTEXTOUTW;
 
 struct EMRFILLPATH {
     EMR emr;
@@ -2886,8 +2875,7 @@ static if (_WIN32_WINNT >= 0x0500) {
         WCHAR wcLow;
         USHORT cGlyphs;
     }
-    alias WCRANGE* PWCRANGE;
-    alias WCRANGE* LPWCRANGE;
+    alias WCRANGE* PWCRANGE, LPWCRANGE;
 
     struct GLYPHSET {
         DWORD cbThis;

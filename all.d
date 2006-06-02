@@ -28,6 +28,8 @@ import win32.richole;
 import win32.tmschema;
 import win32.servprov;
 import win32.exdisp;
+import win32.exdispid;
+import win32.idispids;
 import win32.mshtml;
 
 import win32.lm;
@@ -36,3 +38,15 @@ import win32.lmbrowsr;
 import win32.sql;
 import win32.sqlext;
 import win32.sqlucode;
+
+import win32.imagehlp;
+
+version (Windows2003) {
+	import win32.dhcpcsdk;
+	import win32.errorrep;
+} else version (WindowsXP) {
+	import win32.dhcpcsdk;
+	import win32.errorrep;
+} else version (WindowsNTonly) {
+	version (Windows2000) import win32.dhcpcsdk;
+}

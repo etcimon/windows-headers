@@ -7,9 +7,9 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
-
 module win32.oleauto;
 pragma(lib, "oleaut32.lib");
+
 import win32.oaidl;
 private import win32.wtypes;
 private import win32.winbase; // for SYSTEMTIME
