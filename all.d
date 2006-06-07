@@ -51,3 +51,4 @@ version (Windows2003) {
 	version (Windows2000) import win32.dhcpcsdk;
 }
 import win32.subauth;
+import win32.ras;
