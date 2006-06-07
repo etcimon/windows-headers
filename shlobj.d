@@ -10,7 +10,10 @@
 // TODO: fix bitfields
 // TODO: CMIC_VALID_SEE_FLAGS
 module win32.shlobj;
+
+/* SHGetFolderPath in shfolder.dll on W9x, NT4, also in shell32.dll on W2K */
 pragma(lib, "shell32.lib");
+
 private import win32.w32api;
 private import win32.unknwn;
 private import win32.winuser;

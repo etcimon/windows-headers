@@ -50,3 +50,4 @@ version (Windows2003) {
 } else version (WindowsNTonly) {
 	version (Windows2000) import win32.dhcpcsdk;
 }
+import win32.subauth;

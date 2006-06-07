@@ -3316,7 +3316,7 @@ alias DWORD function (LPSTR, LPSTR, UINT, LPSTR, LPDEVMODEA) LPFNDEVCAPS;
 // ---------
 // C Macros.
 // FIXME:
-//MACRO #define MAKEPOINTS(l) (*((POINTS*)&(l)))
+//POINTS MAKEPOINTS(DWORD dwValue) #define MAKEPOINTS(l) (*((POINTS*)&(l)))
 
 DWORD MAKEROP4(DWORD fore, DWORD back) {
     return (( back<<8)&0xFF000000)|(fore);
