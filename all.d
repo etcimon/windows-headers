@@ -44,9 +44,11 @@ import win32.imagehlp;
 version (Windows2003) {
 	import win32.dhcpcsdk;
 	import win32.errorrep;
+	import win32.secext;
 } else version (WindowsXP) {
 	import win32.dhcpcsdk;
 	import win32.errorrep;
+	import win32.secext;
 } else version (WindowsNTonly) {
 	version (Windows2000) import win32.dhcpcsdk;
 }
