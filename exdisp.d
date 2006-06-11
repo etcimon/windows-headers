@@ -26,12 +26,13 @@ enum BrowserNavConstants {
 }
 
 extern (C) {
-	extern CLSID CLSID_WebBrowser;
-	extern IID DIID_DWebBrowserEvents;
-	extern IID IID_IWebBrowser;
-	extern IID IID_IWebBrowserApp;
-	extern IID IID_IWebBrowser2;
-	extern IID DIID_DWebBrowserEvents2;
+	extern const CLSID CLSID_WebBrowser;
+	extern const IID
+		DIID_DWebBrowserEvents,
+		IID_IWebBrowser,
+		IID_IWebBrowserApp,
+		IID_IWebBrowser2,
+		DIID_DWebBrowserEvents2;
 }
 
 interface IWebBrowser : public IDispatch {

@@ -62,7 +62,6 @@ struct DLLVERSIONINFO2
 	DWORD dwFlags;
 	ULONGLONG ullVersion;
 }
-align:
 
 enum ASSOCSTR {
 	ASSOCSTR_COMMAND,
@@ -126,27 +125,27 @@ alias HUSKEY* PHUSKEY;
 
 extern (Windows)
 {
-alias HRESULT function (DLLVERSIONINFO *) DLLGETVERSIONPROC;
+	alias HRESULT function (DLLVERSIONINFO *) DLLGETVERSIONPROC;
 }
 
 
 BOOL IntlStrEqNA(LPCSTR pStr1, LPCSTR pStr2, int nChar)
-{ 
+{
 	return IntlStrEqWorkerA(TRUE, pStr1, pStr2, nChar);
 }
 
 BOOL IntlStrEqNW(LPCWSTR pStr1, LPCWSTR pStr2, int nChar)
-{ 
+{
 	return IntlStrEqWorkerW(TRUE, pStr1, pStr2, nChar);
 }
 
 BOOL IntlStrEqNIA(LPCSTR pStr1, LPCSTR pStr2, int nChar)
-{ 
+{
 	return IntlStrEqWorkerA(FALSE, pStr1, pStr2, nChar);
 }
 
 BOOL IntlStrEqNIW(LPCWSTR pStr1, LPCWSTR pStr2, int nChar)
-{ 
+{
 	return IntlStrEqWorkerW(FALSE, pStr1, pStr2, nChar);
 }
 

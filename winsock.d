@@ -18,7 +18,7 @@ module win32.winsock;
  */
 
 // DRK: This module should not be included if -version=Win32_Winsock2 has
-// been set.  If it has, assert.  I think it's better that way then letting
+// been set.  If it has, assert.  I think it's better that way than letting
 // the user believe that it's worked.
 version(Win32_Winsock2) {
 	pragma(msg, "Cannot use win32.winsock with Win32_Winsock2 defined.");

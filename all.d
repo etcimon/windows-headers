@@ -40,6 +40,12 @@ import win32.sqlext;
 import win32.sqlucode;
 
 import win32.imagehlp;
+import win32.intshcut;
+import win32.iphlpapi;
+import win32.isguids;
+
+import win32.subauth;
+import win32.ras;
 
 version (Windows2003) {
 	import win32.dhcpcsdk;
@@ -52,5 +58,3 @@ version (Windows2003) {
 } else version (WindowsNTonly) {
 	version (Windows2000) import win32.dhcpcsdk;
 }
-import win32.subauth;
-import win32.ras;

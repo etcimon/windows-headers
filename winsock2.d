@@ -21,7 +21,7 @@ pragma(lib, "Ws2_32.lib");
  */
 
 // DRK: This module should not be included if -version=Win32_Winsock2 has
-// not been set.  If it has, assert.  I think it's better this way then
+// not been set.  If it has, assert.  I think it's better this way than
 // letting the user believe that it's worked.
 version(Win32_Winsock2) {}
 else {

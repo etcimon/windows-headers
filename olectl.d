@@ -376,7 +376,6 @@ struct PICTDESC
 	}
 }
 alias PICTDESC* LPPICTDESC;
-align:
 
 extern(Windows) {
 	HRESULT DllRegisterServer();

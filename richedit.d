@@ -579,4 +579,3 @@ version(Unicode) {
 	alias FINDTEXTEXA FINDTEXTEX;
 	alias TEXTRANGEA TEXTRANGE;
 }
-align:

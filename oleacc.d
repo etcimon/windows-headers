@@ -43,7 +43,7 @@ enum {
 	NAVDIR_NEXT,
 	NAVDIR_PREVIOUS,
 	NAVDIR_FIRSTCHILD,
-	NAVDIR_LASTCHILD // =8
+	NAVDIR_LASTCHILD // = 8
 }
 
 enum {
@@ -153,24 +153,16 @@ enum SELFLAG
 	SELFLAG_REMOVESELECTION = 16
 }
 
-const SELFLAG_VALID=0x0000001F;
+const SELFLAG_VALID = 0x0000001F;
 
 extern (Windows) {
-
-/* DEFINE_GUID(LIBID_Accessibility, 0x1ea4dbf0, 0x3c3b,0x11cf, 0x81, 0x0c, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71); */
-/* DEFINE_GUID(IID_IAccessible,     0x618736e0, 0x3c3d,0x11cf, 0x81, 0x0c, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71); */
-extern IID LIBID_Accessibility;
-extern IID IID_IAccessible;
-
+	/* DEFINE_GUID(LIBID_Accessibility, 0x1ea4dbf0, 0x3c3b, 0x11cf, 0x81, 0x0c, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71); */
+	/* DEFINE_GUID(IID_IAccessible,     0x618736e0, 0x3c3d, 0x11cf, 0x81, 0x0c, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71); */
+	extern IID LIBID_Accessibility;
+	extern IID IID_IAccessible;
 }
 
-interface IAccessible : public IDispatch
-{
-	HRESULT GetTypeInfoCount(UINT*);
-	HRESULT GetTypeInfo(UINT,LCID,LPTYPEINFO*);
-	HRESULT GetIDsOfNames(REFIID,LPOLESTR*,UINT,LCID,DISPID*);
-	HRESULT Invoke(DISPID,REFIID,LCID,WORD,DISPPARAMS*,VARIANT*,EXCEPINFO*,UINT*);
-
+interface IAccessible : public IDispatch {
 	HRESULT get_accParent(IDispatch**);
 	HRESULT get_accChildCount(int*);
 	HRESULT get_accChild(VARIANT, IDispatch **);
@@ -199,23 +191,22 @@ interface IAccessible : public IDispatch
 alias IAccessible* LPACCESSIBLE;
 
 extern (Windows) {
+	HRESULT AccessibleChildren(IAccessible*, LONG, LONG, VARIANT*, LONG*);
+	HRESULT AccessibleObjectFromEvent(HWND, DWORD, DWORD, IAccessible*, VARIANT*);
+	HRESULT AccessibleObjectFromPoint(POINT, IAccessible**, VARIANT*);
+	HRESULT AccessibleObjectFromWindow(HWND, DWORD, REFIID, void**);
+	HRESULT CreateStdAccessibleObject(HWND, LONG, REFIID, void**);
+	HRESULT CreateStdAccessibleProxyA(HWND, LPCSTR, LONG, REFIID, void**);
+	HRESULT CreateStdAccessibleProxyW(HWND, LPCWSTR, LONG, REFIID, void**);
 
-HRESULT AccessibleChildren(IAccessible*,LONG,LONG,VARIANT*,LONG*);
-HRESULT AccessibleObjectFromEvent(HWND,DWORD,DWORD,IAccessible*,VARIANT*);
-HRESULT AccessibleObjectFromPoint(POINT,IAccessible**,VARIANT*);
-HRESULT AccessibleObjectFromWindow(HWND,DWORD,REFIID,void**);
-HRESULT CreateStdAccessibleObject(HWND,LONG,REFIID,void**);
-HRESULT CreateStdAccessibleProxyA(HWND,LPCSTR,LONG,REFIID,void**);
-HRESULT CreateStdAccessibleProxyW(HWND,LPCWSTR,LONG,REFIID,void**);
-
-void GetOleaccVersionInfo(DWORD*,DWORD*);
-UINT GetRoleTextA(DWORD,LPSTR,UINT);
-UINT GetRoleTextW(DWORD,LPWSTR,UINT);
-UINT GetStateTextA(DWORD,LPSTR,UINT);
-UINT GetStateTextW(DWORD,LPWSTR,UINT);
-LRESULT LresultFromObject(REFIID,WPARAM,LPUNKNOWN);
-HRESULT ObjectFromLresult(LRESULT,REFIID,WPARAM,void**);
-HRESULT WindowFromAccessibleObject(IAccessible*,HWND*);
+	void GetOleaccVersionInfo(DWORD*, DWORD*);
+	UINT GetRoleTextA(DWORD, LPSTR, UINT);
+	UINT GetRoleTextW(DWORD, LPWSTR, UINT);
+	UINT GetStateTextA(DWORD, LPSTR, UINT);
+	UINT GetStateTextW(DWORD, LPWSTR, UINT);
+	LRESULT LresultFromObject(REFIID, WPARAM, LPUNKNOWN);
+	HRESULT ObjectFromLresult(LRESULT, REFIID, WPARAM, void**);
+	HRESULT WindowFromAccessibleObject(IAccessible*, HWND*);
 }
 
 version(Unicode) {

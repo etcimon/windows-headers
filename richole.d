@@ -49,10 +49,9 @@ enum {
 	RECO_DRAG // = 4
 }
 
-extern (C) {
-	extern GUID IID_IRichEditOle;
-	extern GUID IID_IRichEditOleCallback;
-}
+extern (C) extern const GUID
+	IID_IRichEditOle,
+	IID_IRichEditOleCallback;
 
 struct REOBJECT {
 	DWORD           cbStruct = REOBJECT.sizeof;

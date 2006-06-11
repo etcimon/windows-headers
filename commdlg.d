@@ -575,8 +575,6 @@ alias PRINTDLGEXW* LPPRINTDLGEXW;
 
 } // WINVER >= 0x0500
 
-align:
-
 extern (Windows):
 
 BOOL ChooseColorA(LPCHOOSECOLORA);

@@ -122,9 +122,9 @@ const BYTE
 
 
 const ANYSIZE_ARRAY=1;
-	
+
 // Access Mask Format
-const ACCESS_MASK 
+const ACCESS_MASK
 	DELETE                   = 0x00010000,
 	READ_CONTROL             = 0x00020000,
 	WRITE_DAC                = 0x00040000,
@@ -613,7 +613,7 @@ enum : WORD {
 	SORT_CHINESE_PRCP         = 0,
 	SORT_CHINESE_UNICODE      = 1,
 	SORT_CHINESE_PRC          = 2,
-	SORT_CHINESE_BOPOMOFO     = 3,	
+	SORT_CHINESE_BOPOMOFO     = 3,
 	SORT_KOREAN_KSC           = 0,
 	SORT_KOREAN_UNICODE       = 1,
 	SORT_GERMAN_PHONE_BOOK    = 1,
@@ -3219,12 +3219,10 @@ struct ADMINISTRATOR_POWER_POLICY {
 }
 alias ADMINISTRATOR_POWER_POLICY* PADMINISTRATOR_POWER_POLICY;
 
-align:
-
 //}//#endif /* WINVER >= 0x0500 */
 
 static if (_WIN32_WINNT >= 0x0500) {
-	alias void function (PVOID,BOOLEAN) WAITORTIMERCALLBACKFUNC;
+	alias void function (PVOID, BOOLEAN) WAITORTIMERCALLBACKFUNC;
 }
 
 version(Unicode) {

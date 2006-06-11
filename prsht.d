@@ -321,8 +321,6 @@ struct PSHNOTIFY {
 }
 alias PSHNOTIFY* LPPSHNOTIFY;
 
-align:
-
 extern (Windows) {
 	HPROPSHEETPAGE CreatePropertySheetPageA(LPCPROPSHEETPAGEA);
 	HPROPSHEETPAGE CreatePropertySheetPageW(LPCPROPSHEETPAGEW);
