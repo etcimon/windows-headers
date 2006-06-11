@@ -38,6 +38,7 @@ import win32.lmbrowsr;
 import win32.sql;
 import win32.sqlext;
 import win32.sqlucode;
+import win32.odbcinst;
 
 import win32.imagehlp;
 import win32.intshcut;
