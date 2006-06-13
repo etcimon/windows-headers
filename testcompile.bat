@@ -1,45 +1,46 @@
-dmd -I.. -c all.d
+dmd -I.. -c testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=Windows98 all.d
+dmd -I.. -c -version=Windows98 testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=WindowsME all.d
+dmd -I.. -c -version=WindowsME testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=WindowsNTonly all.d
+dmd -I.. -c -version=WindowsNTonly testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=Windows2000 all.d
+dmd -I.. -c -version=Windows2000 testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=Windows98 -version=Windows2000 all.d
+dmd -I.. -c -version=Windows98 -version=Windows2000 testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=WindowsME -version=Windows2000 all.d
+dmd -I.. -c -version=WindowsME -version=Windows2000 testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=WindowsNTonly -version=Windows2000 all.d
+dmd -I.. -c -version=WindowsNTonly -version=Windows2000 testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=WindowsXP all.d
+dmd -I.. -c -version=WindowsXP testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=Windows2003 all.d
+dmd -I.. -c -version=Windows2003 testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=Win32_Winsock2 all.d
+dmd -I.. -c -version=Win32_Winsock2 testall.d
 @if errorlevel 1 goto abort
 @rem Do we really need to test version=Unicode under all combinations?
-dmd -I.. -c -version=Unicode all.d
+dmd -I.. -c -version=Unicode testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=Unicode -version=Windows98 all.d
+dmd -I.. -c -version=Unicode -version=Windows98 testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=Unicode -version=WindowsME all.d
+dmd -I.. -c -version=Unicode -version=WindowsME testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=Unicode -version=WindowsNTonly all.d
+dmd -I.. -c -version=Unicode -version=WindowsNTonly testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=Unicode -version=Windows2000 all.d
+dmd -I.. -c -version=Unicode -version=Windows2000 testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=Unicode -version=Windows98 -version=Windows2000 all.d
+dmd -I.. -c -version=Unicode -version=Windows98 -version=Windows2000 testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=Unicode -version=WindowsME -version=Windows2000 all.d
+dmd -I.. -c -version=Unicode -version=WindowsME -version=Windows2000 testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=Unicode -version=WindowsNTonly -version=Windows2000 all.d
+dmd -I.. -c -version=Unicode -version=WindowsNTonly -version=Windows2000 testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=Unicode -version=WindowsXP all.d
+dmd -I.. -c -version=Unicode -version=WindowsXP testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=Unicode -version=Windows2003 all.d
+dmd -I.. -c -version=Unicode -version=Windows2003 testall.d
 @if errorlevel 1 goto abort
-dmd -I.. -c -version=Unicode -version=Win32_Winsock2 all.d
+dmd -I.. -c -version=Unicode -version=Win32_Winsock2 testall.d
+del testall.obj
 :abort
