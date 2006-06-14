@@ -1,5 +1,5 @@
 // Used only for testing -- imports all windows headers.
-module win32.all;
+module win32.testall;
 
 import win32.core;
 import win32.windows;
