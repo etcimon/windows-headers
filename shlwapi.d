@@ -29,6 +29,7 @@ import win32.shlobj;
 private import win32.windef;
 private import win32.winbase;
 private import win32.winreg;
+private import win32.unknwn, win32.objidl, win32.basetyps;
 
 const DLLVER_PLATFORM_WINDOWS = 0x00000001;
 const DLLVER_PLATFORM_NT      = 0x00000002;

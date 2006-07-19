@@ -13,6 +13,7 @@ import win32.windef;
 
 import win32.objfwd;
 import win32.wtypes;
+private import win32.basetyps;
 
 extern (Windows) {
 	void* MIDL_user_allocate(size_t);

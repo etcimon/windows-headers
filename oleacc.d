@@ -12,6 +12,9 @@ pragma(lib, "oleacc.lib");
 
 private import win32.oaidl;
 private import win32.wtypes;
+private import win32.basetyps;
+private import win32.windef;
+private import win32.unknwn;
 
 enum {
 	DISPID_ACC_PARENT           = -5000,

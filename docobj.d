@@ -13,6 +13,7 @@ private import win32.wtypes;
 private import win32.oleidl;
 private import win32.objidl;
 private import win32.oaidl;
+private import win32.windef, win32.basetyps;
 
 // FIXME: remove inherited methods from interface definitions
 

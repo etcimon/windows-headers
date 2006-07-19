@@ -21,6 +21,7 @@ import win32.rpcnsip;
 private import win32.objidl; // for IRpcChannelBuffer, IRpcStubBuffer
 private import win32.rpcdce;
 private import win32.unknwn;
+private import win32.windef;
 
 pragma(lib,"rpcrt4.lib");
 

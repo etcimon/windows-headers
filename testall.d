@@ -47,6 +47,10 @@ import win32.isguids;
 
 import win32.subauth;
 import win32.ras;
+//import win32.nddeapi;
+import win32.msacm;
+import win32.nspapi;
+
 
 version (Windows2003) {
 	import win32.dhcpcsdk;

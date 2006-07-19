@@ -15,7 +15,7 @@
    creating a circular dependency!
 */
 module win32.sqlext;
-import win32.sql;
+public import win32.sql;
 private import win32.windef;
 
 const SQL_SPEC_MAJOR = 3;

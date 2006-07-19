@@ -12,10 +12,11 @@
 // FIXME: clean up Windows version support
 
 module win32.winnt;
+
 private import win32.w32api;
-private import win32.windef;
-import win32.winerror;
-import win32.basetsd;
+public import win32.windef;
+public import win32.winerror;
+public import win32.basetsd;
 
 /* Translation Notes:
 The following macros are unneeded for D:

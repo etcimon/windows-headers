@@ -53,6 +53,7 @@ import win32.winver;
 import win32.windef;
 private import win32.w32api;
 private import win32.winnt;
+private import win32.basetyps;
 
 pragma(lib, "kernel32.lib");
 

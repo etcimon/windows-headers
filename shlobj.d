@@ -19,6 +19,8 @@ private import win32.unknwn;
 private import win32.winuser;
 private import win32.winbase;
 private import win32.winnetwk; // for NETRESOURCE
+private import win32.winnt, win32.wtypes, win32.objfwd, win32.objidl;
+private import win32.prsht;
 
 import win32.ole2;
 import win32.shlguid;

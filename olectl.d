@@ -18,6 +18,9 @@ private import win32.wingdi;
 private import win32.wtypes;
 private import win32.oleauto;
 private import win32.winuser;
+private import win32.winerror;
+private import win32.windef, win32.wtypes, win32.unknwn, win32.basetyps;
+private import win32.oaidl, win32.objfwd;
 
 
 private {

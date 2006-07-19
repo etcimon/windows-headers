@@ -16,6 +16,7 @@ private import win32.winbase; // for SYSTEMTIME
 private import win32.commctrl;
 private import win32.winreg;
 private import win32.prsht;
+private import win32.basetyps;
 
 /*static if(_WIN32_WINNT < _WIN32_WINDOWS) {
 	const UINT _SETUPAPI_VER = _WIN32_WINNT; // SetupAPI version follows Windows NT version

@@ -12,7 +12,8 @@
 */
 
 module win32.sqltypes;
-private import win32.wtypes; // for GUID
+private import win32.basetyps;
+private import win32.windef;
 
 alias byte SCHAR;
 alias int SDWORD;

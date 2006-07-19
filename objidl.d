@@ -15,6 +15,8 @@ module win32.objidl;
 
 import win32.unknwn;
 import win32.objfwd;
+private import win32.windef;
+private import win32.basetyps;
 private import win32.oleidl;
 private import win32.wtypes;
 private import win32.winbase; // for FILETIME

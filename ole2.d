@@ -9,12 +9,18 @@
 \***********************************************************************/
 module win32.ole2;
 pragma(lib, "ole32.lib");
-import win32.winerror;
-import win32.objbase;
-import win32.olectlid;
-import win32.oleauto;
-import win32.oleidl;
+public import win32.winerror;
+public import win32.objbase;
+public import win32.olectlid;
+public import win32.oleauto;
+public import win32.oleidl;
 private import win32.winuser; // for LPMSG
+private import win32.windef;
+private import win32.objfwd;
+private import win32.objidl;
+private import win32.wtypes;
+public import win32.unknwn;
+public import win32.basetyps;
 
 
 const E_DRAW = VIEW_E_DRAW;

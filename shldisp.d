@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.shldisp;
-private import win32.unknwn;
+private import win32.unknwn, win32.windef, win32.wtypes;
 
 // options for IAutoComplete2
 const DWORD ACO_AUTOSUGGEST = 0x01;

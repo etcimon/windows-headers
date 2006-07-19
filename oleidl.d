@@ -13,6 +13,9 @@
 
 module win32.oleidl;
 
+private import win32.objfwd; // for LPMONIKER
+private import win32.windef;
+private import win32.basetyps;
 private import win32.unknwn;
 private import win32.wtypes;
 private import win32.objidl;

@@ -11,7 +11,8 @@ module win32.mshtml;
 
 private import win32.unknwn;
 private import win32.wtypes;
-private import win32.oaidl;
+private import win32.oaidl, win32.basetyps, win32.windef;
+
 
 // These are used in this file, but not defined in MinGW.
 interface IHTMLStyleSheet {};

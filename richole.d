@@ -12,6 +12,8 @@ private import win32.unknwn;
 private import win32.windef;
 private import win32.ole2;
 private import win32.richedit; // for CHARRANGE
+private import win32.objfwd;
+private import win32.objidl;
 
 align(4):
 

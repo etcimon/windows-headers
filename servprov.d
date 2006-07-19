@@ -9,7 +9,7 @@
 \***********************************************************************/
 module win32.servprov;
 private import win32.unknwn;
-private import win32.wtypes;
+private import win32.wtypes, win32.basetyps, win32.windef;
 
 extern (C) {
 	extern IID IID_IServiceProvider;

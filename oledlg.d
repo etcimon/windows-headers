@@ -16,6 +16,8 @@ import win32.ole2;
 
 import win32.dlgs;
 import win32.prsht;
+private import win32.winnt, win32.objidl, win32.objfwd;
+private import win32.winbase;
 
 // FIXME: remove inherited methods from interface definitions
 

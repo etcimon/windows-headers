@@ -32,6 +32,7 @@ else {
 
 import win32.winbase;
 import win32.windef;
+import win32.basetyps;
 
 // NOTE: This header is NOT to be inluded with winsock.
 alias char u_char;

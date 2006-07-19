@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.sqlucode;
-private import win32.sqlext;
+private import win32.sqlext;    
 
 const SQL_WCHAR        = -8;
 const SQL_WVARCHAR     = -9;

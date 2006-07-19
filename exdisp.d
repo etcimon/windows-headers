@@ -12,7 +12,7 @@ module win32.exdisp;
 import win32.oaidl;
 import win32.ocidl;
 import win32.docobj;
-private import win32.wtypes;
+private import win32.wtypes, win32.basetyps, win32.windef;
 
 
 enum BrowserNavConstants {

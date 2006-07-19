@@ -17,14 +17,15 @@
 */
 module win32.core;
 
-import win32.windef;
-import win32.wincon;
-import win32.winbase;
-import win32.wingdi;
-import win32.winuser;
-import win32.winnls;
-import win32.winver;
-import win32.winnetwk;
+public import win32.windef;
+public import win32.winnt;
+public import win32.wincon;
+public import win32.winbase;
+public import win32.wingdi;
+public import win32.winuser;
+public import win32.winnls;
+public import win32.winver;
+public import win32.winnetwk;
 
 // We can't use static if for imports, build gets confused.
 // static if (_WIN32_WINNT_ONLY) import win32.winsvc;
@@ -37,5 +38,5 @@ version (Windows2003) {
 }
 
 version (WIN32_WINNT_ONLY) {
-	import win32.winsvc;
+	public import win32.winsvc;
 }

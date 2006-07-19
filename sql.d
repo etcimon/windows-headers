@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.sql;
-import win32.sqltypes;
+public import win32.sqltypes;
 private import win32.windef;
 
 const ODBCVER = 0x0351;
