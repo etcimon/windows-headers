@@ -9,9 +9,9 @@
 \***********************************************************************/
 module win32.lmuse;
 pragma(lib, "netapi32.lib");
+
 import win32.lmuseflg;
-private import win32.lmcons;
-private import win32.windef;
+private import win32.lmcons, win32.windef;
 
 enum {
 	USE_LOCAL_PARMNUM = 1,

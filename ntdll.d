@@ -1,16 +1,21 @@
 /***********************************************************************\
-*                               lmuseflg.d                              *
+*                                ntdll.d                                *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
 *                 Translated from MinGW Windows headers                 *
+*                           by Stewart Gordon                           *
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
-module win32.lmuseflg;
+module win32.ntdll;
 
-enum {
-	USE_NOFORCE = 0,
-	USE_FORCE,
-	USE_LOTS_OF_FORCE // = 2
+// FIXME: check Windows version support
+
+enum SHUTDOWN_ACTION {
+	ShutdownNoReboot,
+	ShutdownReboot,
+	ShutdownPowerOff
 }
+
+extern (Windows) uint NtShutdownSystem(SHUTDOWN_ACTION Action);

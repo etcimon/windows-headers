@@ -11,12 +11,9 @@
 module win32.aclui;
 pragma(lib, "aclui.lib");
 
-import win32.objbase, win32.commctrl, win32.accctrl;
-private import win32.winuser;
-private import win32.windef;
-private import win32.basetyps;
-private import win32.unknwn;
-private import win32.prsht;
+import win32.accctrl, win32.commctrl, win32.objbase;
+private import win32.basetyps, win32.prsht, win32.unknwn, win32.windef,
+  win32.winuser;
 
 struct SI_OBJECT_INFO {
 	DWORD     dwFlags;

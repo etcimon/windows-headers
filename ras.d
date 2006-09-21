@@ -8,11 +8,9 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.ras;
-private import win32.lmcons;
-private import win32.w32api;
-private import win32.windef, win32.basetyps;
-
 pragma(lib, "rasapi32.lib");
+
+private import win32.basetyps, win32.lmcons, win32.w32api, win32.windef;
 
 align(4):
 

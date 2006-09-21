@@ -7,6 +7,9 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
+module win32.winuser;
+pragma(lib, "user32.lib");
+
 // Conversion Notes:
 // The following macros were for win16 only, and are not included in this file:
 //#define EnumTaskWindows(h, f, p) EnumThreadWindows((DWORD)h, f, p)
@@ -17,12 +20,7 @@
 //#define GetWindowTask(hWnd) ((HANDLE)GetWindowThreadProcessId(hWnd, NULL))
 //#define DefHookProc(c, p, lp, h) CallNextHookEx((HHOOK)*h, c, p, lp)
 
-module win32.winuser;
-pragma(lib, "user32.lib");
-
-private import win32.w32api;
-private import win32.winbase;
-private import win32.wingdi;
+private import win32.w32api, win32.winbase, win32.wingdi;
 private import win32.windef; // for HMONITOR
 
 // FIXME: clean up Windows version support

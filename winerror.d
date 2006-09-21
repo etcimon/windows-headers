@@ -7,12 +7,12 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
+module win32.winerror;
 
 /* Comments from the Mingw header:
  * WAIT_TIMEOUT is also defined in winbase.h
  */
 
-module win32.winerror;
 private import win32.windef;
 
 alias int SCODE; // was in win32.wtypes.

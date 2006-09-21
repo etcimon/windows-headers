@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                              shldisp.d                                *
+*                               shldisp.d                               *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -8,6 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.shldisp;
+
 private import win32.unknwn, win32.windef, win32.wtypes;
 
 // options for IAutoComplete2

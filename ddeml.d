@@ -11,7 +11,7 @@
 module win32.ddeml;
 pragma(lib, "user32.lib");
 
-private import win32.winnt, win32.windef, win32.basetsd;
+private import win32.basetsd, win32.windef, win32.winnt;
 
 enum : int {
 	CP_WINANSI    = 1004,

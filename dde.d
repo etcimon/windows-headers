@@ -158,59 +158,58 @@ extern (Windows) {
 	LPARAM ReuseDDElParam(LPARAM, UINT, UINT, UINT_PTR, UINT_PTR);
 }
 
-version(WindowsUnitTest) {
-    
-unittest {
-	DDEACK ddeack;
+debug (WindowsUnitTest) {
+	unittest {
+		DDEACK ddeack;
 
-	with (ddeack) {
-		reserved = 10;
-		assert (_bf == 0x0A);
-		fBusy = true;
-		assert (_bf == 0x4A);
-		fAck = true;
-		assert (_bf == 0xCA);
+		with (ddeack) {
+			reserved = 10;
+			assert (_bf == 0x0A);
+			fBusy = true;
+			assert (_bf == 0x4A);
+			fAck = true;
+			assert (_bf == 0xCA);
 
-		assert (reserved == 10);
-		assert (fBusy == true);
-		assert (fAck == true);
+			assert (reserved == 10);
+			assert (fBusy == true);
+			assert (fAck == true);
 
-		reserved = 43;
-		assert (_bf == 0xEB);
-		fBusy = false;
-		assert (_bf == 0xAB);
-		fAck = false;
-		assert (_bf == 0x2B);
+			reserved = 43;
+			assert (_bf == 0xEB);
+			fBusy = false;
+			assert (_bf == 0xAB);
+			fAck = false;
+			assert (_bf == 0x2B);
 
-		assert (reserved == 43);
-		assert (fBusy == false);
-		assert (fAck == false);
+			assert (reserved == 43);
+			assert (fBusy == false);
+			assert (fAck == false);
+		}
+
+		DDEPOKE ddepoke;
+
+		with (ddepoke) {
+			unused = 3456;
+			assert (_bf == 0x0D80);
+			fRelease = true;
+			assert (_bf == 0x2D80);
+			fReserved = 2;
+			assert (_bf == 0xAD80);
+
+			assert (unused == 3456);
+			assert (fRelease == true);
+			assert (fReserved == 2);
+
+			unused = 2109;
+			assert (_bf == 0xa83d);
+			fRelease = false;
+			assert (_bf == 0x883d);
+			fReserved = 1;
+			assert (_bf == 0x483d);
+
+			assert (unused == 2109);
+			assert (fRelease == false);
+			assert (fReserved == 1);
+		}
 	}
-
-	DDEPOKE ddepoke;
-
-	with (ddepoke) {
-		unused = 3456;
-		assert (_bf == 0x0D80);
-		fRelease = true;
-		assert (_bf == 0x2D80);
-		fReserved = 2;
-		assert (_bf == 0xAD80);
-
-		assert (unused == 3456);
-		assert (fRelease == true);
-		assert (fReserved == 2);
-
-		unused = 2109;
-		assert (_bf == 0xa83d);
-		fRelease = false;
-		assert (_bf == 0x883d);
-		fReserved = 1;
-		assert (_bf == 0x483d);
-
-		assert (unused == 2109);
-		assert (fRelease == false);
-		assert (fReserved == 1);
-	}
-}
 }

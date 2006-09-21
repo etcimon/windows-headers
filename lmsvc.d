@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                               lmsvc.d                                 *
+*                                lmsvc.d                                *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -7,6 +7,8 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
+module win32.lmsvc;
+
 // FIXME: Is this file deprecated? All of the functions are only for Win16.
 /**
   Changes relative to MinGW:
@@ -14,10 +16,7 @@
 */
 // TODO: 5 macros
 
-module win32.lmsvc;
-private import win32.lmsname;
-private import win32.lmcons;
-private import win32.windef;
+private import win32.lmcons, win32.lmsname, win32.windef;
 
 const TCHAR[] SERVICE_DOS_ENCRYPTION = "ENCRYPT";
 

@@ -8,8 +8,8 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.lmbrowsr;
-private import win32.lmcons;
-private import win32.windef;
+
+private import win32.lmcons, win32.windef;
 
 const BROWSER_ROLE_PDC = 1;
 const BROWSER_ROLE_BDC = 2;

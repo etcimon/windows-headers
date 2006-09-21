@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                               shlobj.d                                *
+*                                shlobj.d                               *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -7,25 +7,18 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
-// TODO: fix bitfields
-// TODO: CMIC_VALID_SEE_FLAGS
 module win32.shlobj;
-
-/* SHGetFolderPath in shfolder.dll on W9x, NT4, also in shell32.dll on W2K */
 pragma(lib, "shell32.lib");
 
-private import win32.w32api;
-private import win32.unknwn;
-private import win32.winuser;
-private import win32.winbase;
-private import win32.winnetwk; // for NETRESOURCE
-private import win32.winnt, win32.wtypes, win32.objfwd, win32.objidl;
-private import win32.prsht;
+// TODO: fix bitfields
+// TODO: CMIC_VALID_SEE_FLAGS
+// SHGetFolderPath in shfolder.dll on W9x, NT4, also in shell32.dll on W2K
 
-import win32.ole2;
-import win32.shlguid;
-import win32.shellapi;
-import win32.commctrl;
+import win32.commctrl, win32.ole2, win32.shlguid, win32.shellapi;
+private import win32.prsht, win32.unknwn, win32.w32api, win32.winbase,
+  win32.winnt, win32.winuser, win32.wtypes, win32.objfwd, win32.objidl;
+private import win32.winnetwk; // for NETRESOURCE
+
 
 // FIXME: clean up Windows version support
 

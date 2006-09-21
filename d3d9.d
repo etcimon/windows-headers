@@ -10,11 +10,8 @@
 \***********************************************************************/
 module win32.d3d9;
 
-private import win32.objbase;
-public import win32.d3d9types;
-public import win32.d3d9caps;
-private import win32.wingdi, win32.windef;
-private import win32.basetyps, win32.unknwn;
+import win32.d3d9caps, win32.d3d9types, win32.objbase;
+private import win32.basetyps, win32.unknwn, win32.windef, win32.wingdi;
 
 // FIXME: check types and gropuing of some constants
 // FIXME: check Windows version support

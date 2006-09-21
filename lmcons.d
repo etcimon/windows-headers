@@ -8,10 +8,11 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.lmcons;
+
 private import win32.windef;
 private import win32.lmerr; // for NERR_BASE
 
-const TCHAR[] 
+const TCHAR[]
 	MESSAGE_FILENAME = "NETMSG",
 	OS2MSG_FILENAME = "BASE",
 	HELP_MSG_FILENAME = "NETH";

@@ -9,9 +9,9 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.winreg;
-
-private import win32.windef, win32.winbase;
 pragma(lib, "advapi32.lib");
+
+private import win32.winbase, win32.windef;
 
 const HKEY
 	HKEY_CLASSES_ROOT     = cast(HKEY) 0x80000000,

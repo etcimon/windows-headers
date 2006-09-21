@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                                ole2.d                                 *
+*                                 ole2.d                                *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -9,19 +9,11 @@
 \***********************************************************************/
 module win32.ole2;
 pragma(lib, "ole32.lib");
-public import win32.winerror;
-public import win32.objbase;
-public import win32.olectlid;
-public import win32.oleauto;
-public import win32.oleidl;
-private import win32.winuser; // for LPMSG
-private import win32.windef;
-private import win32.objfwd;
-private import win32.objidl;
-private import win32.wtypes;
-public import win32.unknwn;
-public import win32.basetyps;
 
+public import win32.basetyps, win32.objbase, win32.oleauto, win32.olectlid,
+  win32.oleidl, win32.unknwn, win32.winerror;
+private import win32.objfwd, win32.objidl, win32.windef, win32.wtypes;
+private import win32.winuser; // for LPMSG
 
 const E_DRAW = VIEW_E_DRAW;
 
@@ -43,13 +35,13 @@ const EMBDHLP_CREATENOW      = 0x00000000L;
 const EMBDHLP_DELAYCREATE    = 0x00010000L;
 
 align(8):
-struct OLESTREAM{
+struct OLESTREAM {
 	LPOLESTREAMVTBL lpstbl;
 }
 alias OLESTREAM* LPOLESTREAM;
 
 extern (Windows) {
-	struct OLESTREAMVTBL{
+	struct OLESTREAMVTBL {
 		DWORD function (LPOLESTREAM, void*, DWORD) Get;
 		DWORD function (LPOLESTREAM, void*, DWORD) Put;
 	}

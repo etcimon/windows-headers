@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                              lmremutl.d                               *
+*                               lmremutl.d                              *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -7,11 +7,12 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
-// D Conversion Note: DESC_CHAR is defined as TCHAR.
 module win32.lmremutl;
 pragma(lib, "netapi32.lib");
-private import win32.lmcons;
-private import win32.windef;
+
+// D Conversion Note: DESC_CHAR is defined as TCHAR.
+
+private import win32.lmcons, win32.windef;
 
 const SUPPORTS_REMOTE_ADMIN_PROTOCOL =  2;
 const SUPPORTS_RPC                   =  4;

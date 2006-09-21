@@ -10,8 +10,7 @@
 \***********************************************************************/
 module win32.accctrl;
 
-private import win32.w32api, win32.winbase, win32.windef;
-private import win32.basetyps;
+private import win32.basetyps, win32.w32api, win32.winbase, win32.windef;
 
 // FIXME: check types and grouping of constants
 // FIXME: check Windows version support

@@ -11,9 +11,7 @@
 module win32.commctrl;
 pragma(lib, "comctl32.lib");
 
-private import win32.w32api;
-private import win32.windef;
-private import win32.winuser;
+private import win32.w32api, win32.windef, win32.winuser;
 private import win32.winbase; // for SYSTEMTIME
 private import win32.objfwd;  // for LPSTREAM
 

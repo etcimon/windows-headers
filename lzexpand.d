@@ -9,8 +9,8 @@
 \***********************************************************************/
 module win32.lzexpand;
 pragma(lib, "lz32.lib");
-private import win32.windef;
-private import win32.winbase;
+
+private import win32.winbase, win32.windef;
 
 enum : LONG {
 	LZERROR_BADINHANDLE  = -1,

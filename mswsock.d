@@ -10,12 +10,10 @@
 \***********************************************************************/
 module win32.mswsock;
 
+import win32.winbase, win32.windef;
 private import win32.w32api;
 
 // FIXME: clean up Windows version support
-
-import win32.winbase;
-import win32.windef;
 
 // Pull in Winsock2 if the user has put "Win32_Winsock2" on the compile
 // line; otherwise, default to Winsock1.

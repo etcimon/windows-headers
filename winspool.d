@@ -10,9 +10,7 @@
 module win32.winspool;
 pragma(lib, "winspool.lib");
 
-private import win32.w32api;
-private import win32.windef;
-private import win32.wingdi;
+private import win32.w32api, win32.windef, win32.wingdi;
 private import win32.winbase; // for SYSTEMTIME
 
 // FIXME: clean up Windows version support

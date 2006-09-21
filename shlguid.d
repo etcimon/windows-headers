@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                              shlguid.d                                *
+*                               shlguid.d                               *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -9,8 +9,7 @@
 \***********************************************************************/
 module win32.shlguid;
 
-private import win32.basetyps;
-private import win32.w32api;
+private import win32.basetyps, win32.w32api;
 
 // FIXME: clean up Windows version support
 

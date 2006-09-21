@@ -8,12 +8,13 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
+module win32.imagehlp;
+
 /* Comment from MinGW
 	NOTE: This strictly does not belong in the Win32 API since it's
 	really part of Platform SDK. However, GDB needs it and we might
 	as well provide it here.
 */
-module win32.imagehlp;
 
 private import win32.winbase, win32.windef;
 

@@ -24,12 +24,9 @@ wnsprintf functions are not included.
          ((ULONGLONG)(  qfe) <<  0))
 */
 
-import win32.objbase;
-import win32.shlobj;
-private import win32.windef;
-private import win32.winbase;
-private import win32.winreg;
-private import win32.unknwn, win32.objidl, win32.basetyps;
+import win32.objbase, win32.shlobj;
+private import win32.basetyps, win32.objidl, win32.unknwn, win32.windef,
+  win32.winbase, win32.winreg;
 
 const DLLVER_PLATFORM_WINDOWS = 0x00000001;
 const DLLVER_PLATFORM_NT      = 0x00000002;

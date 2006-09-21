@@ -11,9 +11,8 @@ module win32.commdlg;
 pragma(lib, "comdlg32.lib");
 
 private import win32.w32api;
-import win32.windef;
+import win32.windef, win32.winuser;
 import win32.wingdi; // for LPLOGFONTA
-import win32.winuser;
 
 const TCHAR []
 	LBSELCHSTRING = "commdlg_LBSelChangedNotify",

@@ -10,7 +10,7 @@
 \***********************************************************************/
 module win32.cpl;
 
-private import win32.winuser, win32.windef;
+private import win32.windef, win32.winuser;
 
 enum : uint {
 	WM_CPL_LAUNCH = WM_USER + 1000,

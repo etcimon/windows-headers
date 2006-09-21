@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                               unknwn.d                                *
+*                                unknwn.d                               *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -9,10 +9,7 @@
 \***********************************************************************/
 module win32.unknwn;
 
-import win32.windef;
-
-import win32.objfwd;
-import win32.wtypes;
+import win32.objfwd, win32.windef, win32.wtypes;
 private import win32.basetyps;
 
 extern (Windows) {

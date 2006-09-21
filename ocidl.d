@@ -10,14 +10,11 @@
 \***********************************************************************/
 module win32.ocidl;
 
-private import win32.ole2;
-private import win32.wingdi; // for TEXTMETRICW
+private import win32.ole2, win32.oleidl, win32.oaidl, win32.objfwd,
+  win32.windef, win32.wtypes;
+private import win32.objidl;  // for CLIPFORMAT
+private import win32.wingdi;  // for TEXTMETRICW
 private import win32.winuser; // for LPMSG
-private import win32.windef, win32.wtypes;
-private import win32.objidl; // for CLIPFORMAT
-private import win32.oleidl;
-private import win32.oaidl;
-private import win32.objfwd;
 
 interface IBindHost : public IUnknown {}
 interface IServiceProvider {}

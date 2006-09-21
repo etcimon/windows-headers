@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                               regstr.d                                *
+*                                regstr.d                               *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -7,8 +7,10 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
-// TODO: fix possible conflict with shloj. Sort out NEC_98 issue.
 module win32.regstr;
+
+// TODO: fix possible conflict with shloj. Sort out NEC_98 issue.
+
 private import win32.windef;
 
 const REGSTR_MAX_VALUE_LENGTH = 256;

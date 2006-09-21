@@ -7,6 +7,8 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
+module win32.windows;
+
 /*
 	windows.h - main header file for the Win32 API
 
@@ -19,41 +21,41 @@
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 */
-module win32.windows;
 
-import win32.w32api;
-import win32.core;
+public import win32.w32api;
+public import win32.core;
 
 // We can't use static if for imports, build gets confused.
 // static if (_WIN32_WINNT_ONLY) import win32.winsvc;
 version (Windows2003) {
-	import win32.winsvc;
+	public import win32.winsvc;
 } else version (WindowsXP) {
-	import win32.winsvc;
+	public import win32.winsvc;
 } else version (WindowsNTonly) {
-	import win32.winsvc;
+	public import win32.winsvc;
 }
 
-import win32.cderr;
-import win32.dde;
-import win32.ddeml;
-import win32.dlgs;
-import win32.imm;
-import win32.lzexpand;
-import win32.mmsystem;
-import win32.nb30;
-//import win32.rpc;
-import win32.shellapi;
-import win32.winperf;
-import win32.commdlg;
-import win32.winspool;
+public import win32.cderr;
+public import win32.dde;
+public import win32.ddeml;
+public import win32.dlgs;
+public import win32.imm;
+public import win32.lzexpand;
+public import win32.mmsystem;
+public import win32.nb30;
+//public import win32.rpc;
+public import win32.shellapi;
+public import win32.winperf;
+public import win32.commdlg;
+public import win32.winspool;
+public import win32.ole2;
 
 // Select correct version of winsock.  Importing the incorrect
 // module will cause a static assert to prevent problems later on.
 version (Win32_Winsock2)
-	import win32.winsock2;
+	public import win32.winsock2;
 else
-	import win32.winsock;
+	public import win32.winsock;
 
 /+
 #if (_WIN32_WINNT >= 0x0400)
@@ -68,4 +70,3 @@ else
 #endif /*  (_WIN32_WINNT >= 0x0400) */
 +/
 
-import win32.ole2;

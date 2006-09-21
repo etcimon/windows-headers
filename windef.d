@@ -51,17 +51,17 @@ template min(T) {
 	}
 }
 
-alias ubyte BYTE;
-alias ubyte* PBYTE, LPBYTE;
-alias ushort USHORT, WORD, ATOM;
+alias ubyte   BYTE;
+alias ubyte*  PBYTE, LPBYTE;
+alias ushort  USHORT, WORD, ATOM;
 alias ushort* PUSHORT, PWORD, LPWORD;
-alias uint ULONG, DWORD, UINT, COLORREF;
-alias uint* PULONG, PDWORD, LPDWORD, PUINT, LPUINT;
-alias int WINBOOL, BOOL, INT, LONG, HFILE;
-alias int* PWINBOOL, LPWINBOOL, PBOOL, LPBOOL, PINT, LPINT, LPLONG;
-alias float FLOAT;
-alias float* PFLOAT;
-alias void* PCVOID, LPCVOID;
+alias uint    ULONG, DWORD, UINT, COLORREF;
+alias uint*   PULONG, PDWORD, LPDWORD, PUINT, LPUINT;
+alias int     WINBOOL, BOOL, INT, LONG, HFILE;
+alias int*    PWINBOOL, LPWINBOOL, PBOOL, LPBOOL, PINT, LPINT, LPLONG;
+alias float   FLOAT;
+alias float*  PFLOAT;
+alias void*   PCVOID, LPCVOID;
 
 alias UINT_PTR WPARAM;
 alias LONG_PTR LPARAM, LRESULT;

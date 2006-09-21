@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                              lmerrlog.d                               *
+*                               lmerrlog.d                              *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -7,10 +7,11 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
-// COMMENT: This appears to be only for Win16. All functions are deprecated.
 module win32.lmerrlog;
-private import win32.lmcons;
-private import win32.windef;
+
+// COMMENT: This appears to be only for Win16. All functions are deprecated.
+
+private import win32.lmcons, win32.windef;
 private import win32.lmaudit; // for LPHLOG
 
 const ERRLOG_BASE=3100;

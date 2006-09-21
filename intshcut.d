@@ -10,7 +10,7 @@
 \***********************************************************************/
 module win32.intshcut;
 
-private import win32.windef, win32.unknwn;
+private import win32.unknwn, win32.windef;
 
 enum : SCODE {
 	E_FLAGS                     = 0x80041000,

@@ -9,8 +9,8 @@
 \***********************************************************************/
 // COMMENT: This file may be deprecated.
 module win32.lmaudit;
-private import win32.lmcons;
-private import win32.windef;
+
+private import win32.lmcons, win32.windef;
 
 const LOGFLAGS_FORWARD  = 0;
 const LOGFLAGS_BACKWARD = 1;

@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                                 sql.d                                 *
+*                               odbcinst.d                              *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -8,10 +8,13 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.odbcinst;
+
 import win32.sql;
 private import win32.windef;
 
-// FIXME: The Unicode/Ansi functions situation is a mess. How do the xxxA versions of these functions fit into the scheme?
+/*	FIXME: The Unicode/Ansi functions situation is a mess. How do the xxxA
+ *	versions of these functions fit into the scheme?
+ */
 
 // SQLConfigDataSource()
 enum : WORD {

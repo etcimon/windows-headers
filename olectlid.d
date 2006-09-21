@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                              olectlid.d                               *
+*                               olectlid.d                              *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -8,6 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.olectlid;
+
 private import win32.basetyps;
 
 extern (Windows) extern const GUID

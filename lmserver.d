@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                              lmserver.d                               *
+*                               lmserver.d                              *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -8,9 +8,9 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.lmserver;
+
 import win32.winsvc;
-private import win32.lmcons;
-private import win32.windef;
+private import win32.lmcons, win32.windef;
 
 struct SERVER_INFO_100 {
 	DWORD  sv100_platform_id;

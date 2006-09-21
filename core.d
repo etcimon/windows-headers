@@ -5,6 +5,8 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
+module win32.core;
+
 /**
  The core Windows API functions.
 
@@ -15,7 +17,6 @@
  ---
 
 */
-module win32.core;
 
 public import win32.windef;
 public import win32.winnt;

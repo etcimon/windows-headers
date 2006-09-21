@@ -9,9 +9,8 @@
 \***********************************************************************/
 module win32.lmalert;
 pragma(lib, "netapi32.lib");
-private import win32.lmcons;
-private import win32.windef;
 
+private import win32.lmcons, win32.windef;
 
 const TCHAR[]
 	ALERTER_MAILSLOT     = `\\.\MAILSLOT\Alerter`,

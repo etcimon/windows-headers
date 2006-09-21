@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                              mshtml.d                               *
+*                                mshtml.d                               *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -9,10 +9,8 @@
 \***********************************************************************/
 module win32.mshtml;
 
-private import win32.unknwn;
-private import win32.wtypes;
-private import win32.oaidl, win32.basetyps, win32.windef;
-
+private import win32.basetyps, win32.oaidl, win32.unknwn,
+  win32.windef, win32.wtypes;
 
 // These are used in this file, but not defined in MinGW.
 interface IHTMLStyleSheet {};

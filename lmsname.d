@@ -1,4 +1,14 @@
+/***********************************************************************\
+*                               lmsname.d                               *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 module win32.lmsname;
+
 private import win32.windef;
 
 const TCHAR[]

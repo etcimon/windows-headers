@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                               objfwd.d                                *
+*                                objfwd.d                               *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -8,6 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.objfwd;
+
 private import win32.objidl;
 
 /+

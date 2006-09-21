@@ -10,10 +10,9 @@
 module win32.imm;
 pragma(lib, "imm32.lib");
 
-private import win32.w32api;
-import win32.windef;
-import win32.wingdi;
+import win32.windef, win32.wingdi;
 import win32.winuser; // for the MFS_xxx enums.
+private import win32.w32api;
 
 const WM_CONVERTREQUESTEX     = 0x108;
 const WM_IME_STARTCOMPOSITION = 0x10D;

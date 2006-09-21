@@ -10,8 +10,8 @@
 \***********************************************************************/
 module win32.iphlpapi;
 
-import win32.iprtrmib, win32.ipexport, win32.iptypes;
-private import win32.windef, win32.winbase;
+import win32.ipexport, win32.iprtrmib, win32.iptypes;
+private import win32.winbase, win32.windef;
 
 extern (Windows) {
 	DWORD AddIPAddress(IPAddr, IPMask, DWORD, PULONG, PULONG);

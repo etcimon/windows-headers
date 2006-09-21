@@ -1,16 +1,17 @@
 /***********************************************************************\
-*                             rpcdce.d                                  *
+*                                rpcdce.d                               *
 *                                                                       *
-*                    Windows API header module                          *
+*                       Windows API header module                       *
 *                                                                       *
-*              Translated from MinGW Windows headers                    *
+*                 Translated from MinGW Windows headers                 *
 *                                                                       *
-*                    Placed into public domain                          *
+*                       Placed into public domain                       *
 \***********************************************************************/
-// TODO: I think MinGW got this wrong. RPC_UNICODE_SUPPORTED should be
-// replaced aliases for version(Unicode)
 module win32.rpcdce;
 pragma(lib, "Rpcrt4.lib");
+
+// TODO: I think MinGW got this wrong. RPC_UNICODE_SUPPORTED should be
+// replaced aliases for version(Unicode)
 
 public import win32.rpcdcep;
 private import win32.basetyps, win32.w32api, win32.windef;

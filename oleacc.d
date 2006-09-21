@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                               oleacc.d                                *
+*                                oleacc.d                               *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -10,11 +10,8 @@
 module win32.oleacc;
 pragma(lib, "oleacc.lib");
 
-private import win32.oaidl;
-private import win32.wtypes;
-private import win32.basetyps;
-private import win32.windef;
-private import win32.unknwn;
+private import win32.basetyps, win32.oaidl, win32.unknwn, win32.wtypes,
+  win32.windef;
 
 enum {
 	DISPID_ACC_PARENT           = -5000,

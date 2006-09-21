@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                              richole.d                                *
+*                               richole.d                               *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -8,12 +8,10 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.richole;
-private import win32.unknwn;
-private import win32.windef;
-private import win32.ole2;
+
+private import win32.objfwd, win32.objidl, win32.ole2, win32.unknwn,
+  win32.windef;
 private import win32.richedit; // for CHARRANGE
-private import win32.objfwd;
-private import win32.objidl;
 
 align(4):
 

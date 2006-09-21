@@ -8,6 +8,8 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.rpcndr;
+pragma(lib, "rpcrt4.lib");
+
 /* Translation notes:
  RPC_CLIENT_ALLOC*, RPC_CLIENT_FREE* were replaced with PRPC_CLIENT_ALLOC, PRPC_CLIENT_FREE
 */
@@ -16,14 +18,10 @@ module win32.rpcndr;
 //       Macros need to be converted.
 const __RPCNDR_H_VERSION__= 450;
 
-private import win32.rpc;
 import win32.rpcnsip;
+private import win32.rpc, win32.rpcdce, win32.unknwn, win32.windef;
 private import win32.objidl; // for IRpcChannelBuffer, IRpcStubBuffer
-private import win32.rpcdce;
-private import win32.unknwn;
-private import win32.windef;
 
-pragma(lib,"rpcrt4.lib");
 
 extern (Windows):
 

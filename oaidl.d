@@ -9,10 +9,7 @@
 \***********************************************************************/
 module win32.oaidl;
 
-private import win32.basetyps;
-private import win32.windef;
-private import win32.unknwn;
-private import win32.wtypes;
+private import win32.basetyps, win32.unknwn, win32.windef, win32.wtypes;
 
 const DISPID_UNKNOWN = -1;
 const DISPID_VALUE = 0;

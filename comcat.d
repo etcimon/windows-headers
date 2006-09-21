@@ -11,8 +11,8 @@
 module win32.comcat;
 
 import win32.windows, win32.ole2;
-private import win32.unknwn, win32.windef, win32.basetyps;
-private import win32.cguid, win32.objbase, win32.wtypes;
+private import win32.basetyps, win32.cguid, win32.objbase, win32.unknwn,
+  win32.windef, win32.wtypes;
 
 alias IEnumGUID* LPENUMGUID;
 

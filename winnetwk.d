@@ -9,11 +9,9 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.winnetwk;
-
-private import win32.winbase, win32.winnt;
-private import win32.winerror;
 pragma(lib, "mpr.lib");
 
+private import win32.winbase, win32.winerror, win32.winnt;
 
 enum : DWORD {
 	WNNC_NET_MSNET       = 0x00010000,

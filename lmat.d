@@ -9,8 +9,8 @@
 \***********************************************************************/
 module win32.lmat;
 pragma(lib, "netapi32.lib");
-private import win32.lmcons;
-private import win32.windef;
+
+private import win32.lmcons, win32.windef;
 
 const JOB_RUN_PERIODICALLY = 1;
 const JOB_EXEC_ERROR       = 2;

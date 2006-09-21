@@ -10,7 +10,7 @@
 \***********************************************************************/
 module win32.d3d9caps;
 
-private import win32.windef, win32.d3d9types;
+private import win32.d3d9types, win32.windef;
 
 // FIXME: check types of constants
 

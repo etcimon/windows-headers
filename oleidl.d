@@ -7,19 +7,15 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
+module win32.oleidl;
+
 // DAC: This is defined in ocidl !!
 // what is it doing in here?
 //alias IEnumOleUndoUnits* LPENUMOLEUNDOUNITS;
 
-module win32.oleidl;
-
+private import win32.basetyps, win32.objidl, win32.unknwn, win32.windef,
+  win32.winuser, win32.wtypes;
 private import win32.objfwd; // for LPMONIKER
-private import win32.windef;
-private import win32.basetyps;
-private import win32.unknwn;
-private import win32.wtypes;
-private import win32.objidl;
-private import win32.winuser;
 private import win32.wingdi; // for LPLOGPALETTE
 
 const MK_ALT = 32;

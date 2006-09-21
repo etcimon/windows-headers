@@ -7,16 +7,20 @@ This is a project to create a well-crafted translation of the Windows 32-bit API
 
 The project started off as an improvement of Y. Tomino's translation, but is now officially a derivative of the public domain MinGW Windows headers.  However, it is useful to have to hand a copy of Tomino's work (or some other D translation of the Win32 headers) in order to test-compile the modules while the work is in progress.
 
-An up-to-date version of this project can be downloaded from
-http://pr.stewartsplace.org.uk/d/win32.zip
-Email me with updates/comments/suggestions/bug reports: smjg@iname.com
+The official project page is at
+
+http://www.prowiki.org/wiki4d/wiki.cgi?WindowsAPI
+
+There, you can find the most up-to-date version of the translation, see who is working on each module, assign modules to yourself to work on, and generally discuss the project.
+
+Email me with comments/suggestions/bug reports: smjg@iname.com
 
 
 Instructions
 ------------
 1. Module naming
 
-The name of each module shall be win32.qwert, where qwert.h is the name of the original header file.  This is for compatibility with the Tomino translation, but may change in the future.
+The name of each module shall be win32.qwert, where qwert.h is the name of the original header file.  This may change in the future.
 
 
 2. Constant #defines to enum blocks
@@ -78,12 +82,12 @@ Some structs have their own size in bytes as the first member, generally called 
 
 A few structs use bit fields.  Because D doesn't have bit fields, they must be simulated using property getters/setters.  See dde.d for an example.  Use bool for one-bit members; otherwise use the smallest integer type that will accommodate the required number of bits.
 
-Some structs end with a one-element array, designed to be followed immediately in memory by more elements of the same type.  Name such struct members with a leading underscore, and use a property getter to return just the pointer in order to prevent bounds checking.
+Some structs end with a one-element array, designed to be followed immediately in memory by more elements of the same type.  Name such struct members with a leading underscore, and use a property getter to return just the pointer in order to prevent bounds checking.  (A
 
 
 4. COM interfaces
 
-Translate DECLARE_INTERFACE constructions into D interfaces.  See unknwn.d for an example.  The macros used to access interface functions become unnecessary and may therefore be removed.
+Translate DECLARE_INTERFACE constructions into D interfaces.  Be sure to omit inherited members.  See unknwn.d for an example.  The macros used to access interface functions become unnecessary and may therefore be removed.
 
 
 5. Consolidate aliases
@@ -106,23 +110,31 @@ This doesn't apply to macros converted to functions (see below).
 
 7. Consolidate ANSI/Unicode selection into version blocks
 
-Where #ifdef UNICODE is used to select A/W versions of functions and other identifiers, replace with version (Unicode).  Use only aliases, rather than enums or const declarations, within these version blocks.  These should be defined in one place at the end of each module, or at the end of some logical section within the module.  Consolidate any aliases of these aliases into the alias declarations within these version blocks.
+Where #ifdef UNICODE is used to select A/W versions of functions and other identifiers, replace with version (Unicode).  Use only aliases, rather than enums or const declarations, within these version blocks.  These should be defined in one place at the end of each module, or at the end of some logical section within the module.
 
 As an exception, reduce string constants to a single declaration of type TCHAR[], bypassing the need to put such a constant in a version block.
+
+Any aliases based on identifiers defined in these version blocks (e.g. pointer type aliases without A/W) should be declared after the version blocks.
 
 
 8. Translate conditional compilation based on Windows version support
 
 Every module that uses this conditional compilation must privately import win32.w32api, which defines the constants used to set the minimum version of Windows an application supports.
 
-Unlike with the C headers, the programmer is expected to specify both the minimum Windows 9x version and the minimum Windows NT version, so both _WIN32_WINDOWS and _WIN32_WINNT are defined in any project.  Conditional compilation must therefore, in general, involve checking the values of both constants either directly or indirectly.  The WINVER and _WIN32_WINNT_ONLY constants are also defined for syntactic sugar.
+Unlike with the C headers, the programmer is expected to specify both the minimum Windows 9x version and the minimum Windows NT version, so both _WIN32_WINDOWS and _WIN32_WINNT are defined in any project.  Conditional compilation must therefore, in general, involve checking the values of both constants - either directly, using the && operator, or with the help of the WINVER and _WIN32_WINNT_ONLY constants defined for syntactic sugar.
 
 Rather than relying on the conditionals in the MinGW headers, it is a good idea to look on http://msdn.microsoft.com/ to see which Windows versions support each entity that is CC'd.
+
+Also available is the _WIN32_IE constant, for functions that rely on a particular version of Internet Explorer being installed.
+
+Exception: To import modules conditionally, always use the version identifiers directly.  This is in order to support Build.
 
 
 9. Other conditional compilation
 
 Use the built-in version (Win32) and version (Win64) to deal with _WIN64 conditional blocks.
+
+Treat STRICT as always defined.
 
 For other #ifdefs designed to be specified by the programmer, leave the directive in, commented out.  This is pending decision on which to include and which to leave out, and how to name them.
 
@@ -151,6 +163,10 @@ Function definitions, struct/enum definitions, etc. should be separated by a bla
 
 Always indent the contents of a { ... } block of any kind by one tab character below the level of that in which it is contained.
 
+The opening '{' doesn't have a line to itself, and is separated from the function signature, struct identifier, etc. by one space.
+
+Use one space after a comma (e.g. in function signatures), no space before.
+
 
 13. Section heading comments (optional)
 
@@ -173,15 +189,4 @@ After translating, compile the module to check for errors.
 
 Sometimes there will be errors due to undefined types or other identifiers.  These compiled in C because of the nature of C preprocessor macros, but fail in D where they are treated symbolically.  To deal with this, use a private import.
 
-It is a good idea to try compiling under all meaningful configurations of Windows versions:
-
-* none specified (equivalent to Windows 95/NT 4)
-* -version=Windows98
-* -version=WindowsME
-* -version=WindowsNTonly
-* -version=Windows2000
-* -version=Windows98 -version=Windows2000
-* -version=WindowsME -version=Windows2000
-* -version=WindowsNTonly -version=Windows2000
-* -version=WindowsXP
-* -version=Windows2003
+It is a good idea to try compiling under all meaningful configurations of Windows versions.  This can be done by using the testcompile.bat file included in the distribution.

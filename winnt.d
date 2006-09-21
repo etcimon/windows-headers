@@ -7,16 +7,13 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
+module win32.winnt;
 
 // FIXME: Two bitfields and a macro need to be fixed.
 // FIXME: clean up Windows version support
 
-module win32.winnt;
-
+public import win32.basetsd, win32.windef, win32.winerror;
 private import win32.w32api;
-public import win32.windef;
-public import win32.winerror;
-public import win32.basetsd;
 
 /* Translation Notes:
 The following macros are unneeded for D:

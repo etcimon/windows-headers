@@ -8,6 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.lmerr;
+
 import win32.winerror;
 
 enum {

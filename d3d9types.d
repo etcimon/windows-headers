@@ -10,7 +10,7 @@
 \***********************************************************************/
 module win32.d3d9types;
 
-private import win32.windef, win32.basetyps;
+private import win32.basetyps, win32.windef;
 
 // FIXME: check types and grouping of constants
 // FIXME: check types of translated macros

@@ -10,7 +10,8 @@
 \***********************************************************************/
 module win32.nspapi;
 
-private import win32.windef, win32.basetyps;
+private import win32.basetyps, win32.windef;
+
 // FIXME: check types of constants
 
 enum {

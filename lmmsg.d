@@ -9,8 +9,8 @@
 \***********************************************************************/
 module win32.lmmsg;
 pragma(lib, "netapi32.lib");
-private import win32.lmcons;
-private import win32.windef;
+
+private import win32.lmcons, win32.windef;
 
 // NOTE: Requires Windows XP or later
 

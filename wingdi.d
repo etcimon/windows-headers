@@ -7,15 +7,12 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
+module win32.wingdi;
+pragma(lib, "gdi32.lib");
 
 // FIXME: clean up Windows version support
 
-module win32.wingdi;
-private import win32.w32api;
-private import win32.winver;
-private import win32.windef;
-
-pragma(lib, "gdi32.lib");
+private import win32.w32api, win32.windef, win32.winver;
 
 // BITMAPINFOHEADER.biCompression
 enum : DWORD {
@@ -1039,7 +1036,7 @@ enum : BYTE {
 }
 
 // ImageList
-const COLORREF 
+const COLORREF
 	CLR_NONE    = 0xffffffff,
 	CLR_INVALID = CLR_NONE,
 	CLR_DEFAULT = 0xff000000;
@@ -1119,12 +1116,12 @@ enum : int {
 	WHITEONBLACK = 2,
 	COLORONCOLOR = 3,
 	HALFTONE     = 4,
-	
+
 	STRETCH_ANDSCANS    = 1,
 	STRETCH_ORSCANS     = 2,
 	STRETCH_DELETESCANS = 3,
 	STRETCH_HALFTONE    = 4,
-	
+
 	MAXSTRETCHBLTMODE   = 4
 }
 
@@ -1153,7 +1150,7 @@ enum : int {
 }
 
 // Escape(), ExtEscape()
-const int 
+const int
 	QUERYESCSUPPORT = 8,
 	PASSTHROUGH     = 19;
 
@@ -1245,13 +1242,13 @@ const QDI_GETDIBITS   = 2;
 const QDI_DIBTOSCREEN = 4;
 const QDI_STRETCHDIB  = 8;
 
-const SP_NOTREPORTED=0x4000;
+const SP_NOTREPORTED = 0x4000;
 
-const ASPECT_FILTERING=1;
+const ASPECT_FILTERING = 1;
 
 // LOGCOLORSPACE.lcsCSType
 enum : LCSCSTYPE {
-	LCS_CALIBRATED_RGB=0,
+	LCS_CALIBRATED_RGB = 0,
 	LCS_DEVICE_RGB,
 	LCS_DEVICE_CMYK
 }
@@ -1260,7 +1257,7 @@ enum : LCSCSTYPE {
 enum : LCSGAMUTMATCH {
 	LCS_GM_BUSINESS = 1,
 	LCS_GM_GRAPHICS = 2,
-	LCS_GM_IMAGES   = 4 
+	LCS_GM_IMAGES   = 4
 }
 
 const DWORD
@@ -1506,7 +1503,7 @@ const GDI_ERROR = 0xFFFFFFFF;
 const HGDI_ERROR= cast(HANDLE)GDI_ERROR;
 
 // TEXTMETRIC.tmPitchAndFamily
-const BYTE 
+const BYTE
 	TMPF_FIXED_PITCH = 1,
 	TMPF_VECTOR      = 2,
 	TMPF_TRUETYPE    = 4,
@@ -1912,20 +1909,20 @@ struct DIBSECTION {
 }
 
 struct DOCINFOA {
-    int cbSize;
+    int    cbSize = DOCINFOA.sizeof;
     LPCSTR lpszDocName;
     LPCSTR lpszOutput;
     LPCSTR lpszDatatype;
-    DWORD fwType;
+    DWORD  fwType;
 }
 alias DOCINFOA* LPDOCINFOA;
 
 struct DOCINFOW {
-    int cbSize;
+    int     cbSize = DOCINFOW.sizeof;
     LPCWSTR lpszDocName;
     LPCWSTR lpszOutput;
     LPCWSTR lpszDatatype;
-    DWORD fwType;
+    DWORD   fwType;
 }
 alias DOCINFOW* LPDOCINFOW;
 
@@ -3303,8 +3300,8 @@ alias DISPLAY_DEVICEW* PDISPLAY_DEVICEW, LPDISPLAY_DEVICEW;
 alias BOOL function (HDC, int) ABORTPROC;
 alias int function (HDC, HANDLETABLE*, METARECORD*, int, LPARAM) MFENUMPROC;
 alias int function (HDC, HANDLETABLE*, ENHMETARECORD*, int, LPARAM) ENHMFENUMPROC;
-alias int function ( LOGFONTA*, TEXTMETRICA*, DWORD, LPARAM) FONTENUMPROCA, OLDFONTENUMPROCA;
-alias int function ( LOGFONTW*, TEXTMETRICW*, DWORD, LPARAM) FONTENUMPROCW, OLDFONTENUMPROCW;
+alias int function (LOGFONTA*, TEXTMETRICA*, DWORD, LPARAM) FONTENUMPROCA, OLDFONTENUMPROCA;
+alias int function (LOGFONTW*, TEXTMETRICW*, DWORD, LPARAM) FONTENUMPROCW, OLDFONTENUMPROCW;
 alias int function (LPSTR, LPARAM) ICMENUMPROCA;
 alias int function (LPWSTR, LPARAM) ICMENUMPROCW;
 alias void function (LPVOID, LPARAM) GOBJENUMPROC;
@@ -3319,415 +3316,413 @@ alias DWORD function (LPSTR, LPSTR, UINT, LPSTR, LPDEVMODEA) LPFNDEVCAPS;
 //POINTS MAKEPOINTS(DWORD dwValue) #define MAKEPOINTS(l) (*((POINTS*)&(l)))
 
 DWORD MAKEROP4(DWORD fore, DWORD back) {
-    return (( back<<8)&0xFF000000)|(fore);
+    return ((back<<8) & 0xFF000000) | (fore);
 }
 
-COLORREF CMYK(byte c, byte m, byte y, byte k) {
-    return cast(COLORREF)(k|(y<<8)|(m<<16)|(c<<24));
+COLORREF CMYK(ubyte c, ubyte m, ubyte y, ubyte k) {
+    return cast(COLORREF) (k | (y<<8) | (m<<16) | (c<<24));
 }
 
-byte GetCValue(COLORREF cmyk) {
-    return cast(byte)(cmyk);
+ubyte GetCValue(COLORREF cmyk) {
+    return cast(ubyte) cmyk;
 }
 
-byte GetMValue(COLORREF cmyk) {
-    return cast(byte)(cmyk>>8);
+ubyte GetMValue(COLORREF cmyk) {
+    return cast(ubyte) (cmyk>>8);
 }
 
-byte GetYValue(COLORREF cmyk) {
-    return cast(byte)(cmyk>>16);
+ubyte GetYValue(COLORREF cmyk) {
+    return cast(ubyte) (cmyk>>16);
 }
 
-byte GetKValue(COLORREF cmyk) {
-    return cast(byte)(cmyk>>24);
+ubyte GetKValue(COLORREF cmyk) {
+    return cast(ubyte) (cmyk>>24);
 }
 
 COLORREF RGB(BYTE r, BYTE g, BYTE b) {
-    return cast(COLORREF)(r|(g<<8)|(b<<16));
+    return cast(COLORREF) (r | (g<<8) | (b<<16));
 }
 
-byte GetRValue(COLORREF c) {
-    return cast(byte)c;
+ubyte GetRValue(COLORREF c) {
+    return cast(ubyte) c;
 }
 
-byte GetGValue(COLORREF c) {
-    return cast(byte)(c>>8);
+ubyte GetGValue(COLORREF c) {
+    return cast(ubyte) (c>>8);
 }
 
-byte GetBValue(COLORREF c) {
-    return cast(byte)(c>>16);
+ubyte GetBValue(COLORREF c) {
+    return cast(ubyte) (c>>16);
 }
 
 COLORREF PALETTEINDEX(WORD i) {
-    return 0x01000000|cast(COLORREF)(i);
+    return 0x01000000 | cast(COLORREF) i;
 }
 
 COLORREF PALETTERGB(BYTE r, BYTE g, BYTE b) {
-    return 0x02000000|RGB(r, g, b);
+    return 0x02000000 | RGB(r, g, b);
 }
 
 extern(Windows) {
+	int AbortDoc(HDC);
+	BOOL AbortPath(HDC);
+	int AddFontResourceA(LPCSTR);
+	int AddFontResourceW(LPCWSTR);
+	BOOL AngleArc(HDC, int, int, DWORD, FLOAT, FLOAT);
+	BOOL AnimatePalette(HPALETTE, UINT, UINT, PALETTEENTRY*);
+	BOOL Arc(HDC, int, int, int, int, int, int, int, int);
+	BOOL ArcTo(HDC, int, int, int, int, int, int, int, int);
+	BOOL BeginPath(HDC);
+	BOOL BitBlt(HDC, int, int, int, int, HDC, int, int, DWORD);
+	BOOL CancelDC(HDC);
+	BOOL CheckColorsInGamut(HDC, PVOID, PVOID, DWORD);
+	BOOL Chord(HDC, int, int, int, int, int, int, int, int);
+	int ChoosePixelFormat(HDC, PIXELFORMATDESCRIPTOR*);
+	HENHMETAFILE CloseEnhMetaFile(HDC);
+	BOOL CloseFigure(HDC);
+	HMETAFILE CloseMetaFile(HDC);
+	BOOL ColorMatchToTarget(HDC, HDC, DWORD);
+	int CombineRgn(HRGN, HRGN, HRGN, int);
+	BOOL CombineTransform(LPXFORM, XFORM*, XFORM*);
+	HENHMETAFILE CopyEnhMetaFileA(HENHMETAFILE, LPCSTR);
+	HENHMETAFILE CopyEnhMetaFileW(HENHMETAFILE, LPCWSTR);
+	HMETAFILE CopyMetaFileA(HMETAFILE, LPCSTR);
+	HMETAFILE CopyMetaFileW(HMETAFILE, LPCWSTR);
+	HBITMAP CreateBitmap(int, int, UINT, UINT, PCVOID);
+	HBITMAP CreateBitmapIndirect(BITMAP*);
+	HBRUSH CreateBrushIndirect(LOGBRUSH*);
+	HCOLORSPACE CreateColorSpaceA(LPLOGCOLORSPACEA);
+	HCOLORSPACE CreateColorSpaceW(LPLOGCOLORSPACEW);
+	HBITMAP CreateCompatibleBitmap(HDC, int, int);
+	HDC CreateCompatibleDC(HDC);
+	HDC CreateDCA(LPCSTR, LPCSTR, LPCSTR, DEVMODEA*);
+	HDC CreateDCW(LPCWSTR, LPCWSTR, LPCWSTR, DEVMODEW*);
+	HBITMAP CreateDIBitmap(HDC, BITMAPINFOHEADER*, DWORD, PCVOID, BITMAPINFO*, UINT);
+	HBRUSH CreateDIBPatternBrush(HGLOBAL, UINT);
+	HBRUSH CreateDIBPatternBrushPt(PCVOID, UINT);
+	HBITMAP CreateDIBSection(HDC, BITMAPINFO*, UINT, void**, HANDLE, DWORD);
+	HBITMAP CreateDiscardableBitmap(HDC, int, int);
+	HRGN CreateEllipticRgn(int, int, int, int);
+	HRGN CreateEllipticRgnIndirect(LPCRECT);
+	HDC CreateEnhMetaFileA(HDC, LPCSTR, LPCRECT, LPCSTR);
+	HDC CreateEnhMetaFileW(HDC, LPCWSTR, LPCRECT, LPCWSTR);
+	HFONT CreateFontA(int, int, int, int, int, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, LPCSTR);
+	HFONT CreateFontW(int, int, int, int, int, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, LPCWSTR);
+	HFONT CreateFontIndirectA(LOGFONTA*);
+	HFONT CreateFontIndirectW(LOGFONTW*);
+	HPALETTE CreateHalftonePalette(HDC);
+	HBRUSH CreateHatchBrush(int, COLORREF);
+	HDC CreateICA(LPCSTR, LPCSTR, LPCSTR, DEVMODEA*);
+	HDC CreateICW(LPCWSTR, LPCWSTR, LPCWSTR, DEVMODEW*);
+	HDC CreateMetaFileA(LPCSTR);
+	HDC CreateMetaFileW(LPCWSTR);
+	HPALETTE CreatePalette(LOGPALETTE*);
+	HBRUSH CreatePatternBrush(HBITMAP);
+	HPEN CreatePen(int, int, COLORREF);
+	HPEN CreatePenIndirect(LOGPEN*);
+	HRGN CreatePolygonRgn(POINT*, int, int);
+	HRGN CreatePolyPolygonRgn(POINT*, INT*, int, int);
+	HRGN CreateRectRgn(int, int, int, int);
+	HRGN CreateRectRgnIndirect(LPCRECT);
+	HRGN CreateRoundRectRgn(int, int, int, int, int, int);
+	BOOL CreateScalableFontResourceA(DWORD, LPCSTR, LPCSTR, LPCSTR);
+	BOOL CreateScalableFontResourceW(DWORD, LPCWSTR, LPCWSTR, LPCWSTR);
+	HBRUSH CreateSolidBrush(COLORREF);
+	BOOL DeleteColorSpace(HCOLORSPACE);
+	BOOL DeleteDC(HDC);
+	BOOL DeleteEnhMetaFile(HENHMETAFILE);
+	BOOL DeleteMetaFile(HMETAFILE);
+	BOOL DeleteObject(HGDIOBJ);
+	int DescribePixelFormat(HDC, int, UINT, LPPIXELFORMATDESCRIPTOR);
+	DWORD DeviceCapabilitiesA(LPCSTR, LPCSTR, WORD, LPSTR, DEVMODEA*);
+	DWORD DeviceCapabilitiesW(LPCWSTR, LPCWSTR, WORD, LPWSTR, DEVMODEW*);
+	BOOL DPtoLP(HDC, LPPOINT, int);
+	int DrawEscape(HDC, int, int, LPCSTR);
+	BOOL Ellipse(HDC, int, int, int, int);
+	int EndDoc(HDC);
+	int EndPage(HDC);
+	BOOL EndPath(HDC);
+	BOOL EnumEnhMetaFile(HDC, HENHMETAFILE, ENHMFENUMPROC, PVOID, LPCRECT);
+	int EnumFontFamiliesA(HDC, LPCSTR, FONTENUMPROCA, LPARAM);
+	int EnumFontFamiliesW(HDC, LPCWSTR, FONTENUMPROCW, LPARAM);
+	int EnumFontFamiliesExA(HDC, PLOGFONTA, FONTENUMPROCA, LPARAM, DWORD);
+	int EnumFontFamiliesExW(HDC, PLOGFONTW, FONTENUMPROCW, LPARAM, DWORD);
+	int EnumFontsA(HDC, LPCSTR, FONTENUMPROCA, LPARAM);
+	int EnumFontsW(HDC, LPCWSTR, FONTENUMPROCW, LPARAM);
+	int EnumICMProfilesA(HDC, ICMENUMPROCA, LPARAM);
+	int EnumICMProfilesW(HDC, ICMENUMPROCW, LPARAM);
+	BOOL EnumMetaFile(HDC, HMETAFILE, MFENUMPROC, LPARAM);
+	int EnumObjects(HDC, int, GOBJENUMPROC, LPARAM);
+	BOOL EqualRgn(HRGN, HRGN);
+	int Escape(HDC, int, int, LPCSTR, PVOID);
+	int ExcludeClipRect(HDC, int, int, int, int);
+	int ExcludeUpdateRgn(HDC, HWND);
+	HPEN ExtCreatePen(DWORD, DWORD, LOGBRUSH*, DWORD, DWORD*);
+	HRGN ExtCreateRegion(XFORM*, DWORD, RGNDATA*);
+	int ExtEscape(HDC, int, int, LPCSTR, int, LPSTR);
+	BOOL ExtFloodFill(HDC, int, int, COLORREF, UINT);
+	int ExtSelectClipRgn(HDC, HRGN, int);
+	BOOL ExtTextOutA(HDC, int, int, UINT, LPCRECT, LPCSTR, UINT, INT*);
+	BOOL ExtTextOutW(HDC, int, int, UINT, LPCRECT, LPCWSTR, UINT, INT*);
+	BOOL FillPath(HDC);
+	int FillRect(HDC, LPCRECT, HBRUSH);
+	int FillRgn(HDC, HRGN, HBRUSH);
+	BOOL FixBrushOrgEx(HDC, int, int, LPPOINT);
+	BOOL FlattenPath(HDC);
+	BOOL FloodFill(HDC, int, int, COLORREF);
+	BOOL GdiComment(HDC, UINT, BYTE*);
+	BOOL GdiFlush();
+	DWORD GdiGetBatchLimit();
+	DWORD GdiSetBatchLimit(DWORD);
+	int GetArcDirection(HDC);
+	BOOL GetAspectRatioFilterEx(HDC, LPSIZE);
+	LONG GetBitmapBits(HBITMAP, LONG, PVOID);
+	BOOL GetBitmapDimensionEx(HBITMAP, LPSIZE);
+	COLORREF GetBkColor(HDC);
+	int GetBkMode(HDC);
+	UINT GetBoundsRect(HDC, LPRECT, UINT);
+	BOOL GetBrushOrgEx(HDC, LPPOINT);
+	BOOL GetCharABCWidthsA(HDC, UINT, UINT, LPABC);
+	BOOL GetCharABCWidthsW(HDC, UINT, UINT, LPABC);
+	BOOL GetCharABCWidthsFloatA(HDC, UINT, UINT, LPABCFLOAT);
+	BOOL GetCharABCWidthsFloatW(HDC, UINT, UINT, LPABCFLOAT);
+	DWORD GetCharacterPlacementA(HDC, LPCSTR, int, int, LPGCP_RESULTSA, DWORD);
+	DWORD GetCharacterPlacementW(HDC, LPCWSTR, int, int, LPGCP_RESULTSW, DWORD);
+	BOOL GetCharWidth32A(HDC, UINT, UINT, LPINT);
+	BOOL GetCharWidth32W(HDC, UINT, UINT, LPINT);
+	BOOL GetCharWidthA(HDC, UINT, UINT, LPINT);
+	BOOL GetCharWidthW(HDC, UINT, UINT, LPINT);
+	BOOL GetCharWidthFloatA(HDC, UINT, UINT, PFLOAT);
+	BOOL GetCharWidthFloatW(HDC, UINT, UINT, PFLOAT);
+	int GetClipBox(HDC, LPRECT);
+	int GetClipRgn(HDC, HRGN);
+	BOOL GetColorAdjustment(HDC, LPCOLORADJUSTMENT);
+	HANDLE GetColorSpace(HDC);
+	HGDIOBJ GetCurrentObject(HDC, UINT);
+	BOOL GetCurrentPositionEx(HDC, LPPOINT);
+	HCURSOR GetCursor();
+	BOOL GetDCOrgEx(HDC, LPPOINT);
+	int GetDeviceCaps(HDC, int);
+	BOOL GetDeviceGammaRamp(HDC, PVOID);
+	UINT GetDIBColorTable(HDC, UINT, UINT, RGBQUAD*);
+	int GetDIBits(HDC, HBITMAP, UINT, UINT, PVOID, LPBITMAPINFO, UINT);
+	HENHMETAFILE GetEnhMetaFileA(LPCSTR);
+	HENHMETAFILE GetEnhMetaFileW(LPCWSTR);
+	UINT GetEnhMetaFileBits(HENHMETAFILE, UINT, LPBYTE);
+	UINT GetEnhMetaFileDescriptionA(HENHMETAFILE, UINT, LPSTR);
+	UINT GetEnhMetaFileDescriptionW(HENHMETAFILE, UINT, LPWSTR);
+	UINT GetEnhMetaFileHeader(HENHMETAFILE, UINT, LPENHMETAHEADER);
+	UINT GetEnhMetaFilePaletteEntries(HENHMETAFILE, UINT, LPPALETTEENTRY);
+	UINT GetEnhMetaFilePixelFormat(HENHMETAFILE, DWORD, PIXELFORMATDESCRIPTOR*);
+	DWORD GetFontData(HDC, DWORD, DWORD, PVOID, DWORD);
+	DWORD GetFontLanguageInfo(HDC);
+	DWORD GetGlyphOutlineA(HDC, UINT, UINT, LPGLYPHMETRICS, DWORD, PVOID, MAT2*);
+	DWORD GetGlyphOutlineW(HDC, UINT, UINT, LPGLYPHMETRICS, DWORD, PVOID, MAT2*);
+	int GetGraphicsMode(HDC);
+	BOOL GetICMProfileA(HDC, DWORD, LPSTR);
+	BOOL GetICMProfileW(HDC, DWORD, LPWSTR);
+	DWORD GetKerningPairsA(HDC, DWORD, LPKERNINGPAIR);
+	DWORD GetKerningPairsW(HDC, DWORD, LPKERNINGPAIR);
+	BOOL GetLogColorSpaceA(HCOLORSPACE, LPLOGCOLORSPACEA, DWORD);
+	BOOL GetLogColorSpaceW(HCOLORSPACE, LPLOGCOLORSPACEW, DWORD);
+	int GetMapMode(HDC);
+	HMETAFILE GetMetaFileA(LPCSTR);
+	HMETAFILE GetMetaFileW(LPCWSTR);
+	UINT GetMetaFileBitsEx(HMETAFILE, UINT, PVOID);
+	int GetMetaRgn(HDC, HRGN);
+	BOOL GetMiterLimit(HDC, PFLOAT);
+	COLORREF GetNearestColor(HDC, COLORREF);
+	UINT GetNearestPaletteIndex(HPALETTE, COLORREF);
+	int GetObjectA(HGDIOBJ, int, PVOID);
+	int GetObjectW(HGDIOBJ, int, PVOID);
+	DWORD GetObjectType(HGDIOBJ);
+	UINT GetOutlineTextMetricsA(HDC, UINT, LPOUTLINETEXTMETRICA);
+	UINT GetOutlineTextMetricsW(HDC, UINT, LPOUTLINETEXTMETRICW);
+	UINT GetPaletteEntries(HPALETTE, UINT, UINT, LPPALETTEENTRY);
+	int GetPath(HDC, LPPOINT, PBYTE, int);
+	COLORREF GetPixel(HDC, int, int);
+	int GetPixelFormat(HDC);
+	int GetPolyFillMode(HDC);
+	BOOL GetRasterizerCaps(LPRASTERIZER_STATUS, UINT);
+	int GetRandomRgn (HDC, HRGN, INT);
+	DWORD GetRegionData(HRGN, DWORD, LPRGNDATA);
+	int GetRgnBox(HRGN, LPRECT);
+	int GetROP2(HDC);
+	HGDIOBJ GetStockObject(int);
+	int GetStretchBltMode(HDC);
+	UINT GetSystemPaletteEntries(HDC, UINT, UINT, LPPALETTEENTRY);
+	UINT GetSystemPaletteUse(HDC);
+	UINT GetTextAlign(HDC);
+	int GetTextCharacterExtra(HDC);
+	int GetTextCharset(HDC);
+	int GetTextCharsetInfo(HDC, LPFONTSIGNATURE, DWORD);
+	COLORREF GetTextColor(HDC);
+	BOOL GetTextExtentExPointA(HDC, LPCSTR, int, int, LPINT, LPINT, LPSIZE);
+	BOOL GetTextExtentExPointW(HDC, LPCWSTR, int, int, LPINT, LPINT, LPSIZE);
+	BOOL GetTextExtentPointA(HDC, LPCSTR, int, LPSIZE);
+	BOOL GetTextExtentPointW(HDC, LPCWSTR, int, LPSIZE);
+	BOOL GetTextExtentPoint32A(HDC, LPCSTR, int, LPSIZE);
+	BOOL GetTextExtentPoint32W(HDC, LPCWSTR, int, LPSIZE);
+	int GetTextFaceA(HDC, int, LPSTR);
+	int GetTextFaceW(HDC, int, LPWSTR);
+	BOOL GetTextMetricsA(HDC, LPTEXTMETRICA);
+	BOOL GetTextMetricsW(HDC, LPTEXTMETRICW);
+	BOOL GetViewportExtEx(HDC, LPSIZE);
+	BOOL GetViewportOrgEx(HDC, LPPOINT);
+	BOOL GetWindowExtEx(HDC, LPSIZE);
+	BOOL GetWindowOrgEx(HDC, LPPOINT);
+	UINT GetWinMetaFileBits(HENHMETAFILE, UINT, LPBYTE, INT, HDC);
+	BOOL GetWorldTransform(HDC, LPXFORM);
+	int IntersectClipRect(HDC, int, int, int, int);
+	BOOL InvertRgn(HDC, HRGN);
+	BOOL LineDDA(int, int, int, int, LINEDDAPROC, LPARAM);
+	BOOL LineTo(HDC, int, int);
+	BOOL LPtoDP(HDC, LPPOINT, int);
+	BOOL MaskBlt(HDC, int, int, int, int, HDC, int, int, HBITMAP, int, int, DWORD);
+	BOOL ModifyWorldTransform(HDC, XFORM*, DWORD);
+	BOOL MoveToEx(HDC, int, int, LPPOINT);
+	int OffsetClipRgn(HDC, int, int);
+	int OffsetRgn(HRGN, int, int);
+	BOOL OffsetViewportOrgEx(HDC, int, int, LPPOINT);
+	BOOL OffsetWindowOrgEx(HDC, int, int, LPPOINT);
+	BOOL PaintRgn(HDC, HRGN);
+	BOOL PatBlt(HDC, int, int, int, int, DWORD);
+	HRGN PathToRegion(HDC);
+	BOOL Pie(HDC, int, int, int, int, int, int, int, int);
+	BOOL PlayEnhMetaFile(HDC, HENHMETAFILE, LPCRECT);
+	BOOL PlayEnhMetaFileRecord(HDC, LPHANDLETABLE, ENHMETARECORD*, UINT);
+	BOOL PlayMetaFile(HDC, HMETAFILE);
+	BOOL PlayMetaFileRecord(HDC, LPHANDLETABLE, LPMETARECORD, UINT);
+	BOOL PlgBlt(HDC, POINT*, HDC, int, int, int, int, HBITMAP, int, int);
+	BOOL PolyBezier(HDC, POINT*, DWORD);
+	BOOL PolyBezierTo(HDC, POINT*, DWORD);
+	BOOL PolyDraw(HDC, POINT*, BYTE*, int);
+	BOOL Polygon(HDC, POINT*, int);
+	BOOL Polyline(HDC, POINT*, int);
+	BOOL PolylineTo(HDC, POINT*, DWORD);
+	BOOL PolyPolygon(HDC, POINT*, INT*, int);
+	BOOL PolyPolyline(HDC, POINT*, DWORD*, DWORD);
+	BOOL PolyTextOutA(HDC, POLYTEXTA*, int);
+	BOOL PolyTextOutW(HDC, POLYTEXTW*, int);
+	BOOL PtInRegion(HRGN, int, int);
+	BOOL PtVisible(HDC, int, int);
+	UINT RealizePalette(HDC);
+	BOOL Rectangle(HDC, int, int, int, int);
+	BOOL RectInRegion(HRGN, LPCRECT);
+	BOOL RectVisible(HDC, LPCRECT);
+	BOOL RemoveFontResourceA(LPCSTR);
+	BOOL RemoveFontResourceW(LPCWSTR);
 
-int AbortDoc(HDC);
-BOOL AbortPath(HDC);
-int AddFontResourceA(LPCSTR);
-int AddFontResourceW(LPCWSTR);
-BOOL AngleArc(HDC, int, int, DWORD, FLOAT, FLOAT);
-BOOL AnimatePalette(HPALETTE, UINT, UINT, PALETTEENTRY*);
-BOOL Arc(HDC, int, int, int, int, int, int, int, int);
-BOOL ArcTo(HDC, int, int, int, int, int, int, int, int);
-BOOL BeginPath(HDC);
-BOOL BitBlt(HDC, int, int, int, int, HDC, int, int, DWORD);
-BOOL CancelDC(HDC);
-BOOL CheckColorsInGamut(HDC, PVOID, PVOID, DWORD);
-BOOL Chord(HDC, int, int, int, int, int, int, int, int);
-int ChoosePixelFormat(HDC, PIXELFORMATDESCRIPTOR*);
-HENHMETAFILE CloseEnhMetaFile(HDC);
-BOOL CloseFigure(HDC);
-HMETAFILE CloseMetaFile(HDC);
-BOOL ColorMatchToTarget(HDC, HDC, DWORD);
-int CombineRgn(HRGN, HRGN, HRGN, int);
-BOOL CombineTransform(LPXFORM, XFORM*, XFORM*);
-HENHMETAFILE CopyEnhMetaFileA(HENHMETAFILE, LPCSTR);
-HENHMETAFILE CopyEnhMetaFileW(HENHMETAFILE, LPCWSTR);
-HMETAFILE CopyMetaFileA(HMETAFILE, LPCSTR);
-HMETAFILE CopyMetaFileW(HMETAFILE, LPCWSTR);
-HBITMAP CreateBitmap(int, int, UINT, UINT, PCVOID);
-HBITMAP CreateBitmapIndirect( BITMAP*);
-HBRUSH CreateBrushIndirect( LOGBRUSH*);
-HCOLORSPACE CreateColorSpaceA(LPLOGCOLORSPACEA);
-HCOLORSPACE CreateColorSpaceW(LPLOGCOLORSPACEW);
-HBITMAP CreateCompatibleBitmap(HDC, int, int);
-HDC CreateCompatibleDC(HDC);
-HDC CreateDCA(LPCSTR, LPCSTR, LPCSTR, DEVMODEA*);
-HDC CreateDCW(LPCWSTR, LPCWSTR, LPCWSTR, DEVMODEW*);
-HBITMAP CreateDIBitmap(HDC, BITMAPINFOHEADER*, DWORD, PCVOID, BITMAPINFO*, UINT);
-HBRUSH CreateDIBPatternBrush(HGLOBAL, UINT);
-HBRUSH CreateDIBPatternBrushPt(PCVOID, UINT);
-HBITMAP CreateDIBSection(HDC, BITMAPINFO*, UINT, void**, HANDLE, DWORD);
-HBITMAP CreateDiscardableBitmap(HDC, int, int);
-HRGN CreateEllipticRgn(int, int, int, int);
-HRGN CreateEllipticRgnIndirect(LPCRECT);
-HDC CreateEnhMetaFileA(HDC, LPCSTR, LPCRECT, LPCSTR);
-HDC CreateEnhMetaFileW(HDC, LPCWSTR, LPCRECT, LPCWSTR);
-HFONT CreateFontA(int, int, int, int, int, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, LPCSTR);
-HFONT CreateFontW(int, int, int, int, int, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, LPCWSTR);
-HFONT CreateFontIndirectA( LOGFONTA*);
-HFONT CreateFontIndirectW( LOGFONTW*);
-HPALETTE CreateHalftonePalette(HDC);
-HBRUSH CreateHatchBrush(int, COLORREF);
-HDC CreateICA(LPCSTR, LPCSTR, LPCSTR, DEVMODEA*);
-HDC CreateICW(LPCWSTR, LPCWSTR, LPCWSTR, DEVMODEW*);
-HDC CreateMetaFileA(LPCSTR);
-HDC CreateMetaFileW(LPCWSTR);
-HPALETTE CreatePalette( LOGPALETTE*);
-HBRUSH CreatePatternBrush(HBITMAP);
-HPEN CreatePen(int, int, COLORREF);
-HPEN CreatePenIndirect( LOGPEN*);
-HRGN CreatePolygonRgn( POINT*, int, int);
-HRGN CreatePolyPolygonRgn( POINT*, INT*, int, int);
-HRGN CreateRectRgn(int, int, int, int);
-HRGN CreateRectRgnIndirect(LPCRECT);
-HRGN CreateRoundRectRgn(int, int, int, int, int, int);
-BOOL CreateScalableFontResourceA(DWORD, LPCSTR, LPCSTR, LPCSTR);
-BOOL CreateScalableFontResourceW(DWORD, LPCWSTR, LPCWSTR, LPCWSTR);
-HBRUSH CreateSolidBrush(COLORREF);
-BOOL DeleteColorSpace(HCOLORSPACE);
-BOOL DeleteDC(HDC);
-BOOL DeleteEnhMetaFile(HENHMETAFILE);
-BOOL DeleteMetaFile(HMETAFILE);
-BOOL DeleteObject(HGDIOBJ);
-int DescribePixelFormat(HDC, int, UINT, LPPIXELFORMATDESCRIPTOR);
-DWORD DeviceCapabilitiesA(LPCSTR, LPCSTR, WORD, LPSTR, DEVMODEA*);
-DWORD DeviceCapabilitiesW(LPCWSTR, LPCWSTR, WORD, LPWSTR, DEVMODEW*);
-BOOL DPtoLP(HDC, LPPOINT, int);
-int DrawEscape(HDC, int, int, LPCSTR);
-BOOL Ellipse(HDC, int, int, int, int);
-int EndDoc(HDC);
-int EndPage(HDC);
-BOOL EndPath(HDC);
-BOOL EnumEnhMetaFile(HDC, HENHMETAFILE, ENHMFENUMPROC, PVOID, LPCRECT);
-int EnumFontFamiliesA(HDC, LPCSTR, FONTENUMPROCA, LPARAM);
-int EnumFontFamiliesW(HDC, LPCWSTR, FONTENUMPROCW, LPARAM);
-int EnumFontFamiliesExA(HDC, PLOGFONTA, FONTENUMPROCA, LPARAM, DWORD);
-int EnumFontFamiliesExW(HDC, PLOGFONTW, FONTENUMPROCW, LPARAM, DWORD);
-int EnumFontsA(HDC, LPCSTR, FONTENUMPROCA, LPARAM);
-int EnumFontsW(HDC, LPCWSTR, FONTENUMPROCW, LPARAM);
-int EnumICMProfilesA(HDC, ICMENUMPROCA, LPARAM);
-int EnumICMProfilesW(HDC, ICMENUMPROCW, LPARAM);
-BOOL EnumMetaFile(HDC, HMETAFILE, MFENUMPROC, LPARAM);
-int EnumObjects(HDC, int, GOBJENUMPROC, LPARAM);
-BOOL EqualRgn(HRGN, HRGN);
-int Escape(HDC, int, int, LPCSTR, PVOID);
-int ExcludeClipRect(HDC, int, int, int, int);
-int ExcludeUpdateRgn(HDC, HWND);
-HPEN ExtCreatePen(DWORD, DWORD, LOGBRUSH*, DWORD, DWORD*);
-HRGN ExtCreateRegion( XFORM*, DWORD, RGNDATA*);
-int ExtEscape(HDC, int, int, LPCSTR, int, LPSTR);
-BOOL ExtFloodFill(HDC, int, int, COLORREF, UINT);
-int ExtSelectClipRgn(HDC, HRGN, int);
-BOOL ExtTextOutA(HDC, int, int, UINT, LPCRECT, LPCSTR, UINT, INT*);
-BOOL ExtTextOutW(HDC, int, int, UINT, LPCRECT, LPCWSTR, UINT, INT*);
-BOOL FillPath(HDC);
-int FillRect(HDC, LPCRECT, HBRUSH);
-int FillRgn(HDC, HRGN, HBRUSH);
-BOOL FixBrushOrgEx(HDC, int, int, LPPOINT);
-BOOL FlattenPath(HDC);
-BOOL FloodFill(HDC, int, int, COLORREF);
-BOOL GdiComment(HDC, UINT, BYTE*);
-BOOL GdiFlush();
-DWORD GdiGetBatchLimit();
-DWORD GdiSetBatchLimit(DWORD);
-int GetArcDirection(HDC);
-BOOL GetAspectRatioFilterEx(HDC, LPSIZE);
-LONG GetBitmapBits(HBITMAP, LONG, PVOID);
-BOOL GetBitmapDimensionEx(HBITMAP, LPSIZE);
-COLORREF GetBkColor(HDC);
-int GetBkMode(HDC);
-UINT GetBoundsRect(HDC, LPRECT, UINT);
-BOOL GetBrushOrgEx(HDC, LPPOINT);
-BOOL GetCharABCWidthsA(HDC, UINT, UINT, LPABC);
-BOOL GetCharABCWidthsW(HDC, UINT, UINT, LPABC);
-BOOL GetCharABCWidthsFloatA(HDC, UINT, UINT, LPABCFLOAT);
-BOOL GetCharABCWidthsFloatW(HDC, UINT, UINT, LPABCFLOAT);
-DWORD GetCharacterPlacementA(HDC, LPCSTR, int, int, LPGCP_RESULTSA, DWORD);
-DWORD GetCharacterPlacementW(HDC, LPCWSTR, int, int, LPGCP_RESULTSW, DWORD);
-BOOL GetCharWidth32A(HDC, UINT, UINT, LPINT);
-BOOL GetCharWidth32W(HDC, UINT, UINT, LPINT);
-BOOL GetCharWidthA(HDC, UINT, UINT, LPINT);
-BOOL GetCharWidthW(HDC, UINT, UINT, LPINT);
-BOOL GetCharWidthFloatA(HDC, UINT, UINT, PFLOAT);
-BOOL GetCharWidthFloatW(HDC, UINT, UINT, PFLOAT);
-int GetClipBox(HDC, LPRECT);
-int GetClipRgn(HDC, HRGN);
-BOOL GetColorAdjustment(HDC, LPCOLORADJUSTMENT);
-HANDLE GetColorSpace(HDC);
-HGDIOBJ GetCurrentObject(HDC, UINT);
-BOOL GetCurrentPositionEx(HDC, LPPOINT);
-HCURSOR GetCursor();
-BOOL GetDCOrgEx(HDC, LPPOINT);
-int GetDeviceCaps(HDC, int);
-BOOL GetDeviceGammaRamp(HDC, PVOID);
-UINT GetDIBColorTable(HDC, UINT, UINT, RGBQUAD*);
-int GetDIBits(HDC, HBITMAP, UINT, UINT, PVOID, LPBITMAPINFO, UINT);
-HENHMETAFILE GetEnhMetaFileA(LPCSTR);
-HENHMETAFILE GetEnhMetaFileW(LPCWSTR);
-UINT GetEnhMetaFileBits(HENHMETAFILE, UINT, LPBYTE);
-UINT GetEnhMetaFileDescriptionA(HENHMETAFILE, UINT, LPSTR);
-UINT GetEnhMetaFileDescriptionW(HENHMETAFILE, UINT, LPWSTR);
-UINT GetEnhMetaFileHeader(HENHMETAFILE, UINT, LPENHMETAHEADER);
-UINT GetEnhMetaFilePaletteEntries(HENHMETAFILE, UINT, LPPALETTEENTRY);
-UINT GetEnhMetaFilePixelFormat(HENHMETAFILE, DWORD, PIXELFORMATDESCRIPTOR*);
-DWORD GetFontData(HDC, DWORD, DWORD, PVOID, DWORD);
-DWORD GetFontLanguageInfo(HDC);
-DWORD GetGlyphOutlineA(HDC, UINT, UINT, LPGLYPHMETRICS, DWORD, PVOID, MAT2*);
-DWORD GetGlyphOutlineW(HDC, UINT, UINT, LPGLYPHMETRICS, DWORD, PVOID, MAT2*);
-int GetGraphicsMode(HDC);
-BOOL GetICMProfileA(HDC, DWORD, LPSTR);
-BOOL GetICMProfileW(HDC, DWORD, LPWSTR);
-DWORD GetKerningPairsA(HDC, DWORD, LPKERNINGPAIR);
-DWORD GetKerningPairsW(HDC, DWORD, LPKERNINGPAIR);
-BOOL GetLogColorSpaceA(HCOLORSPACE, LPLOGCOLORSPACEA, DWORD);
-BOOL GetLogColorSpaceW(HCOLORSPACE, LPLOGCOLORSPACEW, DWORD);
-int GetMapMode(HDC);
-HMETAFILE GetMetaFileA(LPCSTR);
-HMETAFILE GetMetaFileW(LPCWSTR);
-UINT GetMetaFileBitsEx(HMETAFILE, UINT, PVOID);
-int GetMetaRgn(HDC, HRGN);
-BOOL GetMiterLimit(HDC, PFLOAT);
-COLORREF GetNearestColor(HDC, COLORREF);
-UINT GetNearestPaletteIndex(HPALETTE, COLORREF);
-int GetObjectA(HGDIOBJ, int, PVOID);
-int GetObjectW(HGDIOBJ, int, PVOID);
-DWORD GetObjectType(HGDIOBJ);
-UINT GetOutlineTextMetricsA(HDC, UINT, LPOUTLINETEXTMETRICA);
-UINT GetOutlineTextMetricsW(HDC, UINT, LPOUTLINETEXTMETRICW);
-UINT GetPaletteEntries(HPALETTE, UINT, UINT, LPPALETTEENTRY);
-int GetPath(HDC, LPPOINT, PBYTE, int);
-COLORREF GetPixel(HDC, int, int);
-int GetPixelFormat(HDC);
-int GetPolyFillMode(HDC);
-BOOL GetRasterizerCaps(LPRASTERIZER_STATUS, UINT);
-int GetRandomRgn (HDC, HRGN, INT);
-DWORD GetRegionData(HRGN, DWORD, LPRGNDATA);
-int GetRgnBox(HRGN, LPRECT);
-int GetROP2(HDC);
-HGDIOBJ GetStockObject(int);
-int GetStretchBltMode(HDC);
-UINT GetSystemPaletteEntries(HDC, UINT, UINT, LPPALETTEENTRY);
-UINT GetSystemPaletteUse(HDC);
-UINT GetTextAlign(HDC);
-int GetTextCharacterExtra(HDC);
-int GetTextCharset(HDC);
-int GetTextCharsetInfo(HDC, LPFONTSIGNATURE, DWORD);
-COLORREF GetTextColor(HDC);
-BOOL GetTextExtentExPointA(HDC, LPCSTR, int, int, LPINT, LPINT, LPSIZE);
-BOOL GetTextExtentExPointW( HDC, LPCWSTR, int, int, LPINT, LPINT, LPSIZE );
-BOOL GetTextExtentPointA(HDC, LPCSTR, int, LPSIZE);
-BOOL GetTextExtentPointW(HDC, LPCWSTR, int, LPSIZE);
-BOOL GetTextExtentPoint32A(HDC, LPCSTR, int, LPSIZE);
-BOOL GetTextExtentPoint32W( HDC, LPCWSTR, int, LPSIZE);
-int GetTextFaceA(HDC, int, LPSTR);
-int GetTextFaceW(HDC, int, LPWSTR);
-BOOL GetTextMetricsA(HDC, LPTEXTMETRICA);
-BOOL GetTextMetricsW(HDC, LPTEXTMETRICW);
-BOOL GetViewportExtEx(HDC, LPSIZE);
-BOOL GetViewportOrgEx(HDC, LPPOINT);
-BOOL GetWindowExtEx(HDC, LPSIZE);
-BOOL GetWindowOrgEx(HDC, LPPOINT);
-UINT GetWinMetaFileBits(HENHMETAFILE, UINT, LPBYTE, INT, HDC);
-BOOL GetWorldTransform(HDC, LPXFORM);
-int IntersectClipRect(HDC, int, int, int, int);
-BOOL InvertRgn(HDC, HRGN);
-BOOL LineDDA(int, int, int, int, LINEDDAPROC, LPARAM);
-BOOL LineTo(HDC, int, int);
-BOOL LPtoDP(HDC, LPPOINT, int);
-BOOL MaskBlt(HDC, int, int, int, int, HDC, int, int, HBITMAP, int, int, DWORD);
-BOOL ModifyWorldTransform(HDC, XFORM*, DWORD);
-BOOL MoveToEx(HDC, int, int, LPPOINT);
-int OffsetClipRgn(HDC, int, int);
-int OffsetRgn(HRGN, int, int);
-BOOL OffsetViewportOrgEx(HDC, int, int, LPPOINT);
-BOOL OffsetWindowOrgEx(HDC, int, int, LPPOINT);
-BOOL PaintRgn(HDC, HRGN);
-BOOL PatBlt(HDC, int, int, int, int, DWORD);
-HRGN PathToRegion(HDC);
-BOOL Pie(HDC, int, int, int, int, int, int, int, int);
-BOOL PlayEnhMetaFile(HDC, HENHMETAFILE, LPCRECT);
-BOOL PlayEnhMetaFileRecord(HDC, LPHANDLETABLE, ENHMETARECORD*, UINT);
-BOOL PlayMetaFile(HDC, HMETAFILE);
-BOOL PlayMetaFileRecord(HDC, LPHANDLETABLE, LPMETARECORD, UINT);
-BOOL PlgBlt(HDC, POINT*, HDC, int, int, int, int, HBITMAP, int, int);
-BOOL PolyBezier(HDC, POINT*, DWORD);
-BOOL PolyBezierTo(HDC, POINT*, DWORD);
-BOOL PolyDraw(HDC, POINT*, BYTE*, int);
-BOOL Polygon(HDC, POINT*, int);
-BOOL Polyline(HDC, POINT*, int);
-BOOL PolylineTo(HDC, POINT*, DWORD);
-BOOL PolyPolygon(HDC, POINT*, INT*, int);
-BOOL PolyPolyline(HDC, POINT*, DWORD*, DWORD);
-BOOL PolyTextOutA(HDC, POLYTEXTA*, int);
-BOOL PolyTextOutW(HDC, POLYTEXTW*, int);
-BOOL PtInRegion(HRGN, int, int);
-BOOL PtVisible(HDC, int, int);
-UINT RealizePalette(HDC);
-BOOL Rectangle(HDC, int, int, int, int);
-BOOL RectInRegion(HRGN, LPCRECT);
-BOOL RectVisible(HDC, LPCRECT);
-BOOL RemoveFontResourceA(LPCSTR);
-BOOL RemoveFontResourceW(LPCWSTR);
+	HDC ResetDCA(HDC, DEVMODEA*);
+	HDC ResetDCW(HDC, DEVMODEW*);
+	BOOL ResizePalette(HPALETTE, UINT);
+	BOOL RestoreDC(HDC, int);
+	BOOL RoundRect(HDC, int, int, int, int, int, int);
+	int SaveDC(HDC);
+	BOOL ScaleViewportExtEx(HDC, int, int, int, int, LPSIZE);
+	BOOL ScaleWindowExtEx(HDC, int, int, int, int, LPSIZE);
+	BOOL SelectClipPath(HDC, int);
+	int SelectClipRgn(HDC, HRGN);
+	HGDIOBJ SelectObject(HDC, HGDIOBJ);
+	HPALETTE SelectPalette(HDC, HPALETTE, BOOL);
+	int SetAbortProc(HDC, ABORTPROC);
+	int SetArcDirection(HDC, int);
+	LONG SetBitmapBits(HBITMAP, DWORD, PCVOID);
+	BOOL SetBitmapDimensionEx(HBITMAP, int, int, LPSIZE);
+	COLORREF SetBkColor(HDC, COLORREF);
+	int SetBkMode(HDC, int);
+	UINT SetBoundsRect(HDC, LPCRECT, UINT);
+	BOOL SetBrushOrgEx(HDC, int, int, LPPOINT);
+	BOOL SetColorAdjustment(HDC, COLORADJUSTMENT*);
+	BOOL SetColorSpace(HDC, HCOLORSPACE);
 
-HDC ResetDCA(HDC, DEVMODEA*);
-HDC ResetDCW(HDC, DEVMODEW*);
-BOOL ResizePalette(HPALETTE, UINT);
-BOOL RestoreDC(HDC, int);
-BOOL RoundRect(HDC, int, int, int, int, int, int);
-int SaveDC(HDC);
-BOOL ScaleViewportExtEx(HDC, int, int, int, int, LPSIZE);
-BOOL ScaleWindowExtEx(HDC, int, int, int, int, LPSIZE);
-BOOL SelectClipPath(HDC, int);
-int SelectClipRgn(HDC, HRGN);
-HGDIOBJ SelectObject(HDC, HGDIOBJ);
-HPALETTE SelectPalette(HDC, HPALETTE, BOOL);
-int SetAbortProc(HDC, ABORTPROC);
-int SetArcDirection(HDC, int);
-LONG SetBitmapBits(HBITMAP, DWORD, PCVOID);
-BOOL SetBitmapDimensionEx(HBITMAP, int, int, LPSIZE);
-COLORREF SetBkColor(HDC, COLORREF);
-int SetBkMode(HDC, int);
-UINT SetBoundsRect(HDC, LPCRECT, UINT);
-BOOL SetBrushOrgEx(HDC, int, int, LPPOINT);
-BOOL SetColorAdjustment(HDC, COLORADJUSTMENT*);
-BOOL SetColorSpace(HDC, HCOLORSPACE);
+	BOOL SetDeviceGammaRamp(HDC, PVOID);
+	UINT SetDIBColorTable(HDC, UINT, UINT, RGBQUAD*);
+	int SetDIBits(HDC, HBITMAP, UINT, UINT, PCVOID, BITMAPINFO*, UINT);
+	int SetDIBitsToDevice(HDC, int, int, DWORD, DWORD, int, int, UINT, UINT, PCVOID, BITMAPINFO*, UINT);
+	HENHMETAFILE SetEnhMetaFileBits(UINT, BYTE*);
+	int SetGraphicsMode(HDC, int);
+	int SetICMMode(HDC, int);
+	BOOL SetICMProfileA(HDC, LPSTR);
+	BOOL SetICMProfileW(HDC, LPWSTR);
+	int SetMapMode(HDC, int);
+	DWORD SetMapperFlags(HDC, DWORD);
+	HMETAFILE SetMetaFileBitsEx(UINT, BYTE*);
+	int SetMetaRgn(HDC);
+	BOOL SetMiterLimit(HDC, FLOAT, PFLOAT);
+	UINT SetPaletteEntries(HPALETTE, UINT, UINT, PALETTEENTRY*);
+	COLORREF SetPixel(HDC, int, int, COLORREF);
+	BOOL SetPixelFormat(HDC, int, PIXELFORMATDESCRIPTOR*);
+	BOOL SetPixelV(HDC, int, int, COLORREF);
+	int SetPolyFillMode(HDC, int);
+	BOOL SetRectRgn(HRGN, int, int, int, int);
+	int SetROP2(HDC, int);
+	int SetStretchBltMode(HDC, int);
+	UINT SetSystemPaletteUse(HDC, UINT);
+	UINT SetTextAlign(HDC, UINT);
+	int SetTextCharacterExtra(HDC, int);
+	COLORREF SetTextColor(HDC, COLORREF);
+	BOOL SetTextJustification(HDC, int, int);
+	BOOL SetViewportExtEx(HDC, int, int, LPSIZE);
+	BOOL SetViewportOrgEx(HDC, int, int, LPPOINT);
+	BOOL SetWindowExtEx(HDC, int, int, LPSIZE);
+	BOOL SetWindowOrgEx(HDC, int, int, LPPOINT);
+	HENHMETAFILE SetWinMetaFileBits(UINT, BYTE*, HDC, METAFILEPICT*);
+	BOOL SetWorldTransform(HDC, XFORM*);
+	int StartDocA(HDC, DOCINFOA*);
+	int StartDocW(HDC, DOCINFOW*);
+	int StartPage(HDC);
+	BOOL StretchBlt(HDC, int, int, int, int, HDC, int, int, int, int, DWORD);
+	int StretchDIBits(HDC, int, int, int, int, int, int, int, int, VOID* , BITMAPINFO* , UINT, DWORD);
+	BOOL StrokeAndFillPath(HDC);
+	BOOL StrokePath(HDC);
+	BOOL SwapBuffers(HDC);
+	BOOL TextOutA(HDC, int, int, LPCSTR, int);
+	BOOL TextOutW(HDC, int, int, LPCWSTR, int);
+	BOOL TranslateCharsetInfo(PDWORD, LPCHARSETINFO, DWORD);
+	BOOL UnrealizeObject(HGDIOBJ);
+	BOOL UpdateColors(HDC);
+	BOOL UpdateICMRegKeyA(DWORD, DWORD, LPSTR, UINT);
+	BOOL UpdateICMRegKeyW(DWORD, DWORD, LPWSTR, UINT);
+	BOOL WidenPath(HDC);
+	BOOL wglCopyContext(HGLRC, HGLRC, UINT);
+	HGLRC wglCreateContext(HDC);
+	HGLRC wglCreateLayerContext(HDC, int);
+	BOOL wglDeleteContext(HGLRC);
+	BOOL wglDescribeLayerPlane(HDC, int, int, UINT, LPLAYERPLANEDESCRIPTOR);
+	HGLRC wglGetCurrentContext();
+	HDC wglGetCurrentDC();
+	int wglGetLayerPaletteEntries(HDC, int, int, int, COLORREF*);
+	PROC wglGetProcAddress(LPCSTR);
+	BOOL wglMakeCurrent(HDC, HGLRC);
+	BOOL wglRealizeLayerPalette(HDC, int, BOOL);
+	int wglSetLayerPaletteEntries(HDC, int, int, int, COLORREF*);
+	BOOL wglShareLists(HGLRC, HGLRC);
+	BOOL wglSwapLayerBuffers(HDC, UINT);
+	BOOL wglUseFontBitmapsA(HDC, DWORD, DWORD, DWORD);
+	BOOL wglUseFontBitmapsW(HDC, DWORD, DWORD, DWORD);
+	BOOL wglUseFontOutlinesA(HDC, DWORD, DWORD, DWORD, FLOAT, FLOAT, int, LPGLYPHMETRICSFLOAT);
+	BOOL wglUseFontOutlinesW(HDC, DWORD, DWORD, DWORD, FLOAT, FLOAT, int, LPGLYPHMETRICSFLOAT);
 
-BOOL SetDeviceGammaRamp(HDC, PVOID);
-UINT SetDIBColorTable(HDC, UINT, UINT, RGBQUAD*);
-int SetDIBits(HDC, HBITMAP, UINT, UINT, PCVOID, BITMAPINFO*, UINT);
-int SetDIBitsToDevice(HDC, int, int, DWORD, DWORD, int, int, UINT, UINT, PCVOID, BITMAPINFO*, UINT);
-HENHMETAFILE SetEnhMetaFileBits(UINT, BYTE*);
-int SetGraphicsMode(HDC, int);
-int SetICMMode(HDC, int);
-BOOL SetICMProfileA(HDC, LPSTR);
-BOOL SetICMProfileW(HDC, LPWSTR);
-int SetMapMode(HDC, int);
-DWORD SetMapperFlags(HDC, DWORD);
-HMETAFILE SetMetaFileBitsEx(UINT, BYTE* );
-int SetMetaRgn(HDC);
-BOOL SetMiterLimit(HDC, FLOAT, PFLOAT);
-UINT SetPaletteEntries(HPALETTE, UINT, UINT, PALETTEENTRY*);
-COLORREF SetPixel(HDC, int, int, COLORREF);
-BOOL SetPixelFormat(HDC, int, PIXELFORMATDESCRIPTOR*);
-BOOL SetPixelV(HDC, int, int, COLORREF);
-int SetPolyFillMode(HDC, int);
-BOOL SetRectRgn(HRGN, int, int, int, int);
-int SetROP2(HDC, int);
-int SetStretchBltMode(HDC, int);
-UINT SetSystemPaletteUse(HDC, UINT);
-UINT SetTextAlign(HDC, UINT);
-int SetTextCharacterExtra(HDC, int);
-COLORREF SetTextColor(HDC, COLORREF);
-BOOL SetTextJustification(HDC, int, int);
-BOOL SetViewportExtEx(HDC, int, int, LPSIZE);
-BOOL SetViewportOrgEx(HDC, int, int, LPPOINT);
-BOOL SetWindowExtEx(HDC, int, int, LPSIZE);
-BOOL SetWindowOrgEx(HDC, int, int, LPPOINT);
-HENHMETAFILE SetWinMetaFileBits(UINT, BYTE*, HDC, METAFILEPICT*);
-BOOL SetWorldTransform(HDC, XFORM* );
-int StartDocA(HDC, DOCINFOA*);
-int StartDocW(HDC, DOCINFOW*);
-int StartPage(HDC);
-BOOL StretchBlt(HDC, int, int, int, int, HDC, int, int, int, int, DWORD);
-int StretchDIBits(HDC, int, int, int, int, int, int, int, int, VOID* , BITMAPINFO* , UINT, DWORD);
-BOOL StrokeAndFillPath(HDC);
-BOOL StrokePath(HDC);
-BOOL SwapBuffers(HDC);
-BOOL TextOutA(HDC, int, int, LPCSTR, int);
-BOOL TextOutW(HDC, int, int, LPCWSTR, int);
-BOOL TranslateCharsetInfo(PDWORD, LPCHARSETINFO, DWORD);
-BOOL UnrealizeObject(HGDIOBJ);
-BOOL UpdateColors(HDC);
-BOOL UpdateICMRegKeyA(DWORD, DWORD, LPSTR, UINT);
-BOOL UpdateICMRegKeyW(DWORD, DWORD, LPWSTR, UINT);
-BOOL WidenPath(HDC);
-BOOL wglCopyContext(HGLRC, HGLRC, UINT);
-HGLRC wglCreateContext(HDC);
-HGLRC wglCreateLayerContext(HDC, int);
-BOOL wglDeleteContext(HGLRC);
-BOOL wglDescribeLayerPlane(HDC, int, int, UINT, LPLAYERPLANEDESCRIPTOR);
-HGLRC wglGetCurrentContext();
-HDC wglGetCurrentDC();
-int wglGetLayerPaletteEntries(HDC, int, int, int, COLORREF*);
-PROC wglGetProcAddress(LPCSTR);
-BOOL wglMakeCurrent(HDC, HGLRC);
-BOOL wglRealizeLayerPalette(HDC, int, BOOL);
-int wglSetLayerPaletteEntries(HDC, int, int, int, COLORREF*);
-BOOL wglShareLists(HGLRC, HGLRC);
-BOOL wglSwapLayerBuffers(HDC, UINT);
-BOOL wglUseFontBitmapsA(HDC, DWORD, DWORD, DWORD);
-BOOL wglUseFontBitmapsW(HDC, DWORD, DWORD, DWORD);
-BOOL wglUseFontOutlinesA(HDC, DWORD, DWORD, DWORD, FLOAT, FLOAT, int, LPGLYPHMETRICSFLOAT);
-BOOL wglUseFontOutlinesW(HDC, DWORD, DWORD, DWORD, FLOAT, FLOAT, int, LPGLYPHMETRICSFLOAT);
+	static if (WINVER >= 0x0500) {
+		BOOL AlphaBlend(HDC, int, int, int, int, HDC, int, int, int, int, BLENDFUNCTION);
+		BOOL GradientFill(HDC, PTRIVERTEX, ULONG, PVOID, ULONG, ULONG);
+		BOOL TransparentBlt(HDC, int, int, int, int, HDC, int, int, int, int, UINT);
+	}
 
-static if (WINVER >= 0x0500) {
-    BOOL AlphaBlend(HDC, int, int, int, int, HDC, int, int, int, int, BLENDFUNCTION);
-    BOOL GradientFill(HDC, PTRIVERTEX, ULONG, PVOID, ULONG, ULONG);
-    BOOL TransparentBlt(HDC, int, int, int, int, HDC, int, int, int, int, UINT);
-}
-
-static if (_WIN32_WINNT >= 0x0500) {
-    COLORREF SetDCBrushColor(HDC, COLORREF);
-    COLORREF SetDCPenColor(HDC, COLORREF);
-    HANDLE AddFontMemResourceEx(PVOID, DWORD, PVOID, DWORD* );
-    int AddFontResourceExA(LPCSTR, DWORD, PVOID);
-    int AddFontResourceExW(LPCWSTR, DWORD, PVOID);
-    BOOL RemoveFontMemResourceEx(HANDLE);
-    BOOL RemoveFontResourceExA(LPCSTR, DWORD, PVOID);
-    BOOL RemoveFontResourceExW(LPCWSTR, DWORD, PVOID);
-    DWORD GetFontUnicodeRanges(HDC, LPGLYPHSET);
-    DWORD GetGlyphIndicesA(HDC, LPCSTR, int, LPWORD, DWORD);
-    DWORD GetGlyphIndicesW(HDC, LPCWSTR, int, LPWORD, DWORD);
-}
-
+	static if (_WIN32_WINNT >= 0x0500) {
+		COLORREF SetDCBrushColor(HDC, COLORREF);
+		COLORREF SetDCPenColor(HDC, COLORREF);
+		HANDLE AddFontMemResourceEx(PVOID, DWORD, PVOID, DWORD*);
+		int AddFontResourceExA(LPCSTR, DWORD, PVOID);
+		int AddFontResourceExW(LPCWSTR, DWORD, PVOID);
+		BOOL RemoveFontMemResourceEx(HANDLE);
+		BOOL RemoveFontResourceExA(LPCSTR, DWORD, PVOID);
+		BOOL RemoveFontResourceExW(LPCWSTR, DWORD, PVOID);
+		DWORD GetFontUnicodeRanges(HDC, LPGLYPHSET);
+		DWORD GetGlyphIndicesA(HDC, LPCSTR, int, LPWORD, DWORD);
+		DWORD GetGlyphIndicesW(HDC, LPCWSTR, int, LPWORD, DWORD);
+	}
 } // extern (Windows)
 
 version(Unicode) {

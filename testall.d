@@ -19,6 +19,8 @@ import win32.oleacc;
 import win32.ocidl;
 import win32.olectl;
 import win32.oledlg;
+import win32.objsafe;
+import win32.ole;
 
 import win32.shldisp;
 import win32.shlobj;
@@ -47,9 +49,20 @@ import win32.isguids;
 
 import win32.subauth;
 import win32.ras;
-//import win32.nddeapi;
+
+import win32.mapi;
+import win32.mciavi;
+import win32.mcx;
+import win32.mgmtapi;
+
+import win32.nddeapi;
 import win32.msacm;
 import win32.nspapi;
+
+import win32.ntdef;
+import win32.ntdll;
+import win32.ntldap;
+import win32.ntsecapi;
 
 
 version (Windows2003) {

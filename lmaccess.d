@@ -7,16 +7,16 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
-/**
- Changes relative to MinGW:
-	USER_POSIX_ID_PARMNUM and GROUP_POSIX_ID_PARMNUM aren't in MinGW or in the Platform SDK docs,
- so they have been dropped from this file.
-*/
-
 module win32.lmaccess;
 pragma(lib, "netapi32.lib");
-private import win32.windef;
-private import win32.lmcons;
+
+/**
+ Changes relative to MinGW:
+	USER_POSIX_ID_PARMNUM and GROUP_POSIX_ID_PARMNUM aren't in MinGW or in
+	the Platform SDK docs, so they have been dropped from this file.
+*/
+
+private import win32.lmcons, win32.windef;
 
 const wchar[]
 	GROUP_SPECIALGRP_USERS  = "USERS",
@@ -24,7 +24,7 @@ const wchar[]
 	GROUP_SPECIALGRP_GUESTS = "GUESTS",
 	GROUP_SPECIALGRP_LOCAL  = "LOCAL";
 
-const ACCESS_LETTERS="RWCXDAP ";
+const ACCESS_LETTERS = "RWCXDAP ";
 
 const NETLOGON_CONTROL_QUERY=1;
 const NETLOGON_CONTROL_REPLICATE=2;

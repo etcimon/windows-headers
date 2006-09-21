@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                              lmstats.d                                *
+*                               lmstats.d                               *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -9,8 +9,8 @@
 \***********************************************************************/
 module win32.lmstats;
 pragma(lib, "netapi32.lib");
-private import win32.lmcons;
-private import win32.windef;
+
+private import win32.lmcons, win32.windef;
 
 const ULONG
 	STATSOPT_CLR   = 1,

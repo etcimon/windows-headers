@@ -8,6 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.cguid;
+
 private import win32.basetyps;
 
 extern (C) {

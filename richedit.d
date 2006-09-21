@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                              richedit.d                               *
+*                               richedit.d                              *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -8,8 +8,8 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.richedit;
-private import win32.windef;
-private import win32.winuser;
+
+private import win32.windef, win32.winuser;
 private import win32.wingdi; // for LF_FACESIZE
 
 align(4):
@@ -22,7 +22,7 @@ version(Unicode) {
 
 const RICHEDIT_CLASS10A = "RICHEDIT";
 
-const TCHAR []
+const TCHAR[]
 	CF_RTF       = "Rich Text Format",
 	CF_RTFNOOBJS = "Rich Text Format Without Objects",
 	CF_RETEXTOBJ = "RichEdit Text and Objects";

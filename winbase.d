@@ -7,6 +7,8 @@
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
+module win32.winbase;
+pragma(lib, "kernel32.lib");
 
 /**
 Translation Notes:
@@ -47,15 +49,9 @@ SetSwapAreaSize(w), LimitEmsPages(n), Yield()
 int wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int);
 
 */
-module win32.winbase;
 
-import win32.winver;
-import win32.windef;
-private import win32.w32api;
-private import win32.winnt;
-private import win32.basetyps;
-
-pragma(lib, "kernel32.lib");
+import win32.windef, win32.winver;
+private import win32.basetyps, win32.w32api, win32.winnt;
 
 // FIXME: clean up Windows version support
 // FIXME:

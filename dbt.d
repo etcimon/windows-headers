@@ -10,7 +10,7 @@
 \***********************************************************************/
 module win32.dbt;
 
-private import win32.windef, win32.w32api;
+private import win32.w32api, win32.windef;
 
 // FIXME: clean up Windows version support
 

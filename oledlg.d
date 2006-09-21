@@ -1,5 +1,5 @@
 /***********************************************************************\
-*                               oledlg.d                                *
+*                                oledlg.d                               *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
@@ -9,15 +9,9 @@
 \***********************************************************************/
 module win32.oledlg;
 
-import win32.windows;
-import win32.shellapi;
-import win32.commdlg;
-import win32.ole2;
-
-import win32.dlgs;
-import win32.prsht;
-private import win32.winnt, win32.objidl, win32.objfwd;
-private import win32.winbase;
+import win32.commdlg, win32.dlgs, win32.ole2, win32.prsht, win32.shellapi,
+  win32.windows;
+private import win32.winbase, win32.objidl, win32.objfwd, win32.winnt;
 
 // FIXME: remove inherited methods from interface definitions
 
