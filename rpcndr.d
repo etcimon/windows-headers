@@ -21,7 +21,7 @@ const __RPCNDR_H_VERSION__= 450;
 import win32.rpcnsip;
 private import win32.rpc, win32.rpcdce, win32.unknwn, win32.windef;
 private import win32.objidl; // for IRpcChannelBuffer, IRpcStubBuffer
-
+private import win32.basetyps;
 
 extern (Windows):
 
