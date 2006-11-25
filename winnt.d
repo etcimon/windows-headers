@@ -635,15 +635,15 @@ enum : WORD {
 
 //MACRO #define LANGIDFROMLCID(l)	((WORD)(l))
 
-WORD MAKELANGID(USHORT p, USHORT s) { return (((cast(WORD)(s)) << 10) | cast(WORD)(p)); }
-WORD PRIMARYLANGID(WORD lgid) { return lgid & 0x3ff; }
-WORD SUBLANGID(WORD lgid) { return lgid >>> 10; }
+WORD MAKELANGID(USHORT p, USHORT s) { return cast(WORD)((((cast(WORD)(s)) << 10) | cast(WORD)(p))); }
+WORD PRIMARYLANGID(WORD lgid) { return cast(WORD)(lgid & 0x3ff); }
+WORD SUBLANGID(WORD lgid) { return cast(WORD)(lgid >>> 10); }
 
 DWORD MAKELCID(WORD lgid, WORD srtid) { return ((cast(DWORD)srtid) << 16) | (cast(DWORD)lgid); }
 //DWORD MAKESORTLCID(WORD lgid, WORD srtid, WORD ver) { return (MAKELCID(lgid, srtid)) | ((cast(DWORD)ver) << 20); }
-WORD LANGIDFROMLCID(LCID lcid) { return lcid; }
-WORD SORTIDFROMLCID(LCID lcid) { return (cast(DWORD)lcid >>> 16) & 0xf; }
-WORD SORTVERSIONFROMLCID(LCID lcid) { return (cast(DWORD)lcid >>> 20) & 0xf; }
+WORD LANGIDFROMLCID(LCID lcid) { return cast(WORD)lcid; }
+WORD SORTIDFROMLCID(LCID lcid) { return cast(WORD)((cast(DWORD)lcid >>> 16) & 0xf); }
+WORD SORTVERSIONFROMLCID(LCID lcid) { return cast(WORD)((cast(DWORD)lcid >>> 20) & 0xf); }
 
 const WORD LANG_SYSTEM_DEFAULT = (SUBLANG_SYS_DEFAULT << 10) | LANG_NEUTRAL;
 const WORD LANG_USER_DEFAULT   = (SUBLANG_DEFAULT << 10) | LANG_NEUTRAL;
@@ -1404,7 +1404,7 @@ enum {
 }
 
 // Macros
-BYTE BTYPE(BYTE x) { return x & N_BTMASK; }
+BYTE BTYPE(BYTE x) { return cast(BYTE)(x & N_BTMASK); }
 bool ISPTR(uint x) { return (x & N_TMASK) == (IMAGE_SYM_DTYPE_POINTER << N_BTSHFT); }
 bool ISFCN(uint x) { return (x & N_TMASK) == (IMAGE_SYM_DTYPE_FUNCTION << N_BTSHFT); }
 bool ISARY(uint x) { return (x & N_TMASK) == (IMAGE_SYM_DTYPE_ARRAY << N_BTSHFT); }

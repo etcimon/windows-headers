@@ -2260,32 +2260,32 @@ bool IS_ERROR(HRESULT Status)
 
 ushort HRESULT_CODE(HRESULT r)
 {
-	return r & 0xFFFF;
+	return cast(ushort)(r & 0xFFFF);
 }
 
 ushort SCODE_CODE(SCODE r)
 {
-	return r & 0xFFFF;
+	return cast(ushort)(r & 0xFFFF);
 }
 
 ushort HRESULT_FACILITY(HRESULT r)
 {
-	return (r>>16) & 0x1fff;
+	return cast(ushort)((r>>16) & 0x1fff);
 }
 
 ushort SCODE_FACILITY(SCODE r)
 {
-	return (r>>16) & 0x1fff;
+	return cast(ushort)((r>>16) & 0x1fff);
 }
 
 ushort HRESULT_SEVERITY(HRESULT r)
 {
-	return (r>>31) & 0x1;
+	return cast(ushort)((r>>31) & 0x1);
 }
 
 ushort SCODE_SEVERITY(SCODE r)
 {
-	return (r>>31) & 0x1;
+	return cast(ushort)((r>>31) & 0x1);
 }
 
 HRESULT MAKE_HRESULT(bool s, uint f, uint c)

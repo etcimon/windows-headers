@@ -16,11 +16,11 @@ private import win32.w32api;
 const size_t MAX_PATH = 260;
 
 ushort MAKEWORD(ubyte a, ubyte b) {
-	return (cast(ushort) b << 8) | a;
+	return cast(ushort) ((b << 8) | a);
 }
 
 uint MAKELONG(ushort a, ushort b) {
-	return (cast(uint) b << 16) | a;
+	return cast(uint) ((b << 16) | a);
 }
 
 ushort LOWORD(uint l) {

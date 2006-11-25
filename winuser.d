@@ -1582,7 +1582,7 @@ const WHEEL_DELTA=120;
 
 SHORT GET_WHEEL_DELTA_WPARAM(WPARAM wparam)
 {
-	return HIWORD (wparam);
+return cast(SHORT) HIWORD(wparam);
 }
 
 const WHEEL_PAGESCROLL = uint.max;
@@ -3325,8 +3325,8 @@ struct MENUBARINFO {
 //	BOOL  fFocused:1;
 	bool fBarFocused() { return (bf_ & 1) == 1; }
 	bool fFocused() { return (bf_ & 2) == 2; }
-	void fBarFocused(bool b) { bf_ = (bf_ & 0xFE) | b; }
-	void fFocused(bool b) { bf_ = b ? (bf_ | 2) : bf_ & 0xFD; }
+	void fBarFocused(bool b) { bf_ = cast(byte)((bf_ & 0xFE) | b); }
+	void fFocused(bool b) { bf_ = cast(byte)(b ? (bf_ | 2) : bf_ & 0xFD); }
 }
 alias MENUBARINFO* PMENUBARINFO;
 
