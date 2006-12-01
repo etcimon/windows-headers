@@ -48,7 +48,7 @@ import win32.iphlpapi;
 import win32.isguids;
 
 import win32.subauth;
-import win32.ras;
+import win32.rasdlg;
 
 import win32.mapi;
 import win32.mciavi;
@@ -65,6 +65,7 @@ import win32.ntldap;
 import win32.ntsecapi;
 
 import win32.pbt;
+import win32.powrprof;
 
 version (Windows2003) {
 	import win32.dhcpcsdk;
