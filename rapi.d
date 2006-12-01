@@ -15,6 +15,8 @@ module win32.rapi;
 	really part of Platform SDK.
  */
 
+private import win32.winbase, win32.windef;
+
 struct IRAPIStream {
 	IRAPIStreamVtbl* lpVtbl;
 }
