@@ -10,6 +10,8 @@
 \***********************************************************************/
 module win32.pbt;
 
+private import win32.windef;
+
 enum : WPARAM {
 	PBT_APMQUERYSUSPEND,
 	PBT_APMQUERYSTANDBY,

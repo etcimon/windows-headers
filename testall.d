@@ -64,6 +64,7 @@ import win32.ntdll;
 import win32.ntldap;
 import win32.ntsecapi;
 
+import win32.pbt;
 
 version (Windows2003) {
 	import win32.dhcpcsdk;
