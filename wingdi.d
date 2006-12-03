@@ -1794,7 +1794,7 @@ struct COLORADJUSTMENT {
 alias COLORADJUSTMENT* LPCOLORADJUSTMENT;
 
 struct DEVMODEA {
-    BYTE   dmDeviceName[CCHDEVICENAME];
+    BYTE[CCHDEVICENAME] dmDeviceName;
     WORD   dmSpecVersion;
     WORD   dmDriverVersion;
     WORD   dmSize;
@@ -1820,7 +1820,7 @@ struct DEVMODEA {
     short  dmYResolution;
     short  dmTTOption;
     short  dmCollate;
-    BYTE   dmFormName[CCHFORMNAME];
+    BYTE[CCHFORMNAME]   dmFormName;
     WORD   dmLogPixels;
     DWORD  dmBitsPerPel;
     DWORD  dmPelsWidth;
@@ -1847,7 +1847,7 @@ alias DEVMODEA* LPDEVMODEA;
 alias DEVMODEA* PDEVMODEA;
 
 struct DEVMODEW {
-    WCHAR   dmDeviceName[CCHDEVICENAME];
+    WCHAR[CCHDEVICENAME]   dmDeviceName;
     WORD   dmSpecVersion;
     WORD   dmDriverVersion;
     WORD   dmSize;
@@ -1874,7 +1874,7 @@ struct DEVMODEW {
     short  dmYResolution;
     short  dmTTOption;
     short  dmCollate;
-    WCHAR  dmFormName[CCHFORMNAME];
+    WCHAR[CCHFORMNAME]  dmFormName;
     WORD   dmLogPixels;
     DWORD  dmBitsPerPel;
     DWORD  dmPelsWidth;
@@ -1903,7 +1903,7 @@ alias DEVMODEW* PDEVMODEW;
 struct DIBSECTION {
     BITMAP dsBm;
     BITMAPINFOHEADER dsBmih;
-    DWORD dsBitfields[3];
+    DWORD[3] dsBitfields;
     HANDLE dshSection;
     DWORD dsOffset;
 }
@@ -2093,7 +2093,7 @@ struct LOGCOLORSPACEA {
     DWORD lcsGammaRed;
     DWORD lcsGammaGreen;
     DWORD lcsGammaBlue;
-    CHAR lcsFilename[MAX_PATH];
+    CHAR[MAX_PATH] lcsFilename;
 }
 alias LOGCOLORSPACEA* LPLOGCOLORSPACEA;
 
@@ -2107,7 +2107,7 @@ struct LOGCOLORSPACEW {
     DWORD lcsGammaRed;
     DWORD lcsGammaGreen;
     DWORD lcsGammaBlue;
-    WCHAR lcsFilename[MAX_PATH];
+    WCHAR[MAX_PATH] lcsFilename;
 }
 alias LOGCOLORSPACEW* LPLOGCOLORSPACEW;
 
@@ -2151,7 +2151,7 @@ alias PALETTEENTRY* PPALETTEENTRY, LPPALETTEENTRY;
 struct LOGPALETTE {
     WORD palVersion;
     WORD palNumEntries;
-    PALETTEENTRY palPalEntry[1];
+    PALETTEENTRY[1] palPalEntry;
 }
 alias LOGPALETTE* PLOGPALETTE, LPLOGPALETTE;
 
@@ -2208,7 +2208,7 @@ struct EXTLOGPEN {
     COLORREF elpColor;
     LONG elpHatch;
     DWORD elpNumEntries;
-    DWORD elpStyleEntry[1];
+    DWORD[1] elpStyleEntry;
 }
 alias EXTLOGPEN* PEXTLOGPEN, LPEXTLOGPEN;
 
@@ -2235,7 +2235,7 @@ struct EMREXTSELECTCLIPRGN {
     EMR emr;
     DWORD cbRgnData;
     DWORD iMode;
-    BYTE RgnData[1];
+    BYTE [1]RgnData;
 }
 alias EMREXTSELECTCLIPRGN* PEMREXTSELECTCLIPRGN;
 
@@ -2277,7 +2277,7 @@ struct EMRFILLRGN {
     RECTL rclBounds;
     DWORD cbRgnData;
     DWORD ihBrush;
-    BYTE RgnData[1];
+    BYTE[1] RgnData;
 }
 alias EMRFILLRGN* PEMRFILLRGN;
 
@@ -2294,14 +2294,14 @@ struct EMRFRAMERGN {
     DWORD cbRgnData;
     DWORD ihBrush;
     SIZEL szlStroke;
-    BYTE RgnData[1];
+    BYTE[1] RgnData;
 }
 alias EMRFRAMERGN* PEMRFRAMERGN;
 
 struct EMRGDICOMMENT {
     EMR emr;
     DWORD cbData;
-    BYTE Data[1];
+    BYTE[1] Data;
 }
 alias EMRGDICOMMENT* PEMRGDICOMMENT;
 
@@ -2309,7 +2309,7 @@ struct EMRINVERTRGN {
     EMR emr;
     RECTL rclBounds;
     DWORD cbRgnData;
-    BYTE RgnData[1];
+    BYTE[1] RgnData;
 }
 alias EMRINVERTRGN* PEMRINVERTRGN;
 typedef EMRINVERTRGN EMRPAINTRGN;
@@ -2366,7 +2366,7 @@ alias EMROFFSETCLIPRGN* PEMROFFSETCLIPRGN;
 struct EMRPLGBLT {
     EMR emr;
     RECTL rclBounds;
-    POINTL aptlDest[3];
+    POINTL[3] aptlDest;
     LONG xSrc;
     LONG ySrc;
     LONG cxSrc;
@@ -2392,8 +2392,8 @@ struct EMRPOLYDRAW {
     EMR emr;
     RECTL rclBounds;
     DWORD cptl;
-    POINTL aptl[1];
-    BYTE abTypes[1];
+    POINTL[1] aptl;
+    BYTE[1] abTypes;
 }
 alias EMRPOLYDRAW* PEMRPOLYDRAW;
 
@@ -2401,8 +2401,8 @@ struct EMRPOLYDRAW16 {
     EMR emr;
     RECTL rclBounds;
     DWORD cpts;
-    POINTS apts[1];
-    BYTE abTypes[1];
+    POINTS[1] apts;
+    BYTE[1] abTypes;
 }
 alias EMRPOLYDRAW16* PEMRPOLYDRAW16;
 
@@ -2410,7 +2410,7 @@ struct EMRPOLYLINE {
     EMR emr;
     RECTL rclBounds;
     DWORD cptl;
-    POINTL aptl[1];
+    POINTL[1] aptl;
 }
 alias EMRPOLYLINE* PEMRPOLYLINE;
 typedef EMRPOLYLINE EMRPOLYBEZIER;
@@ -2426,7 +2426,7 @@ struct EMRPOLYLINE16 {
     EMR emr;
     RECTL rclBounds;
     DWORD cpts;
-    POINTL apts[1];
+    POINTS[1] apts;
 }
 alias EMRPOLYLINE16* PEMRPOLYLINE16;
 typedef EMRPOLYLINE16 EMRPOLYBEZIER16;
@@ -2443,8 +2443,8 @@ struct EMRPOLYPOLYLINE {
     RECTL rclBounds;
     DWORD nPolys;
     DWORD cptl;
-    DWORD aPolyCounts[1];
-    POINTL aptl[1];
+    DWORD[1] aPolyCounts;
+    POINTL[1] aptl;
 }
 alias EMRPOLYPOLYLINE* PEMRPOLYPOLYLINE;
 typedef EMRPOLYPOLYLINE EMRPOLYPOLYGON;
@@ -2455,8 +2455,8 @@ struct EMRPOLYPOLYLINE16 {
     RECTL rclBounds;
     DWORD nPolys;
     DWORD cpts;
-    DWORD aPolyCounts[1];
-    POINTS apts[1];
+    DWORD[1] aPolyCounts;
+    POINTS[1] apts;
 }
 alias EMRPOLYPOLYLINE16* PEMRPOLYPOLYLINE16;
 typedef EMRPOLYPOLYLINE16 EMRPOLYPOLYGON16;
@@ -2469,7 +2469,7 @@ struct EMRPOLYTEXTOUTA {
     FLOAT exScale;
     FLOAT eyScale;
     LONG cStrings;
-    EMRTEXT aemrtext[1];
+    EMRTEXT[1] aemrtext;
 }
 alias EMRPOLYTEXTOUTA* PEMRPOLYTEXTOUTA;
 alias EMRPOLYTEXTOUTA EMRPOLYTEXTOUTW;
@@ -2584,7 +2584,7 @@ struct EMRSETPALETTEENTRIES {
     DWORD ihPal;
     DWORD iStart;
     DWORD cEntries;
-    PALETTEENTRY aPalEntries[1];
+    PALETTEENTRY[1] aPalEntries;
 }
 alias EMRSETPALETTEENTRIES* PEMRSETPALETTEENTRIES;
 
@@ -2747,7 +2747,7 @@ alias ENHMETAHEADER* LPENHMETAHEADER;
 struct METARECORD {
     DWORD rdSize;
     WORD rdFunction;
-    WORD rdParm[1];
+    WORD[1] rdParm;
 }
 alias METARECORD* PMETARECORD;
 alias METARECORD* LPMETARECORD;
@@ -2755,14 +2755,14 @@ alias METARECORD* LPMETARECORD;
 struct ENHMETARECORD {
     DWORD iType;
     DWORD nSize;
-    DWORD dParm[1];
+    DWORD[1] dParm;
 }
 alias ENHMETARECORD* LPENHMETARECORD;
 
 // ---
 
 struct HANDLETABLE {
-    HGDIOBJ objectHandle[1];
+    HGDIOBJ[1] objectHandle;
 }
 alias HANDLETABLE* LPHANDLETABLE;
 
@@ -2824,7 +2824,7 @@ struct RGNDATAHEADER {
 
 struct RGNDATA {
     RGNDATAHEADER rdh;
-    char Buffer[1];
+    char[1] Buffer;
 }
 alias RGNDATA* PRGNDATA, LPRGNDATA;
 
@@ -2877,7 +2877,7 @@ static if (_WIN32_WINNT >= 0x0500) {
         DWORD flAccel;
         DWORD cGlyphsSupported;
         DWORD cRanges;
-        WCRANGE ranges[1];
+        WCRANGE[1] ranges;
     }
     alias GLYPHSET* PGLYPHSET, LPGLYPHSET;
 }
@@ -3042,9 +3042,9 @@ struct METAFILEPICT {
 alias METAFILEPICT* LPMETAFILEPICT;
 
 struct LOCALESIGNATURE {
-    DWORD lsUsb[4];
-    DWORD lsCsbDefault[2];
-    DWORD lsCsbSupported[2];
+    DWORD[4] lsUsb;
+    DWORD[2] lsCsbDefault;
+    DWORD[2] lsCsbSupported;
 }
 alias LOCALESIGNATURE* PLOCALESIGNATURE, LPLOCALESIGNATURE;
 alias LONG LCSTYPE;
@@ -3128,31 +3128,31 @@ alias PELARRAY* PPELARRAY, LPPELARRAY;
 
 struct ENUMLOGFONTA {
     LOGFONTA elfLogFont;
-    BYTE elfFullName[LF_FULLFACESIZE];
-    BYTE elfStyle[LF_FACESIZE];
+    BYTE[LF_FULLFACESIZE] elfFullName;
+    BYTE[LF_FACESIZE] elfStyle;
 }
 alias ENUMLOGFONTA* LPENUMLOGFONTA;
 
 struct ENUMLOGFONTW {
     LOGFONTW elfLogFont;
-    WCHAR elfFullName[LF_FULLFACESIZE];
-    WCHAR elfStyle[LF_FACESIZE];
+    WCHAR[LF_FULLFACESIZE] elfFullName;
+    WCHAR[LF_FACESIZE] elfStyle;
 }
 alias ENUMLOGFONTW* LPENUMLOGFONTW;
 
 struct ENUMLOGFONTEXA {
     LOGFONTA elfLogFont;
-    BYTE elfFullName[LF_FULLFACESIZE];
-    BYTE elfStyle[LF_FACESIZE];
-    BYTE elfScript[LF_FACESIZE];
+    BYTE[LF_FULLFACESIZE] elfFullName;
+    BYTE[LF_FACESIZE] elfStyle;
+    BYTE[LF_FACESIZE] elfScript;
 }
 alias ENUMLOGFONTEXA* LPENUMLOGFONTEXA;
 
 struct ENUMLOGFONTEXW {
     LOGFONTW elfLogFont;
-    WCHAR elfFullName[LF_FULLFACESIZE];
-    WCHAR elfStyle[LF_FACESIZE];
-    WCHAR elfScript[LF_FACESIZE];
+    WCHAR[LF_FULLFACESIZE] elfFullName;
+    WCHAR[LF_FACESIZE] elfStyle;
+    WCHAR[LF_FACESIZE] elfScript;
 }
 alias ENUMLOGFONTEXW* LPENUMLOGFONTEXW;
 
@@ -3165,7 +3165,7 @@ alias POINTFX* LPPOINTFX;
 struct TTPOLYCURVE {
     WORD wType;
     WORD cpfx;
-    POINTFX apfx[1];
+    POINTFX[1] apfx;
 }
 alias TTPOLYCURVE* LPTTPOLYCURVE;
 
@@ -3232,7 +3232,7 @@ const MM_MAX_NUMAXES = 16;
 struct DESIGNVECTOR {
     DWORD dvReserved;
     DWORD dvNumAxes;
-    LONG dvValues[MM_MAX_NUMAXES];
+    LONG[MM_MAX_NUMAXES] dvValues;
 }
 alias DESIGNVECTOR* PDESIGNVECTOR;
 
@@ -3276,21 +3276,21 @@ alias GRADIENT_RECT* PGRADIENT_RECT, LPGRADIENT_RECT;
 
 struct DISPLAY_DEVICEA {
     DWORD cb;
-    CHAR DeviceName[32];
-    CHAR DeviceString[128];
+    CHAR[32] DeviceName;
+    CHAR[128] DeviceString;
     DWORD StateFlags;
-    CHAR DeviceID[128];
-    CHAR DeviceKey[128];
+    CHAR[128] DeviceID;
+    CHAR[128] DeviceKey;
 }
 alias DISPLAY_DEVICEA* PDISPLAY_DEVICEA, LPDISPLAY_DEVICEA;
 
 struct DISPLAY_DEVICEW {
     DWORD cb;
-    WCHAR DeviceName[32];
-    WCHAR DeviceString[128];
+    WCHAR[32] DeviceName;
+    WCHAR[128] DeviceString;
     DWORD StateFlags;
-    WCHAR DeviceID[128];
-    WCHAR DeviceKey[128];
+    WCHAR[128] DeviceID;
+    WCHAR[128] DeviceKey;
 }
 alias DISPLAY_DEVICEW* PDISPLAY_DEVICEW, LPDISPLAY_DEVICEW;
 
