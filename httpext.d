@@ -9,7 +9,7 @@
 \***********************************************************************/
 module win32.httpext;
 
-/*
+/* Comment from MinGW
        httpext.h - Header for ISAPI extensions.
 
        This file is part of a free library for the Win32 API.

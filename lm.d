@@ -22,18 +22,22 @@ public import win32.lmaccess;
 public import win32.lmalert;
 public import win32.lmat;
 public import win32.lmerr;
-public import win32.lmmsg;
 public import win32.lmshare;
 public import win32.lmapibuf;
 public import win32.lmremutl;
 public import win32.lmrepl;
 public import win32.lmuse;
+public import win32.lmstats;
 
 version (WIN32_WINNT_ONLY) {
 	public import win32.lmwksta;
 	public import win32.lmserver;
 }
-public import win32.lmstats;
+version (Windows2003) {
+	public import win32.lmmsg;
+} else version (WindowsXP) {
+	public import win32.lmmsg;
+}
 
 // FIXME: Everything in these next files seems to be deprecated!
 import win32.lmaudit;

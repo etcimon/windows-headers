@@ -209,12 +209,9 @@ struct NUMPARSE {
 	int nPwr10;
 }
 
-align:
 
-
-
- // DAC: In MinGW, these were declared but not defined in oaidl.
- // The SDK docs suggest they belong in this file instead.
+// DAC: In MinGW, these were declared but not defined in oaidl.
+// The SDK docs suggest they belong in this file instead.
 
 deprecated {  // not actually deprecated, but they aren't converted yet.
 	interface ICreateTypeInfo {};

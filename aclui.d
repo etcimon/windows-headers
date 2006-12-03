@@ -100,7 +100,7 @@ interface ISecurityInformation : IUnknown {
 }
 alias ISecurityInformation* LPSECURITYINFO;
 
-/*
+/* Comment from MinGW
  * TODO: ISecurityInformation2, IEffectivePermission, ISecurityObjectTypeInfo
  */
 

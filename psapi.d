@@ -1,6 +1,15 @@
-/*
- * Process status API (PSAPI)
- * http://windowssdk.msdn.microsoft.com/library/ms684884.aspx
+/***********************************************************************\
+*                                psapi.d                                *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                 Translated from MinGW Windows headers                 *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
+/* Comment from MinGW
+ *   Process status API (PSAPI)
+ *   http://windowssdk.msdn.microsoft.com/library/ms684884.aspx
  */
 
 module win32.psapi;
@@ -9,33 +18,27 @@ private import win32.w32api;
 private import win32.winbase;
 private import win32.windef;
 
-
-alias MODULEINFO* LPMODULEINFO;
-struct MODULEINFO
-{
+struct MODULEINFO {
 	LPVOID lpBaseOfDll;
 	DWORD SizeOfImage;
 	LPVOID EntryPoint;
 }
+alias MODULEINFO* LPMODULEINFO;
 
-alias PSAPI_WS_WATCH_INFORMATION* PPSAPI_WS_WATCH_INFORMATION;
-struct PSAPI_WS_WATCH_INFORMATION
-{
+struct PSAPI_WS_WATCH_INFORMATION {
 	LPVOID FaultingPc;
 	LPVOID FaultingVa;
 }
+alias PSAPI_WS_WATCH_INFORMATION* PPSAPI_WS_WATCH_INFORMATION;
 
-alias PSAPI_WS_WATCH_INFORMATION_EX* PPSAPI_WS_WATCH_INFORMATION_EX;
-struct PSAPI_WS_WATCH_INFORMATION_EX
-{
+struct PSAPI_WS_WATCH_INFORMATION_EX {
 	PSAPI_WS_WATCH_INFORMATION BasicInfo;
 	ULONG_PTR FaultingThreadId;
 	ULONG_PTR Flags;
-} 
+}
+alias PSAPI_WS_WATCH_INFORMATION_EX* PPSAPI_WS_WATCH_INFORMATION_EX;
 
-alias PROCESS_MEMORY_COUNTERS* PPROCESS_MEMORY_COUNTERS;
-struct PROCESS_MEMORY_COUNTERS
-{
+struct PROCESS_MEMORY_COUNTERS {
 	DWORD cb;
 	DWORD PageFaultCount;
 	DWORD PeakWorkingSetSize;
@@ -47,10 +50,9 @@ struct PROCESS_MEMORY_COUNTERS
 	DWORD PagefileUsage;
 	DWORD PeakPagefileUsage;
 }
+alias PROCESS_MEMORY_COUNTERS* PPROCESS_MEMORY_COUNTERS;
 
-alias PERFORMANCE_INFORMATION* PPERFORMANCE_INFORMATION;
-struct PERFORMANCE_INFORMATION
-{
+struct PERFORMANCE_INFORMATION {
 	DWORD cb;
 	SIZE_T CommitTotal;
 	SIZE_T CommitLimit;
@@ -66,28 +68,29 @@ struct PERFORMANCE_INFORMATION
 	DWORD ProcessCount;
 	DWORD ThreadCount;
 }
+alias PERFORMANCE_INFORMATION* PPERFORMANCE_INFORMATION;
 
-alias ENUM_PAGE_FILE_INFORMATION* PENUM_PAGE_FILE_INFORMATION;
-struct ENUM_PAGE_FILE_INFORMATION
-{
+struct ENUM_PAGE_FILE_INFORMATION {
 	DWORD cb;
 	DWORD Reserved;
 	SIZE_T TotalSize;
 	SIZE_T TotalInUse;
 	SIZE_T PeakUsage;
 }
+alias ENUM_PAGE_FILE_INFORMATION* PENUM_PAGE_FILE_INFORMATION;
 
 /* application-defined callback function used with the EnumPageFiles()
  * http://windowssdk.msdn.microsoft.com/library/ms682627.aspx */
-version (Unicode)
-	alias BOOL function(LPVOID, PENUM_PAGE_FILE_INFORMATION, LPCWSTR) PENUM_PAGE_FILE_CALLBACK;
-else
-	alias BOOL function(LPVOID, PENUM_PAGE_FILE_INFORMATION, LPCSTR) PENUM_PAGE_FILE_CALLBACK;
+version (Unicode) {
+	alias BOOL function(LPVOID, PENUM_PAGE_FILE_INFORMATION, LPCWSTR)
+	  PENUM_PAGE_FILE_CALLBACK;
+} else {
+	alias BOOL function(LPVOID, PENUM_PAGE_FILE_INFORMATION, LPCSTR)
+	  PENUM_PAGE_FILE_CALLBACK;
+}
 
-
-/* Grouped by application,not in alphabetical order. */
-extern (Windows)
-{
+// Grouped by application, not in alphabetical order.
+extern (Windows) {
 	/* Process Information
 	 * http://windowssdk.msdn.microsoft.com/library/ms684870.aspx */
 	BOOL EnumProcesses(DWORD*, DWORD, DWORD*); /* NT/2000/XP/Server2003/Vista/Longhorn */
@@ -136,8 +139,7 @@ extern (Windows)
 	BOOL EnumPageFilesA(PENUM_PAGE_FILE_CALLBACK, LPVOID); /* 2000/XP/Server2003/Vista/Longhorn */
 }
 
-version (Unicode)
-{
+version (Unicode) {
 	alias GetModuleBaseNameW GetModuleBaseName;
 	alias GetModuleFileNameExW GetModuleFileNameEx;
 	alias GetMappedFileNameW GetMappedFileName;
@@ -145,9 +147,7 @@ version (Unicode)
 	alias GetDeviceDriverFileNameW GetDeviceDriverFileName;
 	alias EnumPageFilesW EnumPageFiles;
 	alias GetProcessImageFileNameW GetProcessImageFileName;
-}
-else
-{
+} else {
 	alias GetModuleBaseNameA GetModuleBaseName;
 	alias GetModuleFileNameExA GetModuleFileNameEx;
 	alias GetMappedFileNameA GetMappedFileName;
