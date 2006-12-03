@@ -3319,40 +3319,40 @@ DWORD MAKEROP4(DWORD fore, DWORD back) {
     return ((back<<8) & 0xFF000000) | (fore);
 }
 
-COLORREF CMYK(ubyte c, ubyte m, ubyte y, ubyte k) {
-    return cast(COLORREF) (k | (y<<8) | (m<<16) | (c<<24));
+COLORREF CMYK(BYTE c, BYTE m, BYTE y, BYTE k) {
+    return cast(COLORREF)(k | (y << 8) | (m << 16) | (c << 24));
 }
 
-ubyte GetCValue(COLORREF cmyk) {
-    return cast(ubyte) cmyk;
+BYTE GetCValue(COLORREF cmyk) {
+    return cast(BYTE)(cmyk >> 24);
 }
 
-ubyte GetMValue(COLORREF cmyk) {
-    return cast(ubyte) (cmyk>>8);
+BYTE GetMValue(COLORREF cmyk) {
+    return cast(BYTE)(cmyk >> 16);
 }
 
-ubyte GetYValue(COLORREF cmyk) {
-    return cast(ubyte) (cmyk>>16);
+BYTE GetYValue(COLORREF cmyk) {
+    return cast(BYTE)(cmyk >> 8);
 }
 
-ubyte GetKValue(COLORREF cmyk) {
-    return cast(ubyte) (cmyk>>24);
+BYTE GetKValue(COLORREF cmyk) {
+    return cast(BYTE)cmyk;
 }
 
 COLORREF RGB(BYTE r, BYTE g, BYTE b) {
-    return cast(COLORREF) (r | (g<<8) | (b<<16));
+    return cast(COLORREF)(r | (g << 8) | (b << 16));
 }
 
-ubyte GetRValue(COLORREF c) {
-    return cast(ubyte) c;
+BYTE GetRValue(COLORREF c) {
+    return cast(BYTE)c;
 }
 
-ubyte GetGValue(COLORREF c) {
-    return cast(ubyte) (c>>8);
+BYTE GetGValue(COLORREF c) {
+    return cast(BYTE)(c >> 8);
 }
 
-ubyte GetBValue(COLORREF c) {
-    return cast(ubyte) (c>>16);
+BYTE GetBValue(COLORREF c) {
+    return cast(BYTE)(c >> 16);
 }
 
 COLORREF PALETTEINDEX(WORD i) {
@@ -3360,7 +3360,7 @@ COLORREF PALETTEINDEX(WORD i) {
 }
 
 COLORREF PALETTERGB(BYTE r, BYTE g, BYTE b) {
-    return 0x02000000 | RGB(r, g, b);
+    return 0x02000000|RGB(r, g, b);
 }
 
 extern(Windows) {
