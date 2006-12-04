@@ -104,8 +104,8 @@ alias ISecurityInformation* LPSECURITYINFO;
  * TODO: ISecurityInformation2, IEffectivePermission, ISecurityObjectTypeInfo
  */
 
-// FIXME: does this need a linkage attribute?
-extern /+DECLSPEC_IMPORT+/ const IID IID_ISecurityInformation;
+// FIXME: linkage attribute?
+extern (C) /+DECLSPEC_IMPORT+/ extern const IID IID_ISecurityInformation;
 
 extern (Windows) {
 	HPROPSHEETPAGE CreateSecurityPage(LPSECURITYINFO psi);

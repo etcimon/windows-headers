@@ -68,6 +68,8 @@ import win32.pbt;
 import win32.powrprof;
 import win32.rapi;
 
+import win32.winldap;
+
 version (Windows2003) {
 	import win32.dhcpcsdk;
 	import win32.errorrep;
