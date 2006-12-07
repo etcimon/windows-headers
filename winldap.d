@@ -42,7 +42,8 @@ enum {
 }
 
 /*	MinGW defines ANSI and Unicode versions as LDAP_VENDOR_NAME and
- *	LDAP_VENDOR_NAMEW respectively
+ *	LDAP_VENDOR_NAME_W respectively; similarly with other string constants
+ *	defined in this module.
  */
 const TCHAR[] LDAP_VENDOR_NAME = "Microsoft Corporation.";
 
@@ -192,69 +193,88 @@ const LDAP_NO_LIMIT = 0;
 
 const TCHAR[] LDAP_CONTROL_REFERRALS = "1.2.840.113556.1.4.616";
 
-/+#define LDAP_CHASE_SUBORDINATE_REFERRALS	0x20U
-#define LDAP_CHASE_EXTERNAL_REFERRALS	0x40U
-#define LDAP_SCOPE_DEFAULT	-1
-#define LDAP_SCOPE_BASE	0x0000
-#define LDAP_SCOPE_ONELEVEL	0x0001
-#define LDAP_SCOPE_SUBTREE	0x0002
-#define LDAP_MOD_ADD	0x00
-#define LDAP_MOD_DELETE	0x01
-#define LDAP_MOD_REPLACE	0x02
-#define LDAP_MOD_BVALUES	0x80
-#define LDAP_RES_BIND	0x61
-#define LDAP_RES_SEARCH_ENTRY	0x64
-#define LDAP_RES_SEARCH_RESULT	0x65
-#define LDAP_RES_MODIFY	0x67
-#define LDAP_RES_ADD	0x69
-#define LDAP_RES_DELETE	0x6b
-#define LDAP_RES_MODRDN	0x6d
-#define LDAP_RES_COMPARE	0x6f
-#define LDAP_RES_SEARCH_REFERENCE	0x73
-#define LDAP_RES_EXTENDED	0x78
-#define LDAP_RES_ANY	(-1L)
-#define LDAP_MSG_ONE	0x00
-#define LDAP_MSG_ALL	0x01
-#define LDAP_MSG_RECEIVED	0x02
-#define LDAP_SERVER_SORT_OID	"1.2.840.113556.1.4.473"
-#define LDAP_SERVER_SORT_OID_W	L"1.2.840.113556.1.4.473"
-#define LDAP_SERVER_RESP_SORT_OID	"1.2.840.113556.1.4.474"
-#define LDAP_SERVER_RESP_SORT_OID_W	L"1.2.840.113556.1.4.474"
-#define LDAP_PAGED_RESULT_OID_STRING	"1.2.840.113556.1.4.319"
-#define LDAP_PAGED_RESULT_OID_STRING_W	L"1.2.840.113556.1.4.319"
-#define LDAP_CONTROL_VLVREQUEST	"2.16.840.1.113730.3.4.9"
-#define LDAP_CONTROL_VLVREQUEST_W	L"2.16.840.1.113730.3.4.9"
-#define LDAP_CONTROL_VLVRESPONSE	"2.16.840.1.113730.3.4.10"
-#define LDAP_CONTROL_VLVRESPONSE_W	L"2.16.840.1.113730.3.4.10"
-#define LDAP_START_TLS_OID	"1.3.6.1.4.1.1466.20037"
-#define LDAP_START_TLS_OID_W	L"1.3.6.1.4.1.1466.20037"
-#define LDAP_TTL_EXTENDED_OP_OID	"1.3.6.1.4.1.1466.101.119.1"
-#define LDAP_TTL_EXTENDED_OP_OID_W	L"1.3.6.1.4.1.1466.101.119.1"
-#define LDAP_AUTH_NONE	0x00U
-#define LDAP_AUTH_SIMPLE	0x80U
-#define LDAP_AUTH_SASL	0x83U
-#define LDAP_AUTH_OTHERKIND	0x86U
-#define LDAP_AUTH_EXTERNAL	(LDAP_AUTH_OTHERKIND | 0x20U)
-#define LDAP_AUTH_SICILY	(LDAP_AUTH_OTHERKIND | 0x200U)
-#define LDAP_AUTH_NEGOTIATE	(LDAP_AUTH_OTHERKIND | 0x400U)
-#define LDAP_AUTH_MSN	(LDAP_AUTH_OTHERKIND | 0x800U)
-#define LDAP_AUTH_NTLM	(LDAP_AUTH_OTHERKIND | 0x1000U)
-#define LDAP_AUTH_DIGEST	(LDAP_AUTH_OTHERKIND | 0x4000U)
-#define LDAP_AUTH_DPA	(LDAP_AUTH_OTHERKIND | 0x2000U)
-#define LDAP_AUTH_SSPI	LDAP_AUTH_NEGOTIATE
-#define LDAP_FILTER_AND	0xa0
-#define LDAP_FILTER_OR	0xa1
-#define LDAP_FILTER_NOT	0xa2
-#define LDAP_FILTER_EQUALITY	0xa3
-#define LDAP_FILTER_SUBSTRINGS	0xa4
-#define LDAP_FILTER_GE	0xa5
-#define LDAP_FILTER_LE	0xa6
-#define LDAP_FILTER_APPROX	0xa8
-#define LDAP_FILTER_EXTENSIBLE	0xa9
-#define LDAP_FILTER_PRESENT	0x87
-#define LDAP_SUBSTRING_INITIAL	0x80
-#define LDAP_SUBSTRING_ANY	0x81
-#define LDAP_SUBSTRING_FINAL	0x82+/
+// FIXME: check type (declared with U suffix in MinGW)
+enum : uint {
+	LDAP_CHASE_SUBORDINATE_REFERRALS = 0x20,
+	LDAP_CHASE_EXTERNAL_REFERRALS    = 0x40
+}
+
+enum {
+	LDAP_SCOPE_DEFAULT = -1,
+	LDAP_SCOPE_BASE,
+	LDAP_SCOPE_ONELEVEL,
+	LDAP_SCOPE_SUBTREE
+}
+
+enum {
+	LDAP_MOD_ADD,
+	LDAP_MOD_DELETE,
+	LDAP_MOD_REPLACE,
+	LDAP_MOD_BVALUES = 0x80
+}
+
+enum : int {
+	LDAP_RES_BIND             = 0x61,
+	LDAP_RES_SEARCH_ENTRY     = 0x64,
+	LDAP_RES_SEARCH_RESULT    = 0x65,
+	LDAP_RES_MODIFY           = 0x67,
+	LDAP_RES_ADD              = 0x69,
+	LDAP_RES_DELETE           = 0x6b,
+	LDAP_RES_MODRDN           = 0x6d,
+	LDAP_RES_COMPARE          = 0x6f,
+	LDAP_RES_SEARCH_REFERENCE = 0x73,
+	LDAP_RES_EXTENDED         = 0x78,
+	LDAP_RES_ANY              = -1
+}
+
+enum {
+	LDAP_MSG_ONE,
+	LDAP_MSG_ALL,
+	LDAP_MSG_RECEIVED
+}
+
+const TCHAR[]
+	LDAP_SERVER_SORT_OID         = "1.2.840.113556.1.4.473",
+	LDAP_SERVER_RESP_SORT_OID    = "1.2.840.113556.1.4.474",
+	LDAP_PAGED_RESULT_OID_STRING = "1.2.840.113556.1.4.319",
+	LDAP_CONTROL_VLVREQUEST      = "2.16.840.1.113730.3.4.9",
+	LDAP_CONTROL_VLVRESPONSE     = "2.16.840.1.113730.3.4.10",
+	LDAP_START_TLS_OID           = "1.3.6.1.4.1.1466.20037",
+	LDAP_TTL_EXTENDED_OP_OID     = "1.3.6.1.4.1.1466.101.119.1";
+
+enum {
+	LDAP_AUTH_NONE      = 0x00U,
+	LDAP_AUTH_SIMPLE    = 0x80U,
+	LDAP_AUTH_SASL      = 0x83U,
+	LDAP_AUTH_OTHERKIND = 0x86U,
+	LDAP_AUTH_EXTERNAL  = LDAP_AUTH_OTHERKIND | 0x0020U,
+	LDAP_AUTH_SICILY    = LDAP_AUTH_OTHERKIND | 0x0200U,
+	LDAP_AUTH_NEGOTIATE = LDAP_AUTH_OTHERKIND | 0x0400U,
+	LDAP_AUTH_MSN       = LDAP_AUTH_OTHERKIND | 0x0800U,
+	LDAP_AUTH_NTLM      = LDAP_AUTH_OTHERKIND | 0x1000U,
+	LDAP_AUTH_DIGEST    = LDAP_AUTH_OTHERKIND | 0x4000U,
+	LDAP_AUTH_DPA       = LDAP_AUTH_OTHERKIND | 0x2000U,
+	LDAP_AUTH_SSPI      = LDAP_AUTH_NEGOTIATE
+}
+
+enum {
+	LDAP_FILTER_AND        = 0xa0,
+	LDAP_FILTER_OR,
+	LDAP_FILTER_NOT,
+	LDAP_FILTER_EQUALITY,
+	LDAP_FILTER_SUBSTRINGS,
+	LDAP_FILTER_GE,
+	LDAP_FILTER_LE,     // = 0xa6
+	LDAP_FILTER_APPROX     = 0xa8,
+	LDAP_FILTER_EXTENSIBLE,
+	LDAP_FILTER_PRESENT    = 0x87
+}
+
+enum {
+	LDAP_SUBSTRING_INITIAL = 0x80,
+	LDAP_SUBSTRING_ANY,
+	LDAP_SUBSTRING_FINAL
+}
 
 struct LDAP {
 	char[76] Reserved;
@@ -334,6 +354,10 @@ struct LDAPControlW {
 }
 alias LDAPControlW* PLDAPControlW;
 
+/*	Do we really need these?  In MinGW, LDAPModA/W have only mod_op, mod_type
+ *	and mod_vals, and macros are used to simulate anonymous unions in those
+ *	structures.
+ */
 union mod_vals_u_tA {
 	PCHAR*     modv_strvals;
 	BerValue** modv_bvals;
@@ -347,21 +371,28 @@ union mod_vals_u_tW {
 struct LDAPModA {
 	ULONG         mod_op;
 	PCHAR         mod_type;
-	mod_vals_u_tA mod_vals;
+
+	union {
+		mod_vals_u_tA mod_vals;
+		// The following members are defined as macros in MinGW.
+		PCHAR*        mod_values;
+		BerValue**    mod_bvalues;
+	}
 }
 alias LDAPModA* PLDAPModA;
 
 struct LDAPModW {
 	ULONG         mod_op;
 	PWCHAR        mod_type;
-	mod_vals_u_tW mod_vals;
+
+	union {
+		mod_vals_u_tW mod_vals;
+		// The following members are defined as macros in MinGW.
+		PWCHAR*       mod_values;
+		BerValue**    mod_bvalues;
+	}
 }
 alias LDAPModW* PLDAPModW;
-
-/+
-#define mod_values      mod_vals.modv_strvals
-#define mod_bvalues     mod_vals.modv_bvals
-+/
 
 /* Opaque structure
  *	http://msdn.microsoft.com/library/en-us/ldap/ldap/ldapsearch.asp
@@ -463,64 +494,98 @@ extern (C) {
 	ULONG ldap_simple_bind_sW(LDAP*, PWCHAR, PWCHAR);
 	ULONG ldap_unbind(LDAP*);
 	ULONG ldap_unbind_s(LDAP*);
-	ULONG ldap_search_extA(LDAP*, PCHAR, ULONG, PCHAR, PCHAR[], ULONG, PLDAPControlW*, PLDAPControlW*, ULONG, ULONG, ULONG*);
-	ULONG ldap_search_extW(LDAP*, PWCHAR, ULONG, PWCHAR, PWCHAR[], ULONG, PLDAPControlW*, PLDAPControlW*, ULONG, ULONG, ULONG*);
-	ULONG ldap_search_ext_sA(LDAP*, PCHAR, ULONG, PCHAR, PCHAR[], ULONG, PLDAPControlA*, PLDAPControlA*, LDAP_TIMEVAL*, ULONG, LDAPMessage**);
-	ULONG ldap_search_ext_sW(LDAP*, PWCHAR, ULONG, PWCHAR, PWCHAR[], ULONG, PLDAPControlW*, PLDAPControlW*, LDAP_TIMEVAL*, ULONG, LDAPMessage**);
+	ULONG ldap_search_extA(LDAP*, PCHAR, ULONG, PCHAR, PCHAR[], ULONG,
+	  PLDAPControlW*, PLDAPControlW*, ULONG, ULONG, ULONG*);
+	ULONG ldap_search_extW(LDAP*, PWCHAR, ULONG, PWCHAR, PWCHAR[], ULONG,
+	  PLDAPControlW*, PLDAPControlW*, ULONG, ULONG, ULONG*);
+	ULONG ldap_search_ext_sA(LDAP*, PCHAR, ULONG, PCHAR, PCHAR[], ULONG,
+	  PLDAPControlA*, PLDAPControlA*, LDAP_TIMEVAL*, ULONG, LDAPMessage**);
+	ULONG ldap_search_ext_sW(LDAP*, PWCHAR, ULONG, PWCHAR, PWCHAR[], ULONG,
+	  PLDAPControlW*, PLDAPControlW*, LDAP_TIMEVAL*, ULONG, LDAPMessage**);
 	ULONG ldap_searchA(LDAP*, PCHAR, ULONG, PCHAR, PCHAR[], ULONG);
 	ULONG ldap_searchW(LDAP*, PWCHAR, ULONG, PWCHAR, PWCHAR[], ULONG);
-	ULONG ldap_search_sA(LDAP*, PCHAR, ULONG, PCHAR, PCHAR[], ULONG, LDAPMessage**);
-	ULONG ldap_search_sW(LDAP*, PWCHAR, ULONG, PWCHAR, PWCHAR[], ULONG, LDAPMessage**);
-	ULONG ldap_search_stA(LDAP*, PCHAR, ULONG, PCHAR, PCHAR[], ULONG, LDAP_TIMEVAL*, LDAPMessage**);
-	ULONG ldap_search_stW(LDAP*, PWCHAR, ULONG, PWCHAR, PWCHAR[], ULONG, LDAP_TIMEVAL*, LDAPMessage**);
-	ULONG ldap_compare_extA(LDAP*, PCHAR, PCHAR, PCHAR, BerValue*, PLDAPControlA*, PLDAPControlA*, ULONG*);
-	ULONG ldap_compare_extW(LDAP*, PWCHAR, PWCHAR, PWCHAR, BerValue*, PLDAPControlW*, PLDAPControlW*, ULONG*);
-	ULONG ldap_compare_ext_sA(LDAP*, PCHAR, PCHAR, PCHAR, BerValue*, PLDAPControlA*, PLDAPControlA*);
-	ULONG ldap_compare_ext_sW(LDAP*, PWCHAR, PWCHAR, PWCHAR, BerValue*, PLDAPControlW*, PLDAPControlW*);
+	ULONG ldap_search_sA(LDAP*, PCHAR, ULONG, PCHAR, PCHAR[], ULONG,
+	  LDAPMessage**);
+	ULONG ldap_search_sW(LDAP*, PWCHAR, ULONG, PWCHAR, PWCHAR[], ULONG,
+	  LDAPMessage**);
+	ULONG ldap_search_stA(LDAP*, PCHAR, ULONG, PCHAR, PCHAR[], ULONG,
+	  LDAP_TIMEVAL*, LDAPMessage**);
+	ULONG ldap_search_stW(LDAP*, PWCHAR, ULONG, PWCHAR, PWCHAR[], ULONG,
+	  LDAP_TIMEVAL*, LDAPMessage**);
+	ULONG ldap_compare_extA(LDAP*, PCHAR, PCHAR, PCHAR, BerValue*,
+	  PLDAPControlA*, PLDAPControlA*, ULONG*);
+	ULONG ldap_compare_extW(LDAP*, PWCHAR, PWCHAR, PWCHAR, BerValue*,
+	  PLDAPControlW*, PLDAPControlW*, ULONG*);
+	ULONG ldap_compare_ext_sA(LDAP*, PCHAR, PCHAR, PCHAR, BerValue*,
+	  PLDAPControlA*, PLDAPControlA*);
+	ULONG ldap_compare_ext_sW(LDAP*, PWCHAR, PWCHAR, PWCHAR, BerValue*,
+	  PLDAPControlW*, PLDAPControlW*);
 	ULONG ldap_compareA(LDAP*, PCHAR, PCHAR, PCHAR);
 	ULONG ldap_compareW(LDAP*, PWCHAR, PWCHAR, PWCHAR);
 	ULONG ldap_compare_sA(LDAP*, PCHAR, PCHAR, PCHAR);
 	ULONG ldap_compare_sW(LDAP*, PWCHAR, PWCHAR, PWCHAR);
-	ULONG ldap_modify_extA(LDAP*, PCHAR, LDAPModA*[], PLDAPControlA*, PLDAPControlA*, ULONG*);
-	ULONG ldap_modify_extW(LDAP*, PWCHAR, LDAPModW*[], PLDAPControlW*, PLDAPControlW*, ULONG*);
-	ULONG ldap_modify_ext_sA(LDAP*, PCHAR, LDAPModA*[], PLDAPControlA*, PLDAPControlA*);
-	ULONG ldap_modify_ext_sW(LDAP*, PWCHAR, LDAPModW*[], PLDAPControlW*, PLDAPControlW*);
+	ULONG ldap_modify_extA(LDAP*, PCHAR, LDAPModA*[], PLDAPControlA*,
+	  PLDAPControlA*, ULONG*);
+	ULONG ldap_modify_extW(LDAP*, PWCHAR, LDAPModW*[], PLDAPControlW*,
+	  PLDAPControlW*, ULONG*);
+	ULONG ldap_modify_ext_sA(LDAP*, PCHAR, LDAPModA*[], PLDAPControlA*,
+	  PLDAPControlA*);
+	ULONG ldap_modify_ext_sW(LDAP*, PWCHAR, LDAPModW*[], PLDAPControlW*,
+	  PLDAPControlW*);
 	ULONG ldap_modifyA(LDAP*, PCHAR, LDAPModA*[]);
 	ULONG ldap_modifyW(LDAP*, PWCHAR, LDAPModW*[]);
 	ULONG ldap_modify_sA(LDAP*, PCHAR, LDAPModA*[]);
 	ULONG ldap_modify_sW(LDAP*, PWCHAR, LDAPModW*[]);
-	ULONG ldap_rename_extA(LDAP*, PCHAR, PCHAR, PCHAR, INT, PLDAPControlA*, PLDAPControlA*, ULONG*);
-	ULONG ldap_rename_extW(LDAP*, PWCHAR, PWCHAR, PWCHAR, INT, PLDAPControlW*, PLDAPControlW*, ULONG*);
-	ULONG ldap_rename_ext_sA(LDAP*, PCHAR, PCHAR, PCHAR, INT, PLDAPControlA*, PLDAPControlA*);
-	ULONG ldap_rename_ext_sW(LDAP*, PWCHAR, PWCHAR, PWCHAR, INT, PLDAPControlW*, PLDAPControlW*);
-	ULONG ldap_add_extA(LDAP*, PCHAR, LDAPModA*[], PLDAPControlA*, PLDAPControlA*, ULONG*);
-	ULONG ldap_add_extW(LDAP*, PWCHAR, LDAPModW*[], PLDAPControlW*, PLDAPControlW*, ULONG*);
-	ULONG ldap_add_ext_sA(LDAP*, PCHAR, LDAPModA*[], PLDAPControlA*, PLDAPControlA*);
-	ULONG ldap_add_ext_sW(LDAP*, PWCHAR, LDAPModW*[], PLDAPControlW*, PLDAPControlW*);
+	ULONG ldap_rename_extA(LDAP*, PCHAR, PCHAR, PCHAR, INT, PLDAPControlA*,
+	  PLDAPControlA*, ULONG*);
+	ULONG ldap_rename_extW(LDAP*, PWCHAR, PWCHAR, PWCHAR, INT, PLDAPControlW*,
+	  PLDAPControlW*, ULONG*);
+	ULONG ldap_rename_ext_sA(LDAP*, PCHAR, PCHAR, PCHAR, INT,
+	  PLDAPControlA*, PLDAPControlA*);
+	ULONG ldap_rename_ext_sW(LDAP*, PWCHAR, PWCHAR, PWCHAR, INT,
+	  PLDAPControlW*, PLDAPControlW*);
+	ULONG ldap_add_extA(LDAP*, PCHAR, LDAPModA*[], PLDAPControlA*,
+	  PLDAPControlA*, ULONG*);
+	ULONG ldap_add_extW(LDAP*, PWCHAR, LDAPModW*[], PLDAPControlW*,
+	  PLDAPControlW*, ULONG*);
+	ULONG ldap_add_ext_sA(LDAP*, PCHAR, LDAPModA*[], PLDAPControlA*,
+	  PLDAPControlA*);
+	ULONG ldap_add_ext_sW(LDAP*, PWCHAR, LDAPModW*[], PLDAPControlW*,
+	  PLDAPControlW*);
 	ULONG ldap_addA(LDAP*, PCHAR, LDAPModA*[]);
 	ULONG ldap_addW(LDAP*, PWCHAR, LDAPModW*[]);
 	ULONG ldap_add_sA(LDAP*, PCHAR, LDAPModA*[]);
 	ULONG ldap_add_sW(LDAP*, PWCHAR, LDAPModW*[]);
-	ULONG ldap_delete_extA(LDAP*, PCHAR, PLDAPControlA*, PLDAPControlA*, ULONG*);
-	ULONG ldap_delete_extW(LDAP*, PWCHAR, PLDAPControlW*, PLDAPControlW*, ULONG*);
+	ULONG ldap_delete_extA(LDAP*, PCHAR, PLDAPControlA*, PLDAPControlA*,
+	  ULONG*);
+	ULONG ldap_delete_extW(LDAP*, PWCHAR, PLDAPControlW*, PLDAPControlW*,
+	  ULONG*);
 	ULONG ldap_delete_ext_sA(LDAP*, PCHAR, PLDAPControlA*, PLDAPControlA*);
 	ULONG ldap_delete_ext_sW(LDAP*, PWCHAR, PLDAPControlW*, PLDAPControlW*);
 	ULONG ldap_deleteA(LDAP*, PCHAR);
 	ULONG ldap_deleteW(LDAP*, PWCHAR);
 	ULONG ldap_delete_sA(LDAP*, PCHAR);
 	ULONG ldap_delete_sW(LDAP*, PWCHAR);
-	ULONG ldap_extended_operationA(LDAP*, PCHAR, BerValue*, PLDAPControlA*, PLDAPControlA*, ULONG*);
-	ULONG ldap_extended_operationW(LDAP*, PWCHAR, BerValue*, PLDAPControlW*, PLDAPControlW*, ULONG*);
-	ULONG ldap_extended_operation_sA(LDAP*, PCHAR, BerValue*, PLDAPControlA*, PLDAPControlA*, PCHAR*, BerValue**);
-	ULONG ldap_extended_operation_sW(LDAP*, PWCHAR, BerValue*, PLDAPControlW*, PLDAPControlW*, PWCHAR*, BerValue**);
+	ULONG ldap_extended_operationA(LDAP*, PCHAR, BerValue*, PLDAPControlA*,
+	  PLDAPControlA*, ULONG*);
+	ULONG ldap_extended_operationW(LDAP*, PWCHAR, BerValue*, PLDAPControlW*,
+	  PLDAPControlW*, ULONG*);
+	ULONG ldap_extended_operation_sA(LDAP*, PCHAR, BerValue*, PLDAPControlA*,
+	  PLDAPControlA*, PCHAR*, BerValue**);
+	ULONG ldap_extended_operation_sW(LDAP*, PWCHAR, BerValue*, PLDAPControlW*,
+	  PLDAPControlW*, PWCHAR*, BerValue**);
 	ULONG ldap_close_extended_op(LDAP*, ULONG);
 	ULONG ldap_abandon(LDAP*, ULONG);
 	ULONG ldap_result(LDAP*, ULONG, ULONG, LDAP_TIMEVAL*, LDAPMessage**);
 	ULONG ldap_msgfree(LDAPMessage*);
-	ULONG ldap_parse_resultA(LDAP*, LDAPMessage*, ULONG*, PCHAR*, PCHAR*, PCHAR**, PLDAPControlA**, BOOLEAN);
-	ULONG ldap_parse_resultW(LDAP*, LDAPMessage*, ULONG*, PWCHAR*, PWCHAR*, PWCHAR**, PLDAPControlW**, BOOLEAN);
-	ULONG ldap_parse_extended_resultA(LDAP, LDAPMessage*, PCHAR*, BerValue**, BOOLEAN);
-	ULONG ldap_parse_extended_resultW(LDAP, LDAPMessage*, PWCHAR*, BerValue**, BOOLEAN);
+	ULONG ldap_parse_resultA(LDAP*, LDAPMessage*, ULONG*, PCHAR*, PCHAR*,
+	  PCHAR**, PLDAPControlA**, BOOLEAN);
+	ULONG ldap_parse_resultW(LDAP*, LDAPMessage*, ULONG*, PWCHAR*, PWCHAR*,
+	  PWCHAR**, PLDAPControlW**, BOOLEAN);
+	ULONG ldap_parse_extended_resultA(LDAP, LDAPMessage*, PCHAR*, BerValue**,
+	  BOOLEAN);
+	ULONG ldap_parse_extended_resultW(LDAP, LDAPMessage*, PWCHAR*, BerValue**,
+	  BOOLEAN);
 	PCHAR ldap_err2stringA(ULONG);
 	PWCHAR ldap_err2stringW(ULONG);
 	ULONG LdapGetLastError();
@@ -560,27 +625,38 @@ extern (C) {
 	ULONG ldap_parse_referenceW(LDAP*, LDAPMessage*, PWCHAR**);
 	ULONG ldap_check_filterA(LDAP*, PCHAR);
 	ULONG ldap_check_filterW(LDAP*, PWCHAR);
-	ULONG ldap_create_page_controlA(PLDAP, ULONG, BerValue*, UCHAR, PLDAPControlA*);
-	ULONG ldap_create_page_controlW(PLDAP, ULONG, BerValue*, UCHAR, PLDAPControlW*);
-	ULONG ldap_create_sort_controlA(PLDAP, PLDAPSortKeyA*, UCHAR, PLDAPControlA*);
-	ULONG ldap_create_sort_controlW(PLDAP, PLDAPSortKeyW*, UCHAR, PLDAPControlW*);
+	ULONG ldap_create_page_controlA(PLDAP, ULONG, BerValue*, UCHAR,
+	  PLDAPControlA*);
+	ULONG ldap_create_page_controlW(PLDAP, ULONG, BerValue*, UCHAR,
+	  PLDAPControlW*);
+	ULONG ldap_create_sort_controlA(PLDAP, PLDAPSortKeyA*, UCHAR,
+	  PLDAPControlA*);
+	ULONG ldap_create_sort_controlW(PLDAP, PLDAPSortKeyW*, UCHAR,
+	PLDAPControlW*);
 	INT ldap_create_vlv_controlA(LDAP*, LDAPVLVInfo*, UCHAR, LDAPControlA**);
 	INT ldap_create_vlv_controlW(LDAP*, LDAPVLVInfo*, UCHAR, LDAPControlW**);
-	ULONG ldap_encode_sort_controlA(PLDAP, PLDAPSortKeyA*, PLDAPControlA, BOOLEAN);
-	ULONG ldap_encode_sort_controlW(PLDAP, PLDAPSortKeyW*, PLDAPControlW, BOOLEAN);
+	ULONG ldap_encode_sort_controlA(PLDAP, PLDAPSortKeyA*, PLDAPControlA,
+	  BOOLEAN);
+	ULONG ldap_encode_sort_controlW(PLDAP, PLDAPSortKeyW*, PLDAPControlW,
+	  BOOLEAN);
 	ULONG ldap_escape_filter_elementA(PCHAR, ULONG, PCHAR, ULONG);
 	ULONG ldap_escape_filter_elementW(PWCHAR, ULONG, PWCHAR, ULONG);
 	ULONG ldap_get_next_page(PLDAP, PLDAPSearch, ULONG, ULONG*);
-	ULONG ldap_get_next_page_s(PLDAP, PLDAPSearch, LDAP_TIMEVAL*, ULONG, ULONG*, LDAPMessage**);
+	ULONG ldap_get_next_page_s(PLDAP, PLDAPSearch, LDAP_TIMEVAL*, ULONG,
+	  ULONG*, LDAPMessage**);
 	ULONG ldap_get_paged_count(PLDAP, PLDAPSearch, ULONG*, PLDAPMessage);
 	ULONG ldap_parse_page_controlA(PLDAP, PLDAPControlA*, ULONG*, BerValue**);
 	ULONG ldap_parse_page_controlW(PLDAP, PLDAPControlW*, ULONG*, BerValue**);
 	ULONG ldap_parse_sort_controlA(PLDAP, PLDAPControlA*, ULONG*, PCHAR*);
 	ULONG ldap_parse_sort_controlW(PLDAP, PLDAPControlW*, ULONG*, PWCHAR*);
-	INT ldap_parse_vlv_controlA(LDAP*, LDAPControlA**, uint*, uint*, BerValue**, int*);
-	INT ldap_parse_vlv_controlW(LDAP*, LDAPControlW**, uint*, uint*, BerValue**, int*);
-	PLDAPSearch ldap_search_init_pageA(PLDAP, PCHAR, ULONG, PCHAR, PCHAR[], ULONG, PLDAPControlA*, PLDAPControlA*, ULONG, ULONG, PLDAPSortKeyA*);
-	PLDAPSearch ldap_search_init_pageW(PLDAP, PWCHAR, ULONG, PWCHAR, PWCHAR[], ULONG, PLDAPControlW*, PLDAPControlW*, ULONG, ULONG, PLDAPSortKeyW*);
+	INT ldap_parse_vlv_controlA(LDAP*, LDAPControlA**, uint*, uint*,
+	  BerValue**, int*);
+	INT ldap_parse_vlv_controlW(LDAP*, LDAPControlW**, uint*, uint*,
+	  BerValue**, int*);
+	PLDAPSearch ldap_search_init_pageA(PLDAP, PCHAR, ULONG, PCHAR, PCHAR[],
+	  ULONG, PLDAPControlA*, PLDAPControlA*, ULONG, ULONG, PLDAPSortKeyA*);
+	PLDAPSearch ldap_search_init_pageW(PLDAP, PWCHAR, ULONG, PWCHAR, PWCHAR[],
+	  ULONG, PLDAPControlW*, PLDAPControlW*, ULONG, ULONG, PLDAPSortKeyW*);
 	ULONG ldap_search_abandon_page(PLDAP, PLDAPSearch);
 	LDAP ldap_conn_from_msg(LDAP*, LDAPMessage*);
 	INT LdapUnicodeToUTF8(LPCWSTR, int, LPSTR, int);

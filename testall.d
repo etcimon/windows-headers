@@ -68,6 +68,8 @@ import win32.pbt;
 import win32.powrprof;
 import win32.rapi;
 
+import win32.wininet;
+import win32.winioctl;
 import win32.winldap;
 
 version (Windows2003) {
