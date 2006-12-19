@@ -235,13 +235,13 @@ struct NOTIFYICONDATAW {
 		DWORD      dwStateMask;
 		WCHAR[256] szInfo;
 		union {
-			UINT uTimeout;
-			UINT uVersion;
+			UINT   uTimeout;
+			UINT   uVersion;
 		}
-		WCHAR[64] szInfoTitle;
-		DWORD     dwInfoFlags;
+		WCHAR[64]  szInfoTitle;
+		DWORD      dwInfoFlags;
 	} else {
-		WCHAR[64] szTip;
+		WCHAR[64]  szTip;
 	}
 	static if (_WIN32_IE >= 0x600) {
 		GUID guidItem;

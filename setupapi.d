@@ -38,9 +38,12 @@ version (WindowsNTonly) {
 } else {
 	const UINT USE_SP_DRVINFO_DATA_V1 = 1;
 }*/
-
+/+
 const UINT _SETUPAPI_VER = 0x0400;     // Earliest SetupAPI version
 const UINT USE_SP_DRVINFO_DATA_V1 = 1;
++/
+const UINT _SETUPAPI_VER          = WINVER;
+const bool USE_SP_DRVINFO_DATA_V1 = !_WIN32_WINNT_ONLY || _WIN32_WINNT < 0x500;
 
 enum : uint {
 	LINE_LEN                  = 256,
@@ -712,7 +715,7 @@ enum : UINT {
 }
 
 static if(_SETUPAPI_VER >= 0x0501) {
-	enum UINT {
+	enum : UINT {
 		SPFILENOTIFY_QUEUESCAN_SIGNERINFO = 0x00000040
 	}
 }
