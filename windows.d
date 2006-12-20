@@ -26,7 +26,6 @@ public import win32.w32api;
 public import win32.core;
 
 // We can't use static if for imports, build gets confused.
-// static if (_WIN32_WINNT_ONLY) import win32.winsvc;
 version (Windows2003) {
 	public import win32.winsvc;
 } else version (WindowsXP) {
@@ -70,4 +69,3 @@ version (Win32_Winsock1) {
 #include <winsock.h>
 #endif /*  (_WIN32_WINNT >= 0x0400) */
 +/
-

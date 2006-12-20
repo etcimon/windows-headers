@@ -210,10 +210,10 @@ struct NETRESOURCEA {
 alias NETRESOURCEA* LPNETRESOURCEA;
 
 struct NETRESOURCEW {
-	DWORD dwScope;
-	DWORD dwType;
-	DWORD dwDisplayType;
-	DWORD dwUsage;
+	DWORD  dwScope;
+	DWORD  dwType;
+	DWORD  dwDisplayType;
+	DWORD  dwUsage;
 	LPWSTR lpLocalName;
 	LPWSTR lpRemoteName;
 	LPWSTR lpComment ;
@@ -241,7 +241,7 @@ alias CONNECTDLGSTRUCTW* LPCONNECTDLGSTRUCTW;
 
 struct DISCDLGSTRUCTA {
 	DWORD cbStructure;
-	HWND hwndOwner;
+	HWND  hwndOwner;
 	LPSTR lpLocalName;
 	LPSTR lpRemoteName;
 	DWORD dwFlags;
@@ -257,10 +257,14 @@ struct DISCDLGSTRUCTW {
 }
 alias DISCDLGSTRUCTW* LPDISCDLGSTRUCTW;
 
-struct UNIVERSAL_NAME_INFOA { LPSTR lpUniversalName; }
+struct UNIVERSAL_NAME_INFOA {
+	LPSTR lpUniversalName;
+}
 alias UNIVERSAL_NAME_INFOA* LPUNIVERSAL_NAME_INFOA;
 
-struct UNIVERSAL_NAME_INFOW { LPWSTR lpUniversalName; }
+struct UNIVERSAL_NAME_INFOW {
+	LPWSTR lpUniversalName;
+}
 alias UNIVERSAL_NAME_INFOW* LPUNIVERSAL_NAME_INFOW;
 
 struct REMOTE_NAME_INFOA {

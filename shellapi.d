@@ -55,7 +55,6 @@ enum : DWORD {
 	ABM_WINDOWPOSCHANGED // = 9
 }
 
-// FIXME: is the value correct?
 static if (WINVER >= 0x501) {
 	const DWORD ABM_SETSTATE = 10;
 }
