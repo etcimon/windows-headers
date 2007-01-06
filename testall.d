@@ -72,6 +72,8 @@ import win32.wininet;
 import win32.winioctl;
 import win32.winldap;
 
+import win32.dbt;
+
 version (Windows2003) {
 	import win32.dhcpcsdk;
 	import win32.errorrep;

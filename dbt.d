@@ -10,7 +10,8 @@
 \***********************************************************************/
 module win32.dbt;
 
-private import win32.w32api, win32.windef;
+import win32.w32api, win32.windef;
+import win32.basetyps; // for GUID
 
 // FIXME: clean up Windows version support
 

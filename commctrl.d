@@ -4386,7 +4386,7 @@ ubyte FOURTH_IPADDRESS(LPARAM x) {
 
 HWND Animate_Create(HWND hwndP, UINT id, DWORD dwStyle,
 	  HINSTANCE hInstance) {
-	return CreateWindow(ANIMATE_CLASS, null, dwStyle, 0, 0, 0, 0, hwndP,
+	return CreateWindow(ANIMATE_CLASS.ptr, null, dwStyle, 0, 0, 0, 0, hwndP,
 	  cast(HMENU) id, hInstance, null);
 }
 
