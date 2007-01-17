@@ -2287,10 +2287,11 @@ alias IMAGE_ROM_HEADERS* PIMAGE_ROM_HEADERS;
 
 struct IMAGE_SECTION_HEADER {
 	BYTE Name[IMAGE_SIZEOF_SHORT_NAME];
-	union Misc {
+	union _Misc {
 		DWORD PhysicalAddress;
 		DWORD VirtualSize;
 	}
+	_Misc Misc;	
 	DWORD VirtualAddress;
 	DWORD SizeOfRawData;
 	DWORD PointerToRawData;
@@ -2304,7 +2305,7 @@ alias IMAGE_SECTION_HEADER *PIMAGE_SECTION_HEADER;
 
 align(2):
 struct IMAGE_SYMBOL {
-	union N {
+	union _N {
 		BYTE ShortName[8];
 		struct Name {
 			DWORD Short;
@@ -2312,6 +2313,7 @@ struct IMAGE_SYMBOL {
 		}
 		PBYTE LongName[2];
 	}
+	_N N;	
 	DWORD Value;
 	SHORT SectionNumber;
 	WORD Type;
@@ -2323,14 +2325,15 @@ alias IMAGE_SYMBOL* PIMAGE_SYMBOL;
 union IMAGE_AUX_SYMBOL {
 	struct  Sym {
 		DWORD TagIndex;
-		union Misc {
+		union _Misc {
 			struct LnSz {
 				WORD Linenumber;
 				WORD Size;
 			}
-		DWORD TotalSize;
+			DWORD TotalSize;
 		}
-		union FcnAry {
+		_Misc Misc;	
+		union _FcnAry {
 			struct Function {
 				DWORD PointerToLinenumber;
 				DWORD PointerToNextFunction;
@@ -2339,6 +2342,7 @@ union IMAGE_AUX_SYMBOL {
 				WORD Dimension[4];
 			}
 		}
+		_FcnAry FcnAry;	
 		WORD TvIndex;
 	}
 	struct File {
@@ -2386,10 +2390,11 @@ alias IMAGE_BASE_RELOCATION* PIMAGE_BASE_RELOCATION;
 
 align(2):
 struct IMAGE_LINENUMBER {
-	union Type {
+	union _Type {
 		DWORD SymbolTableIndex;
 		DWORD VirtualAddress;
 	}
+	_Type Type;	
 	WORD Linenumber;
 }
 alias IMAGE_LINENUMBER* PIMAGE_LINENUMBER;
@@ -2428,22 +2433,24 @@ struct IMAGE_IMPORT_BY_NAME {
 alias IMAGE_IMPORT_BY_NAME* PIMAGE_IMPORT_BY_NAME;
 
 struct IMAGE_THUNK_DATA32 {
-	union u1 {
+	union _u1 {
 		DWORD ForwarderString;
 		DWORD Function;
 		DWORD Ordinal;
 		DWORD AddressOfData;
 	}
+	_u1 u1;	
 }
 alias IMAGE_THUNK_DATA32* PIMAGE_THUNK_DATA32;
 
 struct IMAGE_THUNK_DATA64 {
-	union u1 {
+	union _u1 {
 		ULONGLONG ForwarderString;
 		ULONGLONG Function;
 		ULONGLONG Ordinal;
 		ULONGLONG AddressOfData;
 	}
+	_u1 u1;	
 }
 alias IMAGE_THUNK_DATA64* PIMAGE_THUNK_DATA64;
 
@@ -2698,7 +2705,7 @@ struct REPARSE_DATA_BUFFER {
 	DWORD  ReparseTag;
 	WORD   ReparseDataLength;
 	WORD   Reserved;
-	union u {
+	union _u {
 		struct GenericReparseBuffer {
 			BYTE   DataBuffer[1];
 		}
@@ -2717,6 +2724,7 @@ struct REPARSE_DATA_BUFFER {
 			WCHAR PathBuffer[1];
 		}
 	}
+	_u u;	
 }
 alias REPARSE_DATA_BUFFER *PREPARSE_DATA_BUFFER;
 

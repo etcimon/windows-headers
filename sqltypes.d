@@ -123,10 +123,11 @@ struct SQL_DAY_SECOND_STRUCT {
 struct SQL_INTERVAL_STRUCT {
 	SQLINTERVAL interval_type;
 	SQLSMALLINT interval_sign;
-	union intval {
+	union _intval {
 		SQL_YEAR_MONTH_STRUCT year_month;
 		SQL_DAY_SECOND_STRUCT day_second;
 	}
+	_intval intval;	
 }
 
 const SQL_MAX_NUMERIC_LEN = 16;

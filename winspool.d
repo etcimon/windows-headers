@@ -634,13 +634,14 @@ struct PRINTER_NOTIFY_INFO_DATA {
 	WORD  Field;
 	DWORD Reserved;
 	DWORD Id;
-	union NotifyData {
+	union _NotifyData {
 		DWORD adwData[2];
 		struct Data {
 			DWORD cbBuf;
 			PVOID pBuf;
 		}
 	}
+	_NotifyData NotifyData;	
 }
 alias PRINTER_NOTIFY_INFO_DATA* PPRINTER_NOTIFY_INFO_DATA, LPPRINTER_NOTIFY_INFO_DATA;
 

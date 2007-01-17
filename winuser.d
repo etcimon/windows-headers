@@ -3556,11 +3556,12 @@ alias RAWHID* PRAWHID, LPRAWHID;
 
 struct RAWINPUT {
 	RAWINPUTHEADER header;
-	union data {
+	union _data {
 		RAWMOUSE    mouse;
 		RAWKEYBOARD keyboard;
 		RAWHID      hid;
 	}
+	_data data;	
 }
 alias RAWINPUT* PRAWINPUT, LPRAWINPUT;
 

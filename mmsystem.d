@@ -1370,7 +1370,7 @@ struct MIXERCONTROLA {
 	DWORD cMultipleItems;
 	CHAR szShortName[MIXER_SHORT_NAME_CHARS];
 	CHAR szName[MIXER_LONG_NAME_CHARS];
-	union Bounds {
+	union _Bounds {
 		struct {
 			LONG lMinimum;
 			LONG lMaximum;
@@ -1381,11 +1381,13 @@ struct MIXERCONTROLA {
 		}
 		DWORD dwReserved[6];
 	}
-	union Metrics {
+	_Bounds Bounds;
+	union _Metrics {
 		DWORD cSteps;
 		DWORD cbCustomData;
 		DWORD dwReserved[6];
 	}
+	_Metrics Metrics;
 }
 alias MIXERCONTROLA* PMIXERCONTROLA, LPMIXERCONTROLA;
 
@@ -1397,7 +1399,7 @@ struct MIXERCONTROLW {
 	DWORD cMultipleItems;
 	WCHAR szShortName[MIXER_SHORT_NAME_CHARS];
 	WCHAR szName[MIXER_LONG_NAME_CHARS];
-	union Bounds {
+	union _Bounds {
 		struct {
 			LONG lMinimum;
 			LONG lMaximum;
@@ -1408,11 +1410,13 @@ struct MIXERCONTROLW {
 		}
 		DWORD dwReserved[6];
 	}
-	union Metrics {
+	_Bounds Bounds;	
+	union _Metrics {
 		DWORD cSteps;
 		DWORD cbCustomData;
 		DWORD dwReserved[6];
 	}
+	_Metrics Metrics;	
 }
 
 alias MIXERCONTROLW* PMIXERCONTROLW, LPMIXERCONTROLW;

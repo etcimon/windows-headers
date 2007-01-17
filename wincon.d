@@ -86,10 +86,11 @@ enum {
 }
 
 struct CHAR_INFO {
-	union Char {
+	union _Char {
 		WCHAR UnicodeChar;
 		CHAR AsciiChar;
 	}
+	_Char Char;	
 	WORD Attributes;
 }
 alias CHAR_INFO* PCHAR_INFO;
@@ -136,10 +137,11 @@ struct KEY_EVENT_RECORD {
 	WORD  wRepeatCount;
 	WORD  wVirtualKeyCode;
 	WORD  wVirtualScanCode;
-	union uChar {
+	union _uChar {
 		WCHAR UnicodeChar;
 		CHAR  AsciiChar;
 	}
+	_uChar uChar;	
 	DWORD dwControlKeyState;
 }
 
@@ -165,13 +167,14 @@ struct FOCUS_EVENT_RECORD {
 
 struct INPUT_RECORD {
 	WORD EventType;
-	union Event {
+	union _Event {
 		KEY_EVENT_RECORD KeyEvent;
 		MOUSE_EVENT_RECORD MouseEvent;
 		WINDOW_BUFFER_SIZE_RECORD WindowBufferSizeEvent;
 		MENU_EVENT_RECORD MenuEvent;
 		FOCUS_EVENT_RECORD FocusEvent;
 	}
+	_Event Event;	
 }
 alias INPUT_RECORD* PINPUT_RECORD;
 

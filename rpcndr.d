@@ -277,11 +277,12 @@ struct MIDL_STUB_DESC {
 	void* RpcInterfaceInformation;
 	void* function(uint) pfnAllocate;
 	void function (void*) pfnFree;
-	union IMPLICIT_HANDLE_INFO {
+	union _IMPLICIT_HANDLE_INFO {
 		handle_t *pAutoHandle;
 		handle_t *pPrimitiveHandle;
 		PGENERIC_BINDING_INFO pGenericBindingInfo;
 	}
+	_IMPLICIT_HANDLE_INFO IMPLICIT_HANDLE_INFO;	
 	NDR_RUNDOWN *apfnNdrRundownRoutines;
 	GENERIC_BINDING_ROUTINE_PAIR *aGenericBindingRoutinePairs;
 	EXPR_EVAL *apfnExprEval;

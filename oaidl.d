@@ -156,7 +156,7 @@ struct SAFEARR_HAVEIID {
 
 struct SAFEARRAYUNION {
 	ULONG sfType;
-	union u {
+	union _u {
 		SAFEARR_BSTR BstrStr;
 		SAFEARR_UNKNOWN UnknownStr;
 		SAFEARR_DISPATCH DispatchStr;
@@ -168,6 +168,7 @@ struct SAFEARRAYUNION {
 		DWORD_SIZEDARR LongStr;
 		HYPER_SIZEDARR HyperStr;
 	}
+	_u u;	
 }
 
 struct _wireSAFEARRAY {
