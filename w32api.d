@@ -21,12 +21,21 @@ const __W32API_MINOR_VERSION = 6;
  *	minimum Windows NT version and one for the minimum Windows 9x
  *	version.  If no Windows NT version is specified, Windows NT 4 is
  *	assumed.  If no Windows 9x version is specified, Windows 95 is
- *	assumed, unless WindowsNTonly, WindowsXP or Windows2003 is specified,
- *	implying that the application supports only Windows NT.
+ *	assumed, unless WindowsNTonly, WindowsXP, Windows2003 or WindowsVista
+ *	is specified, implying that the application supports only the NT line of
+ *	versions.
  */
 
-// For Windows XP and later, assume no Windows 9x support
-version (Windows2003) {
+/*	For Windows XP and later, assume no Windows 9x support.
+ *	API features new to Windows Vista are not yet included in this
+ *	translation or in MinGW, but this is here ready to start adding them.
+ */
+version (WindowsVista) {
+	const uint
+		_WIN32_WINNT   = 0x600,
+		_WIN32_WINDOWS = uint.max;
+
+} else version (Windows2003) {
 	const uint
 		_WIN32_WINNT   = 0x502,
 		_WIN32_WINDOWS = uint.max;

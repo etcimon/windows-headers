@@ -49,6 +49,7 @@ import win32.isguids;
 
 import win32.subauth;
 import win32.rasdlg;
+import win32.rassapi;
 
 import win32.mapi;
 import win32.mciavi;
@@ -74,13 +75,21 @@ import win32.winldap;
 
 import win32.dbt;
 
-version (Windows2003) {
-	import win32.dhcpcsdk;
-	import win32.errorrep;
-	import win32.secext;
+import win32.rpcdce2;
+
+
+version (WindowsVista) {
+	version = WINDOWS_XP_UP;
+} else version (Windows2003) {
+	version = WINDOWS_XP_UP;
 } else version (WindowsXP) {
+	version = WINDOWS_XP_UP;
+}
+
+version (WINDOWS_XP_UP) {
 	import win32.dhcpcsdk;
 	import win32.errorrep;
+	import win32.reason;
 	import win32.secext;
 } else version (WindowsNTonly) {
 	version (Windows2000) import win32.dhcpcsdk;

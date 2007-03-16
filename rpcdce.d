@@ -204,149 +204,149 @@ extern (Windows) {
 
 static if(_WIN32_WINNT_ONLY) {
 
-struct RPC_PROTSEQ_VECTORA {
-	uint Count;
-	ubyte*[1] Protseq;
-}
+	struct RPC_PROTSEQ_VECTORA {
+		uint Count;
+		ubyte*[1] Protseq;
+	}
 
-struct RPC_PROTSEQ_VECTORW {
-	uint Count;
-	ushort*[1] Protseq;
-}
+	struct RPC_PROTSEQ_VECTORW {
+		uint Count;
+		ushort*[1] Protseq;
+	}
 
-extern (Windows) {
-	RPC_STATUS RpcBindingFromStringBindingA(char*, RPC_BINDING_HANDLE*);
-	RPC_STATUS RpcBindingFromStringBindingW(wchar*, RPC_BINDING_HANDLE*);
-	RPC_STATUS RpcBindingToStringBindingA(RPC_BINDING_HANDLE, char**);
-	RPC_STATUS RpcBindingToStringBindingW(RPC_BINDING_HANDLE, wchar**);
-	RPC_STATUS RpcStringBindingComposeA(char*, char*, char*, char*, char*, char**);
-	RPC_STATUS RpcStringBindingComposeW(wchar*, wchar*, wchar*, wchar*, wchar*, wchar**);
-	RPC_STATUS RpcStringBindingParseA(char*, char**, char**, char**, char**, char**);
-	RPC_STATUS RpcStringBindingParseW(wchar*, wchar**, wchar**, wchar**, wchar**, wchar**);
-	RPC_STATUS RpcStringFreeA(char**);
-	RPC_STATUS RpcStringFreeW(wchar**);
-	RPC_STATUS RpcNetworkIsProtseqValidA(char*);
-	RPC_STATUS RpcNetworkIsProtseqValidW(wchar*);
-	RPC_STATUS RpcNetworkInqProtseqsA(RPC_PROTSEQ_VECTORA**);
-	RPC_STATUS RpcNetworkInqProtseqsW(RPC_PROTSEQ_VECTORW**);
-	RPC_STATUS RpcProtseqVectorFreeA(RPC_PROTSEQ_VECTORA**);
-	RPC_STATUS RpcProtseqVectorFreeW(RPC_PROTSEQ_VECTORW**);
-	RPC_STATUS RpcServerUseProtseqA(char*, uint, void*);
-	RPC_STATUS RpcServerUseProtseqW(wchar*, uint, void*);
-	RPC_STATUS RpcServerUseProtseqExA(char*, uint MaxCalls, void*, PRPC_POLICY);
-	RPC_STATUS RpcServerUseProtseqExW(wchar*, uint, void*, PRPC_POLICY);
-	RPC_STATUS RpcServerUseProtseqEpA(char*, uint, char*, void*);
-	RPC_STATUS RpcServerUseProtseqEpExA(char*, uint, char*, void*, PRPC_POLICY);
-	RPC_STATUS RpcServerUseProtseqEpW(wchar*, uint, wchar*, void*);
-	RPC_STATUS RpcServerUseProtseqEpExW(wchar*, uint, wchar*, void*, PRPC_POLICY);
-	RPC_STATUS RpcServerUseProtseqIfA(char*, uint, RPC_IF_HANDLE, void*);
-	RPC_STATUS RpcServerUseProtseqIfExA(char*, uint, RPC_IF_HANDLE, void*, PRPC_POLICY);
-	RPC_STATUS RpcServerUseProtseqIfW(wchar*, uint, RPC_IF_HANDLE, void*);
-	RPC_STATUS RpcServerUseProtseqIfExW(wchar*, uint, RPC_IF_HANDLE, void*, PRPC_POLICY);
-	RPC_STATUS RpcMgmtInqServerPrincNameA(RPC_BINDING_HANDLE, uint, char**);
-	RPC_STATUS RpcMgmtInqServerPrincNameW(RPC_BINDING_HANDLE, uint, wchar**);
-	RPC_STATUS RpcServerInqDefaultPrincNameA(uint, char**);
-	RPC_STATUS RpcServerInqDefaultPrincNameW(uint, wchar**);
-	RPC_STATUS RpcNsBindingInqEntryNameA(RPC_BINDING_HANDLE, uint, char**);
-	RPC_STATUS RpcNsBindingInqEntryNameW(RPC_BINDING_HANDLE, uint, wchar**);
-	RPC_STATUS RpcBindingInqAuthClientA(RPC_BINDING_HANDLE, RPC_AUTHZ_HANDLE*, char**, uint*, uint*, uint*);
-	RPC_STATUS RpcBindingInqAuthClientW(RPC_BINDING_HANDLE, RPC_AUTHZ_HANDLE*, wchar**, uint*, uint*, uint*);
-	RPC_STATUS RpcBindingInqAuthInfoA(RPC_BINDING_HANDLE, char**, uint*, uint*, RPC_AUTH_IDENTITY_HANDLE*, uint*);
-	RPC_STATUS RpcBindingInqAuthInfoW(RPC_BINDING_HANDLE, wchar**, uint*, uint*, RPC_AUTH_IDENTITY_HANDLE*, uint*);
-	RPC_STATUS RpcBindingSetAuthInfoA(RPC_BINDING_HANDLE, char*, uint, uint, RPC_AUTH_IDENTITY_HANDLE, uint);
-	RPC_STATUS RpcBindingSetAuthInfoExA(RPC_BINDING_HANDLE, char*, uint, uint, RPC_AUTH_IDENTITY_HANDLE, uint, RPC_SECURITY_QOS*);
-	RPC_STATUS RpcBindingSetAuthInfoW(RPC_BINDING_HANDLE, wchar*, uint, uint, RPC_AUTH_IDENTITY_HANDLE, uint);
-	RPC_STATUS RpcBindingSetAuthInfoExW(RPC_BINDING_HANDLE, wchar*, uint, uint, RPC_AUTH_IDENTITY_HANDLE, uint, RPC_SECURITY_QOS*);
-	RPC_STATUS RpcBindingInqAuthInfoExA(RPC_BINDING_HANDLE, char**, uint*, uint*, RPC_AUTH_IDENTITY_HANDLE*, uint*, uint, RPC_SECURITY_QOS*);
-	RPC_STATUS RpcBindingInqAuthInfoExW(RPC_BINDING_HANDLE, wchar**, uint*, uint*, RPC_AUTH_IDENTITY_HANDLE*, uint*, uint, RPC_SECURITY_QOS*);
-	alias void function(void*, wchar*, uint, void**, RPC_STATUS*) RPC_AUTH_KEY_RETRIEVAL_FN;
-	RPC_STATUS RpcServerRegisterAuthInfoA(char*, uint, RPC_AUTH_KEY_RETRIEVAL_FN, void*);
-	RPC_STATUS RpcServerRegisterAuthInfoW(wchar*, uint, RPC_AUTH_KEY_RETRIEVAL_FN, void*);
-	RPC_STATUS UuidToStringA(UUID*, char**);
-	RPC_STATUS UuidFromStringA(char*, UUID*);
-	RPC_STATUS UuidToStringW(UUID*, wchar**);
-	RPC_STATUS UuidFromStringW(wchar*, UUID*);
-	RPC_STATUS RpcEpRegisterNoReplaceA(RPC_IF_HANDLE, RPC_BINDING_VECTOR*, UUID_VECTOR*, char*);
-	RPC_STATUS RpcEpRegisterNoReplaceW(RPC_IF_HANDLE, RPC_BINDING_VECTOR*, UUID_VECTOR*, wchar*);
-	RPC_STATUS RpcEpRegisterA(RPC_IF_HANDLE, RPC_BINDING_VECTOR*, UUID_VECTOR*, char*);
-	RPC_STATUS RpcEpRegisterW(RPC_IF_HANDLE, RPC_BINDING_VECTOR*, UUID_VECTOR*, wchar*);
-	RPC_STATUS DceErrorInqTextA(RPC_STATUS, char*);
-	RPC_STATUS DceErrorInqTextW(RPC_STATUS, wchar*);
-	RPC_STATUS RpcMgmtEpEltInqNextA(RPC_EP_INQ_HANDLE, RPC_IF_ID*, RPC_BINDING_HANDLE*, UUID*, char**);
-	RPC_STATUS RpcMgmtEpEltInqNextW(RPC_EP_INQ_HANDLE, RPC_IF_ID*, RPC_BINDING_HANDLE*, UUID*, wchar**);
+	extern (Windows) {
+		RPC_STATUS RpcBindingFromStringBindingA(char*, RPC_BINDING_HANDLE*);
+		RPC_STATUS RpcBindingFromStringBindingW(wchar*, RPC_BINDING_HANDLE*);
+		RPC_STATUS RpcBindingToStringBindingA(RPC_BINDING_HANDLE, char**);
+		RPC_STATUS RpcBindingToStringBindingW(RPC_BINDING_HANDLE, wchar**);
+		RPC_STATUS RpcStringBindingComposeA(char*, char*, char*, char*, char*, char**);
+		RPC_STATUS RpcStringBindingComposeW(wchar*, wchar*, wchar*, wchar*, wchar*, wchar**);
+		RPC_STATUS RpcStringBindingParseA(char*, char**, char**, char**, char**, char**);
+		RPC_STATUS RpcStringBindingParseW(wchar*, wchar**, wchar**, wchar**, wchar**, wchar**);
+		RPC_STATUS RpcStringFreeA(char**);
+		RPC_STATUS RpcStringFreeW(wchar**);
+		RPC_STATUS RpcNetworkIsProtseqValidA(char*);
+		RPC_STATUS RpcNetworkIsProtseqValidW(wchar*);
+		RPC_STATUS RpcNetworkInqProtseqsA(RPC_PROTSEQ_VECTORA**);
+		RPC_STATUS RpcNetworkInqProtseqsW(RPC_PROTSEQ_VECTORW**);
+		RPC_STATUS RpcProtseqVectorFreeA(RPC_PROTSEQ_VECTORA**);
+		RPC_STATUS RpcProtseqVectorFreeW(RPC_PROTSEQ_VECTORW**);
+		RPC_STATUS RpcServerUseProtseqA(char*, uint, void*);
+		RPC_STATUS RpcServerUseProtseqW(wchar*, uint, void*);
+		RPC_STATUS RpcServerUseProtseqExA(char*, uint MaxCalls, void*, PRPC_POLICY);
+		RPC_STATUS RpcServerUseProtseqExW(wchar*, uint, void*, PRPC_POLICY);
+		RPC_STATUS RpcServerUseProtseqEpA(char*, uint, char*, void*);
+		RPC_STATUS RpcServerUseProtseqEpExA(char*, uint, char*, void*, PRPC_POLICY);
+		RPC_STATUS RpcServerUseProtseqEpW(wchar*, uint, wchar*, void*);
+		RPC_STATUS RpcServerUseProtseqEpExW(wchar*, uint, wchar*, void*, PRPC_POLICY);
+		RPC_STATUS RpcServerUseProtseqIfA(char*, uint, RPC_IF_HANDLE, void*);
+		RPC_STATUS RpcServerUseProtseqIfExA(char*, uint, RPC_IF_HANDLE, void*, PRPC_POLICY);
+		RPC_STATUS RpcServerUseProtseqIfW(wchar*, uint, RPC_IF_HANDLE, void*);
+		RPC_STATUS RpcServerUseProtseqIfExW(wchar*, uint, RPC_IF_HANDLE, void*, PRPC_POLICY);
+		RPC_STATUS RpcMgmtInqServerPrincNameA(RPC_BINDING_HANDLE, uint, char**);
+		RPC_STATUS RpcMgmtInqServerPrincNameW(RPC_BINDING_HANDLE, uint, wchar**);
+		RPC_STATUS RpcServerInqDefaultPrincNameA(uint, char**);
+		RPC_STATUS RpcServerInqDefaultPrincNameW(uint, wchar**);
+		RPC_STATUS RpcNsBindingInqEntryNameA(RPC_BINDING_HANDLE, uint, char**);
+		RPC_STATUS RpcNsBindingInqEntryNameW(RPC_BINDING_HANDLE, uint, wchar**);
+		RPC_STATUS RpcBindingInqAuthClientA(RPC_BINDING_HANDLE, RPC_AUTHZ_HANDLE*, char**, uint*, uint*, uint*);
+		RPC_STATUS RpcBindingInqAuthClientW(RPC_BINDING_HANDLE, RPC_AUTHZ_HANDLE*, wchar**, uint*, uint*, uint*);
+		RPC_STATUS RpcBindingInqAuthInfoA(RPC_BINDING_HANDLE, char**, uint*, uint*, RPC_AUTH_IDENTITY_HANDLE*, uint*);
+		RPC_STATUS RpcBindingInqAuthInfoW(RPC_BINDING_HANDLE, wchar**, uint*, uint*, RPC_AUTH_IDENTITY_HANDLE*, uint*);
+		RPC_STATUS RpcBindingSetAuthInfoA(RPC_BINDING_HANDLE, char*, uint, uint, RPC_AUTH_IDENTITY_HANDLE, uint);
+		RPC_STATUS RpcBindingSetAuthInfoExA(RPC_BINDING_HANDLE, char*, uint, uint, RPC_AUTH_IDENTITY_HANDLE, uint, RPC_SECURITY_QOS*);
+		RPC_STATUS RpcBindingSetAuthInfoW(RPC_BINDING_HANDLE, wchar*, uint, uint, RPC_AUTH_IDENTITY_HANDLE, uint);
+		RPC_STATUS RpcBindingSetAuthInfoExW(RPC_BINDING_HANDLE, wchar*, uint, uint, RPC_AUTH_IDENTITY_HANDLE, uint, RPC_SECURITY_QOS*);
+		RPC_STATUS RpcBindingInqAuthInfoExA(RPC_BINDING_HANDLE, char**, uint*, uint*, RPC_AUTH_IDENTITY_HANDLE*, uint*, uint, RPC_SECURITY_QOS*);
+		RPC_STATUS RpcBindingInqAuthInfoExW(RPC_BINDING_HANDLE, wchar**, uint*, uint*, RPC_AUTH_IDENTITY_HANDLE*, uint*, uint, RPC_SECURITY_QOS*);
+		alias void function(void*, wchar*, uint, void**, RPC_STATUS*) RPC_AUTH_KEY_RETRIEVAL_FN;
+		RPC_STATUS RpcServerRegisterAuthInfoA(char*, uint, RPC_AUTH_KEY_RETRIEVAL_FN, void*);
+		RPC_STATUS RpcServerRegisterAuthInfoW(wchar*, uint, RPC_AUTH_KEY_RETRIEVAL_FN, void*);
+		RPC_STATUS UuidToStringA(UUID*, char**);
+		RPC_STATUS UuidFromStringA(char*, UUID*);
+		RPC_STATUS UuidToStringW(UUID*, wchar**);
+		RPC_STATUS UuidFromStringW(wchar*, UUID*);
+		RPC_STATUS RpcEpRegisterNoReplaceA(RPC_IF_HANDLE, RPC_BINDING_VECTOR*, UUID_VECTOR*, char*);
+		RPC_STATUS RpcEpRegisterNoReplaceW(RPC_IF_HANDLE, RPC_BINDING_VECTOR*, UUID_VECTOR*, wchar*);
+		RPC_STATUS RpcEpRegisterA(RPC_IF_HANDLE, RPC_BINDING_VECTOR*, UUID_VECTOR*, char*);
+		RPC_STATUS RpcEpRegisterW(RPC_IF_HANDLE, RPC_BINDING_VECTOR*, UUID_VECTOR*, wchar*);
+		RPC_STATUS DceErrorInqTextA(RPC_STATUS, char*);
+		RPC_STATUS DceErrorInqTextW(RPC_STATUS, wchar*);
+		RPC_STATUS RpcMgmtEpEltInqNextA(RPC_EP_INQ_HANDLE, RPC_IF_ID*, RPC_BINDING_HANDLE*, UUID*, char**);
+		RPC_STATUS RpcMgmtEpEltInqNextW(RPC_EP_INQ_HANDLE, RPC_IF_ID*, RPC_BINDING_HANDLE*, UUID*, wchar**);
 
-	// MinGW erroneously had these in rpc.h
-	RPC_STATUS RpcImpersonateClient(RPC_BINDING_HANDLE);
-	RPC_STATUS RpcRevertToSelf();
-}
+		// MinGW erroneously had these in rpc.h
+		RPC_STATUS RpcImpersonateClient(RPC_BINDING_HANDLE);
+		RPC_STATUS RpcRevertToSelf();
+	}
 
-version(Unicode) {
-	alias RPC_PROTSEQ_VECTORW RPC_PROTSEQ_VECTOR;
-	alias SEC_WINNT_AUTH_IDENTITY_W SEC_WINNT_AUTH_IDENTITY;
-	alias PSEC_WINNT_AUTH_IDENTITY_W PSEC_WINNT_AUTH_IDENTITY;
-	alias RpcMgmtEpEltInqNextW RpcMgmtEpEltInqNext;
-	alias RpcBindingFromStringBindingW RpcBindingFromStringBinding;
-	alias RpcBindingToStringBindingW RpcBindingToStringBinding;
-	alias RpcStringBindingComposeW RpcStringBindingCompose;
-	alias RpcStringBindingParseW RpcStringBindingParse;
-	alias RpcStringFreeW RpcStringFree;
-	alias RpcNetworkIsProtseqValidW RpcNetworkIsProtseqValid;
-	alias RpcNetworkInqProtseqsW RpcNetworkInqProtseqs;
-	alias RpcProtseqVectorFreeW RpcProtseqVectorFree;
-	alias RpcServerUseProtseqW RpcServerUseProtseq;
-	alias RpcServerUseProtseqExW RpcServerUseProtseqEx;
-	alias RpcServerUseProtseqEpW RpcServerUseProtseqEp;
-	alias RpcServerUseProtseqEpExW RpcServerUseProtseqEpEx;
-	alias RpcServerUseProtseqIfW RpcServerUseProtseqIf;
-	alias RpcServerUseProtseqIfExW RpcServerUseProtseqIfEx;
-	alias RpcMgmtInqServerPrincNameW RpcMgmtInqServerPrincName;
-	alias RpcServerInqDefaultPrincNameW RpcServerInqDefaultPrincName;
-	alias RpcNsBindingInqEntryNameW RpcNsBindingInqEntryName;
-	alias RpcBindingInqAuthClientW RpcBindingInqAuthClient;
-	alias RpcBindingInqAuthInfoW RpcBindingInqAuthInfo;
-	alias RpcBindingSetAuthInfoW RpcBindingSetAuthInfo;
-	alias RpcServerRegisterAuthInfoW RpcServerRegisterAuthInfo;
-	alias RpcBindingInqAuthInfoExW RpcBindingInqAuthInfoEx;
-	alias RpcBindingSetAuthInfoExW RpcBindingSetAuthInfoEx;
-	alias UuidFromStringW UuidFromString;
-	alias UuidToStringW UuidToString;
-	alias RpcEpRegisterNoReplaceW RpcEpRegisterNoReplace;
-	alias RpcEpRegisterW RpcEpRegister;
-	alias DceErrorInqTextW DceErrorInqText;
-} else { // Ansi
-	alias RPC_PROTSEQ_VECTORA RPC_PROTSEQ_VECTOR;
-	alias SEC_WINNT_AUTH_IDENTITY_A SEC_WINNT_AUTH_IDENTITY;
-	alias PSEC_WINNT_AUTH_IDENTITY_A PSEC_WINNT_AUTH_IDENTITY;
-	alias RpcMgmtEpEltInqNextA RpcMgmtEpEltInqNext;
-	alias RpcBindingFromStringBindingA RpcBindingFromStringBinding;
-	alias RpcBindingToStringBindingA RpcBindingToStringBinding;
-	alias RpcStringBindingComposeA RpcStringBindingCompose;
-	alias RpcStringBindingParseA RpcStringBindingParse;
-	alias RpcStringFreeA RpcStringFree;
-	alias RpcNetworkIsProtseqValidA RpcNetworkIsProtseqValid;
-	alias RpcNetworkInqProtseqsA RpcNetworkInqProtseqs;
-	alias RpcProtseqVectorFreeA RpcProtseqVectorFree;
-	alias RpcServerUseProtseqA RpcServerUseProtseq;
-	alias RpcServerUseProtseqExA RpcServerUseProtseqEx;
-	alias RpcServerUseProtseqEpA RpcServerUseProtseqEp;
-	alias RpcServerUseProtseqEpExA RpcServerUseProtseqEpEx;
-	alias RpcServerUseProtseqIfA RpcServerUseProtseqIf;
-	alias RpcServerUseProtseqIfExA RpcServerUseProtseqIfEx;
-	alias RpcMgmtInqServerPrincNameA RpcMgmtInqServerPrincName;
-	alias RpcServerInqDefaultPrincNameA RpcServerInqDefaultPrincName;
-	alias RpcNsBindingInqEntryNameA RpcNsBindingInqEntryName;
-	alias RpcBindingInqAuthClientA RpcBindingInqAuthClient;
-	alias RpcBindingInqAuthInfoA RpcBindingInqAuthInfo;
-	alias RpcBindingSetAuthInfoA RpcBindingSetAuthInfo;
-	alias RpcServerRegisterAuthInfoA RpcServerRegisterAuthInfo;
-	alias RpcBindingInqAuthInfoExA RpcBindingInqAuthInfoEx;
-	alias RpcBindingSetAuthInfoExA RpcBindingSetAuthInfoEx;
-	alias UuidFromStringA UuidFromString;
-	alias UuidToStringA UuidToString;
-	alias RpcEpRegisterNoReplaceA RpcEpRegisterNoReplace;
-	alias RpcEpRegisterA RpcEpRegister;
-	alias DceErrorInqTextA DceErrorInqText;
-} //#endif // UNICODE
+	version(Unicode) {
+		alias RPC_PROTSEQ_VECTORW RPC_PROTSEQ_VECTOR;
+		alias SEC_WINNT_AUTH_IDENTITY_W SEC_WINNT_AUTH_IDENTITY;
+		alias PSEC_WINNT_AUTH_IDENTITY_W PSEC_WINNT_AUTH_IDENTITY;
+		alias RpcMgmtEpEltInqNextW RpcMgmtEpEltInqNext;
+		alias RpcBindingFromStringBindingW RpcBindingFromStringBinding;
+		alias RpcBindingToStringBindingW RpcBindingToStringBinding;
+		alias RpcStringBindingComposeW RpcStringBindingCompose;
+		alias RpcStringBindingParseW RpcStringBindingParse;
+		alias RpcStringFreeW RpcStringFree;
+		alias RpcNetworkIsProtseqValidW RpcNetworkIsProtseqValid;
+		alias RpcNetworkInqProtseqsW RpcNetworkInqProtseqs;
+		alias RpcProtseqVectorFreeW RpcProtseqVectorFree;
+		alias RpcServerUseProtseqW RpcServerUseProtseq;
+		alias RpcServerUseProtseqExW RpcServerUseProtseqEx;
+		alias RpcServerUseProtseqEpW RpcServerUseProtseqEp;
+		alias RpcServerUseProtseqEpExW RpcServerUseProtseqEpEx;
+		alias RpcServerUseProtseqIfW RpcServerUseProtseqIf;
+		alias RpcServerUseProtseqIfExW RpcServerUseProtseqIfEx;
+		alias RpcMgmtInqServerPrincNameW RpcMgmtInqServerPrincName;
+		alias RpcServerInqDefaultPrincNameW RpcServerInqDefaultPrincName;
+		alias RpcNsBindingInqEntryNameW RpcNsBindingInqEntryName;
+		alias RpcBindingInqAuthClientW RpcBindingInqAuthClient;
+		alias RpcBindingInqAuthInfoW RpcBindingInqAuthInfo;
+		alias RpcBindingSetAuthInfoW RpcBindingSetAuthInfo;
+		alias RpcServerRegisterAuthInfoW RpcServerRegisterAuthInfo;
+		alias RpcBindingInqAuthInfoExW RpcBindingInqAuthInfoEx;
+		alias RpcBindingSetAuthInfoExW RpcBindingSetAuthInfoEx;
+		alias UuidFromStringW UuidFromString;
+		alias UuidToStringW UuidToString;
+		alias RpcEpRegisterNoReplaceW RpcEpRegisterNoReplace;
+		alias RpcEpRegisterW RpcEpRegister;
+		alias DceErrorInqTextW DceErrorInqText;
+	} else { // Ansi
+		alias RPC_PROTSEQ_VECTORA RPC_PROTSEQ_VECTOR;
+		alias SEC_WINNT_AUTH_IDENTITY_A SEC_WINNT_AUTH_IDENTITY;
+		alias PSEC_WINNT_AUTH_IDENTITY_A PSEC_WINNT_AUTH_IDENTITY;
+		alias RpcMgmtEpEltInqNextA RpcMgmtEpEltInqNext;
+		alias RpcBindingFromStringBindingA RpcBindingFromStringBinding;
+		alias RpcBindingToStringBindingA RpcBindingToStringBinding;
+		alias RpcStringBindingComposeA RpcStringBindingCompose;
+		alias RpcStringBindingParseA RpcStringBindingParse;
+		alias RpcStringFreeA RpcStringFree;
+		alias RpcNetworkIsProtseqValidA RpcNetworkIsProtseqValid;
+		alias RpcNetworkInqProtseqsA RpcNetworkInqProtseqs;
+		alias RpcProtseqVectorFreeA RpcProtseqVectorFree;
+		alias RpcServerUseProtseqA RpcServerUseProtseq;
+		alias RpcServerUseProtseqExA RpcServerUseProtseqEx;
+		alias RpcServerUseProtseqEpA RpcServerUseProtseqEp;
+		alias RpcServerUseProtseqEpExA RpcServerUseProtseqEpEx;
+		alias RpcServerUseProtseqIfA RpcServerUseProtseqIf;
+		alias RpcServerUseProtseqIfExA RpcServerUseProtseqIfEx;
+		alias RpcMgmtInqServerPrincNameA RpcMgmtInqServerPrincName;
+		alias RpcServerInqDefaultPrincNameA RpcServerInqDefaultPrincName;
+		alias RpcNsBindingInqEntryNameA RpcNsBindingInqEntryName;
+		alias RpcBindingInqAuthClientA RpcBindingInqAuthClient;
+		alias RpcBindingInqAuthInfoA RpcBindingInqAuthInfo;
+		alias RpcBindingSetAuthInfoA RpcBindingSetAuthInfo;
+		alias RpcServerRegisterAuthInfoA RpcServerRegisterAuthInfo;
+		alias RpcBindingInqAuthInfoExA RpcBindingInqAuthInfoEx;
+		alias RpcBindingSetAuthInfoExA RpcBindingSetAuthInfoEx;
+		alias UuidFromStringA UuidFromString;
+		alias UuidToStringA UuidToString;
+		alias RpcEpRegisterNoReplaceA RpcEpRegisterNoReplace;
+		alias RpcEpRegisterA RpcEpRegister;
+		alias DceErrorInqTextA DceErrorInqText;
+	} //#endif // UNICODE
 
 } else { // _WIN32_WINNT_ONLY
 

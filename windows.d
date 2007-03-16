@@ -26,7 +26,9 @@ public import win32.w32api;
 public import win32.core;
 
 // We can't use static if for imports, build gets confused.
-version (Windows2003) {
+version (WindowsVista) {
+	public import win32.winsvc;
+} else version (Windows2003) {
 	public import win32.winsvc;
 } else version (WindowsXP) {
 	public import win32.winsvc;
@@ -42,7 +44,7 @@ public import win32.imm;
 public import win32.lzexpand;
 public import win32.mmsystem;
 public import win32.nb30;
-//public import win32.rpc;
+public import win32.rpc;
 public import win32.shellapi;
 public import win32.winperf;
 public import win32.commdlg;

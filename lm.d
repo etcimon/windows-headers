@@ -9,11 +9,13 @@
 \***********************************************************************/
 module win32.lm;
 
-version (Windows2003) {
+version (WindowsVista) {
+	version = WIN32_WINNT_ONLY;
+} else version (Windows2003) {
 	version = WIN32_WINNT_ONLY;
 } else version (WindowsXP) {
 	version = WIN32_WINNT_ONLY;
-} else version(WindowsNTonly) {
+} else version (WindowsNTonly) {
 	version = WIN32_WINNT_ONLY;
 }
 
@@ -33,7 +35,9 @@ version (WIN32_WINNT_ONLY) {
 	public import win32.lmwksta;
 	public import win32.lmserver;
 }
-version (Windows2003) {
+version (WindowsVista) {
+	public import win32.lmmsg;
+} else version (Windows2003) {
 	public import win32.lmmsg;
 } else version (WindowsXP) {
 	public import win32.lmmsg;
