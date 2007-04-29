@@ -103,6 +103,6 @@ struct IP_UNIDIRECTIONAL_ADAPTER_ADDRESS {
 	ULONG     NumAdapters;
 	IPAddr[1] _Address;
 
-	IPAddr* Address() { return IPAddr.ptr; }
+	IPAddr* Address() { return _Address.ptr; }
 }
 alias IP_UNIDIRECTIONAL_ADAPTER_ADDRESS* PIP_UNIDIRECTIONAL_ADAPTER_ADDRESS;

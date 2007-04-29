@@ -69,7 +69,7 @@ struct MIB_IPADDRTABLE {
 	DWORD            dwNumEntries;
 	MIB_IPADDRROW[1] _table;
 
-	MIB_IPADDRROW* table() { return _table; }
+	MIB_IPADDRROW* table() { return _table.ptr; }
 }
 alias MIB_IPADDRTABLE* PMIB_IPADDRTABLE;
 

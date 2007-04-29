@@ -4850,7 +4850,7 @@ void ListView_GetItemText(HWND w, int i, int iS, LPTSTR s, int n) {
 	SendMessage(w, LVM_GETITEMTEXT, i, cast(LPARAM) &_lvi);
 }
 
-void ListView_SetItemText(HWND w, int i, int iS, LPCSTR s) {
+void ListView_SetItemText(HWND w, int i, int iS, LPTSTR s) {
 	LV_ITEM _lvi;
 	_lvi.iSubItem = iS;
 	_lvi.pszText = s;
