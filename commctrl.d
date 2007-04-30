@@ -4710,7 +4710,7 @@ BOOL ListView_SetCallbackMask(HWND w, UINT m) {
 }
 
 int ListView_GetNextItem(HWND w, int i, UINT f) {
-	return SendMessage(w, LVM_GETNEXTITEM, i, MAKELPARAM(f, 0));
+	return SendMessage(w, LVM_GETNEXTITEM, i, MAKELPARAM(cast(ushort)f, 0));
 }
 
 int ListView_FindItem(HWND w, int i, LVFINDINFO* p) {
@@ -4723,7 +4723,7 @@ BOOL ListView_GetItemRect(HWND w, int i, LPRECT p, int c) {
 }
 
 BOOL ListView_SetItemPosition(HWND w, int i, int x, int y) {
-	return cast(BOOL) SendMessage(w, LVM_SETITEMPOSITION, i, MAKELPARAM(x, y));
+	return cast(BOOL) SendMessage(w, LVM_SETITEMPOSITION, i, MAKELPARAM(cast(ushort)x, cast(ushort)y));
 }
 
 BOOL ListView_GetItemPosition(HWND w, int i, POINT* p) {
@@ -4743,7 +4743,7 @@ int ListView_HitTest(HWND w, LPLVHITTESTINFO p) {
 }
 
 BOOL ListView_EnsureVisible(HWND w, int i, BOOL f) {
-	return cast(BOOL) SendMessage(w, LVM_ENSUREVISIBLE, i, MAKELPARAM(f, 0));
+	return cast(BOOL) SendMessage(w, LVM_ENSUREVISIBLE, i, MAKELPARAM(cast(ushort)f, 0));
 }
 
 BOOL ListView_Scroll(HWND w, int dx, int dy) {
@@ -4787,7 +4787,7 @@ int ListView_GetColumnWidth(HWND w, int i) {
 }
 
 BOOL ListView_SetColumnWidth(HWND w, int i, int x) {
-	return cast(BOOL) SendMessage(w, LVM_SETCOLUMNWIDTH, i, MAKELPARAM(x, 0));
+	return cast(BOOL) SendMessage(w, LVM_SETCOLUMNWIDTH, i, MAKELPARAM(cast(ushort)x, 0));
 }
 
 HIMAGELIST ListView_CreateDragImage(HWND w, int i, LPPOINT p) {
@@ -5065,7 +5065,7 @@ int TabCtrl_AdjustRect(HWND w, BOOL b, LPRECT p) {
 }
 
 DWORD TabCtrl_SetItemSize(HWND w, int x, int y) {
-	return cast(DWORD) SendMessage(w, TCM_SETITEMSIZE, 0, MAKELPARAM(x, y));
+	return cast(DWORD) SendMessage(w, TCM_SETITEMSIZE, 0, MAKELPARAM(cast(ushort)x, cast(ushort)y));
 }
 
 void TabCtrl_RemoveImage(HWND w, int i) {
@@ -5073,7 +5073,7 @@ void TabCtrl_RemoveImage(HWND w, int i) {
 }
 
 void TabCtrl_SetPadding(HWND w, int x, int y) {
-	SendMessage(w, TCM_SETPADDING, 0, MAKELPARAM(x, y));
+	SendMessage(w, TCM_SETPADDING, 0, MAKELPARAM(cast(ushort)x, cast(ushort)y));
 }
 
 int TabCtrl_GetRowCount(HWND w) {
@@ -5265,7 +5265,7 @@ BOOL TreeView_GetISearchString(HWND w, LPTSTR s) {
 static if (_WIN32_IE >= 0x300) {
 	DWORD ListView_ApproximateViewRect(HWND w, int iw, int ih, int i) {
 		return cast(DWORD) SendMessage(w, LVM_APPROXIMATEVIEWRECT, i,
-		  MAKELPARAM(iw, ih));
+		  MAKELPARAM(cast(ushort)iw, cast(ushort)ih));
 	}
 
 	DWORD ListView_SetExtendedListViewStyle(HWND w, DWORD s) {
@@ -5314,7 +5314,7 @@ static if (_WIN32_IE >= 0x300) {
 
 	DWORD ListView_SetIconSpacing(HWND w, int x, int y) {
 		return cast(DWORD) SendMessage(w, LVM_SETICONSPACING, 0,
-		  MAKELONG(x, y));
+		  MAKELONG(cast(ushort)x, cast(ushort)y));
 	}
 
 	INT ListView_SubItemHitTest(HWND w, LPLVHITTESTINFO p) {
