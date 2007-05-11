@@ -1567,6 +1567,8 @@ enum : uint {
 	DNS_ERROR_DP_ALREADY_ENLISTED,
 	DNS_ERROR_DP_NOT_AVAILABLE,                        // =  9905
 
+/+	already in winsock2.d defined!
+
 	WSABASEERR                                            = 10000,
 	WSAEINTR                                              = 10004,
 	WSAEBADF                                              = 10009,
@@ -1657,6 +1659,8 @@ enum : uint {
 	WSA_QOS_ESDMODEOBJ,
 	WSA_QOS_ESHAPERATEOBJ,
 	WSA_QOS_RESERVED_PETYPE,                           // = 11031
+
++/
 
 	ERROR_IPSEC_QM_POLICY_EXISTS                          = 13000,
 	ERROR_IPSEC_QM_POLICY_NOT_FOUND,

@@ -73,7 +73,7 @@ alias FD_SET* PFD_SET, LPFD_SET;
 // Keep this alias, since fd_set isn't a tag name in the original header.
 alias FD_SET fd_set;
 
-extern(Pascal) int __WSAFDIsSet(SOCKET, FD_SET*);
+extern(Windows) int __WSAFDIsSet(SOCKET, FD_SET*);
 alias __WSAFDIsSet FD_ISSET;
 
 void FD_CLR(SOCKET fd, FD_SET* set) {
@@ -608,7 +608,7 @@ enum : int {
 	NO_ADDRESS     = WSANO_ADDRESS
 }
 
-extern (Pascal) {
+extern (Windows) {
 	SOCKET accept(SOCKET, SOCKADDR*, int*);
 	int bind(SOCKET, SOCKADDR*, int);
 	int closesocket(SOCKET);
@@ -616,12 +616,14 @@ extern (Pascal) {
 	int ioctlsocket(SOCKET, int, u_long*);
 	int getpeername(SOCKET, SOCKADDR*, int*);
 	int getsockname(SOCKET, SOCKADDR*, int*);
-	int getsockopt(SOCKET, int, int, char*, int*);
+	int getsockopt(SOCKET, int, int, void*, int*);
 	uint inet_addr(char*);
 	int listen(SOCKET, int);
-	int recv(SOCKET, char*, int, int);
-	int recvfrom(SOCKET, char*, int, int, SOCKADDR*, int*);
-	int setsockopt(SOCKET, int, int, char*, int);
+	int recv(SOCKET, ubyte*, int, int);
+	int recvfrom(SOCKET, ubyte*, int, int, SOCKADDR*, int*);
+	int send(SOCKET, ubyte*, int, int);
+	int sendto(SOCKET, ubyte*, int, int, SOCKADDR*, int);
+	int setsockopt(SOCKET, int, int, void*, int);
 	int shutdown(SOCKET, int);
 	SOCKET socket(int, int, int);
 
@@ -637,6 +639,8 @@ extern (Pascal) {
 	alias typeof(&listen) LPFN_LISTEN;
 	alias typeof(&recv) LPFN_RECV;
 	alias typeof(&recvfrom) LPFN_RECVFROM;
+	alias typeof(&send) LPFN_SEND;
+	alias typeof(&sendto) LPFN_SENDTO;
 	alias typeof(&setsockopt) LPFN_SETSOCKOPT;
 	alias typeof(&shutdown) LPFN_SHUTDOWN;
 	alias typeof(&socket) LPFN_SOCKET;
@@ -664,11 +668,11 @@ extern(Windows) {
 	alias typeof(&getprotobyname) LPFN_GETPROTOBYNAME;
 }
 
-extern(Pascal) {
+extern(Windows) {
 	int WSAStartup(WORD, LPWSADATA);
 	int WSACleanup();
 	void WSASetLastError(int);
-	int WSAGetLastError(int);
+	int WSAGetLastError();
 
 	alias typeof(&WSAStartup) LPFN_WSASTARTUP;
 	alias typeof(&WSACleanup) LPFN_WSACLEANUP;
@@ -680,7 +684,7 @@ extern(Pascal) {
  * Pseudo-blocking functions are deprecated in WinSock2
  * spec. Use threads instead.
  */
-deprecated extern(Pascal) {
+deprecated extern(Windows) {
 	BOOL WSAIsBlocking();
 	int WSAUnhookBlockingHook();
 	FARPROC WSASetBlockingHook(FARPROC);
@@ -692,7 +696,7 @@ deprecated extern(Pascal) {
 	alias typeof(&WSACancelBlockingCall) LPFN_WSACANCELBLOCKINGCALL;
 }
 
-extern(Pascal) {
+extern(Windows) {
 	HANDLE WSAAsyncGetServByName(HWND, u_int, char*, char*, char*, int);
 	HANDLE WSAAsyncGetServByPort(HWND, u_int, int, char*, char*, int);
 	HANDLE WSAAsyncGetProtoByName(HWND, u_int, char*, char*, int);
@@ -712,7 +716,7 @@ extern(Pascal) {
 	alias typeof(&WSAAsyncSelect) LPFN_WSAASYNCSELECT;
 }
 
-extern(Pascal) {
+extern(Windows) {
 	u_long htonl(u_long);
 	u_long ntohl(u_long);
 	u_short htons(u_short);
