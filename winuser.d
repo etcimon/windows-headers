@@ -1458,6 +1458,39 @@ const WM_MENUCOMMAND=0x0126;
 const WM_MENUGETOBJECT=0x0124;
 const WM_MENUDRAG=0x0123;
 }
+
+static if (_WIN32_WINNT >= 0x500) {
+
+	enum {
+		WM_CHANGEUISTATE	=	0x0127,
+		WM_UPDATEUISTATE	=	0x0128,
+		WM_QUERYUISTATE		=	0x0129
+	}
+
+	// LOWORD(wParam) values in WM_*UISTATE*
+	enum {
+		UIS_SET			=	1,
+		UIS_CLEAR		=	2,
+		UIS_INITIALIZE	=	3
+	}
+
+	// HIWORD(wParam) values in WM_*UISTATE*
+	enum {
+		UISF_HIDEFOCUS	=	0x1,
+		UISF_HIDEACCEL	=	0x2
+	}
+
+}
+
+static if (_WIN32_WINNT >= 0x501) {
+
+	// HIWORD(wParam) values in WM_*UISTATE*
+	enum {
+		UISF_ACTIVE		=	0x4
+	}
+
+}
+
 const WM_MENUCHAR=288;
 const WM_MENUSELECT=287;
 const WM_MOVE=3;
