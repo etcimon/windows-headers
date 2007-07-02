@@ -11,7 +11,7 @@
 module win32.shellapi;
 pragma(lib, "shell32.lib");
 
-private import win32.w32api, win32.windef;
+private import win32.w32api, win32.windef, win32.basetyps;
 
 enum : UINT {
 	ABE_LEFT,
