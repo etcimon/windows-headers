@@ -1114,8 +1114,8 @@ uint D3DPS_VERSION(ubyte _Major, ubyte _Minor) { return (0xFFFF0000|(_Major<<8)|
 uint D3DVS_VERSION(ubyte _Major, ubyte _Minor) { return (0xFFFE0000|(_Major<<8)|_Minor); }
 
 // extract major/minor from version cap
-ubyte D3DSHADER_VERSION_MAJOR(uint _Version) { return ((_Version>>8)&0xFF); }
-ubyte D3DSHADER_VERSION_MINOR(uint _Version) { return ((_Version>>0)&0xFF); }
+ubyte D3DSHADER_VERSION_MAJOR(uint _Version) { return cast(ubyte)((_Version>>8)&0xFF); }
+ubyte D3DSHADER_VERSION_MINOR(uint _Version) { return cast(ubyte)((_Version>>0)&0xFF); }
 
 // destination/source parameter register type
 const D3DSI_COMMENTSIZE_SHIFT = 16;
