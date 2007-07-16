@@ -15,6 +15,10 @@ private import win32.basetyps, win32.w32api, win32.winbase, win32.windef;
 // FIXME: check types and grouping of constants
 // FIXME: check Windows version support
 
+static assert (_WIN32_WINNT_ONLY,
+	"win32.accctrl is available only if version WindowsNTonly, WindowsXP "
+	"or Windows2003 is set");
+
 alias LocalFree AccFree;
 
 const uint
