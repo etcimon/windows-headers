@@ -2,1256 +2,2648 @@
 *                                 vfw.d                                 *
 *                                                                       *
 *                       Windows API header module                       *
-*                                                                       *
-*                 Translated from MinGW Windows headers                 *
+*                 written in the D programming language                 *
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
+
 module win32.vfw;
 pragma(lib, "vfw32.lib");
 
-private import win32.ole2, win32.mmsystem, win32.windows;
+private import
+	win32.commdlg,
+	win32.wingdi,
+	win32.mmsystem,
+	win32.unknwn,
+	win32.w32api,
+	win32.windef,
+	win32.winuser;
 
-//MACRO #define mmioFOURCC(c0,c1,c2,c3) ((DWORD)(BYTE)(c0)|((DWORD)(BYTE)(c1)<<8)|((DWORD)(BYTE)(c2)<<16)|((DWORD)(BYTE)(c3)<<24))
-//MACRO #define aviTWOCC(ch0,ch1) ((WORD)(BYTE)(ch0)|((WORD)(BYTE)(ch1)<<8))
+extern(Windows) {
+	DWORD VideoForWindowsVersion();
+	LONG InitVFW();
+	LONG TermVFW();
+}
 
-align(8):
+DWORD MKFOURCC(char ch0, char ch1, char ch2, char ch3) {
+	return (cast(DWORD)ch0) | ((cast(DWORD)ch1) << 8) | ((cast(DWORD)ch2) << 16) | ((cast(DWORD)ch3) << 24);
+}
 
-const ICERR_OK=0;
-const ICERR_DONTDRAW=1;
-const ICERR_NEWPALETTE=2;
-const ICERR_GOTOKEYFRAME=3;
-const ICERR_STOPDRAWING=4;
-const ICERR_UNSUPPORTED=-1;
-const ICERR_BADFORMAT=-2;
-const ICERR_MEMORY=-3;
-const ICERR_INTERNAL=-4;
-const ICERR_BADFLAGS=-5;
-const ICERR_BADPARAM=-6;
-const ICERR_BADSIZE=-7;
-const ICERR_BADHANDLE=-8;
-const ICERR_CANTUPDATE=-9;
-const ICERR_ABORT=-10;
-const ICERR_ERROR=-100;
-const ICERR_BADBITDEPTH=-200;
-const ICERR_BADIMAGESIZE=-201;
-const ICERR_CUSTOM=-400;
-const ICCOMPRESSFRAMES_PADDING=0x01;
-const ICM_USER=(DRV_USER+0x0000);
-const ICM_RESERVED_LOW=(DRV_USER+0x1000);
-const ICM_RESERVED_HIGH=(DRV_USER+0x2000);
-const ICM_RESERVED=ICM_RESERVED_LOW;
-const ICM_GETSTATE=(ICM_RESERVED+0);
-const ICM_SETSTATE=(ICM_RESERVED+1);
-const ICM_GETINFO=(ICM_RESERVED+2);
-const ICM_CONFIGURE=(ICM_RESERVED+10);
-const ICM_ABOUT=(ICM_RESERVED+11);
-const ICM_GETDEFAULTQUALITY=(ICM_RESERVED+30);
-const ICM_GETQUALITY=(ICM_RESERVED+31);
-const ICM_SETQUALITY=(ICM_RESERVED+32);
-const ICM_SET=(ICM_RESERVED+40);
-const ICM_GET=(ICM_RESERVED+41);
-const ICM_FRAMERATE=mmioFOURCC!('F','r','m','R');
-const ICM_KEYFRAMERATE=mmioFOURCC!('K','e','y','R');
-const ICM_COMPRESS_GET_FORMAT=(ICM_USER+4);
-const ICM_COMPRESS_GET_SIZE=(ICM_USER+5);
-const ICM_COMPRESS_QUERY=(ICM_USER+6);
-const ICM_COMPRESS_BEGIN=(ICM_USER+7);
-const ICM_COMPRESS=(ICM_USER+8);
-const ICM_COMPRESS_END=(ICM_USER+9);
-const ICM_DECOMPRESS_GET_FORMAT=(ICM_USER+10);
-const ICM_DECOMPRESS_QUERY=(ICM_USER+11);
-const ICM_DECOMPRESS_BEGIN=(ICM_USER+12);
-const ICM_DECOMPRESS=(ICM_USER+13);
-const ICM_DECOMPRESS_END=(ICM_USER+14);
-const ICM_DECOMPRESS_SET_PALETTE=(ICM_USER+29);
-const ICM_DECOMPRESS_GET_PALETTE=(ICM_USER+30);
-const ICM_DRAW_QUERY=(ICM_USER+31);
-const ICM_DRAW_BEGIN=(ICM_USER+15);
-const ICM_DRAW_GET_PALETTE=(ICM_USER+16);
-const ICM_DRAW_START=(ICM_USER+18);
-const ICM_DRAW_STOP=(ICM_USER+19);
-const ICM_DRAW_END=(ICM_USER+21);
-const ICM_DRAW_GETTIME=(ICM_USER+32);
-const ICM_DRAW=(ICM_USER+33);
-const ICM_DRAW_WINDOW=(ICM_USER+34);
-const ICM_DRAW_SETTIME=(ICM_USER+35);
-const ICM_DRAW_REALIZE=(ICM_USER+36);
-const ICM_DRAW_FLUSH=(ICM_USER+37);
-const ICM_DRAW_RENDERBUFFER=(ICM_USER+38);
-const ICM_DRAW_START_PLAY=(ICM_USER+39);
-const ICM_DRAW_STOP_PLAY=(ICM_USER+40);
-const ICM_DRAW_SUGGESTFORMAT=(ICM_USER+50);
-const ICM_DRAW_CHANGEPALETTE=(ICM_USER+51);
-const ICM_GETBUFFERSWANTED=(ICM_USER+41);
-const ICM_GETDEFAULTKEYFRAMERATE=(ICM_USER+42);
-const ICM_DECOMPRESSEX_BEGIN=(ICM_USER+60);
-const ICM_DECOMPRESSEX_QUERY=(ICM_USER+61);
-const ICM_DECOMPRESSEX=(ICM_USER+62);
-const ICM_DECOMPRESSEX_END=(ICM_USER+63);
-const ICM_COMPRESS_FRAMES_INFO=(ICM_USER+70);
-const ICM_SET_STATUS_PROC=(ICM_USER+72);
-const ICMF_CONFIGURE_QUERY=0x01;
-const ICCOMPRESS_KEYFRAME=0x01;
-const ICSTATUS_START=0;
-const ICSTATUS_STATUS=1;
-const ICSTATUS_END=2;
-const ICSTATUS_ERROR=3;
-const ICSTATUS_YIELD=4;
-const ICMODE_COMPRESS=1;
-const ICMODE_DECOMPRESS=2;
-const ICMODE_FASTDECOMPRESS=3;
-const ICMODE_QUERY=4;
-const ICMODE_FASTCOMPRESS=5;
-const ICMODE_DRAW=8;
-const ICQUALITY_LOW=0;
-const ICQUALITY_HIGH=10000;
-const ICQUALITY_DEFAULT=-1;
-const VIDCF_QUALITY=0x01;
-const VIDCF_CRUNCH=0x02;
-const VIDCF_TEMPORAL=0x04;
-const VIDCF_COMPRESSFRAMES=0x08;
-const VIDCF_DRAW=0x10;
-const VIDCF_FASTTEMPORALC=0x20;
-const VIDCF_FASTTEMPORALD=0x80;
-const VIDCF_QUALITYTIME=0x40;
-const VIDCF_FASTTEMPORAL=(VIDCF_FASTTEMPORALC|VIDCF_FASTTEMPORALD);
-const ICMF_ABOUT_QUERY=0x01;
-const ICDECOMPRESS_HURRYUP=0x80000000;
-const ICDECOMPRESS_UPDATE=0x40000000;
-const ICDECOMPRESS_PREROLL=0x20000000;
-const ICDECOMPRESS_NULLFRAME=0x10000000;
-const ICDECOMPRESS_NOTKEYFRAME=0x8000000;
-const ICDRAW_QUERY=0x01L;
-const ICDRAW_FULLSCREEN=0x02L;
-const ICDRAW_HDC=0x04L;
-const ICDRAW_ANIMATE=0x08L;
-const ICDRAW_CONTINUE=0x10L;
-const ICDRAW_MEMORYDC=0x20L;
-const ICDRAW_UPDATING=0x40L;
-const ICDRAW_RENDER=0x80L;
-const ICDRAW_BUFFER=0x100L;
-const ICINSTALL_UNICODE=0x8000;
-const ICINSTALL_FUNCTION=0x01;
-const ICINSTALL_DRIVER=0x02;
-const ICINSTALL_HDRV=0x04;
-const ICINSTALL_DRIVERW=0x8002;
-const ICDRAW_HURRYUP=0x80000000L;
-const ICDRAW_UPDATE=0x40000000L;
-const ICDRAW_PREROLL=0x20000000L;
-const ICDRAW_NULLFRAME=0x10000000L;
-const ICDRAW_NOTKEYFRAME=0x8000000L;
-const ICMF_COMPVARS_VALID=0x01;
-const ICMF_CHOOSE_KEYFRAME=0x01;
-const ICMF_CHOOSE_DATARATE=0x02;
-const ICMF_CHOOSE_PREVIEW=0x04;
-const ICMF_CHOOSE_ALLCOMPRESSORS=0x08;
-const ICTYPE_VIDEO=mmioFOURCC!('v','i','d','c');
-const ICTYPE_AUDIO=mmioFOURCC!('a','u','d','c');
-const formtypeAVI=mmioFOURCC!('A','V','I',' ');
-const listtypeAVIHEADER=mmioFOURCC!('h','d','r','l');
-const ckidAVIMAINHDR=mmioFOURCC!('a','v','i','h');
-const listtypeSTREAMHEADER=mmioFOURCC!('s','t','r','l');
-const ckidSTREAMHEADER=mmioFOURCC!('s','t','r','h');
-const ckidSTREAMFORMAT=mmioFOURCC!('s','t','r','f');
-const ckidSTREAMHANDLERDATA=mmioFOURCC!('s','t','r','d');
-const ckidSTREAMNAME=mmioFOURCC!('s','t','r','n');
-const listtypeAVIMOVIE=mmioFOURCC!('m','o','v','i');
-const listtypeAVIRECORD=mmioFOURCC!('r','e','c',' ');
-const ckidAVINEWINDEX=mmioFOURCC!('i', 'd', 'x', '1');
-const streamtypeANY=0UL;
-const streamtypeVIDEO=mmioFOURCC!('v','i','d','s');
-const streamtypeAUDIO=mmioFOURCC!('a','u','d','s');
-const streamtypeMIDI=mmioFOURCC!('m','i','d','s');
-const streamtypeTEXT=mmioFOURCC!('t','x','t','s');
-const cktypeDIBbits=aviTWOCC!('d','b');
-const cktypeDIBcompressed=aviTWOCC!('d','c');
-const cktypePALchange=aviTWOCC!('p','c');
-const cktypeWAVEbytes=aviTWOCC!('w','b');
-const ckidAVIPADDING=mmioFOURCC!('J','U','N','K');
-//MACRO #define FromHex(n) (((n)>='A')?((n)+10-'A'):((n)-'0'))
+/**
+ * COMPMAN - Installable Compression Manager.
+ */
 
-//MACRO #define StreamFromFOURCC(fcc) ((WORD)((FromHex(LOBYTE(LOWORD(fcc)))<<4)+(FromHex(HIBYTE(LOWORD(fcc))))))
+const ICVERSION = 0x0104;
 
-//MACRO #define TWOCCFromFOURCC(fcc) HIWORD(fcc)
+typedef HANDLE HIC;
 
-//MACRO #define ToHex(n) ((BYTE)(((n)>9)?((n)-10+'A'):((n)+'0')))
+const BI_1632 = 0x32333631;
 
-//MACRO #define MAKEAVICKID(tcc, stream) MAKELONG((ToHex((stream)&0x0f)<<8)|(ToHex(((stream)&0xf0)>>4)),tcc)
+template aviTWOCC(char c0, char c1) {
+	const WORD aviTWOCC = c0 | (c1 << 8);
+}
 
-const AVIF_HASINDEX=0x10;
-const AVIF_MUSTUSEINDEX=0x20;
-const AVIF_ISINTERLEAVED=0x100;
-const AVIF_TRUSTCKTYPE=0x800;
-const AVIF_WASCAPTUREFILE=0x10000;
-const AVIF_COPYRIGHTED=0x20000;
-const AVI_HEADERSIZE=2048;
-const AVISF_DISABLED=0x01;
-const AVISF_VIDEO_PALCHANGES=0x10000;
-const AVIIF_LIST=0x01;
-const AVIIF_TWOCC=0x02;
-const AVIIF_KEYFRAME=0x10;
-const AVIIF_NOTIME=0x100;
-const AVIIF_COMPUSE=0xfff0000;
+const ICTYPE_VIDEO	= mmioFOURCC!('v', 'i', 'd', 'c');
+const ICTYPE_AUDIO	= mmioFOURCC!('a', 'u', 'd', 'c');
 
-const AVIGETFRAMEF_BESTDISPLAYFMT=1;
-const AVISTREAMINFO_DISABLED=0x01;
-const AVISTREAMINFO_FORMATCHANGES=0x10000;
-const AVIFILEINFO_HASINDEX=0x10;
-const AVIFILEINFO_MUSTUSEINDEX=0x20;
-const AVIFILEINFO_ISINTERLEAVED=0x100;
-const AVIFILEINFO_TRUSTCKTYPE=0x800;
-const AVIFILEINFO_WASCAPTUREFILE=0x10000;
-const AVIFILEINFO_COPYRIGHTED=0x20000;
-const AVIFILECAPS_CANREAD=0x01;
-const AVIFILECAPS_CANWRITE=0x02;
-const AVIFILECAPS_ALLKEYFRAMES=0x10;
-const AVIFILECAPS_NOCOMPRESSION=0x20;
-const AVICOMPRESSF_INTERLEAVE=0x01;
-const AVICOMPRESSF_DATARATE=0x02;
-const AVICOMPRESSF_KEYFRAMES=0x04;
-const AVICOMPRESSF_VALID=0x08;
+enum {
+	ICERR_OK			= 0,
+	ICERR_DONTDRAW		= 1,
+	ICERR_NEWPALETTE	= 2,
+	ICERR_GOTOKEYFRAME	= 3,
+	ICERR_STOPDRAWING	= 4,
+}
 
-const FIND_DIR=0x0000000fL;
-const FIND_NEXT=0x00000001L;
-const FIND_PREV=0x00000004L;
-const FIND_FROM_START=0x00000008L;
-const FIND_TYPE=0x000000f0L;
-const FIND_KEY=0x00000010L;
-const FIND_ANY=0x00000020L;
-const FIND_FORMAT=0x00000040L;
-const FIND_RET=0x0000f000L;
-const FIND_POS=0x00000000L;
-const FIND_LENGTH=0x00001000L;
-const FIND_OFFSET=0x00002000L;
-const FIND_SIZE=0x00003000L;
-const FIND_INDEX=0x00004000L;
-const AVIERR_OK=0;
-//MACRO #define MAKE_AVIERR(e)	MAKE_SCODE(SEVERITY_ERROR,FACILITY_ITF,0x4000+e)
+const ICERR_UNSUPPORTED	= -1;
+const ICERR_BADFORMAT	= -2;
+const ICERR_MEMORY		= -3;
+const ICERR_INTERNAL	= -4;
+const ICERR_BADFLAGS	= -5;
+const ICERR_BADPARAM	= -6;
+const ICERR_BADSIZE		= -7;
+const ICERR_BADHANDLE	= -8;
+const ICERR_CANTUPDATE	= -9;
+const ICERR_ABORT		= -10;
+const ICERR_ERROR		= -100;
+const ICERR_BADBITDEPTH	= -200;
+const ICERR_BADIMAGESIZE = -201;
 
-const AVIERR_UNSUPPORTED=MAKE_AVIERR(101);
-const AVIERR_BADFORMAT=MAKE_AVIERR(102);
-const AVIERR_MEMORY=MAKE_AVIERR(103);
-const AVIERR_INTERNAL=MAKE_AVIERR(104);
-const AVIERR_BADFLAGS=MAKE_AVIERR(105);
-const AVIERR_BADPARAM=MAKE_AVIERR(106);
-const AVIERR_BADSIZE=MAKE_AVIERR(107);
-const AVIERR_BADHANDLE=MAKE_AVIERR(108);
-const AVIERR_FILEREAD=MAKE_AVIERR(109);
-const AVIERR_FILEWRITE=MAKE_AVIERR(110);
-const AVIERR_FILEOPEN=MAKE_AVIERR(111);
-const AVIERR_COMPRESSOR=MAKE_AVIERR(112);
-const AVIERR_NOCOMPRESSOR=MAKE_AVIERR(113);
-const AVIERR_READONLY=MAKE_AVIERR(114);
-const AVIERR_NODATA=MAKE_AVIERR(115);
-const AVIERR_BUFFERTOOSMALL=MAKE_AVIERR(116);
-const AVIERR_CANTCOMPRESS=MAKE_AVIERR(117);
-const AVIERR_USERABORT=MAKE_AVIERR(198);
-const AVIERR_ERROR=MAKE_AVIERR(199);
-const MCIWNDOPENF_NEW=0x0001;
-const MCIWNDF_NOAUTOSIZEWINDOW=0x0001;
-const MCIWNDF_NOPLAYBAR=0x0002;
-const MCIWNDF_NOAUTOSIZEMOVIE=0x0004;
-const MCIWNDF_NOMENU=0x0008;
-const MCIWNDF_SHOWNAME=0x0010;
-const MCIWNDF_SHOWPOS=0x0020;
-const MCIWNDF_SHOWMODE=0x0040;
-const MCIWNDF_SHOWALL=0x0070;
-const MCIWNDF_NOTIFYMODE=0x0100;
-const MCIWNDF_NOTIFYPOS=0x0200;
-const MCIWNDF_NOTIFYSIZE=0x0400;
-const MCIWNDF_NOTIFYERROR=0x1000;
-const MCIWNDF_NOTIFYALL=0x1F00;
-const MCIWNDF_NOTIFYANSI=0x0080;
-const MCIWNDF_NOTIFYMEDIAA=0x0880;
-const MCIWNDF_NOTIFYMEDIAW=0x0800;
-const MCIWNDF_RECORD=0x2000;
-const MCIWNDF_NOERRORDLG=0x4000;
-const MCIWNDF_NOOPEN=0x8000;
-const MCIWNDM_GETDEVICEID=(WM_USER + 100);
-const MCIWNDM_GETSTART=(WM_USER + 103);
-const MCIWNDM_GETLENGTH=(WM_USER + 104);
-const MCIWNDM_GETEND=(WM_USER + 105);
-const MCIWNDM_EJECT=(WM_USER + 107);
-const MCIWNDM_SETZOOM=(WM_USER + 108);
-const MCIWNDM_GETZOOM=(WM_USER + 109);
-const MCIWNDM_SETVOLUME=(WM_USER + 110);
-const MCIWNDM_GETVOLUME=(WM_USER + 111);
-const MCIWNDM_SETSPEED=(WM_USER + 112);
-const MCIWNDM_GETSPEED=(WM_USER + 113);
-const MCIWNDM_SETREPEAT=(WM_USER + 114);
-const MCIWNDM_GETREPEAT=(WM_USER + 115);
-const MCIWNDM_REALIZE=(WM_USER + 118);
-const MCIWNDM_VALIDATEMEDIA=(WM_USER + 121);
-const MCIWNDM_PLAYFROM=(WM_USER + 122);
-const MCIWNDM_PLAYTO=(WM_USER + 123);
-const MCIWNDM_GETPALETTE=(WM_USER + 126);
-const MCIWNDM_SETPALETTE=(WM_USER + 127);
-const MCIWNDM_SETTIMERS=(WM_USER + 129);
-const MCIWNDM_SETACTIVETIMER=(WM_USER + 130);
-const MCIWNDM_SETINACTIVETIMER=(WM_USER + 131);
-const MCIWNDM_GETACTIVETIMER=(WM_USER + 132);
-const MCIWNDM_GETINACTIVETIMER=(WM_USER + 133);
-const MCIWNDM_CHANGESTYLES=(WM_USER + 135);
-const MCIWNDM_GETSTYLES=(WM_USER + 136);
-const MCIWNDM_GETALIAS=(WM_USER + 137);
-const MCIWNDM_PLAYREVERSE=(WM_USER + 139);
-const MCIWNDM_GET_SOURCE=(WM_USER + 140);
-const MCIWNDM_PUT_SOURCE=(WM_USER + 141);
-const MCIWNDM_GET_DEST=(WM_USER + 142);
-const MCIWNDM_PUT_DEST=(WM_USER + 143);
-const MCIWNDM_CAN_PLAY=(WM_USER + 144);
-const MCIWNDM_CAN_WINDOW=(WM_USER + 145);
-const MCIWNDM_CAN_RECORD=(WM_USER + 146);
-const MCIWNDM_CAN_SAVE=(WM_USER + 147);
-const MCIWNDM_CAN_EJECT=(WM_USER + 148);
-const MCIWNDM_CAN_CONFIG=(WM_USER + 149);
-const MCIWNDM_PALETTEKICK=(WM_USER + 150);
-const MCIWNDM_OPENINTERFACE=(WM_USER + 151);
-const MCIWNDM_SETOWNER=(WM_USER + 152);
-const MCIWNDM_SENDSTRINGA=(WM_USER + 101);
-const MCIWNDM_GETPOSITIONA=(WM_USER + 102);
-const MCIWNDM_GETMODEA=(WM_USER + 106);
-const MCIWNDM_SETTIMEFORMATA=(WM_USER + 119);
-const MCIWNDM_GETTIMEFORMATA=(WM_USER + 120);
-const MCIWNDM_GETFILENAMEA=(WM_USER + 124);
-const MCIWNDM_GETDEVICEA=(WM_USER + 125);
-const MCIWNDM_GETERRORA=(WM_USER + 128);
-const MCIWNDM_NEWA=(WM_USER + 134);
-const MCIWNDM_RETURNSTRINGA=(WM_USER + 138);
-const MCIWNDM_OPENA=(WM_USER + 153);
-const MCIWNDM_SENDSTRINGW=(WM_USER + 201);
-const MCIWNDM_GETPOSITIONW=(WM_USER + 202);
-const MCIWNDM_GETMODEW=(WM_USER + 206);
-const MCIWNDM_SETTIMEFORMATW=(WM_USER + 219);
-const MCIWNDM_GETTIMEFORMATW=(WM_USER + 220);
-const MCIWNDM_GETFILENAMEW=(WM_USER + 224);
-const MCIWNDM_GETDEVICEW=(WM_USER + 225);
-const MCIWNDM_GETERRORW=(WM_USER + 228);
-const MCIWNDM_NEWW=(WM_USER + 234);
-const MCIWNDM_RETURNSTRINGW=(WM_USER + 238);
-const MCIWNDM_OPENW=(WM_USER + 252);
-const MCIWNDM_NOTIFYMODE=(WM_USER + 200);
-const MCIWNDM_NOTIFYPOS=(WM_USER + 201);
-const MCIWNDM_NOTIFYSIZE=(WM_USER + 202);
-const MCIWNDM_NOTIFYMEDIA=(WM_USER + 203);
-const MCIWNDM_NOTIFYERROR=(WM_USER + 205);
-const MCIWND_START=-1;
-const MCIWND_END=-2;
-const DDF_UPDATE=0x02;
-const DDF_SAME_HDC=0x04;
-const DDF_SAME_DRAW=0x08;
-const DDF_DONTDRAW=0x10;
-const DDF_ANIMATE=0x20;
-const DDF_BUFFER=0x40;
-const DDF_JUSTDRAWIT=0x80;
-const DDF_FULLSCREEN=0x100;
-const DDF_BACKGROUNDPAL=0x200;
-const DDF_NOTKEYFRAME=0x400;
-const DDF_HURRYUP=0x800;
-const DDF_HALFTONE=0x1000;
-const DDF_PREROLL=DDF_DONTDRAW;
-const DDF_SAME_DIB=DDF_SAME_DRAW;
-const DDF_SAME_SIZE=DDF_SAME_DRAW;
-const PD_CAN_DRAW_DIB=0x01;
-const PD_CAN_STRETCHDIB=0x02;
-const PD_STRETCHDIB_1_1_OK=0x04;
-const PD_STRETCHDIB_1_2_OK=0x08;
-const PD_STRETCHDIB_1_N_OK=0x10;
+const ICERR_CUSTOM = -400;
 
-alias HANDLE HIC;
-alias HANDLE HDRAWDIB;
-alias WORD TWOCC;
+enum {
+	ICMODE_COMPRESS			= 1,
+	ICMODE_DECOMPRESS,
+	ICMODE_FASTDECOMPRESS,
+	ICMODE_QUERY,
+	ICMODE_FASTCOMPRESS,
+	ICMODE_DRAW				= 8,
+}
 
-extern (Windows):
-alias BOOL function (INT) AVISAVECALLBACK;
+const ICMODE_INTERNALF_FUNCTION32	= 0x8000;
+const ICMODE_INTERNALF_MASK			= 0x8000;
+
+enum {
+	AVIIF_LIST		= 0x00000001,
+	AVIIF_TWOCC		= 0x00000002,
+	AVIIF_KEYFRAME	= 0x00000010,
+}
+
+const ICQUALITY_LOW		= 0;
+const ICQUALITY_HIGH	= 10000;
+const ICQUALITY_DEFAULT = -1;
+
+enum {
+	ICM_USER			= DRV_USER + 0x0000,
+	ICM_RESERVED_LOW	= DRV_USER + 0x1000,
+	ICM_RESERVED_HIGH	= DRV_USER + 0x2000,
+	ICM_RESERVED		= ICM_RESERVED_LOW,
+}
+
+// messages
+
+enum {
+	ICM_GETSTATE			= ICM_RESERVED + 0,
+	ICM_SETSTATE			= ICM_RESERVED + 1,
+	ICM_GETINFO				= ICM_RESERVED + 2,
+	ICM_CONFIGURE			= ICM_RESERVED + 10,
+	ICM_ABOUT				= ICM_RESERVED + 11,
+	ICM_GETERRORTEXT		= ICM_RESERVED + 12,
+	ICM_GETFORMATNAME		= ICM_RESERVED + 20,
+	ICM_ENUMFORMATS			= ICM_RESERVED + 21,
+	ICM_GETDEFAULTQUALITY	= ICM_RESERVED + 30,
+	ICM_GETQUALITY			= ICM_RESERVED + 31,
+	ICM_SETQUALITY			= ICM_RESERVED + 32,
+	ICM_SET					= ICM_RESERVED + 40,
+	ICM_GET					= ICM_RESERVED + 41,
+}
+
+const ICM_FRAMERATE		= mmioFOURCC!('F','r','m','R');
+const ICM_KEYFRAMERATE	= mmioFOURCC!('K','e','y','R');
+
+// ICM specific messages.
+
+enum {
+	ICM_COMPRESS_GET_FORMAT		= ICM_USER + 4,
+	ICM_COMPRESS_GET_SIZE		= ICM_USER + 5,
+	ICM_COMPRESS_QUERY			= ICM_USER + 6,
+	ICM_COMPRESS_BEGIN			= ICM_USER + 7,
+	ICM_COMPRESS				= ICM_USER + 8,
+	ICM_COMPRESS_END			= ICM_USER + 9,
+	ICM_DECOMPRESS_GET_FORMAT	= ICM_USER + 10,
+	ICM_DECOMPRESS_QUERY		= ICM_USER + 11,
+	ICM_DECOMPRESS_BEGIN		= ICM_USER + 12,
+	ICM_DECOMPRESS				= ICM_USER + 13,
+	ICM_DECOMPRESS_END			= ICM_USER + 14,
+	ICM_DECOMPRESS_SET_PALETTE	= ICM_USER + 29,
+	ICM_DECOMPRESS_GET_PALETTE	= ICM_USER + 30,
+	ICM_DRAW_QUERY				= ICM_USER + 31,
+	ICM_DRAW_BEGIN				= ICM_USER + 15,
+	ICM_DRAW_GET_PALETTE		= ICM_USER + 16,
+	ICM_DRAW_UPDATE				= ICM_USER + 17,
+	ICM_DRAW_START				= ICM_USER + 18,
+	ICM_DRAW_STOP				= ICM_USER + 19,
+	ICM_DRAW_BITS				= ICM_USER + 20,
+	ICM_DRAW_END				= ICM_USER + 21,
+	ICM_DRAW_GETTIME			= ICM_USER + 32,
+	ICM_DRAW					= ICM_USER + 33,
+	ICM_DRAW_WINDOW				= ICM_USER + 34,
+	ICM_DRAW_SETTIME			= ICM_USER + 35,
+	ICM_DRAW_REALIZE			= ICM_USER + 36,
+	ICM_DRAW_FLUSH				= ICM_USER + 37,
+	ICM_DRAW_RENDERBUFFER		= ICM_USER + 38,
+	ICM_DRAW_START_PLAY			= ICM_USER + 39,
+	ICM_DRAW_STOP_PLAY			= ICM_USER + 40,
+	ICM_DRAW_SUGGESTFORMAT		= ICM_USER + 50,
+	ICM_DRAW_CHANGEPALETTE		= ICM_USER + 51,
+	ICM_DRAW_IDLE				= ICM_USER + 52,
+	ICM_GETBUFFERSWANTED		= ICM_USER + 41,
+	ICM_GETDEFAULTKEYFRAMERATE	= ICM_USER + 42,
+	ICM_DECOMPRESSEX_BEGIN		= ICM_USER + 60,
+	ICM_DECOMPRESSEX_QUERY		= ICM_USER + 61,
+	ICM_DECOMPRESSEX			= ICM_USER + 62,
+	ICM_DECOMPRESSEX_END		= ICM_USER + 63,
+	ICM_COMPRESS_FRAMES_INFO	= ICM_USER + 70,
+	ICM_COMPRESS_FRAMES			= ICM_USER + 71,
+	ICM_SET_STATUS_PROC			= ICM_USER + 72,
+}
+
 struct ICOPEN {
-	DWORD dwSize;
-	DWORD fccType;
-	DWORD fccHandler;
-	DWORD dwVersion;
-	DWORD dwFlags;
-	LRESULT dwError;
-	LPVOID pV1Reserved;
-	LPVOID pV2Reserved;
-	DWORD dnDevNode;
-}
-alias ICOPEN* LPICOPEN;
-
-struct ICCOMPRESS {
-	DWORD dwFlags;
-	LPBITMAPINFOHEADER lpbiOutput;
-	LPVOID lpOutput;
-	LPBITMAPINFOHEADER lpbiInput;
-	LPVOID lpInput;
-	LPDWORD lpckid;
-	LPDWORD lpdwFlags;
-	LONG lFrameNum;
-	DWORD dwFrameSize;
-	DWORD dwQuality;
-	LPBITMAPINFOHEADER lpbiPrev;
-	LPVOID lpPrev;
-}
-
-struct ICCOMPRESSFRAMES {
-	DWORD dwFlags;
-	LPBITMAPINFOHEADER lpbiOutput;
-	LPARAM lOutput;
-	LPBITMAPINFOHEADER lpbiInput;
-	LPARAM lInput;
-	LONG lStartFrame;
-	LONG lFrameCount;
-	LONG lQuality;
-	LONG lDataRate;
-	LONG lKeyRate;
-	DWORD dwRate;
-	DWORD dwScale;
-	DWORD dwOverheadPerFrame;
-	DWORD dwReserved2;
-	LONG function (LPARAM,LONG,LPVOID,LONG) GetData;
-	LONG function (LPARAM,LONG,LPVOID,LONG) PutData;
-}
-
-struct ICSETSTATUSPROC {
-	DWORD dwFlags;
-	LPARAM lParam;
-	LONG function(LPARAM,UINT,LONG) Status;
+	DWORD	dwSize;
+	DWORD	fccType;
+	DWORD	fccHandler;
+	DWORD	dwVersion;
+	DWORD	dwFlags;
+	LRESULT	dwError;
+	LPVOID	pV1Reserved;
+	LPVOID	pV2Reserved;
+	DWORD	dnDevNode;
 }
 
 struct ICINFO {
-	DWORD dwSize;
-	DWORD fccType;
-	DWORD fccHandler;
-	DWORD dwFlags;
-	DWORD dwVersion;
-	DWORD dwVersionICM;
-	WCHAR szName[16];
-	WCHAR szDescription[128];
-	WCHAR szDriver[128];
+	DWORD	dwSize;
+	DWORD	fccType;
+	DWORD	fccHandler;
+	DWORD	dwFlags;
+	DWORD	dwVersion;
+	DWORD	dwVersionICM;
+	WCHAR	szName[16];
+	WCHAR	szDescription[128];
+	WCHAR	szDriver[128];
+}
+
+enum {
+	VIDCF_QUALITY			= 0x0001,
+	VIDCF_CRUNCH			= 0x0002,
+	VIDCF_TEMPORAL			= 0x0004,
+	VIDCF_COMPRESSFRAMES	= 0x0008,
+	VIDCF_DRAW				= 0x0010,
+	VIDCF_FASTTEMPORALC		= 0x0020,
+	VIDCF_FASTTEMPORALD		= 0x0080,
+}
+
+const ICCOMPRESS_KEYFRAME = 0x00000001L;
+
+struct ICCOMPRESS {
+	DWORD				dwFlags;
+	LPBITMAPINFOHEADER	lpbiOutput;
+	LPVOID				lpOutput;
+	LPBITMAPINFOHEADER	lpbiInput;
+	LPVOID				lpInput;
+	LPDWORD				lpckid;
+	LPDWORD				lpdwFlags;
+	LONG				lFrameNum;
+	DWORD				dwFrameSize;
+	DWORD				dwQuality;
+	LPBITMAPINFOHEADER	lpbiPrev;
+	LPVOID				lpPrev;
+}
+
+const ICCOMPRESSFRAMES_PADDING = 0x00000001;
+
+struct ICCOMPRESSFRAMES {
+	DWORD				dwFlags;
+	LPBITMAPINFOHEADER	lpbiOutput;
+	LPARAM				lOutput;
+	LPBITMAPINFOHEADER	lpbiInput;
+	LPARAM				lInput;
+	LONG				lStartFrame;
+	LONG				lFrameCount;
+	LONG				lQuality;
+	LONG				lDataRate;
+	LONG				lKeyRate;
+	DWORD				dwRate;
+	DWORD				dwScale;    DWORD		dwOverheadPerFrame;
+	DWORD				dwReserved2;
+
+	LONG function(LPARAM lInput, LONG lFrame, LPVOID lpBits, LONG len) GetData;
+	LONG function(LPARAM lOutput, LONG lFrame, LPVOID lpBits, LONG len) PutData;
+}
+
+enum {
+	ICSTATUS_START	= 0,
+	ICSTATUS_STATUS	= 1,
+	ICSTATUS_END	= 2,
+	ICSTATUS_ERROR	= 3,
+	ICSTATUS_YIELD	= 4,
+}
+
+struct ICSETSTATUSPROC {
+	DWORD	dwFlags;
+	LPARAM	lParam;
+	LONG function(LPARAM lParam, UINT message, LONG l) Status;
+}
+
+enum {
+	ICDECOMPRESS_NOTKEYFRAME	= 0x08000000,
+	ICDECOMPRESS_NULLFRAME		= 0x10000000,
+	ICDECOMPRESS_PREROLL		= 0x20000000,
+	ICDECOMPRESS_UPDATE			= 0x40000000,
+	ICDECOMPRESS_HURRYUP		= 0x80000000,
 }
 
 struct ICDECOMPRESS {
-	DWORD dwFlags;
-	LPBITMAPINFOHEADER lpbiInput;
-	LPVOID lpInput;
-	LPBITMAPINFOHEADER lpbiOutput;
-	LPVOID lpOutput;
-	DWORD ckid;
+	DWORD				dwFlags;
+	LPBITMAPINFOHEADER	lpbiInput;
+	LPVOID				lpInput;
+	LPBITMAPINFOHEADER	lpbiOutput;
+	LPVOID				lpOutput;
+	DWORD				ckid;
 }
 
 struct ICDECOMPRESSEX {
-	DWORD dwFlags;
-	LPBITMAPINFOHEADER lpbiSrc;
-	LPVOID lpSrc;
-	LPBITMAPINFOHEADER lpbiDst;
-	LPVOID lpDst;
-	INT xDst;
-	INT yDst;
-	INT dxDst;
-	INT dyDst;
-	INT xSrc;
-	INT ySrc;
-	INT dxSrc;
-	INT dySrc;
+	DWORD				dwFlags;
+	LPBITMAPINFOHEADER  lpbiSrc;
+	LPVOID				lpSrc;
+	LPBITMAPINFOHEADER	lpbiDst;
+	LPVOID				lpDst;
+	int					xDst;
+	int					yDst;
+	int					dxDst;
+	int					dyDst;
+	int					xSrc;
+	int					ySrc;
+	int					dxSrc;
+	int					dySrc;
 }
 
-struct ICDRAWSUGGEST {
-	DWORD dwFlags;
-	LPBITMAPINFOHEADER lpbiIn;
-	LPBITMAPINFOHEADER lpbiSuggest;
-	INT dxSrc;
-	INT dySrc;
-	INT dxDst;
-	INT dyDst;
-	HIC hicDecompressor;
-}
-
-struct ICPALETTE {
-	DWORD dwFlags;
-	INT iStart;
-	INT iLen;
-	LPPALETTEENTRY lppe;
+enum {
+	ICDRAW_QUERY		= 0x00000001,
+	ICDRAW_FULLSCREEN	= 0x00000002,
+	ICDRAW_HDC			= 0x00000004,
+	ICDRAW_ANIMATE		= 0x00000008,
+	ICDRAW_CONTINUE		= 0x00000010,
+	ICDRAW_MEMORYDC		= 0x00000020,
+	ICDRAW_UPDATING		= 0x00000040,
+	ICDRAW_RENDER		= 0x00000080,
+	ICDRAW_BUFFER		= 0x00000100,
 }
 
 struct ICDRAWBEGIN {
-	DWORD dwFlags;
-	HPALETTE hpal;
-	HWND hwnd;
-	HDC hdc;
-	INT xDst;
-	INT yDst;
-	INT dxDst;
-	INT dyDst;
-	LPBITMAPINFOHEADER lpbi;
-	INT xSrc;
-	INT ySrc;
-	INT dxSrc;
-	INT dySrc;
-	DWORD dwRate;
-	DWORD dwScale;
+	DWORD				dwFlags;
+	HPALETTE			hpal;
+	HWND				hwnd;
+	HDC					hdc;
+	int					xDst;
+	int					yDst;
+	int					dxDst;
+	int					dyDst;
+	LPBITMAPINFOHEADER	lpbi;
+	int					xSrc;
+	int					ySrc;
+	int					dxSrc;
+	int					dySrc;
+	DWORD				dwRate;
+	DWORD				dwScale;
+}
+
+enum {
+	ICDRAW_HURRYUP		= 0x80000000,
+	ICDRAW_UPDATE		= 0x40000000,
+	ICDRAW_PREROLL		= 0x20000000,
+	ICDRAW_NULLFRAME	= 0x10000000,
+	ICDRAW_NOTKEYFRAME	= 0x08000000,
 }
 
 struct ICDRAW {
-	DWORD dwFlags;
-	LPVOID lpFormat;
-	LPVOID lpData;
-	DWORD cbData;
-	LONG lTime;
+	DWORD			dwFlags;
+	LPVOID			lpFormat;
+	LPVOID			lpData;
+	DWORD			cbData;
+	LONG			lTime;
 }
 
-struct COMPVARS {
-	LONG cbSize;
-	DWORD dwFlags;
-	HIC hic;
-	DWORD fccType;
-	DWORD fccHandler;
-	LPBITMAPINFO lpbiIn;
-	LPBITMAPINFO lpbiOut;
-	LPVOID lpBitsOut;
-	LPVOID lpBitsPrev;
-	LONG lFrame;
-	LONG lKey;
-	LONG lDataRate;
-	LONG lQ;
-	LONG lKeyCount;
-	LPVOID lpState;
-	LONG cbState;
-}
-alias COMPVARS* PCOMPVARS;
-
-struct MainAVIHeader
-{
-	DWORD dwMicroSecPerFrame;
-	DWORD dwMaxBytesPerSec;
-	DWORD dwPaddingGranularity;
-	DWORD dwFlags;
-	DWORD dwTotalFrames;
-	DWORD dwInitialFrames;
-	DWORD dwStreams;
-	DWORD dwSuggestedBufferSize;
-	DWORD dwWidth;
-	DWORD dwHeight;
-	DWORD dwReserved[4];
+struct ICDRAWSUGGEST {
+	LPBITMAPINFOHEADER	lpbiIn;
+	LPBITMAPINFOHEADER	lpbiSuggest;
+	int					dxSrc;
+	int					dySrc;
+	int					dxDst;
+	int					dyDst;
+	HIC					hicDecompressor;
 }
 
-struct AVIStreamHeader {
-	FOURCC fccType;
-	FOURCC fccHandler;
-	DWORD dwFlags;
-	WORD wPriority;
-	WORD wLanguage;
-	DWORD dwInitialFrames;
-	DWORD dwScale;
-	DWORD dwRate;
-	DWORD dwStart;
-	DWORD dwLength;
-	DWORD dwSuggestedBufferSize;
-	DWORD dwQuality;
-	DWORD dwSampleSize;
-	RECT rcFrame;
+struct ICPALETTE {
+	DWORD			dwFlags;
+	int				iStart;
+	int				iLen;
+	LPPALETTEENTRY	lppe;
 }
 
-struct AVIINDEXENTRY{
-	DWORD ckid;
-	DWORD dwFlags;
-	DWORD dwChunkOffset;
-	DWORD dwChunkLength;
-}
 
-struct AVIPALCHANGE{
-	BYTE bFirstEntry;
-	BYTE bNumEntries;
-	WORD wFlags;
-	PALETTEENTRY peNew[1];
-}
+/**
+ * ICM function declarations
+ */
 
-struct AVISTREAMINFOA{
-	DWORD fccType;
-	DWORD fccHandler;
-	DWORD dwFlags;
-	DWORD dwCaps;
-	WORD wPriority;
-	WORD wLanguage;
-	DWORD dwScale;
-	DWORD dwRate;
-	DWORD dwStart;
-	DWORD dwLength;
-	DWORD dwInitialFrames;
-	DWORD dwSuggestedBufferSize;
-	DWORD dwQuality;
-	DWORD dwSampleSize;
-	RECT rcFrame;
-	DWORD dwEditCount;
-	DWORD dwFormatChangeCount;
-	CHAR szName[64];
-}
-alias AVISTREAMINFOA* LPAVISTREAMINFOA, PAVISTREAMINFOA;
-
-struct AVISTREAMINFOW{
-	DWORD fccType;
-	DWORD fccHandler;
-	DWORD dwFlags;
-	DWORD dwCaps;
-	WORD wPriority;
-	WORD wLanguage;
-	DWORD dwScale;
-	DWORD dwRate;
-	DWORD dwStart;
-	DWORD dwLength;
-	DWORD dwInitialFrames;
-	DWORD dwSuggestedBufferSize;
-	DWORD dwQuality;
-	DWORD dwSampleSize;
-	RECT rcFrame;
-	DWORD dwEditCount;
-	DWORD dwFormatChangeCount;
-	WCHAR szName[64];
-}
-alias AVISTREAMINFOW* LPAVISTREAMINFOW, PAVISTREAMINFOW;
-
-struct AVIFILEINFOW{
-	DWORD dwMaxBytesPerSec;
-	DWORD dwFlags;
-	DWORD dwCaps;
-	DWORD dwStreams;
-	DWORD dwSuggestedBufferSize;
-	DWORD dwWidth;
-	DWORD dwHeight;
-	DWORD dwScale;
-	DWORD dwRate;
-	DWORD dwLength;
-	DWORD dwEditCount;
-	WCHAR szFileType[64];
-}
-alias AVIFILEINFOW* LPAVIFILEINFOW, PAVIFILEINFOW;
-
-struct AVIFILEINFOA{
-	DWORD dwMaxBytesPerSec;
-	DWORD dwFlags;
-	DWORD dwCaps;
-	DWORD dwStreams;
-	DWORD dwSuggestedBufferSize;
-	DWORD dwWidth;
-	DWORD dwHeight;
-	DWORD dwScale;
-	DWORD dwRate;
-	DWORD dwLength;
-	DWORD dwEditCount;
-	CHAR szFileType[64];
-}
-alias AVIFILEINFOA* LPAVIFILEINFOA, PAVIFILEINFOA;
-
-struct AVICOMPRESSOPTIONS{
-	DWORD fccType;
-	DWORD fccHandler;
-	DWORD dwKeyFrameEvery;
-	DWORD dwQuality;
-	DWORD dwBytesPerSecond;
-	DWORD dwFlags;
-	LPVOID lpFormat;
-	DWORD cbFormat;
-	LPVOID lpParms;
-	DWORD cbParms;
-	DWORD dwInterleaveEvery;
-}
-alias AVICOMPRESSOPTIONS* LPAVICOMPRESSOPTIONS, PAVICOMPRESSOPTIONS;
-
-//[???] #if !defined (__OBJC__)
-//MACRO #define DEFINE_AVIGUID(name,l,w1,w2) DEFINE_GUID(name,l,w1,w2,0xC0,0,0,0,0,0,0,0x46)
-
-DEFINE_AVIGUID(IID_IAVIFile,0x00020020,0,0);
-DEFINE_AVIGUID(IID_IAVIStream,0x00020021,0,0);
-DEFINE_AVIGUID(IID_IAVIStreaming,0x00020022,0,0);
-DEFINE_AVIGUID(IID_IGetFrame,0x00020023,0,0);
-DEFINE_AVIGUID(IID_IAVIEditStream,0x00020024,0,0);
-DEFINE_AVIGUID(CLSID_AVIFile,0x00020000,0,0);
-
-interface IAVIStream : public IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT Create(LPARAM,LPARAM);
-	HRESULT Info(AVISTREAMINFOW*,LONG);
-	LONG FindSample(LONG,LONG);
-	HRESULT ReadFormat(LONG,LPVOID,LONG*);
-	HRESULT SetFormat(LONG,LPVOID,LONG);
-	HRESULT Read(LONG,LONG,LPVOID,LONG,LONG*,LONG*);
-	HRESULT Write(LONG,LONG,LPVOID,LONG,DWORD,LONG*,LONG*);
-	HRESULT Delete(LONG,LONG);
-	HRESULT ReadData(DWORD,LPVOID,LONG*);
-	HRESULT WriteData(DWORD,LPVOID,LONG);
-	HRESULT SetInfo(AVISTREAMINFOW*,LONG);
-}
-alias IAVIStream *PAVISTREAM;
-
-interface IAVIStreaming : public IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT Begin(LONG,LONG,LONG);
-	HRESULT End();
-}
-alias IAVIStreaming *PAVISTREAMING;
-
-interface IAVIEditStream : public IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT Cut(LONG*,LONG*,PAVISTREAM*);
-	HRESULT Copy(LONG*,LONG*,PAVISTREAM*);
-	HRESULT Paste(LONG*,LONG*,PAVISTREAM,LONG,LONG);
-	HRESULT Clone(PAVISTREAM*);
-	HRESULT SetInfo(LPAVISTREAMINFOW,LONG);
-}
-alias IAVIEditStream *PAVIEDITSTREAM;
-
-interface IAVIFile : public IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT Info(AVIFILEINFOW*,LONG);
-	HRESULT GetStream(PAVISTREAM*,DWORD,LONG);
-	HRESULT CreateStream(PAVISTREAM*,AVISTREAMINFOW*);
-	HRESULT WriteData(DWORD,LPVOID,LONG);
-	HRESULT ReadData(DWORD,LPVOID,LONG*);
-	HRESULT EndRecord();
-	HRESULT DeleteStream(DWORD,LONG);
-}
-alias IAVIFile *PAVIFILE;
-
-interface IGetFrame : public IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	LPVOID GetFrame(LONG);
-	HRESULT Begin(LONG,LONG,LONG);
-	HRESULT End();
-	HRESULT SetFormat(LPBITMAPINFOHEADER,LPVOID,INT,INT,INT,INT);
-}
-alias IGetFrame *PGETFRAME;
-
-extern(Windows):
-DWORD VideoForWindowsVersion();
-LONG InitVFW();
-LONG TermVFW();
-DWORD VFWAPIV ICCompress(HIC,DWORD,LPBITMAPINFOHEADER,LPVOID,LPBITMAPINFOHEADER,LPVOID,LPDWORD,LPDWORD,LONG,DWORD,DWORD,LPBITMAPINFOHEADER,LPVOID);
-DWORD VFWAPIV ICDecompress(HIC,DWORD,LPBITMAPINFOHEADER,LPVOID,LPBITMAPINFOHEADER,LPVOID);
-LRESULT ICSendMessage(HIC,UINT,DWORD,DWORD);
-HANDLE ICImageCompress(HIC,UINT,LPBITMAPINFO,LPVOID,LPBITMAPINFO,LONG,LONG*);
-HANDLE ICImageDecompress(HIC,UINT,LPBITMAPINFO,LPVOID,LPBITMAPINFO);
-BOOL ICInfo(DWORD,DWORD,ICINFO*);
-BOOL ICInstall(DWORD,DWORD,LPARAM,LPSTR,UINT);
-BOOL ICRemove(DWORD,DWORD,UINT);
-LRESULT ICGetInfo(HIC,ICINFO*,DWORD);
-HIC ICOpen(DWORD,DWORD,UINT);
-HIC ICOpenFunction(DWORD,DWORD,UINT,FARPROC);
+BOOL ICInfo(DWORD fccType, DWORD fccHandler, ICINFO *lpicinfo);
+BOOL ICInstall(DWORD fccType, DWORD fccHandler, LPARAM lParam, LPSTR szDesc, UINT wFlags);
+BOOL ICRemove(DWORD fccType, DWORD fccHandler, UINT wFlags);
+LRESULT ICGetInfo(HIC hic, ICINFO *picinfo, DWORD cb);
+HIC ICOpen(DWORD fccType, DWORD fccHandler, UINT wMode);
+HIC ICOpenFunction(DWORD fccType, DWORD fccHandler, UINT wMode, FARPROC lpfnHandler);
 LRESULT ICClose(HIC hic);
-HIC ICLocate(DWORD,DWORD,LPBITMAPINFOHEADER,LPBITMAPINFOHEADER,WORD);
-HIC ICGetDisplayFormat(HIC,LPBITMAPINFOHEADER,LPBITMAPINFOHEADER,INT,INT,INT);
-DWORD VFWAPIV ICDrawBegin(HIC,DWORD,HPALETTE,HWND,HDC,INT,INT,INT,INT,LPBITMAPINFOHEADER,INT,INT,INT,INT,DWORD,DWORD);
-DWORD VFWAPIV ICDraw(HIC,DWORD,LPVOID,LPVOID,DWORD,LONG);
-BOOL ICCompressorChoose(HWND,UINT,LPVOID,LPVOID,PCOMPVARS,LPSTR);
-BOOL ICSeqCompressFrameStart(PCOMPVARS,LPBITMAPINFO);
-void ICSeqCompressFrameEnd(PCOMPVARS);
-LPVOID ICSeqCompressFrame(PCOMPVARS,UINT,LPVOID,BOOL*,LONG*);
-void ICCompressorFree(PCOMPVARS);
-
-extern (Windows):
-ULONG AVIStreamAddRef(PAVISTREAM);
-ULONG AVIStreamRelease(PAVISTREAM);
-HRESULT AVIStreamCreate(PAVISTREAM*,LONG,LONG,CLSID*);
-HRESULT AVIStreamInfoA(PAVISTREAM,AVISTREAMINFOA*,LONG);
-HRESULT AVIStreamInfoW(PAVISTREAM,AVISTREAMINFOW*,LONG);
-HRESULT AVIStreamFindSample(PAVISTREAM,LONG,DWORD);
-HRESULT AVIStreamReadFormat(PAVISTREAM,LONG,LPVOID,LONG*);
-HRESULT AVIStreamSetFormat(PAVISTREAM,LONG,LPVOID,LONG);
-HRESULT AVIStreamRead(PAVISTREAM,LONG,LONG,LPVOID,LONG,LONG*,LONG*);
-HRESULT AVIStreamWrite(PAVISTREAM,LONG,LONG,LPVOID,LONG,DWORD,LONG*,LONG*);
-HRESULT AVIStreamReadData(PAVISTREAM,DWORD,LPVOID,LONG*);
-HRESULT AVIStreamWriteData(PAVISTREAM,DWORD,LPVOID,LONG);
-PGETFRAME AVIStreamGetFrameOpen(PAVISTREAM,LPBITMAPINFOHEADER);
-LPVOID AVIStreamGetFrame(PGETFRAME,LONG);
-HRESULT AVIStreamGetFrameClose(PGETFRAME);
-HRESULT AVIMakeCompressedStream(PAVISTREAM*,PAVISTREAM,AVICOMPRESSOPTIONS*,CLSID*);
-HRESULT AVIMakeFileFromStreams(PAVIFILE*,INT,PAVISTREAM*);
-HRESULT AVIStreamOpenFromFileA(PAVISTREAM*,LPCSTR,DWORD,LONG,UINT,CLSID*);
-HRESULT AVIStreamOpenFromFileW(PAVISTREAM*,LPCWSTR,DWORD,LONG,UINT,CLSID*);
-HRESULT AVIBuildFilterA(LPSTR,LONG,BOOL);
-HRESULT AVIBuildFilterW(LPWSTR,LONG,BOOL);
-BOOL AVISaveOptions(HWND,UINT,INT,PAVISTREAM*,LPAVICOMPRESSOPTIONS*);
-HRESULT AVISaveOptionsFree(INT,LPAVICOMPRESSOPTIONS*);
-HRESULT AVISaveVA(LPCSTR,CLSID*,AVISAVECALLBACK,INT,PAVISTREAM*,LPAVICOMPRESSOPTIONS*);
-HRESULT AVISaveVW(LPCWSTR,CLSID*,AVISAVECALLBACK,INT,PAVISTREAM*,LPAVICOMPRESSOPTIONS*);
-LONG AVIStreamStart(PAVISTREAM);
-LONG AVIStreamLength(PAVISTREAM);
-LONG AVIStreamSampleToTime(PAVISTREAM,LONG);
-LONG AVIStreamTimeToSample(PAVISTREAM,LONG);
-HRESULT CreateEditableStream(PAVISTREAM*,PAVISTREAM);
-HRESULT EditStreamClone(PAVISTREAM,PAVISTREAM*);
-HRESULT EditStreamCopy(PAVISTREAM,LONG*,LONG*,PAVISTREAM*);
-HRESULT EditStreamCut(PAVISTREAM,LONG*,LONG*,PAVISTREAM*);
-HRESULT EditStreamPaste(PAVISTREAM,LONG*,LONG*,PAVISTREAM,LONG,LONG);
-HRESULT EditStreamSetInfoA(PAVISTREAM,LPAVISTREAMINFOA,LONG);
-HRESULT EditStreamSetInfoW(PAVISTREAM,LPAVISTREAMINFOW,LONG);
-HRESULT EditStreamSetNameA(PAVISTREAM,LPCSTR);
-HRESULT EditStreamSetNameW(PAVISTREAM,LPCWSTR);
-HRESULT CreateEditableStream(PAVISTREAM*,PAVISTREAM);
-HRESULT EditStreamClone(PAVISTREAM,PAVISTREAM*);
-HRESULT EditStreamCopy(PAVISTREAM,LONG*,LONG*,PAVISTREAM*);
-HRESULT EditStreamCut(PAVISTREAM,LONG*,LONG*,PAVISTREAM*);
-HRESULT EditStreamPaste(PAVISTREAM,LONG*,LONG*,PAVISTREAM,LONG,LONG);
-HRESULT EditStreamSetInfoA(PAVISTREAM,LPAVISTREAMINFOA,LONG);
-HRESULT EditStreamSetInfoW(PAVISTREAM,LPAVISTREAMINFOW,LONG);
-HRESULT EditStreamSetNameA(PAVISTREAM,LPCSTR);
-HRESULT EditStreamSetNameW(PAVISTREAM,LPCWSTR);
-void AVIFileInit();
-void AVIFileExit();
-HRESULT AVIFileOpenA(PAVIFILE*,LPCSTR,UINT,LPCLSID);
-HRESULT AVIFileOpenW(PAVIFILE*,LPCWSTR,UINT,LPCLSID);
-ULONG AVIFileAddRef(PAVIFILE);
-ULONG AVIFileRelease(PAVIFILE);
-HRESULT AVIFileInfoA(PAVIFILE,PAVIFILEINFOA,LONG);
-HRESULT AVIFileInfoW(PAVIFILE,PAVIFILEINFOW,LONG);
-HRESULT AVIFileGetStream(PAVIFILE,PAVISTREAM*,DWORD,LONG);
-HRESULT AVIFileCreateStreamA(PAVIFILE,PAVISTREAM*,AVISTREAMINFOA*);
-HRESULT AVIFileCreateStreamW(PAVIFILE,PAVISTREAM*,AVISTREAMINFOW*);
-HRESULT AVIFileWriteData(PAVIFILE,DWORD,LPVOID,LONG);
-HRESULT AVIFileReadData(PAVIFILE,DWORD,LPVOID,LPLONG);
-HRESULT AVIFileEndRecord(PAVIFILE);
-HRESULT AVIClearClipboard();
-HRESULT AVIGetFromClipboard(PAVIFILE*);
-HRESULT AVIPutFileOnClipboard(PAVIFILE);
-
-//[No] #ifdef OFN_READONLY
-//[No] BOOL WINAPI GetOpenFileNamePreviewA(LPOPENFILENAMEA);
-//[No] BOOL WINAPI GetOpenFileNamePreviewW(LPOPENFILENAMEW);
-//[No] BOOL WINAPI GetSaveFileNamePreviewA(LPOPENFILENAMEA);
-//[No] BOOL WINAPI GetSaveFileNamePreviewW(LPOPENFILENAMEW);
-//[No] #endif
-HWND VFWAPIV MCIWndCreateA(HWND,HINSTANCE,DWORD,LPCSTR);
-HWND VFWAPIV MCIWndCreateW(HWND,HINSTANCE,DWORD,LPCWSTR);
-HDRAWDIB VFWAPI DrawDibOpen();
-UINT VFWAPI DrawDibRealize(HDRAWDIB,HDC,BOOL);
-BOOL VFWAPI DrawDibBegin(HDRAWDIB,HDC,INT,INT,LPBITMAPINFOHEADER,INT,INT,UINT);
-BOOL VFWAPI DrawDibDraw(HDRAWDIB,HDC,INT,INT,INT,INT,LPBITMAPINFOHEADER,LPVOID,INT,INT,INT,INT,UINT);
-BOOL VFWAPI DrawDibSetPalette(HDRAWDIB,HPALETTE);
-HPALETTE VFWAPI DrawDibGetPalette(HDRAWDIB);
-BOOL VFWAPI DrawDibChangePalette(HDRAWDIB,int,int,LPPALETTEENTRY);
-LPVOID VFWAPI DrawDibGetBuffer(HDRAWDIB,LPBITMAPINFOHEADER,DWORD,DWORD);
-BOOL VFWAPI DrawDibStart(HDRAWDIB,DWORD);
-BOOL VFWAPI DrawDibStop(HDRAWDIB);
-BOOL VFWAPI DrawDibEnd(HDRAWDIB);
-BOOL VFWAPI DrawDibClose(HDRAWDIB);
-DWORD VFWAPI DrawDibProfileDisplay(LPBITMAPINFOHEADER);
-
-//MACRO #define ICCompressGetFormat(hic,lpbiInput,lpbiOutput) ICSendMessage(hic,ICM_COMPRESS_GET_FORMAT,(DWORD)(lpbiInput),(DWORD)(lpbiOutput))
-
-//MACRO #define ICCompressGetFormatSize(hic,lpbi) ICCompressGetFormat(hic,lpbi,NULL)
-
-//MACRO #define ICCompressBegin(hic,lpbiInput,lpbiOutput) ICSendMessage(hic,ICM_COMPRESS_BEGIN,(DWORD)(lpbiInput),(DWORD)(lpbiOutput))
-
-//MACRO #define ICCompressGetSize(hic,lpbiInput,lpbiOutput) ICSendMessage(hic,ICM_COMPRESS_GET_SIZE,(DWORD)(lpbiInput),(DWORD)(lpbiOutput))
-
-//MACRO #define ICCompressQuery(hic,lpbiInput,lpbiOutput) ICSendMessage(hic,ICM_COMPRESS_QUERY,(DWORD)(lpbiInput),(DWORD)(lpbiOutput))
-
-//MACRO #define ICCompressEnd(hic) ICSendMessage(hic,ICM_COMPRESS_END,0,0)
-
-//MACRO #define ICQueryAbout(hic) (ICSendMessage(hic,ICM_ABOUT,(DWORD)-1,ICMF_ABOUT_QUERY)==ICERR_OK)
-
-//MACRO #define ICAbout(hic,hwnd) ICSendMessage(hic,ICM_ABOUT,(DWORD)(hwnd),0)
-
-//MACRO #define ICQueryConfigure(hic) (ICSendMessage(hic,ICM_CONFIGURE,(DWORD)-1,ICMF_CONFIGURE_QUERY)==ICERR_OK)
-
-//MACRO #define ICConfigure(hic,hwnd) ICSendMessage(hic,ICM_CONFIGURE,(DWORD)(hwnd),0)
-
-//MACRO #define ICDecompressBegin(hic,lpbiInput,lpbiOutput) ICSendMessage(hic,ICM_DECOMPRESS_BEGIN,(DWORD)(lpbiInput),(DWORD)(lpbiOutput))
-
-//MACRO #define ICDecompressQuery(hic,lpbiInput,lpbiOutput) ICSendMessage(hic,ICM_DECOMPRESS_QUERY,(DWORD)(lpbiInput),(DWORD)(lpbiOutput))
-
-//MACRO #define ICDecompressGetFormat(hic,lpbiInput,lpbiOutput) (LONG)ICSendMessage(hic,ICM_DECOMPRESS_GET_FORMAT,(DWORD)(lpbiInput),(DWORD)(lpbiOutput))
-
-//MACRO #define ICDecompressGetFormatSize(hic,lpbi) ICDecompressGetFormat(hic, lpbi, NULL)
-
-//MACRO #define ICDecompressGetPalette(hic,lpbiInput,lpbiOutput) ICSendMessage(hic,ICM_DECOMPRESS_GET_PALETTE,(DWORD)(lpbiInput),(DWORD)(lpbiOutput))
-
-//MACRO #define ICDecompressSetPalette(hic,lpbiPalette) ICSendMessage(hic,ICM_DECOMPRESS_SET_PALETTE,(DWORD)(lpbiPalette),0)
-
-//MACRO #define ICDecompressEnd(hic) ICSendMessage(hic,ICM_DECOMPRESS_END,0,0)
-
-//MACRO #define ICDecompressExEnd(hic) ICSendMessage(hic,ICM_DECOMPRESSEX_END,0,0)
-
-//MACRO #define ICDecompressOpen(fccType,fccHandler,lpbiIn,lpbiOut) ICLocate(fccType,fccHandler,lpbiIn,lpbiOut,ICMODE_DECOMPRESS)
-
-//MACRO #define ICDrawOpen(fccType,fccHandler,lpbiIn) ICLocate(fccType,fccHandler,lpbiIn,NULL,ICMODE_DRAW)
-
-//MACRO #define ICGetState(hic,pv,cb) ICSendMessage(hic,ICM_GETSTATE,(DWORD)(pv),(DWORD)(cb))
-
-//MACRO #define ICSetState(hic,pv,cb) ICSendMessage(hic,ICM_SETSTATE,(DWORD)(pv),(DWORD)(cb))
-
-//MACRO #define ICGetStateSize(hic) ICGetState(hic,NULL,0)
-
-//MACRO #define ICDrawWindow(hic,prc) ICSendMessage(hic,ICM_DRAW_WINDOW,(DWORD)(prc),sizeof(RECT))
-
-//MACRO #define ICDrawQuery(hic,lpbiInput) ICSendMessage(hic,ICM_DRAW_QUERY,(DWORD)(lpbiInput),0)
-
-//MACRO #define ICDrawChangePalette(hic,lpbiInput) ICSendMessage(hic,ICM_DRAW_CHANGEPALETTE,(DWORD)(lpbiInput),0)
-
-//MACRO #define ICGetBuffersWanted(hic,lpdwBuffers) ICSendMessage(hic,ICM_GETBUFFERSWANTED,(DWORD)(lpdwBuffers),0)
-
-//MACRO #define ICDrawEnd(hic) ICSendMessage(hic,ICM_DRAW_END,0,0)
-
-//MACRO #define ICDrawStart(hic) ICSendMessage(hic,ICM_DRAW_START,0,0)
-
-//MACRO #define ICDrawStartPlay(hic,lFrom,lTo) ICSendMessage(hic,ICM_DRAW_START_PLAY,(DWORD)(lFrom),(DWORD)(lTo))
-
-//MACRO #define ICDrawStop(hic) ICSendMessage(hic,ICM_DRAW_STOP,0,0)
-
-//MACRO #define ICDrawStopPlay(hic) ICSendMessage(hic,ICM_DRAW_STOP_PLAY,0,0)
-
-//MACRO #define ICDrawGetTime(hic,lplTime) ICSendMessage(hic,ICM_DRAW_GETTIME,(DWORD)(lplTime),0)
-
-//MACRO #define ICDrawSetTime(hic,lTime) ICSendMessage(hic,ICM_DRAW_SETTIME,(DWORD)lTime,0)
-
-//MACRO #define ICDrawRealize(hic,hdc,fBackground) ICSendMessage(hic,ICM_DRAW_REALIZE,(DWORD)(hdc),(DWORD)(fBackground))
-
-//MACRO #define ICDrawFlush(hic) ICSendMessage(hic,ICM_DRAW_FLUSH,0,0)
-
-//MACRO #define ICDrawRenderBuffer(hic) ICSendMessage(hic,ICM_DRAW_RENDERBUFFER,0,0)
-
-//MACRO #define AVIFileClose(pavi) AVIFileRelease(pavi)
-
-//MACRO #define AVIStreamClose(pavi) AVIStreamRelease(pavi);
-
-//MACRO #define AVIStreamEnd(pavi) (AVIStreamStart(pavi)+AVIStreamLength(pavi))
-
-//MACRO #define AVIStreamEndTime(pavi) AVIStreamSampleToTime(pavi,AVIStreamEnd(pavi))
-
-//MACRO #define AVIStreamFormatSize(pavi,lPos,plSize) AVIStreamReadFormat(pavi,lPos,NULL,plSize)
-
-//MACRO #define AVIStreamLengthTime(pavi) AVIStreamSampleToTime(pavi,AVIStreamLength(pavi))
-
-//MACRO #define AVIStreamSampleSize(pavi,pos,psize) AVIStreamRead(pavi,pos,1,NULL,0,psize,NULL)
-
-//MACRO #define AVIStreamSampleToSample(pavi1,pavi2,samp2) AVIStreamTimeToSample(pavi1,AVIStreamSampleToTime(pavi2,samp2))
-
-//MACRO #define AVIStreamStartTime(pavi) AVIStreamSampleToTime(pavi,AVIStreamStart(pavi))
-
-//MACRO #define AVIStreamNextSample(pavi,pos) AVIStreamFindSample(pavi,pos+1,FIND_NEXT|FIND_ANY)
-
-//MACRO #define AVIStreamPrevSample(pavi,pos) AVIStreamFindSample(pavi,pos-1,FIND_PREV|FIND_ANY)
-
-//MACRO #define AVIStreamNearestSample(pavi, pos) AVIStreamFindSample(pavi,pos,FIND_PREV|FIND_ANY)
-
-//MACRO #define AVStreamNextKeyFrame(pavi,pos) AVIStreamFindSample(pavi,pos+1,FIND_NEXT|FIND_KEY)
-
-//MACRO #define AVStreamPrevKeyFrame(pavi,pos) AVIStreamFindSample(pavi,pos-1,FIND_NEXT|FIND_KEY)
-
-//MACRO #define AVIStreamNearestKeyFrame(pavi,pos) AVIStreamFindSample(pavi,pos,FIND_PREV|FIND_KEY)
-
-//MACRO #define AVIStreamIsKeyFrame(pavi, pos) (AVIStreamNearestKeyFrame(pavi,pos) == pos)
-
-alias SendMessage MCIWndSM;
-
-//MACRO #define MCIWndCanPlay(hWnd) (BOOL)MCIWndSM(hWnd,MCIWNDM_CAN_PLAY,0,0)
-
-//MACRO #define MCIWndCanRecord(hWnd) (BOOL)MCIWndSM(hWnd,MCIWNDM_CAN_RECORD,0,0)
-
-//MACRO #define MCIWndCanSave(hWnd) (BOOL)MCIWndSM(hWnd,MCIWNDM_CAN_SAVE,0,0)
-
-//MACRO #define MCIWndCanWindow(hWnd) (BOOL)MCIWndSM(hWnd,MCIWNDM_CAN_WINDOW,0,0)
-
-//MACRO #define MCIWndCanEject(hWnd) (BOOL)MCIWndSM(hWnd,MCIWNDM_CAN_EJECT,0,0)
-
-//MACRO #define MCIWndCanConfig(hWnd) (BOOL)MCIWndSM(hWnd,MCIWNDM_CAN_CONFIG,0,0)
-
-//MACRO #define MCIWndPaletteKick(hWnd) (BOOL)MCIWndSM(hWnd,MCIWNDM_PALETTEKICK,0,0)
-
-//MACRO #define MCIWndSave(hWnd,szFile) (LONG)MCIWndSM(hWnd,MCI_SAVE,0,(LPARAM)(LPVOID)(szFile))
-
-//MACRO #define MCIWndSaveDialog(hWnd) MCIWndSave(hWnd,-1)
-
-//MACRO #define MCIWndNew(hWnd,lp) (LONG)MCIWndSM(hWnd,MCIWNDM_NEW,0,(LPARAM)(LPVOID)(lp))
-
-//MACRO #define MCIWndRecord(hWnd) (LONG)MCIWndSM(hWnd,MCI_RECORD,0,0)
-
-//MACRO #define MCIWndOpen(hWnd,sz,f) (LONG)MCIWndSM(hWnd,MCIWNDM_OPEN,(WPARAM)(UINT)(f),(LPARAM)(LPVOID)(sz))
-
-//MACRO #define MCIWndOpenDialog(hWnd) MCIWndOpen(hWnd,-1,0)
-
-//MACRO #define MCIWndClose(hWnd) (LONG)MCIWndSM(hWnd,MCI_CLOSE,0,0)
-
-//MACRO #define MCIWndPlay(hWnd) (LONG)MCIWndSM(hWnd,MCI_PLAY,0,0)
-
-//MACRO #define MCIWndStop(hWnd) (LONG)MCIWndSM(hWnd,MCI_STOP,0,0)
-
-//MACRO #define MCIWndPause(hWnd) (LONG)MCIWndSM(hWnd,MCI_PAUSE,0,0)
-
-//MACRO #define MCIWndResume(hWnd) (LONG)MCIWndSM(hWnd,MCI_RESUME,0,0)
-
-//MACRO #define MCIWndSeek(hWnd,lPos) (LONG)MCIWndSM(hWnd,MCI_SEEK,0,(LPARAM)(LONG)(lPos))
-
-//MACRO #define MCIWndEject(hWnd) (LONG)MCIWndSM(hWnd,MCIWNDM_EJECT,0,0)
-
-//MACRO #define MCIWndHome(hWnd) MCIWndSeek(hWnd,MCIWND_START)
-
-//MACRO #define MCIWndEnd(hWnd) MCIWndSeek(hWnd,MCIWND_END)
-
-//MACRO #define MCIWndGetSource(hWnd,prc) (LONG)MCIWndSM(hWnd,MCIWNDM_GET_SOURCE,0,(LPARAM)(LPRECT)(prc))
-
-//MACRO #define MCIWndPutSource(hWnd,prc) (LONG)MCIWndSM(hWnd,MCIWNDM_PUT_SOURCE,0,(LPARAM)(LPRECT)(prc))
-
-//MACRO #define MCIWndGetDest(hWnd,prc) (LONG)MCIWndSM(hWnd,MCIWNDM_GET_DEST,0,(LPARAM)(LPRECT)(prc))
-
-//MACRO #define MCIWndPutDest(hWnd,prc) (LONG)MCIWndSM(hWnd,MCIWNDM_PUT_DEST,0,(LPARAM)(LPRECT)(prc))
-
-//MACRO #define MCIWndPlayReverse(hWnd) (LONG)MCIWndSM(hWnd,MCIWNDM_PLAYREVERSE,0,0)
-
-//MACRO #define MCIWndPlayFrom(hWnd,lPos) (LONG)MCIWndSM(hWnd,MCIWNDM_PLAYFROM,0,(LPARAM)(LONG)(lPos))
-
-//MACRO #define MCIWndPlayTo(hWnd,lPos) (LONG)MCIWndSM(hWnd,MCIWNDM_PLAYTO,  0,(LPARAM)(LONG)(lPos))
-
-//MACRO #define MCIWndPlayFromTo(hWnd,lStart,lEnd) (MCIWndSeek(hWnd,lStart),MCIWndPlayTo(hWnd,lEnd))
-
-//MACRO #define MCIWndGetDeviceID(hWnd) (UINT)MCIWndSM(hWnd,MCIWNDM_GETDEVICEID,0,0)
-
-//MACRO #define MCIWndGetAlias(hWnd) (UINT)MCIWndSM(hWnd,MCIWNDM_GETALIAS,0,0)
-
-//MACRO #define MCIWndGetMode(hWnd,lp,len) (LONG)MCIWndSM(hWnd,MCIWNDM_GETMODE,(WPARAM)(UINT)(len),(LPARAM)(LPTSTR)(lp))
-
-//MACRO #define MCIWndGetPosition(hWnd) (LONG)MCIWndSM(hWnd,MCIWNDM_GETPOSITION,0,0)
-
-//MACRO #define MCIWndGetPositionString(hWnd,lp,len) (LONG)MCIWndSM(hWnd,MCIWNDM_GETPOSITION,(WPARAM)(UINT)(len),(LPARAM)(LPTSTR)(lp))
-
-//MACRO #define MCIWndGetStart(hWnd) (LONG)MCIWndSM(hWnd,MCIWNDM_GETSTART,0,0)
-
-//MACRO #define MCIWndGetLength(hWnd) (LONG)MCIWndSM(hWnd,MCIWNDM_GETLENGTH,0,0)
-
-//MACRO #define MCIWndGetEnd(hWnd) (LONG)MCIWndSM(hWnd,MCIWNDM_GETEND,0,0)
-
-//MACRO #define MCIWndStep(hWnd,n) (LONG)MCIWndSM(hWnd,MCI_STEP,0,(LPARAM)(long)(n))
-
-//MACRO #define MCIWndDestroy(hWnd) (VOID)MCIWndSM(hWnd,WM_CLOSE,0,0)
-
-//MACRO #define MCIWndSetZoom(hWnd,iZoom) (VOID)MCIWndSM(hWnd,MCIWNDM_SETZOOM,0,(LPARAM)(UINT)(iZoom))
-
-//MACRO #define MCIWndGetZoom(hWnd) (UINT)MCIWndSM(hWnd,MCIWNDM_GETZOOM,0,0)
-
-//MACRO #define MCIWndSetVolume(hWnd,iVol) (LONG)MCIWndSM(hWnd,MCIWNDM_SETVOLUME,0,(LPARAM)(UINT)(iVol))
-
-//MACRO #define MCIWndGetVolume(hWnd) (LONG)MCIWndSM(hWnd,MCIWNDM_GETVOLUME,0,0)
-
-//MACRO #define MCIWndSetSpeed(hWnd,iSpeed) (LONG)MCIWndSM(hWnd,MCIWNDM_SETSPEED,0,(LPARAM)(UINT)(iSpeed))
-
-//MACRO #define MCIWndGetSpeed(hWnd) (LONG)MCIWndSM(hWnd,MCIWNDM_GETSPEED,0,0)
-
-//MACRO #define MCIWndSetTimeFormat(hWnd,lp) (LONG)MCIWndSM(hWnd,MCIWNDM_SETTIMEFORMAT,0,(LPARAM)(LPTSTR)(lp))
-
-//MACRO #define MCIWndGetTimeFormat(hWnd,lp,len) (LONG)MCIWndSM(hWnd,MCIWNDM_GETTIMEFORMAT,(WPARAM)(UINT)(len),(LPARAM)(LPTSTR)(lp))
-
-//MACRO #define MCIWndValidateMedia(hWnd) (VOID)MCIWndSM(hWnd,MCIWNDM_VALIDATEMEDIA,0,0)
-
-//MACRO #define MCIWndSetRepeat(hWnd,f) (void)MCIWndSM(hWnd,MCIWNDM_SETREPEAT,0,(LPARAM)(BOOL)(f))
-
-//MACRO #define MCIWndGetRepeat(hWnd) (BOOL)MCIWndSM(hWnd,MCIWNDM_GETREPEAT,0,0)
-
-//MACRO #define MCIWndUseFrames(hWnd) MCIWndSetTimeFormat(hWnd,TEXT("frames"))
-
-//MACRO #define MCIWndUseTime(hWnd) MCIWndSetTimeFormat(hWnd,TEXT("ms"))
-
-//MACRO #define MCIWndSetActiveTimer(hWnd,active) (VOID)MCIWndSM(hWnd,MCIWNDM_SETACTIVETIMER,(WPARAM)(UINT)(active),0L)
-
-//MACRO #define MCIWndSetInactiveTimer(hWnd,inactive) (VOID)MCIWndSM(hWnd,MCIWNDM_SETINACTIVETIMER,(WPARAM)(UINT)(inactive),0L)
-
-//MACRO #define MCIWndSetTimers(hWnd,active,inactive) (VOID)MCIWndSM(hWnd,MCIWNDM_SETTIMERS,(WPARAM)(UINT)(active),(LPARAM)(UINT)(inactive))
-
-//MACRO #define MCIWndGetActiveTimer(hWnd) (UINT)MCIWndSM(hWnd,MCIWNDM_GETACTIVETIMER,0,0L);
-
-//MACRO #define MCIWndGetInactiveTimer(hWnd) (UINT)MCIWndSM(hWnd,MCIWNDM_GETINACTIVETIMER,0,0L);
-
-//MACRO #define MCIWndRealize(hWnd,fBkgnd) (LONG)MCIWndSM(hWnd,MCIWNDM_REALIZE,(WPARAM)(BOOL)(fBkgnd),0)
-
-//MACRO #define MCIWndSendString(hWnd,sz) (LONG)MCIWndSM(hWnd,MCIWNDM_SENDSTRING,0,(LPARAM)(LPTSTR)(sz))
-
-//MACRO #define MCIWndReturnString(hWnd,lp,len) (LONG)MCIWndSM(hWnd,MCIWNDM_RETURNSTRING,(WPARAM)(UINT)(len),(LPARAM)(LPVOID)(lp))
-
-//MACRO #define MCIWndGetError(hWnd,lp,len) (LONG)MCIWndSM(hWnd,MCIWNDM_GETERROR,(WPARAM)(UINT)(len),(LPARAM)(LPVOID)(lp))
-
-//MACRO #define MCIWndGetPalette(hWnd) (HPALETTE)MCIWndSM(hWnd,MCIWNDM_GETPALETTE,0,0)
-
-//MACRO #define MCIWndSetPalette(hWnd,hpal) (LONG)MCIWndSM(hWnd,MCIWNDM_SETPALETTE,(WPARAM)(HPALETTE)(hpal),0)
-
-//MACRO #define MCIWndGetFileName(hWnd,lp,len) (LONG)MCIWndSM(hWnd,MCIWNDM_GETFILENAME,(WPARAM)(UINT)(len),(LPARAM)(LPVOID)(lp))
-
-//MACRO #define MCIWndGetDevice(hWnd,lp,len) (LONG)MCIWndSM(hWnd,MCIWNDM_GETDEVICE,(WPARAM)(UINT)(len),(LPARAM)(LPVOID)(lp))
-
-//MACRO #define MCIWndGetStyles(hWnd) (UINT)MCIWndSM(hWnd,MCIWNDM_GETSTYLES,0,0L)
-
-//MACRO #define MCIWndChangeStyles(hWnd,mask,value) (LONG)MCIWndSM(hWnd,MCIWNDM_CHANGESTYLES,(WPARAM)(UINT)(mask),(LPARAM)(LONG)(value))
-
-//MACRO #define MCIWndOpenInterface(hWnd,pUnk) (LONG)MCIWndSM(hWnd,MCIWNDM_OPENINTERFACE,0,(LPARAM)(LPUNKNOWN)(pUnk))
-
-//MACRO #define MCIWndSetOwner(hWnd,hWndP) (LONG)MCIWndSM(hWnd,MCIWNDM_SETOWNER,(WPARAM)(hWndP),0)
-
-//MACRO #define DrawDibUpdate(hdd,hdc,x,y) DrawDibDraw(hdd,hdc,x,y,0,0,NULL,NULL,0,0,0,0,DDF_UPDATE)
-
-DWORD ICGetDefaultQuality(HIC hic)
-{
-	DWORD dwICValue;
-	ICSendMessage(hic, ICM_GETDEFAULTQUALITY, cast(DWORD)cast(LPVOID)&dwICValue, DWORD.sizeof);
-	return dwICValue;
+LRESULT ICSendMessage(HIC hic, UINT msg, DWORD_PTR dw1, DWORD_PTR dw2);
+
+enum {
+	ICINSTALL_FUNCTION	= 0x0001,
+	ICINSTALL_DRIVER	= 0x0002,
+	ICINSTALL_HDRV		= 0x0004,
+	ICINSTALL_UNICODE	= 0x8000,
+	ICINSTALL_DRIVERW	= 0x8002,
 }
 
-DWORD ICGetDefaultKeyFrameRate(HIC hic)
-{
-	DWORD dwICValue;
-	ICSendMessage(hic, ICM_GETDEFAULTKEYFRAMERATE, cast(DWORD)cast(LPVOID)&dwICValue, DWORD.sizeof);
-	return dwICValue;
+// query macros
+
+const ICMF_CONFIGURE_QUERY	= 0x00000001;
+const ICMF_ABOUT_QUERY		= 0x00000001;
+
+DWORD ICQueryAbout(HIC hic) {
+	return ICSendMessage(hic, ICM_ABOUT, -1, ICMF_ABOUT_QUERY) == ICERR_OK;
 }
 
-LRESULT ICDrawSuggestFormat(HIC hic,LPBITMAPINFOHEADER lpbiIn,LPBITMAPINFOHEADER lpbiOut,INT dxSrc,INT dySrc,INT dxDst,INT dyDst,HIC hicDecomp)
-{
-	ICDRAWSUGGEST ic;
-	ic.lpbiIn = lpbiIn;
-	ic.lpbiSuggest = lpbiOut;
-	ic.dxSrc = dxSrc;
-	ic.dySrc = dySrc;
-	ic.dxDst = dxDst;
-	ic.dyDst = dyDst;
-	ic.hicDecompressor = hicDecomp;
-	return ICSendMessage(hic,ICM_DRAW_SUGGESTFORMAT,cast(DWORD)&ic,ic.sizeof);
+DWORD ICAbout(HIC hic, HWND hwnd) {
+	return ICSendMessage(hic, ICM_ABOUT, cast(UINT)hwnd, 0);
 }
 
-LRESULT ICSetStatusProc(HIC hic,DWORD dwFlags,LRESULT lParam,LONG (CALLBACK *fpfnStatus)(LPARAM,UINT,LONG))
-{
-	ICSETSTATUSPROC ic;
-	ic.dwFlags = dwFlags;
-	ic.lParam = lParam;
-	ic.Status = fpfnStatus;
-	return ICSendMessage(hic,ICM_SET_STATUS_PROC,cast(DWORD)&ic,ic.sizeof);
+DWORD ICQueryConfigure(HIC hic) {
+	return (ICSendMessage(hic, ICM_CONFIGURE, -1, ICMF_CONFIGURE_QUERY) == ICERR_OK);
 }
 
-LRESULT ICDecompressEx(HIC hic,DWORD dwFlags,LPBITMAPINFOHEADER lpbiSrc,LPVOID lpSrc,INT xSrc,INT ySrc,INT dxSrc,INT dySrc,LPBITMAPINFOHEADER lpbiDst,LPVOID lpDst,INT xDst,INT yDst,INT dxDst,INT dyDst)
-{
-	ICDECOMPRESSEX ic;
-	ic.dwFlags = dwFlags;
-	ic.lpbiSrc = lpbiSrc;
-	ic.lpSrc = lpSrc;
-	ic.xSrc = xSrc;
-	ic.ySrc = ySrc;
-	ic.dxSrc = dxSrc;
-	ic.dySrc = dySrc;
-	ic.lpbiDst = lpbiDst;
-	ic.lpDst = lpDst;
-	ic.xDst = xDst;
-	ic.yDst = yDst;
-	ic.dxDst = dxDst;
-	ic.dyDst = dyDst;
-	return ICSendMessage(hic,ICM_DECOMPRESSEX,cast(DWORD)&ic,ic.sizeof);
+DWORD ICConfigure(HIC hic, HWND hwnd) {
+	return ICSendMessage(hic, ICM_CONFIGURE, cast(UINT)hwnd, 0);
 }
 
-LRESULT ICDecompressExBegin(HIC hic,DWORD dwFlags,LPBITMAPINFOHEADER lpbiSrc,LPVOID lpSrc,INT xSrc,INT ySrc,INT dxSrc,INT dySrc,LPBITMAPINFOHEADER lpbiDst,LPVOID lpDst,INT xDst,INT yDst,INT dxDst,INT dyDst)
-{
-	ICDECOMPRESSEX ic;
-	ic.dwFlags = dwFlags;
-	ic.lpbiSrc = lpbiSrc;
-	ic.lpSrc = lpSrc;
-	ic.xSrc = xSrc;
-	ic.ySrc = ySrc;
-	ic.dxSrc = dxSrc;
-	ic.dySrc = dySrc;
-	ic.lpbiDst = lpbiDst;
-	ic.lpDst = lpDst;
-	ic.xDst = xDst;
-	ic.yDst = yDst;
-	ic.dxDst = dxDst;
-	ic.dyDst = dyDst;
-	return ICSendMessage(hic,ICM_DECOMPRESSEX_BEGIN,cast(DWORD)&ic,ic.sizeof);
+DWORD ICGetState(HIC hic, LPVOID pv, DWORD_PTR cb) {
+	return ICSendMessage(hic, ICM_GETSTATE, cast(DWORD)pv, cast(DWORD)cb);
 }
 
-LRESULT ICDecompressExQuery(HIC hic,DWORD dwFlags,LPBITMAPINFOHEADER lpbiSrc,LPVOID lpSrc,INT xSrc,INT ySrc,INT dxSrc,INT dySrc,LPBITMAPINFOHEADER lpbiDst,LPVOID lpDst,INT xDst,INT yDst,INT dxDst,INT dyDst)
+DWORD ICSetState(HIC hic, LPVOID pv, DWORD_PTR cb) {
+	return ICSendMessage(hic, ICM_SETSTATE, cast(DWORD)pv, cast(DWORD)cb);
+}
+
+DWORD ICGetStateSize(HIC hic) {
+	return ICGetState(hic, null, 0);
+}
+
+/+ TODO:
+static DWORD dwICValue;
+
+#define ICGetDefaultQuality(hic)    (ICSendMessage(hic, ICM_GETDEFAULTQUALITY, (DWORD_PTR)(LPVOID)&dwICValue, sizeof(DWORD)), dwICValue)
+
+#define ICGetDefaultKeyFrameRate(hic)    (ICSendMessage(hic, ICM_GETDEFAULTKEYFRAMERATE, (DWORD_PTR)(LPVOID)&dwICValue, sizeof(DWORD)), dwICValue)
++/
+
+DWORD ICDrawWindow(HIC hic, LPVOID prc) {
+	return ICSendMessage(hic, ICM_DRAW_WINDOW, cast(DWORD)prc, RECT.sizeof);
+}
+
+DWORD ICCompress(HIC hic, DWORD dwFlags, LPBITMAPINFOHEADER lpbiOutput, LPVOID lpData, LPBITMAPINFOHEADER lpbiInput, LPVOID lpBits, LPDWORD lpckid, LPDWORD lpdwFlags, LONG lFrameNum, DWORD dwFrameSize, DWORD dwQuality, LPBITMAPINFOHEADER lpbiPrev, LPVOID lpPrev);
+
+/+ TODO:
+#define ICCompressBegin(hic, lpbiInput, lpbiOutput)    ICSendMessage(hic, ICM_COMPRESS_BEGIN, (DWORD_PTR)(LPVOID)(lpbiInput), (DWORD_PTR)(LPVOID)(lpbiOutput))
+#define ICCompressQuery(hic, lpbiInput, lpbiOutput)    ICSendMessage(hic, ICM_COMPRESS_QUERY, (DWORD_PTR)(LPVOID)(lpbiInput), (DWORD_PTR)(LPVOID)(lpbiOutput))
+#define ICCompressGetFormat(hic, lpbiInput, lpbiOutput)    ICSendMessage(hic, ICM_COMPRESS_GET_FORMAT, (DWORD_PTR)(LPVOID)(lpbiInput), (DWORD_PTR)(LPVOID)(lpbiOutput))
+#define ICCompressGetFormatSize(hic, lpbi)    (DWORD) ICCompressGetFormat(hic, lpbi, NULL)
+#define ICCompressGetSize(hic, lpbiInput, lpbiOutput)    (DWORD) ICSendMessage(hic, ICM_COMPRESS_GET_SIZE, (DWORD_PTR)(LPVOID)(lpbiInput), (DWORD_PTR)(LPVOID)(lpbiOutput))
+#define ICCompressEnd(hic)    ICSendMessage(hic, ICM_COMPRESS_END, 0, 0)
+#define ICDECOMPRESS_HURRYUP    0x80000000L
+DWORD
+ICDecompress(
+    IN  HIC                 hic,
+    IN  DWORD               dwFlags,
+    IN  LPBITMAPINFOHEADER  lpbiFormat,
+    IN  LPVOID              lpData,
+    IN  LPBITMAPINFOHEADER  lpbi,
+    OUT LPVOID              lpBits
+    );
+
+#define ICDecompressBegin(hic, lpbiInput, lpbiOutput)    ICSendMessage(hic, ICM_DECOMPRESS_BEGIN, (DWORD_PTR)(LPVOID)(lpbiInput), (DWORD_PTR)(LPVOID)(lpbiOutput))
+#define ICDecompressQuery(hic, lpbiInput, lpbiOutput)    ICSendMessage(hic, ICM_DECOMPRESS_QUERY, (DWORD_PTR)(LPVOID)(lpbiInput), (DWORD_PTR)(LPVOID)(lpbiOutput))
+#define ICDecompressGetFormat(hic, lpbiInput, lpbiOutput)    ((LONG) ICSendMessage(hic, ICM_DECOMPRESS_GET_FORMAT, (DWORD_PTR)(LPVOID)(lpbiInput), (DWORD_PTR)(LPVOID)(lpbiOutput)))
+
+#define ICDecompressGetFormatSize(hic, lpbi)    ICDecompressGetFormat(hic, lpbi, NULL)
+#define ICDecompressGetPalette(hic, lpbiInput, lpbiOutput)    ICSendMessage(hic, ICM_DECOMPRESS_GET_PALETTE, (DWORD_PTR)(LPVOID)(lpbiInput), (DWORD_PTR)(LPVOID)(lpbiOutput))
+
+#define ICDecompressSetPalette(hic, lpbiPalette)    ICSendMessage(hic, ICM_DECOMPRESS_SET_PALETTE, (DWORD_PTR)(LPVOID)(lpbiPalette), 0)
+
+#define ICDecompressEnd(hic)    ICSendMessage(hic, ICM_DECOMPRESS_END, 0, 0)
+
+static __inline LRESULT VFWAPI_INLINE
+ICDecompressEx(
+            HIC hic,
+            DWORD dwFlags,
+            LPBITMAPINFOHEADER lpbiSrc,
+            LPVOID lpSrc,
+            int xSrc,
+            int ySrc,
+            int dxSrc,
+            int dySrc,
+            LPBITMAPINFOHEADER lpbiDst,
+            LPVOID lpDst,
+            int xDst,
+            int yDst,
+            int dxDst,
+            int dyDst)
 {
-	ICDECOMPRESSEX ic;
-	ic.dwFlags = dwFlags;
-	ic.lpbiSrc = lpbiSrc;
-	ic.lpSrc = lpSrc;
-	ic.xSrc = xSrc;
-	ic.ySrc = ySrc;
-	ic.dxSrc = dxSrc;
-	ic.dySrc = dySrc;
-	ic.lpbiDst = lpbiDst;
-	ic.lpDst = lpDst;
-	ic.xDst = xDst;
-	ic.yDst = yDst;
-	ic.dxDst = dxDst;
-	ic.dyDst = dyDst;
-	return ICSendMessage(hic,ICM_DECOMPRESSEX_QUERY,cast(DWORD)&ic,ic.sizeof);
+    ICDECOMPRESSEX ic;
+
+    ic.dwFlags = dwFlags;
+    ic.lpbiSrc = lpbiSrc;
+    ic.lpSrc = lpSrc;
+    ic.xSrc = xSrc;
+    ic.ySrc = ySrc;
+    ic.dxSrc = dxSrc;
+    ic.dySrc = dySrc;
+    ic.lpbiDst = lpbiDst;
+    ic.lpDst = lpDst;
+    ic.xDst = xDst;
+    ic.yDst = yDst;
+    ic.dxDst = dxDst;
+    ic.dyDst = dyDst;
+
+    return ICSendMessage(hic, ICM_DECOMPRESSEX, (DWORD_PTR)&ic, sizeof(ic));
+}
+
+static __inline LRESULT VFWAPI_INLINE
+ICDecompressExBegin(
+            HIC hic,
+            DWORD dwFlags,
+            LPBITMAPINFOHEADER lpbiSrc,
+            LPVOID lpSrc,
+            int xSrc,
+            int ySrc,
+            int dxSrc,
+            int dySrc,
+            LPBITMAPINFOHEADER lpbiDst,
+            LPVOID lpDst,
+            int xDst,
+            int yDst,
+            int dxDst,
+            int dyDst)
+{
+    ICDECOMPRESSEX ic;
+
+    ic.dwFlags = dwFlags;
+    ic.lpbiSrc = lpbiSrc;
+    ic.lpSrc = lpSrc;
+    ic.xSrc = xSrc;
+    ic.ySrc = ySrc;
+    ic.dxSrc = dxSrc;
+    ic.dySrc = dySrc;
+    ic.lpbiDst = lpbiDst;
+    ic.lpDst = lpDst;
+    ic.xDst = xDst;
+    ic.yDst = yDst;
+    ic.dxDst = dxDst;
+    ic.dyDst = dyDst;
+
+    return ICSendMessage(hic, ICM_DECOMPRESSEX_BEGIN, (DWORD_PTR)&ic, sizeof(ic));
+}
+
+static __inline LRESULT VFWAPI_INLINE
+ICDecompressExQuery(
+            HIC hic,
+            DWORD dwFlags,
+            LPBITMAPINFOHEADER lpbiSrc,
+            LPVOID lpSrc,
+            int xSrc,
+            int ySrc,
+            int dxSrc,
+            int dySrc,
+            LPBITMAPINFOHEADER lpbiDst,
+            LPVOID lpDst,
+            int xDst,
+            int yDst,
+            int dxDst,
+            int dyDst)
+{
+    ICDECOMPRESSEX ic;
+
+    ic.dwFlags = dwFlags;
+    ic.lpbiSrc = lpbiSrc;
+    ic.lpSrc = lpSrc;
+    ic.xSrc = xSrc;
+    ic.ySrc = ySrc;
+    ic.dxSrc = dxSrc;
+    ic.dySrc = dySrc;
+    ic.lpbiDst = lpbiDst;
+    ic.lpDst = lpDst;
+    ic.xDst = xDst;
+    ic.yDst = yDst;
+    ic.dxDst = dxDst;
+    ic.dyDst = dyDst;
+
+    return ICSendMessage(hic, ICM_DECOMPRESSEX_QUERY, (DWORD_PTR)&ic, sizeof(ic));
+}
+
+
+#define ICDecompressExEnd(hic)    ICSendMessage(hic, ICM_DECOMPRESSEX_END, 0, 0)
+#define ICDRAW_QUERY        0x00000001L
+#define ICDRAW_FULLSCREEN   0x00000002L
+#define ICDRAW_HDC          0x00000004L
+
+DWORD
+VFWAPIV
+ICDrawBegin(
+    IN HIC                 hic,
+    IN DWORD               dwFlags,
+    IN HPALETTE            hpal,
+    IN HWND                hwnd,
+    IN HDC                 hdc,
+    IN int                 xDst,
+    IN int                 yDst,
+    IN int                 dxDst,
+    IN int                 dyDst,
+    IN LPBITMAPINFOHEADER  lpbi,
+    IN int                 xSrc,
+    IN int                 ySrc,
+    IN int                 dxSrc,
+    IN int                 dySrc,
+    IN DWORD               dwRate,
+    IN DWORD               dwScale
+    );
+
+#define ICDRAW_HURRYUP      0x80000000L
+#define ICDRAW_UPDATE       0x40000000L
+
+DWORD
+VFWAPIV
+ICDraw(
+    IN HIC                 hic,
+    IN DWORD               dwFlags,
+    IN LPVOID              lpFormat,
+    IN LPVOID              lpData,
+    IN DWORD               cbData,
+    IN LONG                lTime
+    );
+
+
+static __inline LRESULT VFWAPI_INLINE
+ICDrawSuggestFormat(
+            HIC hic,
+            LPBITMAPINFOHEADER lpbiIn,
+            LPBITMAPINFOHEADER lpbiOut,
+            int dxSrc,
+            int dySrc,
+            int dxDst,
+            int dyDst,
+            HIC hicDecomp)
+{
+    ICDRAWSUGGEST ic;
+
+    ic.lpbiIn = lpbiIn;
+    ic.lpbiSuggest = lpbiOut;
+    ic.dxSrc = dxSrc;
+    ic.dySrc = dySrc;
+    ic.dxDst = dxDst;
+    ic.dyDst = dyDst;
+    ic.hicDecompressor = hicDecomp;
+
+    return ICSendMessage(hic, ICM_DRAW_SUGGESTFORMAT, (DWORD_PTR)&ic, sizeof(ic));
+}
+
+#define ICDrawQuery(hic, lpbiInput)    ICSendMessage(hic, ICM_DRAW_QUERY, (DWORD_PTR)(LPVOID)(lpbiInput), 0L)
+
+#define ICDrawChangePalette(hic, lpbiInput)    ICSendMessage(hic, ICM_DRAW_CHANGEPALETTE, (DWORD_PTR)(LPVOID)(lpbiInput), 0L)
+
+#define ICGetBuffersWanted(hic, lpdwBuffers)    ICSendMessage(hic, ICM_GETBUFFERSWANTED, (DWORD_PTR)(LPVOID)(lpdwBuffers), 0)
+
+#define ICDrawEnd(hic)    ICSendMessage(hic, ICM_DRAW_END, 0, 0)
+
+#define ICDrawStart(hic)    ICSendMessage(hic, ICM_DRAW_START, 0, 0)
+
+#define ICDrawStartPlay(hic, lFrom, lTo)    ICSendMessage(hic, ICM_DRAW_START_PLAY, (DWORD_PTR)(lFrom), (DWORD_PTR)(lTo))
+
+#define ICDrawStop(hic)    ICSendMessage(hic, ICM_DRAW_STOP, 0, 0)
+
+#define ICDrawStopPlay(hic)    ICSendMessage(hic, ICM_DRAW_STOP_PLAY, 0, 0)
+
+#define ICDrawGetTime(hic, lplTime)    ICSendMessage(hic, ICM_DRAW_GETTIME, (DWORD_PTR)(LPVOID)(lplTime), 0)
+
+#define ICDrawSetTime(hic, lTime)    ICSendMessage(hic, ICM_DRAW_SETTIME, (DWORD_PTR)lTime, 0)
+
+#define ICDrawRealize(hic, hdc, fBackground)    ICSendMessage(hic, ICM_DRAW_REALIZE, (DWORD_PTR)(UINT_PTR)(HDC)(hdc), (DWORD_PTR)(BOOL)(fBackground))
+
+#define ICDrawFlush(hic)    ICSendMessage(hic, ICM_DRAW_FLUSH, 0, 0)
+
+#define ICDrawRenderBuffer(hic)    ICSendMessage(hic, ICM_DRAW_RENDERBUFFER, 0, 0)
+
+static __inline LRESULT VFWAPI_INLINE
+ICSetStatusProc(
+            HIC hic,
+            DWORD dwFlags,
+            LRESULT lParam,
+            LONG (CALLBACK *fpfnStatus)(LPARAM, UINT, LONG) )
+{
+    ICSETSTATUSPROC ic;
+
+    ic.dwFlags = dwFlags;
+    ic.lParam = lParam;
+    ic.Status = fpfnStatus;
+
+    return ICSendMessage(hic, ICM_SET_STATUS_PROC, (DWORD_PTR)&ic, sizeof(ic));
+}
+
+#define ICDecompressOpen(fccType, fccHandler, lpbiIn, lpbiOut)    ICLocate(fccType, fccHandler, lpbiIn, lpbiOut, ICMODE_DECOMPRESS)
+
+#define ICDrawOpen(fccType, fccHandler, lpbiIn)    ICLocate(fccType, fccHandler, lpbiIn, NULL, ICMODE_DRAW)
+
+HIC
+ICLocate(
+    IN DWORD fccType,
+    IN DWORD fccHandler,
+    IN LPBITMAPINFOHEADER lpbiIn,
+    IN LPBITMAPINFOHEADER lpbiOut,
+    IN WORD wFlags
+    );
+
+HIC
+ICGetDisplayFormat(
+    IN HIC hic,
+    IN LPBITMAPINFOHEADER lpbiIn,
+    OUT LPBITMAPINFOHEADER lpbiOut,
+    IN int BitDepth,
+    IN int dx,
+    IN int dy
+    );
+
+HANDLE
+ICImageCompress(
+    IN HIC                 hic,
+    IN UINT                uiFlags,
+    IN LPBITMAPINFO        lpbiIn,
+    IN LPVOID              lpBits,
+    IN LPBITMAPINFO        lpbiOut,
+    IN LONG                lQuality,
+    IN OUT LONG FAR *      plSize
+    );
+
+HANDLE
+ICImageDecompress(
+    IN HIC                 hic,
+    IN UINT                uiFlags,
+    IN LPBITMAPINFO        lpbiIn,
+    IN LPVOID              lpBits,
+    IN LPBITMAPINFO        lpbiOut
+    );
+
+typedef struct {
+    LONG		cbSize;
+    DWORD		dwFlags;
+    HIC			hic;
+    DWORD               fccType;
+    DWORD               fccHandler;
+    LPBITMAPINFO	lpbiIn;
+    LPBITMAPINFO	lpbiOut;
+    LPVOID		lpBitsOut;
+    LPVOID		lpBitsPrev;
+    LONG		lFrame;
+    LONG		lKey;
+    LONG		lDataRate;
+    LONG		lQ;
+    LONG		lKeyCount;
+    LPVOID		lpState;
+    LONG		cbState;
+} COMPVARS, FAR *PCOMPVARS;
+
+#define ICMF_COMPVARS_VALID	0x00000001
+
+BOOL
+ICCompressorChoose(
+    IN     HWND        hwnd,
+    IN     UINT        uiFlags,
+    IN     LPVOID      pvIn,
+    IN     LPVOID      lpData,
+    IN OUT PCOMPVARS   pc,
+    IN     LPSTR       lpszTitle
+    );
+
+#define ICMF_CHOOSE_KEYFRAME	0x0001
+#define ICMF_CHOOSE_DATARATE	0x0002
+#define ICMF_CHOOSE_PREVIEW	0x0004
+#define ICMF_CHOOSE_ALLCOMPRESSORS	0x0008
+
+BOOL
+ICSeqCompressFrameStart(
+    IN PCOMPVARS pc,
+    IN LPBITMAPINFO lpbiIn
+    );
+
+void
+ICSeqCompressFrameEnd(
+    IN PCOMPVARS pc
+    );
+
+LPVOID
+ICSeqCompressFrame(
+    IN  PCOMPVARS               pc,
+    IN  UINT                    uiFlags,
+    IN  LPVOID                  lpBits,
+    OUT BOOL FAR                *pfKey,
+    IN OUT LONG FAR             *plSize
+    );
+
+void
+ICCompressorFree(
+    IN PCOMPVARS pc
+    );
+
+#endif
+
+#ifndef NODRAWDIB
+
+typedef HANDLE HDRAWDIB;
+
+#define DDF_0001            0x0001
+#define DDF_UPDATE          0x0002
+#define DDF_SAME_HDC        0x0004
+#define DDF_SAME_DRAW       0x0008
+#define DDF_DONTDRAW        0x0010
+#define DDF_ANIMATE         0x0020
+#define DDF_BUFFER          0x0040
+#define DDF_JUSTDRAWIT      0x0080
+#define DDF_FULLSCREEN      0x0100
+#define DDF_BACKGROUNDPAL   0x0200
+#define DDF_NOTKEYFRAME     0x0400
+#define DDF_HURRYUP         0x0800
+#define DDF_HALFTONE        0x1000
+#define DDF_2000            0x2000
+
+#define DDF_PREROLL         DDF_DONTDRAW
+#define DDF_SAME_DIB        DDF_SAME_DRAW
+#define DDF_SAME_SIZE       DDF_SAME_DRAW
+
+extern BOOL VFWAPI DrawDibInit(void);
+extern HDRAWDIB VFWAPI DrawDibOpen(void);
+
+extern
+BOOL
+DrawDibClose(
+    IN HDRAWDIB hdd
+    );
+
+extern
+LPVOID
+DrawDibGetBuffer(
+    IN HDRAWDIB hdd,
+    OUT LPBITMAPINFOHEADER lpbi,
+    IN DWORD dwSize,
+    IN DWORD dwFlags
+    );
+
+extern UINT VFWAPI DrawDibError(HDRAWDIB hdd);
+extern
+HPALETTE
+DrawDibGetPalette(
+    IN HDRAWDIB hdd
+    );
+extern
+BOOL
+DrawDibSetPalette(
+    IN HDRAWDIB hdd,
+    IN HPALETTE hpal
+    );
+extern
+BOOL
+DrawDibChangePalette(
+    IN HDRAWDIB hdd,
+    IN int iStart,
+    IN int iLen,
+    IN LPPALETTEENTRY lppe
+    );
+
+extern
+UINT
+DrawDibRealize(
+    IN HDRAWDIB hdd,
+    IN HDC hdc,
+    IN BOOL fBackground
+    );
+
+extern
+BOOL
+DrawDibStart(
+    IN HDRAWDIB hdd,
+    IN DWORD rate
+    );
+
+extern
+BOOL
+DrawDibStop(
+    IN HDRAWDIB hdd
+    );
+
+extern
+BOOL
+DrawDibBegin(
+    IN HDRAWDIB hdd,
+    IN HDC      hdc,
+    IN int      dxDst,
+    IN int      dyDst,
+    IN LPBITMAPINFOHEADER lpbi,
+    IN int      dxSrc,
+    IN int      dySrc,
+    IN UINT     wFlags
+    );
+
+extern
+BOOL
+DrawDibDraw(
+    IN HDRAWDIB hdd,
+    IN HDC      hdc,
+    IN int      xDst,
+    IN int      yDst,
+    IN int      dxDst,
+    IN int      dyDst,
+    IN LPBITMAPINFOHEADER lpbi,
+    IN LPVOID   lpBits,
+    IN int      xSrc,
+    IN int      ySrc,
+    IN int      dxSrc,
+    IN int      dySrc,
+    IN UINT     wFlags
+    );
+
+#define DrawDibUpdate(hdd, hdc, x, y)        DrawDibDraw(hdd, hdc, x, y, 0, 0, NULL, NULL, 0, 0, 0, 0, DDF_UPDATE)
+
+extern
+BOOL
+DrawDibEnd(
+    IN HDRAWDIB hdd
+    );
+
+typedef struct {
+    LONG    timeCount;
+    LONG    timeDraw;
+    LONG    timeDecompress;
+    LONG    timeDither;
+    LONG    timeStretch;
+    LONG    timeBlt;
+    LONG    timeSetDIBits;
+}   DRAWDIBTIME, FAR *LPDRAWDIBTIME;
+
+BOOL
+DrawDibTime(
+    IN HDRAWDIB hdd,
+    OUT LPDRAWDIBTIME lpddtime
+    );
+
+
+#define PD_CAN_DRAW_DIB         0x0001
+#define PD_CAN_STRETCHDIB       0x0002
+#define PD_STRETCHDIB_1_1_OK    0x0004
+#define PD_STRETCHDIB_1_2_OK    0x0008
+#define PD_STRETCHDIB_1_N_OK    0x0010
+
+LRESULT
+DrawDibProfileDisplay(
+    IN LPBITMAPINFOHEADER lpbi
+    );
+
+
+#ifdef DRAWDIB_INCLUDE_STRETCHDIB
+void WINAPI StretchDIB(
+	LPBITMAPINFOHEADER biDst,
+	LPVOID	lpDst,		
+	int	DstX,		
+	int	DstY,		
+	int	DstXE,		
+	int	DstYE,		
+	LPBITMAPINFOHEADER biSrc,
+	LPVOID	lpSrc,		
+	int	SrcX,		
+	int	SrcY,		
+	int	SrcXE,		
+	int	SrcYE); 	
+#endif
+
+#endif
+
+#ifndef NOAVIFMT
+    #ifndef _INC_MMSYSTEM
+        typedef DWORD FOURCC;
+    #endif
+#ifdef _MSC_VER
+#pragma warning(disable:4200)
+#endif
++/
+
+alias DWORD FOURCC;
+
+/+ TODO:
+
+#ifndef mmioFOURCC
+#define mmioFOURCC( ch0, ch1, ch2, ch3 )				\
+		( (DWORD)(BYTE)(ch0) | ( (DWORD)(BYTE)(ch1) << 8 ) |	\
+		( (DWORD)(BYTE)(ch2) << 16 ) | ( (DWORD)(BYTE)(ch3) << 24 ) )
+#endif
+
+
+#ifndef aviTWOCC
+#define aviTWOCC(ch0, ch1) ((WORD)(BYTE)(ch0) | ((WORD)(BYTE)(ch1) << 8))
+#endif
+
+typedef WORD TWOCC;
+
+
+#define formtypeAVI             mmioFOURCC('A', 'V', 'I', ' ')
+#define listtypeAVIHEADER       mmioFOURCC('h', 'd', 'r', 'l')
+#define ckidAVIMAINHDR          mmioFOURCC('a', 'v', 'i', 'h')
+#define listtypeSTREAMHEADER    mmioFOURCC('s', 't', 'r', 'l')
+#define ckidSTREAMHEADER        mmioFOURCC('s', 't', 'r', 'h')
+#define ckidSTREAMFORMAT        mmioFOURCC('s', 't', 'r', 'f')
+#define ckidSTREAMHANDLERDATA   mmioFOURCC('s', 't', 'r', 'd')
+#define ckidSTREAMNAME		mmioFOURCC('s', 't', 'r', 'n')
+
+#define listtypeAVIMOVIE        mmioFOURCC('m', 'o', 'v', 'i')
+#define listtypeAVIRECORD       mmioFOURCC('r', 'e', 'c', ' ')
+
+#define ckidAVINEWINDEX         mmioFOURCC('i', 'd', 'x', '1')
+
+#define streamtypeVIDEO         mmioFOURCC('v', 'i', 'd', 's')
+#define streamtypeAUDIO         mmioFOURCC('a', 'u', 'd', 's')
+#define streamtypeMIDI		mmioFOURCC('m', 'i', 'd', 's')
+#define streamtypeTEXT          mmioFOURCC('t', 'x', 't', 's')
+
+
+#define cktypeDIBbits           aviTWOCC('d', 'b')
+#define cktypeDIBcompressed     aviTWOCC('d', 'c')
+#define cktypePALchange         aviTWOCC('p', 'c')
+#define cktypeWAVEbytes         aviTWOCC('w', 'b')
+
+
+#define ckidAVIPADDING          mmioFOURCC('J', 'U', 'N', 'K')
+
+
+#define FromHex(n)	(((n) >= 'A') ? ((n) + 10 - 'A') : ((n) - '0'))
+#define StreamFromFOURCC(fcc) ((WORD) ((FromHex(LOBYTE(LOWORD(fcc))) << 4) +                                             (FromHex(HIBYTE(LOWORD(fcc))))))
+
+#define TWOCCFromFOURCC(fcc)    HIWORD(fcc)
+
+#define ToHex(n)	((BYTE) (((n) > 9) ? ((n) - 10 + 'A') : ((n) + '0')))
+#define MAKEAVICKID(tcc, stream)        MAKELONG((ToHex((stream) & 0x0f) << 8) |			    (ToHex(((stream) & 0xf0) >> 4)), tcc)
+
+#define AVIF_HASINDEX		0x00000010
+#define AVIF_MUSTUSEINDEX	0x00000020
+#define AVIF_ISINTERLEAVED	0x00000100
+#define AVIF_WASCAPTUREFILE	0x00010000
+#define AVIF_COPYRIGHTED	0x00020000
+
+#define AVI_HEADERSIZE  2048
+
+typedef struct
+{
+    DWORD		dwMicroSecPerFrame;
+    DWORD		dwMaxBytesPerSec;
+    DWORD		dwPaddingGranularity;
+    DWORD		dwFlags;
+    DWORD		dwTotalFrames;
+    DWORD		dwInitialFrames;
+    DWORD		dwStreams;
+    DWORD		dwSuggestedBufferSize;
+    DWORD		dwWidth;
+    DWORD		dwHeight;
+    DWORD		dwReserved[4];
+} MainAVIHeader;
+
+
+#define AVISF_DISABLED			0x00000001
+
+#define AVISF_VIDEO_PALCHANGES		0x00010000
+
+typedef struct {
+    FOURCC		fccType;
+    FOURCC		fccHandler;
+    DWORD		dwFlags;
+    WORD		wPriority;
+    WORD		wLanguage;
+    DWORD		dwInitialFrames;
+    DWORD		dwScale;	
+    DWORD		dwRate;
+    DWORD		dwStart;
+    DWORD		dwLength;
+    DWORD		dwSuggestedBufferSize;
+    DWORD		dwQuality;
+    DWORD		dwSampleSize;
+    RECT		rcFrame;
+} AVIStreamHeader;
+
+#define AVIIF_LIST          0x00000001L
+#define AVIIF_KEYFRAME      0x00000010L
+#define AVIIF_FIRSTPART     0x00000020L
+#define AVIIF_LASTPART      0x00000040L
+#define AVIIF_MIDPART       (AVIIF_LASTPART|AVIIF_FIRSTPART)
+
+#define AVIIF_NOTIME	    0x00000100L
+#define AVIIF_COMPUSE       0x0FFF0000L
+
+typedef struct
+{
+    DWORD		ckid;
+    DWORD		dwFlags;
+    DWORD		dwChunkOffset;
+    DWORD		dwChunkLength;
+} AVIINDEXENTRY;
+
+typedef struct
+{
+    BYTE		bFirstEntry;
+    BYTE		bNumEntries;
+    WORD		wFlags;
+    PALETTEENTRY	peNew[];
+} AVIPALCHANGE;
+
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#ifndef RC_INVOKED
+#include "pshpack8.h"
+#endif
+#ifndef NOMMREG
+    #include <mmreg.h>
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifndef NOAVIFILE
+
+#ifndef mmioFOURCC
+    #define mmioFOURCC( ch0, ch1, ch2, ch3 )	( (DWORD)(BYTE)(ch0) | ( (DWORD)(BYTE)(ch1) << 8 ) |	\
+	( (DWORD)(BYTE)(ch2) << 16 ) | ( (DWORD)(BYTE)(ch3) << 24 ) )
+#endif
+
+#ifndef streamtypeVIDEO
+#define streamtypeVIDEO		mmioFOURCC('v', 'i', 'd', 's')
+#define streamtypeAUDIO		mmioFOURCC('a', 'u', 'd', 's')
+#define streamtypeMIDI		mmioFOURCC('m', 'i', 'd', 's')
+#define streamtypeTEXT		mmioFOURCC('t', 'x', 't', 's')
+#endif
+
+#ifndef AVIIF_KEYFRAME
+#define AVIIF_KEYFRAME      0x00000010L
+#endif
+
+#define AVIGETFRAMEF_BESTDISPLAYFMT	1
+
+typedef struct _AVISTREAMINFOW {
+    DWORD		fccType;
+    DWORD               fccHandler;
+    DWORD               dwFlags;
+    DWORD		dwCaps;
+    WORD		wPriority;
+    WORD		wLanguage;
+    DWORD               dwScale;
+    DWORD               dwRate;
+    DWORD               dwStart;
+    DWORD               dwLength;
+    DWORD		dwInitialFrames;
+    DWORD               dwSuggestedBufferSize;
+    DWORD               dwQuality;
+    DWORD               dwSampleSize;
+    RECT                rcFrame;
+    DWORD		dwEditCount;
+    DWORD		dwFormatChangeCount;
+    WCHAR		szName[64];
+} AVISTREAMINFOW, FAR * LPAVISTREAMINFOW;
+
+typedef struct _AVISTREAMINFOA {
+    DWORD		fccType;
+    DWORD               fccHandler;
+    DWORD               dwFlags;
+    DWORD		dwCaps;
+    WORD		wPriority;
+    WORD		wLanguage;
+    DWORD               dwScale;
+    DWORD               dwRate;
+    DWORD               dwStart;
+    DWORD               dwLength;
+    DWORD		dwInitialFrames;
+    DWORD               dwSuggestedBufferSize;
+    DWORD               dwQuality;
+    DWORD               dwSampleSize;
+    RECT                rcFrame;
+    DWORD		dwEditCount;
+    DWORD		dwFormatChangeCount;
+    char		szName[64];
+} AVISTREAMINFOA, FAR * LPAVISTREAMINFOA;
+
+#ifdef UNICODE
+#define AVISTREAMINFO	AVISTREAMINFOW
+#define LPAVISTREAMINFO	LPAVISTREAMINFOW
+#else
+#define AVISTREAMINFO	AVISTREAMINFOA
+#define LPAVISTREAMINFO	LPAVISTREAMINFOA
+#endif
+
+
+#define AVISTREAMINFO_DISABLED			0x00000001
+#define AVISTREAMINFO_FORMATCHANGES		0x00010000
+
+typedef struct _AVIFILEINFOW {
+    DWORD		dwMaxBytesPerSec;
+    DWORD		dwFlags;
+    DWORD		dwCaps;
+    DWORD		dwStreams;
+    DWORD		dwSuggestedBufferSize;
+
+    DWORD		dwWidth;
+    DWORD		dwHeight;
+
+    DWORD		dwScale;	
+    DWORD		dwRate;
+    DWORD		dwLength;
+
+    DWORD		dwEditCount;
+
+    WCHAR		szFileType[64];
+} AVIFILEINFOW, FAR * LPAVIFILEINFOW;
+
+typedef struct _AVIFILEINFOA {
+    DWORD		dwMaxBytesPerSec;
+    DWORD		dwFlags;
+    DWORD		dwCaps;
+    DWORD		dwStreams;
+    DWORD		dwSuggestedBufferSize;
+
+    DWORD		dwWidth;
+    DWORD		dwHeight;
+
+    DWORD		dwScale;	
+    DWORD		dwRate;
+    DWORD		dwLength;
+
+    DWORD		dwEditCount;
+
+    char		szFileType[64];
+} AVIFILEINFOA, FAR * LPAVIFILEINFOA;
+
+#ifdef UNICODE
+#define AVIFILEINFO	AVIFILEINFOW
+#define LPAVIFILEINFO	LPAVIFILEINFOW
+#else
+#define AVIFILEINFO	AVIFILEINFOA
+#define LPAVIFILEINFO	LPAVIFILEINFOA
+#endif
+
+#define AVIFILEINFO_HASINDEX		0x00000010
+#define AVIFILEINFO_MUSTUSEINDEX	0x00000020
+#define AVIFILEINFO_ISINTERLEAVED	0x00000100
+#define AVIFILEINFO_WASCAPTUREFILE	0x00010000
+#define AVIFILEINFO_COPYRIGHTED		0x00020000
+
+#define AVIFILECAPS_CANREAD		0x00000001
+#define AVIFILECAPS_CANWRITE		0x00000002
+#define AVIFILECAPS_ALLKEYFRAMES	0x00000010
+#define AVIFILECAPS_NOCOMPRESSION	0x00000020
+
+typedef BOOL (FAR PASCAL * AVISAVECALLBACK)(int);
+
+typedef struct {
+    DWORD	fccType;
+    DWORD       fccHandler;
+    DWORD       dwKeyFrameEvery;
+    DWORD       dwQuality;
+    DWORD       dwBytesPerSecond;
+    DWORD       dwFlags;
+    LPVOID      lpFormat;
+    DWORD       cbFormat;
+    LPVOID      lpParms;
+    DWORD       cbParms;
+    DWORD       dwInterleaveEvery;
+} AVICOMPRESSOPTIONS, FAR *LPAVICOMPRESSOPTIONS;
+
+#define AVICOMPRESSF_INTERLEAVE		0x00000001
+#define AVICOMPRESSF_DATARATE		0x00000002
+#define AVICOMPRESSF_KEYFRAMES		0x00000004
+#define AVICOMPRESSF_VALID		0x00000008
+
+#ifdef __cplusplus
+}
+#endif
+
+#include <ole2.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#undef  INTERFACE
+#define INTERFACE   IAVIStream
+
+DECLARE_INTERFACE_(IAVIStream, IUnknown)
+{
+    STDMETHOD(QueryInterface) (THIS_ REFIID riid, LPVOID FAR* ppvObj) PURE;
+    STDMETHOD_(ULONG,AddRef) (THIS)  PURE;
+    STDMETHOD_(ULONG,Release) (THIS) PURE;
+
+    STDMETHOD(Create)      (THIS_ LPARAM lParam1, LPARAM lParam2) PURE ;
+    STDMETHOD(Info)        (THIS_ AVISTREAMINFOW FAR * psi, LONG lSize) PURE ;
+    STDMETHOD_(LONG, FindSample)(THIS_ LONG lPos, LONG lFlags) PURE ;
+    STDMETHOD(ReadFormat)  (THIS_ LONG lPos,
+			    LPVOID lpFormat, LONG FAR *lpcbFormat) PURE ;
+    STDMETHOD(SetFormat)   (THIS_ LONG lPos,
+			    LPVOID lpFormat, LONG cbFormat) PURE ;
+    STDMETHOD(Read)        (THIS_ LONG lStart, LONG lSamples,
+			    LPVOID lpBuffer, LONG cbBuffer,
+			    LONG FAR * plBytes, LONG FAR * plSamples) PURE ;
+    STDMETHOD(Write)       (THIS_ LONG lStart, LONG lSamples,
+			    LPVOID lpBuffer, LONG cbBuffer,
+			    DWORD dwFlags,
+			    LONG FAR *plSampWritten,
+			    LONG FAR *plBytesWritten) PURE ;
+    STDMETHOD(Delete)      (THIS_ LONG lStart, LONG lSamples) PURE;
+    STDMETHOD(ReadData)    (THIS_ DWORD fcc, LPVOID lp, LONG FAR *lpcb) PURE ;
+    STDMETHOD(WriteData)   (THIS_ DWORD fcc, LPVOID lp, LONG cb) PURE ;
+#ifdef _WIN32
+    STDMETHOD(SetInfo) (THIS_ AVISTREAMINFOW FAR * lpInfo,
+			    LONG cbInfo) PURE;
+#else
+    STDMETHOD(Reserved1)            (THIS) PURE;
+    STDMETHOD(Reserved2)            (THIS) PURE;
+    STDMETHOD(Reserved3)            (THIS) PURE;
+    STDMETHOD(Reserved4)            (THIS) PURE;
+    STDMETHOD(Reserved5)            (THIS) PURE;
+#endif
+};
+
+typedef       IAVIStream FAR* PAVISTREAM;
+
+
+#undef  INTERFACE
+#define INTERFACE   IAVIStreaming
+
+DECLARE_INTERFACE_(IAVIStreaming, IUnknown)
+{
+    STDMETHOD(QueryInterface) (THIS_ REFIID riid, LPVOID FAR* ppvObj) PURE;
+    STDMETHOD_(ULONG,AddRef) (THIS)  PURE;
+    STDMETHOD_(ULONG,Release) (THIS) PURE;
+
+    STDMETHOD(Begin) (THIS_
+		      LONG  lStart,
+		      LONG  lEnd,
+		      LONG  lRate) PURE;
+    STDMETHOD(End)   (THIS) PURE;
+};
+
+typedef       IAVIStreaming FAR* PAVISTREAMING;
+
+
+#undef  INTERFACE
+#define INTERFACE   IAVIEditStream
+
+DECLARE_INTERFACE_(IAVIEditStream, IUnknown)
+{
+    STDMETHOD(QueryInterface) (THIS_ REFIID riid, LPVOID FAR* ppvObj) PURE;
+    STDMETHOD_(ULONG,AddRef) (THIS)  PURE;
+    STDMETHOD_(ULONG,Release) (THIS) PURE;
+
+    STDMETHOD(Cut) (THIS_ LONG FAR *plStart,
+			  LONG FAR *plLength,
+			  PAVISTREAM FAR * ppResult) PURE;
+    STDMETHOD(Copy) (THIS_ LONG FAR *plStart,
+			   LONG FAR *plLength,
+			   PAVISTREAM FAR * ppResult) PURE;
+    STDMETHOD(Paste) (THIS_ LONG FAR *plPos,
+			    LONG FAR *plLength,
+			    PAVISTREAM pstream,
+			    LONG lStart,
+			    LONG lEnd) PURE;
+    STDMETHOD(Clone) (THIS_ PAVISTREAM FAR *ppResult) PURE;
+    STDMETHOD(SetInfo) (THIS_ AVISTREAMINFOW FAR * lpInfo,
+			    LONG cbInfo) PURE;
+};
+
+typedef       IAVIEditStream FAR* PAVIEDITSTREAM;
+
+#undef  INTERFACE
+#define INTERFACE   IAVIPersistFile
+
+DECLARE_INTERFACE_(IAVIPersistFile, IPersistFile)
+{
+    STDMETHOD(Reserved1)(THIS) PURE;
+};
+
+typedef IAVIPersistFile FAR* PAVIPERSISTFILE;
+
+#undef  INTERFACE
+#define INTERFACE   IAVIFile
+#define PAVIFILE IAVIFile FAR*
+
+DECLARE_INTERFACE_(IAVIFile, IUnknown)
+{
+    STDMETHOD(QueryInterface) (THIS_ REFIID riid, LPVOID FAR* ppvObj) PURE;
+    STDMETHOD_(ULONG,AddRef) (THIS)  PURE;
+    STDMETHOD_(ULONG,Release) (THIS) PURE;
+
+    STDMETHOD(Info)                 (THIS_
+                                     AVIFILEINFOW FAR * pfi,
+                                     LONG lSize) PURE;
+    STDMETHOD(GetStream)            (THIS_
+                                     PAVISTREAM FAR * ppStream,
+				     DWORD fccType,
+                                     LONG lParam) PURE;
+    STDMETHOD(CreateStream)         (THIS_
+                                     PAVISTREAM FAR * ppStream,
+                                     AVISTREAMINFOW FAR * psi) PURE;
+    STDMETHOD(WriteData)            (THIS_
+                                     DWORD ckid,
+                                     LPVOID lpData,
+                                     LONG cbData) PURE;
+    STDMETHOD(ReadData)             (THIS_
+                                     DWORD ckid,
+                                     LPVOID lpData,
+                                     LONG FAR *lpcbData) PURE;
+    STDMETHOD(EndRecord)            (THIS) PURE;
+    STDMETHOD(DeleteStream)         (THIS_
+				     DWORD fccType,
+                                     LONG lParam) PURE;
+};
+
+#undef PAVIFILE
+typedef       IAVIFile FAR* PAVIFILE;
+
+#undef  INTERFACE
+#define INTERFACE   IGetFrame
+#define PGETFRAME   IGetFrame FAR*
+
+DECLARE_INTERFACE_(IGetFrame, IUnknown)
+{
+    STDMETHOD(QueryInterface) (THIS_ REFIID riid, LPVOID FAR* ppvObj) PURE;
+    STDMETHOD_(ULONG,AddRef) (THIS)  PURE;
+    STDMETHOD_(ULONG,Release) (THIS) PURE;
+
+    STDMETHOD_(LPVOID,GetFrame) (THIS_ LONG lPos) PURE;
+
+    STDMETHOD(Begin) (THIS_ LONG lStart, LONG lEnd, LONG lRate) PURE;
+    STDMETHOD(End) (THIS) PURE;
+
+    STDMETHOD(SetFormat) (THIS_ LPBITMAPINFOHEADER lpbi, LPVOID lpBits, int x, int y, int dx, int dy) PURE;
+};
+
+#undef PGETFRAME
+typedef IGetFrame FAR* PGETFRAME;
+
+#define DEFINE_AVIGUID(name, l, w1, w2)    DEFINE_GUID(name, l, w1, w2, 0xC0,0,0,0,0,0,0,0x46)
+
+DEFINE_AVIGUID(IID_IAVIFile,            0x00020020, 0, 0);
+DEFINE_AVIGUID(IID_IAVIStream,          0x00020021, 0, 0);
+DEFINE_AVIGUID(IID_IAVIStreaming,       0x00020022, 0, 0);
+DEFINE_AVIGUID(IID_IGetFrame,           0x00020023, 0, 0);
+DEFINE_AVIGUID(IID_IAVIEditStream,      0x00020024, 0, 0);
+DEFINE_AVIGUID(IID_IAVIPersistFile,     0x00020025, 0, 0);
+#ifndef UNICODE
+DEFINE_AVIGUID(CLSID_AVISimpleUnMarshal,        0x00020009, 0, 0);
+#endif
+
+DEFINE_AVIGUID(CLSID_AVIFile,           0x00020000, 0, 0);
+
+#define	AVIFILEHANDLER_CANREAD		0x0001
+#define	AVIFILEHANDLER_CANWRITE		0x0002
+#define	AVIFILEHANDLER_CANACCEPTNONRGB	0x0004
+
+STDAPI_(void) AVIFileInit(void);
+STDAPI_(void) AVIFileExit(void);
+
+STDAPI_(ULONG) AVIFileAddRef       (PAVIFILE pfile);
+STDAPI_(ULONG) AVIFileRelease      (PAVIFILE pfile);
+
+#ifdef _WIN32
+STDAPI AVIFileOpenA       (PAVIFILE FAR * ppfile, LPCSTR szFile,
+			  UINT uMode, LPCLSID lpHandler);
+STDAPI AVIFileOpenW       (PAVIFILE FAR * ppfile, LPCWSTR szFile,
+			  UINT uMode, LPCLSID lpHandler);
+#ifdef UNICODE
+#define AVIFileOpen	  AVIFileOpenW	
+#else
+#define AVIFileOpen	  AVIFileOpenA	
+#endif
+#else
+STDAPI AVIFileOpen       (PAVIFILE FAR * ppfile, LPCSTR szFile,
+			  UINT uMode, LPCLSID lpHandler);
+#define AVIFileOpenW	AVIFileOpen
+#endif
+
+#ifdef _WIN32
+STDAPI AVIFileInfoW (PAVIFILE pfile, LPAVIFILEINFOW pfi, LONG lSize);
+STDAPI AVIFileInfoA (PAVIFILE pfile, LPAVIFILEINFOA pfi, LONG lSize);
+#ifdef UNICODE
+#define AVIFileInfo	AVIFileInfoW
+#else
+#define AVIFileInfo	AVIFileInfoA
+#endif
+#else
+STDAPI AVIFileInfo (PAVIFILE pfile, LPAVIFILEINFO pfi, LONG lSize);
+#define AVIFileInfoW AVIFileInfo
+#endif
+
+
+STDAPI AVIFileGetStream     (PAVIFILE pfile, PAVISTREAM FAR * ppavi, DWORD fccType, LONG lParam);
+
+
+#ifdef _WIN32
+STDAPI AVIFileCreateStreamW (PAVIFILE pfile, PAVISTREAM FAR *ppavi, AVISTREAMINFOW FAR * psi);
+STDAPI AVIFileCreateStreamA (PAVIFILE pfile, PAVISTREAM FAR *ppavi, AVISTREAMINFOA FAR * psi);
+#ifdef UNICODE
+#define AVIFileCreateStream	AVIFileCreateStreamW
+#else
+#define AVIFileCreateStream	AVIFileCreateStreamA
+#endif
+#else
+STDAPI AVIFileCreateStream(PAVIFILE pfile, PAVISTREAM FAR *ppavi, AVISTREAMINFO FAR * psi);
+#define AVIFileCreateStreamW AVIFileCreateStream
+#endif
+
+STDAPI AVIFileWriteData	(PAVIFILE pfile,
+					 DWORD ckid,
+					 LPVOID lpData,
+					 LONG cbData);
+STDAPI AVIFileReadData	(PAVIFILE pfile,
+					 DWORD ckid,
+					 LPVOID lpData,
+					 LONG FAR *lpcbData);
+STDAPI AVIFileEndRecord	(PAVIFILE pfile);
+
+STDAPI_(ULONG) AVIStreamAddRef       (PAVISTREAM pavi);
+STDAPI_(ULONG) AVIStreamRelease      (PAVISTREAM pavi);
+
+STDAPI AVIStreamInfoW (PAVISTREAM pavi, LPAVISTREAMINFOW psi, LONG lSize);
+STDAPI AVIStreamInfoA (PAVISTREAM pavi, LPAVISTREAMINFOA psi, LONG lSize);
+#ifdef UNICODE
+#define AVIStreamInfo	AVIStreamInfoW
+#else
+#define AVIStreamInfo	AVIStreamInfoA
+#endif
+
+STDAPI_(LONG) AVIStreamFindSample(PAVISTREAM pavi, LONG lPos, LONG lFlags);
+STDAPI AVIStreamReadFormat   (PAVISTREAM pavi, LONG lPos,LPVOID lpFormat,LONG FAR *lpcbFormat);
+STDAPI AVIStreamSetFormat    (PAVISTREAM pavi, LONG lPos,LPVOID lpFormat,LONG cbFormat);
+STDAPI AVIStreamReadData     (PAVISTREAM pavi, DWORD fcc, LPVOID lp, LONG FAR *lpcb);
+STDAPI AVIStreamWriteData    (PAVISTREAM pavi, DWORD fcc, LPVOID lp, LONG cb);
+
+STDAPI AVIStreamRead         (PAVISTREAM pavi,
+			      LONG lStart,
+			      LONG lSamples,
+			      LPVOID lpBuffer,
+			      LONG cbBuffer,
+			      LONG FAR * plBytes,
+			      LONG FAR * plSamples);
+#define AVISTREAMREAD_CONVENIENT	(-1L)
+
+STDAPI AVIStreamWrite        (PAVISTREAM pavi,
+			      LONG lStart, LONG lSamples,
+			      LPVOID lpBuffer, LONG cbBuffer, DWORD dwFlags,
+			      LONG FAR *plSampWritten,
+			      LONG FAR *plBytesWritten);
+
+STDAPI_(LONG) AVIStreamStart        (PAVISTREAM pavi);
+STDAPI_(LONG) AVIStreamLength       (PAVISTREAM pavi);
+STDAPI_(LONG) AVIStreamTimeToSample (PAVISTREAM pavi, LONG lTime);
+STDAPI_(LONG) AVIStreamSampleToTime (PAVISTREAM pavi, LONG lSample);
+
+
+STDAPI AVIStreamBeginStreaming(PAVISTREAM pavi, LONG lStart, LONG lEnd, LONG lRate);
+STDAPI AVIStreamEndStreaming(PAVISTREAM pavi);
+
+STDAPI_(PGETFRAME) AVIStreamGetFrameOpen(PAVISTREAM pavi,
+					 LPBITMAPINFOHEADER lpbiWanted);
+STDAPI_(LPVOID) AVIStreamGetFrame(PGETFRAME pg, LONG lPos);
+STDAPI AVIStreamGetFrameClose(PGETFRAME pg);
+
+STDAPI AVIStreamOpenFromFileA(PAVISTREAM FAR *ppavi, LPCSTR szFile,
+			     DWORD fccType, LONG lParam,
+			     UINT mode, CLSID FAR *pclsidHandler);
+STDAPI AVIStreamOpenFromFileW(PAVISTREAM FAR *ppavi, LPCWSTR szFile,
+			     DWORD fccType, LONG lParam,
+			     UINT mode, CLSID FAR *pclsidHandler);
+#ifdef UNICODE
+#define AVIStreamOpenFromFile	AVIStreamOpenFromFileW
+#else
+#define AVIStreamOpenFromFile	AVIStreamOpenFromFileA
+#endif
+
+STDAPI AVIStreamCreate(PAVISTREAM FAR *ppavi, LONG lParam1, LONG lParam2,
+		       CLSID FAR *pclsidHandler);
+
+
+
+#define FIND_DIR        0x0000000FL
+#define FIND_NEXT       0x00000001L
+#define FIND_PREV       0x00000004L
+#define FIND_FROM_START 0x00000008L
+
+#define FIND_TYPE       0x000000F0L
+#define FIND_KEY        0x00000010L
+#define FIND_ANY        0x00000020L
+#define FIND_FORMAT     0x00000040L
+
+#define FIND_RET        0x0000F000L
+#define FIND_POS        0x00000000L
+#define FIND_LENGTH     0x00001000L
+#define FIND_OFFSET     0x00002000L
+#define FIND_SIZE       0x00003000L
+#define FIND_INDEX      0x00004000L
+
+#define AVIStreamFindKeyFrame AVIStreamFindSample
+#define FindKeyFrame	FindSample
+
+#define AVIStreamClose AVIStreamRelease
+#define AVIFileClose   AVIFileRelease
+#define AVIStreamInit  AVIFileInit
+#define AVIStreamExit  AVIFileExit
+
+#define SEARCH_NEAREST  FIND_PREV
+#define SEARCH_BACKWARD FIND_PREV
+#define SEARCH_FORWARD  FIND_NEXT
+#define SEARCH_KEY      FIND_KEY
+#define SEARCH_ANY      FIND_ANY
+
+#define     AVIStreamSampleToSample(pavi1, pavi2, l)            AVIStreamTimeToSample(pavi1,AVIStreamSampleToTime(pavi2, l))
+
+#define     AVIStreamNextSample(pavi, l)            AVIStreamFindSample(pavi,l+1,FIND_NEXT|FIND_ANY)
+
+#define     AVIStreamPrevSample(pavi, l)            AVIStreamFindSample(pavi,l-1,FIND_PREV|FIND_ANY)
+
+#define     AVIStreamNearestSample(pavi, l)            AVIStreamFindSample(pavi,l,FIND_PREV|FIND_ANY)
+
+#define     AVIStreamNextKeyFrame(pavi,l)            AVIStreamFindSample(pavi,l+1,FIND_NEXT|FIND_KEY)
+
+#define     AVIStreamPrevKeyFrame(pavi, l)            AVIStreamFindSample(pavi,l-1,FIND_PREV|FIND_KEY)
+
+#define     AVIStreamNearestKeyFrame(pavi, l)            AVIStreamFindSample(pavi,l,FIND_PREV|FIND_KEY)
+
+#define     AVIStreamIsKeyFrame(pavi, l)            (AVIStreamNearestKeyFrame(pavi,l) == l)
+
+#define     AVIStreamPrevSampleTime(pavi, t)            AVIStreamSampleToTime(pavi, AVIStreamPrevSample(pavi,AVIStreamTimeToSample(pavi,t)))
+
+#define     AVIStreamNextSampleTime(pavi, t)            AVIStreamSampleToTime(pavi, AVIStreamNextSample(pavi,AVIStreamTimeToSample(pavi,t)))
+
+#define     AVIStreamNearestSampleTime(pavi, t)            AVIStreamSampleToTime(pavi, AVIStreamNearestSample(pavi,AVIStreamTimeToSample(pavi,t)))
+
+#define     AVIStreamNextKeyFrameTime(pavi, t)            AVIStreamSampleToTime(pavi, AVIStreamNextKeyFrame(pavi,AVIStreamTimeToSample(pavi, t)))
+
+#define     AVIStreamPrevKeyFrameTime(pavi, t)            AVIStreamSampleToTime(pavi, AVIStreamPrevKeyFrame(pavi,AVIStreamTimeToSample(pavi, t)))
+
+#define     AVIStreamNearestKeyFrameTime(pavi, t)            AVIStreamSampleToTime(pavi, AVIStreamNearestKeyFrame(pavi,AVIStreamTimeToSample(pavi, t)))
+
+#define     AVIStreamStartTime(pavi)            AVIStreamSampleToTime(pavi, AVIStreamStart(pavi))
+
+#define     AVIStreamLengthTime(pavi)            AVIStreamSampleToTime(pavi, AVIStreamLength(pavi))
+
+#define     AVIStreamEnd(pavi)            (AVIStreamStart(pavi) + AVIStreamLength(pavi))
+
+#define     AVIStreamEndTime(pavi)            AVIStreamSampleToTime(pavi, AVIStreamEnd(pavi))
+
+#define     AVIStreamSampleSize(pavi, lPos, plSize)	    AVIStreamRead(pavi,lPos,1,NULL,0,plSize,NULL)
+
+#define     AVIStreamFormatSize(pavi, lPos, plSize)            AVIStreamReadFormat(pavi,lPos,NULL,plSize)
+
+#define     AVIStreamDataSize(pavi, fcc, plSize)            AVIStreamReadData(pavi,fcc,NULL,plSize)
+
+#ifndef comptypeDIB
+#define comptypeDIB         mmioFOURCC('D', 'I', 'B', ' ')
+#endif
+
+STDAPI AVIMakeCompressedStream(
+		PAVISTREAM FAR *	    ppsCompressed,
+		PAVISTREAM		    ppsSource,
+		AVICOMPRESSOPTIONS FAR *    lpOptions,
+		CLSID FAR *pclsidHandler);
+
+EXTERN_C HRESULT CDECL AVISaveA (LPCSTR               szFile,
+		CLSID FAR *pclsidHandler,
+		AVISAVECALLBACK     lpfnCallback,
+		int                 nStreams,
+		PAVISTREAM	    pfile,
+		LPAVICOMPRESSOPTIONS lpOptions,
+		...);
+
+STDAPI AVISaveVA(LPCSTR               szFile,
+		CLSID FAR *pclsidHandler,
+		AVISAVECALLBACK     lpfnCallback,
+		int                 nStreams,
+		PAVISTREAM FAR *    ppavi,
+		LPAVICOMPRESSOPTIONS FAR *plpOptions);
+EXTERN_C HRESULT CDECL AVISaveW (LPCWSTR               szFile,
+		CLSID FAR *pclsidHandler,
+		AVISAVECALLBACK     lpfnCallback,
+		int                 nStreams,
+		PAVISTREAM	    pfile,
+		LPAVICOMPRESSOPTIONS lpOptions,
+		...);
+
+STDAPI AVISaveVW(LPCWSTR               szFile,
+		CLSID FAR *pclsidHandler,
+		AVISAVECALLBACK     lpfnCallback,
+		int                 nStreams,
+		PAVISTREAM FAR *    ppavi,
+		LPAVICOMPRESSOPTIONS FAR *plpOptions);
+#ifdef UNICODE
+#define AVISave		AVISaveW
+#define AVISaveV	AVISaveVW
+#else
+#define AVISave		AVISaveA
+#define AVISaveV	AVISaveVA
+#endif
+
+
+
+STDAPI_(INT_PTR) AVISaveOptions(HWND hwnd,
+			     UINT	uiFlags,
+			     int	nStreams,
+			     PAVISTREAM FAR *ppavi,
+			     LPAVICOMPRESSOPTIONS FAR *plpOptions);
+
+STDAPI AVISaveOptionsFree(int nStreams,
+			     LPAVICOMPRESSOPTIONS FAR *plpOptions);
+
+STDAPI AVIBuildFilterW(LPWSTR lpszFilter, LONG cbFilter, BOOL fSaving);
+STDAPI AVIBuildFilterA(LPSTR lpszFilter, LONG cbFilter, BOOL fSaving);
+#ifdef UNICODE
+#define AVIBuildFilter	AVIBuildFilterW
+#else
+#define AVIBuildFilter	AVIBuildFilterA
+#endif
+STDAPI AVIMakeFileFromStreams(PAVIFILE FAR *	ppfile,
+			       int		nStreams,
+			       PAVISTREAM FAR *	papStreams);
+
+STDAPI AVIMakeStreamFromClipboard(UINT cfFormat, HANDLE hGlobal, PAVISTREAM FAR *ppstream);
+
+STDAPI AVIPutFileOnClipboard(PAVIFILE pf);
+
+STDAPI AVIGetFromClipboard(PAVIFILE FAR * lppf);
+
+STDAPI AVIClearClipboard(void);
+
+STDAPI CreateEditableStream(
+		PAVISTREAM FAR *	    ppsEditable,
+		PAVISTREAM		    psSource);
+
+STDAPI EditStreamCut(PAVISTREAM pavi, LONG FAR *plStart, LONG FAR *plLength, PAVISTREAM FAR * ppResult);
+
+STDAPI EditStreamCopy(PAVISTREAM pavi, LONG FAR *plStart, LONG FAR *plLength, PAVISTREAM FAR * ppResult);
+
+STDAPI EditStreamPaste(PAVISTREAM pavi, LONG FAR *plPos, LONG FAR *plLength, PAVISTREAM pstream, LONG lStart, LONG lEnd);
+
+STDAPI EditStreamClone(PAVISTREAM pavi, PAVISTREAM FAR *ppResult);
+
+
+STDAPI EditStreamSetNameA(PAVISTREAM pavi, LPCSTR lpszName);
+STDAPI EditStreamSetNameW(PAVISTREAM pavi, LPCWSTR lpszName);
+STDAPI EditStreamSetInfoW(PAVISTREAM pavi, LPAVISTREAMINFOW lpInfo, LONG cbInfo);
+STDAPI EditStreamSetInfoA(PAVISTREAM pavi, LPAVISTREAMINFOA lpInfo, LONG cbInfo);
+#ifdef UNICODE
+#define EditStreamSetInfo	EditStreamSetInfoW
+#define EditStreamSetName	EditStreamSetNameW
+#else
+#define EditStreamSetInfo	EditStreamSetInfoA
+#define EditStreamSetName	EditStreamSetNameA
+#endif
+
+#ifndef AVIERR_OK
+#define AVIERR_OK               0L
+
+#define MAKE_AVIERR(error)	MAKE_SCODE(SEVERITY_ERROR, FACILITY_ITF, 0x4000 + error)
+
+#define AVIERR_UNSUPPORTED      MAKE_AVIERR(101)
+#define AVIERR_BADFORMAT        MAKE_AVIERR(102)
+#define AVIERR_MEMORY           MAKE_AVIERR(103)
+#define AVIERR_INTERNAL         MAKE_AVIERR(104)
+#define AVIERR_BADFLAGS         MAKE_AVIERR(105)
+#define AVIERR_BADPARAM         MAKE_AVIERR(106)
+#define AVIERR_BADSIZE          MAKE_AVIERR(107)
+#define AVIERR_BADHANDLE        MAKE_AVIERR(108)
+#define AVIERR_FILEREAD         MAKE_AVIERR(109)
+#define AVIERR_FILEWRITE        MAKE_AVIERR(110)
+#define AVIERR_FILEOPEN         MAKE_AVIERR(111)
+#define AVIERR_COMPRESSOR       MAKE_AVIERR(112)
+#define AVIERR_NOCOMPRESSOR     MAKE_AVIERR(113)
+#define AVIERR_READONLY		MAKE_AVIERR(114)
+#define AVIERR_NODATA		MAKE_AVIERR(115)
+#define AVIERR_BUFFERTOOSMALL	MAKE_AVIERR(116)
+#define AVIERR_CANTCOMPRESS	MAKE_AVIERR(117)
+#define AVIERR_USERABORT        MAKE_AVIERR(198)
+#define AVIERR_ERROR            MAKE_AVIERR(199)
+#endif
+#endif
+
++/
+
+const TCHAR[] MCIWND_WINDOW_CLASS = "MCIWndClass";
+
+extern (Windows) {
+	HWND MCIWndCreateA(HWND hwndParent, HINSTANCE hInstance, DWORD dwStyle, LPCSTR szFile);
+	HWND MCIWndCreateW(HWND hwndParent, HINSTANCE hInstance, DWORD dwStyle, LPCWSTR szFile);
 }
 
 version(Unicode) {
-	alias AVISTREAMINFOW AVISTREAMINFO;
-	alias LPAVISTREAMINFOW LPAVISTREAMINFO;
-	alias PAVISTREAMINFOW PAVISTREAMINFO;
-	alias AVIFILEINFOW AVIFILEINFO;
-	alias PAVIFILEINFOW PAVIFILEINFO;
-	alias LPAVIFILEINFOW LPAVIFILEINFO;
-	alias AVIStreamInfoW AVIStreamInfo;
-	alias AVIStreamOpenFromFileW AVIStreamOpenFromFile;
-	alias AVIBuildFilterW AVIBuildFilter;
-	alias AVISaveVW AVISaveV;
-	alias EditStreamSetInfoW EditStreamSetInfo;
-	alias EditStreamSetNameW EditStreamSetName;
-	alias AVIFileOpenW AVIFileOpen;
-	alias AVIFileInfoW AVIFileInfo;
-	alias AVIFileCreateStreamW AVIFileCreateStream;
-	alias GetOpenFileNamePreviewW GetOpenFileNamePreview;
-	alias GetSaveFileNamePreviewW GetSaveFileNamePreview;
-	alias MCIWndCreateW MCIWndCreate;
-	alias MCIWNDF_NOTIFYMEDIAW MCIWNDF_NOTIFYMEDIA;
-	alias MCIWNDM_SENDSTRINGW MCIWNDM_SENDSTRING;
-	alias MCIWNDM_GETPOSITIONW MCIWNDM_GETPOSITION;
-	alias MCIWNDM_GETMODEW MCIWNDM_GETMODE;
-	alias MCIWNDM_SETTIMEFORMATW MCIWNDM_SETTIMEFORMAT;
-	alias MCIWNDM_GETTIMEFORMATW MCIWNDM_GETTIMEFORMAT;
-	alias MCIWNDM_GETFILENAMEW MCIWNDM_GETFILENAME;
-	alias MCIWNDM_GETDEVICEW MCIWNDM_GETDEVICE;
-	alias MCIWNDM_GETERRORW MCIWNDM_GETERROR;
-	alias MCIWNDM_NEWW MCIWNDM_NEW;
-	alias MCIWNDM_RETURNSTRINGW MCIWNDM_RETURNSTRING;
-	alias MCIWNDM_OPENW MCIWNDM_OPEN;
-} else {
-	alias AVISTREAMINFOA AVISTREAMINFO;
-	alias LPAVISTREAMINFOA LPAVISTREAMINFO;
-	alias PAVISTREAMINFOA PAVISTREAMINFO;
-	alias AVIFILEINFOA AVIFILEINFO;
-	alias PAVIFILEINFOA PAVIFILEINFO;
-	alias LPAVIFILEINFOA LPAVIFILEINFO;
-	alias AVIStreamInfoA AVIStreamInfo;
-	alias AVIStreamOpenFromFileA AVIStreamOpenFromFile;
-	alias AVIBuildFilterA AVIBuildFilter;
-	alias AVISaveVA AVISaveV;
-	alias EditStreamSetInfoA EditStreamSetInfo;
-	alias EditStreamSetNameA EditStreamSetName;
-	alias AVIFileOpenA AVIFileOpen;
-	alias AVIFileInfoA AVIFileInfo;
-	alias AVIFileCreateStreamA AVIFileCreateStream;
-	alias GetOpenFileNamePreviewA GetOpenFileNamePreview;
-	alias GetSaveFileNamePreviewA GetSaveFileNamePreview;
-	alias MCIWndCreateA MCIWndCreate;
-	alias MCIWNDF_NOTIFYMEDIAA MCIWNDF_NOTIFYMEDIA;
-	alias MCIWNDM_SENDSTRINGA MCIWNDM_SENDSTRING;
-	alias MCIWNDM_GETPOSITIONA MCIWNDM_GETPOSITION;
-	alias MCIWNDM_GETMODEA MCIWNDM_GETMODE;
-	alias MCIWNDM_SETTIMEFORMATA MCIWNDM_SETTIMEFORMAT;
-	alias MCIWNDM_GETTIMEFORMATA MCIWNDM_GETTIMEFORMAT;
-	alias MCIWNDM_GETFILENAMEA MCIWNDM_GETFILENAME;
-	alias MCIWNDM_GETDEVICEA MCIWNDM_GETDEVICE;
-	alias MCIWNDM_GETERRORA MCIWNDM_GETERROR;
-	alias MCIWNDM_NEWA MCIWNDM_NEW;
-	alias MCIWNDM_RETURNSTRINGA MCIWNDM_RETURNSTRING;
-	alias MCIWNDM_OPENA MCIWNDM_OPEN;
+	alias MCIWndCreateW	MCIWndCreate;
+} else { // Unicode
+	alias MCIWndCreateA	MCIWndCreate;
+}
+
+extern(Windows) {
+	BOOL MCIWndRegisterClass();
+}
+
+enum {
+	MCIWNDOPENF_NEW				= 0x0001,
+	MCIWNDF_NOAUTOSIZEWINDOW	= 0x0001,
+	MCIWNDF_NOPLAYBAR			= 0x0002,
+	MCIWNDF_NOAUTOSIZEMOVIE		= 0x0004,
+	MCIWNDF_NOMENU				= 0x0008,
+	MCIWNDF_SHOWNAME			= 0x0010,
+	MCIWNDF_SHOWPOS				= 0x0020,
+	MCIWNDF_SHOWMODE			= 0x0040,
+	MCIWNDF_SHOWALL				= 0x0070,
+	MCIWNDF_NOTIFYMODE			= 0x0100,
+	MCIWNDF_NOTIFYPOS			= 0x0200,
+	MCIWNDF_NOTIFYSIZE			= 0x0400,
+	MCIWNDF_NOTIFYERROR			= 0x1000,
+	MCIWNDF_NOTIFYALL			= 0x1F00,
+	MCIWNDF_NOTIFYANSI			= 0x0080,
+	MCIWNDF_NOTIFYMEDIAA		= 0x0880,
+	MCIWNDF_NOTIFYMEDIAW		= 0x0800,
+}
+
+version(Unicode) {
+	alias MCIWNDF_NOTIFYMEDIAW	MCIWNDF_NOTIFYMEDIA;
+} else { // Unicode
+	alias MCIWNDF_NOTIFYMEDIAA	MCIWNDF_NOTIFYMEDIA;
+}
+
+enum {
+	MCIWNDF_RECORD		= 0x2000,
+	MCIWNDF_NOERRORDLG	= 0x4000,
+	MCIWNDF_NOOPEN		= 0x8000,
+}
+
+// can macros
+
+BOOL MCIWndCanPlay(HWND hwnd)
+	{ return cast(BOOL)SendMessage(hwnd, MCIWNDM_CAN_PLAY, 0, 0); }
+BOOL MCIWndCanRecord(HWND hwnd)
+	{ return cast(BOOL)SendMessage(hwnd, MCIWNDM_CAN_RECORD, 0, 0); }
+BOOL MCIWndCanSave(HWND hwnd)
+	{ return cast(BOOL)SendMessage(hwnd, MCIWNDM_CAN_SAVE, 0, 0); }
+BOOL MCIWndCanWindow(HWND hwnd)
+	{ return cast(BOOL)SendMessage(hwnd, MCIWNDM_CAN_WINDOW, 0, 0); }
+BOOL MCIWndCanEject(HWND hwnd)
+	{ return cast(BOOL)SendMessage(hwnd, MCIWNDM_CAN_EJECT, 0, 0); }
+BOOL MCIWndCanConfig(HWND hwnd)
+	{ return cast(BOOL)SendMessage(hwnd, MCIWNDM_CAN_CONFIG, 0, 0); }
+BOOL MCIWndPaletteKick(HWND hwnd)
+	{ return cast(BOOL)SendMessage(hwnd, MCIWNDM_PALETTEKICK, 0, 0); }
+LONG MCIWndSave(HWND hwnd, LPVOID szFile)
+	{ return cast(LONG)SendMessage(hwnd, MCI_SAVE, 0, cast(LPARAM)szFile); }
+LONG MCIWndSaveDialog(HWND hwnd)
+	{ return MCIWndSave(hwnd, cast(LPVOID)-1); }
+LONG MCIWndNew(HWND hwnd, LPVOID lp)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_NEW, 0, cast(LPARAM)lp); }
+LONG MCIWndRecord(HWND hwnd)
+	{ return cast(LONG)SendMessage(hwnd, MCI_RECORD, 0, 0); }
+LONG MCIWndOpen(HWND hwnd, LPVOID sz, UINT f)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_OPEN, cast(WPARAM)f, cast(LPARAM)sz); }
+LONG MCIWndOpenDialog(HWND hwnd)
+	{ return MCIWndOpen(hwnd, cast(LPVOID)-1, 0); }
+LONG MCIWndClose(HWND hwnd)
+	{ return cast(LONG)SendMessage(hwnd, MCI_CLOSE, 0, 0); }
+LONG MCIWndPlay(HWND hwnd)
+	{ return cast(LONG)SendMessage(hwnd, MCI_PLAY, 0, 0); }
+LONG MCIWndStop(HWND hwnd)
+	{ return cast(LONG)SendMessage(hwnd, MCI_STOP, 0, 0); }
+LONG MCIWndPause(HWND hwnd)
+	{ return cast(LONG)SendMessage(hwnd, MCI_PAUSE, 0, 0); }
+LONG MCIWndResume(HWND hwnd)
+	{ return cast(LONG)SendMessage(hwnd, MCI_RESUME, 0, 0); }
+LONG MCIWndSeek(HWND hwnd, LONG lPos)
+	{ return cast(LONG)SendMessage(hwnd, MCI_SEEK, 0, cast(LPARAM)lPos); }
+LONG MCIWndHome(HWND hwnd)
+	{ return MCIWndSeek(hwnd, MCIWND_START); }
+LONG MCIWndEnd(HWND hwnd)
+	{ return MCIWndSeek(hwnd, MCIWND_END); }
+LONG MCIWndEject(HWND hwnd)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_EJECT, 0, 0); }
+LONG MCIWndGetSource(HWND hwnd, LPRECT prc)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_GET_SOURCE, 0, cast(LPARAM)prc); }
+LONG MCIWndPutSource(HWND hwnd, LPRECT prc)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_PUT_SOURCE, 0, cast(LPARAM)prc); }
+LONG MCIWndGetDest(HWND hwnd, LPRECT prc)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_GET_DEST, 0, cast(LPARAM)prc); }
+LONG MCIWndPutDest(HWND hwnd, LPRECT prc)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_PUT_DEST, 0, cast(LPARAM)prc); }
+LONG MCIWndPlayReverse(HWND hwnd)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_PLAYREVERSE, 0, 0); }
+LONG MCIWndPlayFrom(HWND hwnd, LONG lPos)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_PLAYFROM, 0, cast(LPARAM)lPos); }
+LONG MCIWndPlayTo(HWND hwnd, LONG lPos)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_PLAYTO, 0, cast(LPARAM)lPos); }
+LONG MCIWndPlayFromTo(HWND hwnd, LONG lStart, LONG lEnd)
+	{ MCIWndSeek(hwnd, lStart); return MCIWndPlayTo(hwnd, lEnd); }
+UINT MCIWndGetDeviceID(HWND hwnd)
+	{ return cast(UINT)SendMessage(hwnd, MCIWNDM_GETDEVICEID, 0, 0); }
+UINT MCIWndGetAlias(HWND hwnd)
+	{ return cast(UINT)SendMessage(hwnd, MCIWNDM_GETALIAS, 0, 0); }
+LONG MCIWndGetMode(HWND hwnd, LPTSTR lp, UINT len)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_GETMODE, cast(WPARAM)len, cast(LPARAM)lp); }
+LONG MCIWndGetPosition(HWND hwnd)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_GETPOSITION, 0, 0); }
+LONG MCIWndGetPositionString(HWND hwnd, LPTSTR lp, UINT len)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_GETPOSITION, cast(WPARAM)len, cast(LPARAM)lp); }
+LONG MCIWndGetStart(HWND hwnd)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_GETSTART, 0, 0); }
+LONG MCIWndGetLength(HWND hwnd)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_GETLENGTH, 0, 0); }
+LONG MCIWndGetEnd(HWND hwnd)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_GETEND, 0, 0); }
+LONG MCIWndStep(HWND hwnd, LONG n)
+	{ return cast(LONG)SendMessage(hwnd, MCI_STEP, 0, cast(LPARAM)n); }
+void MCIWndDestroy(HWND hwnd)
+	{ SendMessage(hwnd, WM_CLOSE, 0, 0); }
+void MCIWndSetZoom(HWND hwnd, UINT iZoom)
+	{ SendMessage(hwnd, MCIWNDM_SETZOOM, 0, cast(LPARAM)iZoom); }
+UINT MCIWndGetZoom(HWND hwnd)
+	{ return cast(UINT)SendMessage(hwnd, MCIWNDM_GETZOOM, 0, 0); }
+LONG MCIWndSetVolume(HWND hwnd, UINT iVol)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_SETVOLUME, 0, cast(LPARAM)iVol); }
+LONG MCIWndGetVolume(HWND hwnd)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_GETVOLUME, 0, 0); }
+LONG MCIWndSetSpeed(HWND hwnd, UINT iSpeed)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_SETSPEED, 0, cast(LPARAM)iSpeed); }
+LONG MCIWndGetSpeed(HWND hwnd)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_GETSPEED, 0, 0); }
+LONG MCIWndSetTimeFormat(HWND hwnd, LPTSTR lp)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_SETTIMEFORMAT, 0, cast(LPARAM)lp); }
+LONG MCIWndUseFrames(HWND hwnd)
+	{ return MCIWndSetTimeFormat(hwnd, (cast(TCHAR[])"frames").ptr); }
+LONG MCIWndUseTime(HWND hwnd)
+	{ return MCIWndSetTimeFormat(hwnd, (cast(TCHAR[])"ms").ptr); }
+LONG MCIWndGetTimeFormat(HWND hwnd, LPTSTR lp, UINT len)
+	{ return cast(LONG)SendMessage(hwnd, MCIWNDM_GETTIMEFORMAT, cast(WPARAM)len, cast(LPARAM)lp); }
+void MCIWndValidateMedia(HWND hwnd)
+	{ SendMessage(hwnd, MCIWNDM_VALIDATEMEDIA, 0, 0); }
+void MCIWndSetRepeat(HWND hwnd, BOOL f)
+	{ SendMessage(hwnd, MCIWNDM_SETREPEAT, 0, cast(LPARAM)f); }
+BOOL MCIWndGetRepeat(HWND hwnd)
+	{ return cast(BOOL)SendMessage(hwnd, MCIWNDM_GETREPEAT, 0, 0); }
+void MCIWndSetActiveTimer(HWND hwnd, UINT active)
+	{ SendMessage(hwnd, MCIWNDM_SETACTIVETIMER, cast(WPARAM)active, 0); }
+void MCIWndSetInactiveTimer(HWND hwnd, UINT inactive)
+	{ SendMessage(hwnd, MCIWNDM_SETINACTIVETIMER, cast(WPARAM)inactive, 0); }
+void MCIWndSetTimers(HWND hwnd, UINT active, UINT inactive)
+	{ SendMessage(hwnd, MCIWNDM_SETTIMERS, cast(WPARAM)active, cast(LPARAM)inactive); }
+UINT MCIWndGetActiveTimer(HWND hwnd)
+	{ return cast(UINT)SendMessage(hwnd, MCIWNDM_GETACTIVETIMER, 0, 0); }
+UINT MCIWndGetInactiveTimer(HWND hwnd)
+	{ return cast(UINT)SendMessage(hwnd, MCIWNDM_GETINACTIVETIMER, 0, 0); }
+LONG MCIWndRealize(HWND hwnd, BOOL fBkgnd)
+	{ return SendMessage(hwnd, MCIWNDM_REALIZE, cast(WPARAM)fBkgnd, 0); }
+LONG MCIWndSendString(HWND hwnd, LPTSTR sz)
+	{ return SendMessage(hwnd, MCIWNDM_SENDSTRING, 0, cast(LPARAM)sz); }
+LONG MCIWndReturnString(HWND hwnd, LPVOID lp, UINT len)
+	{ return SendMessage(hwnd, MCIWNDM_RETURNSTRING, cast(WPARAM)len, cast(LPARAM)lp); }
+LONG MCIWndGetError(HWND hwnd, LPVOID lp, UINT len)
+	{ return SendMessage(hwnd, MCIWNDM_GETERROR, cast(WPARAM)len, cast(LPARAM)lp); }
+HPALETTE MCIWndGetPalette(HWND hwnd)
+	{ return cast(HPALETTE)SendMessage(hwnd, MCIWNDM_GETPALETTE, 0, 0); }
+LONG MCIWndSetPalette(HWND hwnd, HPALETTE hpal)
+	{ return SendMessage(hwnd, MCIWNDM_SETPALETTE, cast(WPARAM)hpal, 0); }
+LONG MCIWndGetFileName(HWND hwnd, LPVOID lp, UINT len)
+	{ return SendMessage(hwnd, MCIWNDM_GETFILENAME, cast(WPARAM)len, cast(LPARAM)lp); }
+LONG MCIWndGetDevice(HWND hwnd, LPVOID lp, UINT len)
+	{ return SendMessage(hwnd, MCIWNDM_GETDEVICE, cast(WPARAM)len, cast(LPARAM)lp); }
+UINT MCIWndGetStyles(HWND hwnd)
+	{ return SendMessage(hwnd, MCIWNDM_GETSTYLES, 0, 0); }
+LONG MCIWndChangeStyles(HWND hwnd, UINT mask, LONG value)
+	{ return SendMessage(hwnd, MCIWNDM_CHANGESTYLES, cast(WPARAM)mask, cast(LPARAM)value); }
+LONG MCIWndOpenInterface(HWND hwnd, LPUNKNOWN pUnk)
+	{ return SendMessage(hwnd, MCIWNDM_OPENINTERFACE, 0, cast(LPARAM)pUnk); }
+LONG MCIWndSetOwner(HWND hwnd, HWND hwndP)
+	{ return SendMessage(hwnd, MCIWNDM_SETOWNER, cast(WPARAM)hwndP, 0); }
+
+enum {
+	MCIWNDM_GETDEVICEID			= WM_USER + 100,
+	MCIWNDM_SENDSTRINGA			= WM_USER + 101,
+	MCIWNDM_GETPOSITIONA		= WM_USER + 102,
+	MCIWNDM_GETSTART			= WM_USER + 103,
+	MCIWNDM_GETLENGTH			= WM_USER + 104,
+	MCIWNDM_GETEND				= WM_USER + 105,
+	MCIWNDM_GETMODEA			= WM_USER + 106,
+	MCIWNDM_EJECT				= WM_USER + 107,
+	MCIWNDM_SETZOOM				= WM_USER + 108,
+	MCIWNDM_GETZOOM				= WM_USER + 109,
+	MCIWNDM_SETVOLUME			= WM_USER + 110,
+	MCIWNDM_GETVOLUME			= WM_USER + 111,
+	MCIWNDM_SETSPEED			= WM_USER + 112,
+	MCIWNDM_GETSPEED			= WM_USER + 113,
+	MCIWNDM_SETREPEAT			= WM_USER + 114,
+	MCIWNDM_GETREPEAT			= WM_USER + 115,
+	MCIWNDM_REALIZE				= WM_USER + 118,
+	MCIWNDM_SETTIMEFORMATA		= WM_USER + 119,
+	MCIWNDM_GETTIMEFORMATA		= WM_USER + 120,
+	MCIWNDM_VALIDATEMEDIA		= WM_USER + 121,
+	MCIWNDM_PLAYFROM			= WM_USER + 122,
+	MCIWNDM_PLAYTO				= WM_USER + 123,
+	MCIWNDM_GETFILENAMEA		= WM_USER + 124,
+	MCIWNDM_GETDEVICEA			= WM_USER + 125,
+	MCIWNDM_GETPALETTE			= WM_USER + 126,
+	MCIWNDM_SETPALETTE			= WM_USER + 127,
+	MCIWNDM_GETERRORA			= WM_USER + 128,
+	MCIWNDM_SETTIMERS			= WM_USER + 129,
+	MCIWNDM_SETACTIVETIMER		= WM_USER + 130,
+	MCIWNDM_SETINACTIVETIMER	= WM_USER + 131,
+	MCIWNDM_GETACTIVETIMER		= WM_USER + 132,
+	MCIWNDM_GETINACTIVETIMER	= WM_USER + 133,
+	MCIWNDM_NEWA				= WM_USER + 134,
+	MCIWNDM_CHANGESTYLES		= WM_USER + 135,
+	MCIWNDM_GETSTYLES			= WM_USER + 136,
+	MCIWNDM_GETALIAS			= WM_USER + 137,
+	MCIWNDM_RETURNSTRINGA		= WM_USER + 138,
+	MCIWNDM_PLAYREVERSE			= WM_USER + 139,
+	MCIWNDM_GET_SOURCE			= WM_USER + 140,
+	MCIWNDM_PUT_SOURCE			= WM_USER + 141,
+	MCIWNDM_GET_DEST			= WM_USER + 142,
+	MCIWNDM_PUT_DEST			= WM_USER + 143,
+	MCIWNDM_CAN_PLAY			= WM_USER + 144,
+	MCIWNDM_CAN_WINDOW			= WM_USER + 145,
+	MCIWNDM_CAN_RECORD			= WM_USER + 146,
+	MCIWNDM_CAN_SAVE			= WM_USER + 147,
+	MCIWNDM_CAN_EJECT			= WM_USER + 148,
+	MCIWNDM_CAN_CONFIG			= WM_USER + 149,
+	MCIWNDM_PALETTEKICK			= WM_USER + 150,
+	MCIWNDM_OPENINTERFACE		= WM_USER + 151,
+	MCIWNDM_SETOWNER			= WM_USER + 152,
+	MCIWNDM_OPENA				= WM_USER + 153,
+	MCIWNDM_SENDSTRINGW			= WM_USER + 201,
+	MCIWNDM_GETPOSITIONW		= WM_USER + 202,
+	MCIWNDM_GETMODEW			= WM_USER + 206,
+	MCIWNDM_SETTIMEFORMATW		= WM_USER + 219,
+	MCIWNDM_GETTIMEFORMATW		= WM_USER + 220,
+	MCIWNDM_GETFILENAMEW		= WM_USER + 224,
+	MCIWNDM_GETDEVICEW			= WM_USER + 225,
+	MCIWNDM_GETERRORW			= WM_USER + 228,
+	MCIWNDM_NEWW				= WM_USER + 234,
+	MCIWNDM_RETURNSTRINGW		= WM_USER + 238,
+	MCIWNDM_OPENW				= WM_USER + 252,
+}
+
+version(Unicode) {
+	alias MCIWNDM_SENDSTRINGW		MCIWNDM_SENDSTRING;
+	alias MCIWNDM_GETPOSITIONW		MCIWNDM_GETPOSITION;
+	alias MCIWNDM_GETMODEW			MCIWNDM_GETMODE;
+	alias MCIWNDM_SETTIMEFORMATW	MCIWNDM_SETTIMEFORMAT;
+	alias MCIWNDM_GETTIMEFORMATW	MCIWNDM_GETTIMEFORMAT;
+	alias MCIWNDM_GETFILENAMEW		MCIWNDM_GETFILENAME;
+	alias MCIWNDM_GETDEVICEW		MCIWNDM_GETDEVICE;
+	alias MCIWNDM_GETERRORW			MCIWNDM_GETERROR;
+	alias MCIWNDM_NEWW				MCIWNDM_NEW;
+	alias MCIWNDM_RETURNSTRINGW		MCIWNDM_RETURNSTRING;
+	alias MCIWNDM_OPENW				MCIWNDM_OPEN;
+} else { // Unicode
+	alias MCIWNDM_SENDSTRINGA		MCIWNDM_SENDSTRING;
+	alias MCIWNDM_GETPOSITIONA		MCIWNDM_GETPOSITION;
+	alias MCIWNDM_GETMODEA			MCIWNDM_GETMODE;
+	alias MCIWNDM_SETTIMEFORMATA	MCIWNDM_SETTIMEFORMAT;
+	alias MCIWNDM_GETTIMEFORMATA	MCIWNDM_GETTIMEFORMAT;
+	alias MCIWNDM_GETFILENAMEA		MCIWNDM_GETFILENAME;
+	alias MCIWNDM_GETDEVICEA		MCIWNDM_GETDEVICE;
+	alias MCIWNDM_GETERRORA			MCIWNDM_GETERROR;
+	alias MCIWNDM_NEWA				MCIWNDM_NEW;
+	alias MCIWNDM_RETURNSTRINGA		MCIWNDM_RETURNSTRING;
+	alias MCIWNDM_OPENA				MCIWNDM_OPEN;
+}
+
+enum {
+	MCIWNDM_NOTIFYMODE	= WM_USER + 200,
+	MCIWNDM_NOTIFYPOS	= WM_USER + 201,
+	MCIWNDM_NOTIFYSIZE	= WM_USER + 202,
+	MCIWNDM_NOTIFYMEDIA	= WM_USER + 203,
+	MCIWNDM_NOTIFYERROR	= WM_USER + 205,
+}
+
+const MCIWND_START	= -1;
+const MCIWND_END	= -2;
+
+enum {
+	MCI_CLOSE	= 0x0804,
+	MCI_PLAY	= 0x0806,
+	MCI_SEEK	= 0x0807,
+	MCI_STOP	= 0x0808,
+	MCI_PAUSE	= 0x0809,
+	MCI_STEP	= 0x080E,
+	MCI_RECORD	= 0x080F,
+	MCI_SAVE	= 0x0813,
+	MCI_CUT		= 0x0851,
+	MCI_COPY	= 0x0852,
+	MCI_PASTE	= 0x0853,
+	MCI_RESUME	= 0x0855,
+	MCI_DELETE	= 0x0856,
+}
+
+enum {
+	MCI_MODE_NOT_READY	= 524,
+	MCI_MODE_STOP,
+	MCI_MODE_PLAY,
+	MCI_MODE_RECORD,
+	MCI_MODE_SEEK,
+	MCI_MODE_PAUSE,
+	MCI_MODE_OPEN,
+}
+
+typedef HANDLE HVIDEO;
+alias HVIDEO* LPHVIDEO;
+
+// Error Return Values
+
+enum {
+	DV_ERR_OK				= 0,
+	DV_ERR_BASE				= 1,
+	DV_ERR_NONSPECIFIC		= DV_ERR_BASE,
+	DV_ERR_BADFORMAT		= DV_ERR_BASE + 1,
+	DV_ERR_STILLPLAYING		= DV_ERR_BASE + 2,
+	DV_ERR_UNPREPARED		= DV_ERR_BASE + 3,
+	DV_ERR_SYNC				= DV_ERR_BASE + 4,
+	DV_ERR_TOOMANYCHANNELS	= DV_ERR_BASE + 5,
+	DV_ERR_NOTDETECTED		= DV_ERR_BASE + 6,
+	DV_ERR_BADINSTALL		= DV_ERR_BASE + 7,
+	DV_ERR_CREATEPALETTE	= DV_ERR_BASE + 8,
+	DV_ERR_SIZEFIELD		= DV_ERR_BASE + 9,
+	DV_ERR_PARAM1			= DV_ERR_BASE + 10,
+	DV_ERR_PARAM2			= DV_ERR_BASE + 11,
+	DV_ERR_CONFIG1			= DV_ERR_BASE + 12,
+	DV_ERR_CONFIG2			= DV_ERR_BASE + 13,
+	DV_ERR_FLAGS			= DV_ERR_BASE + 14,
+	DV_ERR_13				= DV_ERR_BASE + 15,
+	DV_ERR_NOTSUPPORTED		= DV_ERR_BASE + 16,
+	DV_ERR_NOMEM			= DV_ERR_BASE + 17,
+	DV_ERR_ALLOCATED		= DV_ERR_BASE + 18,
+	DV_ERR_BADDEVICEID		= DV_ERR_BASE + 19,
+	DV_ERR_INVALHANDLE		= DV_ERR_BASE + 20,
+	DV_ERR_BADERRNUM		= DV_ERR_BASE + 21,
+	DV_ERR_NO_BUFFERS		= DV_ERR_BASE + 22,
+	DV_ERR_MEM_CONFLICT		= DV_ERR_BASE + 23,
+	DV_ERR_IO_CONFLICT		= DV_ERR_BASE + 24,
+	DV_ERR_DMA_CONFLICT		= DV_ERR_BASE + 25,
+	DV_ERR_INT_CONFLICT		= DV_ERR_BASE + 26,
+	DV_ERR_PROTECT_ONLY		= DV_ERR_BASE + 27,
+	DV_ERR_LASTERROR		= DV_ERR_BASE + 27,
+	DV_ERR_USER_MSG			= DV_ERR_BASE + 1000,
+}
+
+// Callback Messages
+
+enum {
+	MM_DRVM_OPEN	= 0x3D0,
+	MM_DRVM_CLOSE,
+	MM_DRVM_DATA,
+	MM_DRVM_ERROR,
+}
+
+enum {
+	DV_VM_OPEN	= MM_DRVM_OPEN,
+	DV_VM_CLOSE	= MM_DRVM_CLOSE,
+	DV_VM_DATA	= MM_DRVM_DATA,
+	DV_VM_ERROR	= MM_DRVM_ERROR,
+}
+
+/**
+ * Structures
+ */
+
+struct VIDEOHDR {
+	LPBYTE		lpData;
+	DWORD		dwBufferLength;
+	DWORD		dwBytesUsed;
+	DWORD		dwTimeCaptured;
+	DWORD_PTR	dwUser;
+	DWORD		dwFlags;
+    DWORD_PTR   dwReserved[4];
+}
+alias VIDEOHDR* PVIDEOHDR, LPVIDEOHDR;
+
+enum {
+	VHDR_DONE		= 0x00000001,
+	VHDR_PREPARED	= 0x00000002,
+	VHDR_INQUEUE	= 0x00000004,
+	VHDR_KEYFRAME	= 0x00000008,
+	VHDR_VALID		= 0x0000000F,
+}
+
+struct CHANNEL_CAPS {
+	DWORD	dwFlags;
+	DWORD	dwSrcRectXMod;
+	DWORD	dwSrcRectYMod;
+	DWORD	dwSrcRectWidthMod;
+	DWORD	dwSrcRectHeightMod;
+	DWORD	dwDstRectXMod;
+	DWORD	dwDstRectYMod;
+	DWORD	dwDstRectWidthMod;
+	DWORD	dwDstRectHeightMod;
+}
+alias CHANNEL_CAPS* PCHANNEL_CAPS, LPCHANNEL_CAPS;
+
+enum {
+	VCAPS_OVERLAY		= 0x00000001,
+	VCAPS_SRC_CAN_CLIP	= 0x00000002,
+	VCAPS_DST_CAN_CLIP	= 0x00000004,
+	VCAPS_CAN_SCALE		= 0x00000008,
+}
+
+/**
+ * API Flags
+ */
+
+enum {
+	VIDEO_EXTERNALIN			= 0x0001,
+	VIDEO_EXTERNALOUT			= 0x0002,
+	VIDEO_IN					= 0x0004,
+	VIDEO_OUT					= 0x0008,
+	VIDEO_DLG_QUERY				= 0x0010,
+}
+
+enum {
+	VIDEO_CONFIGURE_QUERYSIZE	= 0x0001,
+	VIDEO_CONFIGURE_CURRENT		= 0x0010,
+	VIDEO_CONFIGURE_NOMINAL		= 0x0020,
+	VIDEO_CONFIGURE_MIN			= 0x0040,
+	VIDEO_CONFIGURE_MAX			= 0x0080,
+	VIDEO_CONFIGURE_SET			= 0x1000,
+	VIDEO_CONFIGURE_GET			= 0x2000,
+	VIDEO_CONFIGURE_QUERY		= 0x8000,
+}
+
+/**
+ * CONFIGURE MESSAGES
+ */
+
+enum {
+	DVM_USER			= 0x4000,
+	DVM_CONFIGURE_START	= 0x1000,
+	DVM_CONFIGURE_END	= 0x1FFF,
+	DVM_PALETTE			= DVM_CONFIGURE_START + 1,
+	DVM_FORMAT			= DVM_CONFIGURE_START + 2,
+	DVM_PALETTERGB555	= DVM_CONFIGURE_START + 3,
+	DVM_SRC_RECT		= DVM_CONFIGURE_START + 4,
+	DVM_DST_RECT		= DVM_CONFIGURE_START + 5,
+}
+
+/**
+ * AVICap window class
+ */
+
+LRESULT AVICapSM(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+	if (IsWindow(hWnd)) {
+		return SendMessage(hWnd, msg, wParam, lParam);
+	}
+	return 0;
+}
+
+enum {
+	WM_CAP_START				= WM_USER,
+	WM_CAP_UNICODE_START		= WM_USER + 100,
+
+	WM_CAP_GET_CAPSTREAMPTR		= WM_CAP_START + 1,
+	WM_CAP_SET_CALLBACK_ERRORA	= WM_CAP_START + 2,
+	WM_CAP_SET_CALLBACK_STATUSA	= WM_CAP_START + 3,
+
+	WM_CAP_SET_CALLBACK_ERRORW	= WM_CAP_UNICODE_START + 2,
+	WM_CAP_SET_CALLBACK_STATUSW	= WM_CAP_UNICODE_START + 3,
+}
+
+version(Unicode) {
+	alias WM_CAP_SET_CALLBACK_ERRORW	WM_CAP_SET_CALLBACK_ERROR;
+	alias WM_CAP_SET_CALLBACK_STATUSW	WM_CAP_SET_CALLBACK_STATUS;
+} else { // Unicode
+	alias WM_CAP_SET_CALLBACK_ERRORA	WM_CAP_SET_CALLBACK_ERROR;
+	alias WM_CAP_SET_CALLBACK_STATUSA	WM_CAP_SET_CALLBACK_STATUS;
+}
+
+enum {
+	WM_CAP_SET_CALLBACK_YIELD		= WM_CAP_START + 4,
+	WM_CAP_SET_CALLBACK_FRAME		= WM_CAP_START + 5,
+	WM_CAP_SET_CALLBACK_VIDEOSTREAM	= WM_CAP_START + 6,
+	WM_CAP_SET_CALLBACK_WAVESTREAM	= WM_CAP_START + 7,
+	WM_CAP_GET_USER_DATA			= WM_CAP_START + 8,
+	WM_CAP_SET_USER_DATA			= WM_CAP_START + 9,
+	WM_CAP_DRIVER_CONNECT			= WM_CAP_START + 10,
+	WM_CAP_DRIVER_DISCONNECT		= WM_CAP_START + 11,
+	WM_CAP_DRIVER_GET_NAMEA			= WM_CAP_START + 12,
+	WM_CAP_DRIVER_GET_VERSIONA		= WM_CAP_START + 13,
+
+	WM_CAP_DRIVER_GET_NAMEW			= WM_CAP_UNICODE_START + 12,
+	WM_CAP_DRIVER_GET_VERSIONW		= WM_CAP_UNICODE_START + 13,
+}
+
+version(Unicode) {
+	alias WM_CAP_DRIVER_GET_NAMEW		WM_CAP_DRIVER_GET_NAME;
+	alias WM_CAP_DRIVER_GET_VERSIONW	WM_CAP_DRIVER_GET_VERSION;
+} else { // Unicode
+	alias WM_CAP_DRIVER_GET_NAMEA		WM_CAP_DRIVER_GET_NAME;
+	alias WM_CAP_DRIVER_GET_VERSIONA	WM_CAP_DRIVER_GET_VERSION;
+}
+
+enum {
+	WM_CAP_DRIVER_GET_CAPS			= WM_CAP_START + 14,
+	WM_CAP_FILE_SET_CAPTURE_FILEA	= WM_CAP_START + 20,
+	WM_CAP_FILE_GET_CAPTURE_FILEA	= WM_CAP_START + 21,
+	WM_CAP_FILE_SAVEASA				= WM_CAP_START + 23,
+	WM_CAP_FILE_SAVEDIBA			= WM_CAP_START + 25,
+
+	WM_CAP_FILE_SET_CAPTURE_FILEW	= WM_CAP_UNICODE_START + 20,
+	WM_CAP_FILE_GET_CAPTURE_FILEW	= WM_CAP_UNICODE_START + 21,
+	WM_CAP_FILE_SAVEASW				= WM_CAP_UNICODE_START + 23,
+	WM_CAP_FILE_SAVEDIBW			= WM_CAP_UNICODE_START + 25,
+}
+
+version(Unicode) {
+	alias WM_CAP_FILE_SET_CAPTURE_FILEW	WM_CAP_FILE_SET_CAPTURE_FILE;
+	alias WM_CAP_FILE_GET_CAPTURE_FILEW	WM_CAP_FILE_GET_CAPTURE_FILE;
+	alias WM_CAP_FILE_SAVEASW			WM_CAP_FILE_SAVEAS;
+	alias WM_CAP_FILE_SAVEDIBW			WM_CAP_FILE_SAVEDIB;
+} else { // Unicode
+	alias WM_CAP_FILE_SET_CAPTURE_FILEA	WM_CAP_FILE_SET_CAPTURE_FILE;
+	alias WM_CAP_FILE_GET_CAPTURE_FILEA	WM_CAP_FILE_GET_CAPTURE_FILE;
+	alias WM_CAP_FILE_SAVEASA			WM_CAP_FILE_SAVEAS;
+	alias WM_CAP_FILE_SAVEDIBA			WM_CAP_FILE_SAVEDIB;
+}
+
+enum {
+	WM_CAP_FILE_ALLOCATE		= WM_CAP_START + 22,
+	WM_CAP_FILE_SET_INFOCHUNK	= WM_CAP_START + 24,
+	WM_CAP_EDIT_COPY			= WM_CAP_START + 30,
+	WM_CAP_SET_AUDIOFORMAT		= WM_CAP_START + 35,
+	WM_CAP_GET_AUDIOFORMAT		= WM_CAP_START + 36,
+	WM_CAP_DLG_VIDEOFORMAT		= WM_CAP_START + 41,
+	WM_CAP_DLG_VIDEOSOURCE		= WM_CAP_START + 42,
+	WM_CAP_DLG_VIDEODISPLAY		= WM_CAP_START + 43,
+	WM_CAP_GET_VIDEOFORMAT		= WM_CAP_START + 44,
+	WM_CAP_SET_VIDEOFORMAT		= WM_CAP_START + 45,
+	WM_CAP_DLG_VIDEOCOMPRESSION	= WM_CAP_START + 46,
+	WM_CAP_SET_PREVIEW			= WM_CAP_START + 50,
+	WM_CAP_SET_OVERLAY			= WM_CAP_START + 51,
+	WM_CAP_SET_PREVIEWRATE		= WM_CAP_START + 52,
+	WM_CAP_SET_SCALE			= WM_CAP_START + 53,
+	WM_CAP_GET_STATUS			= WM_CAP_START + 54,
+	WM_CAP_SET_SCROLL			= WM_CAP_START + 55,
+	WM_CAP_GRAB_FRAME			= WM_CAP_START + 60,
+	WM_CAP_GRAB_FRAME_NOSTOP	= WM_CAP_START + 61,
+	WM_CAP_SEQUENCE				= WM_CAP_START + 62,
+	WM_CAP_SEQUENCE_NOFILE		= WM_CAP_START + 63,
+	WM_CAP_SET_SEQUENCE_SETUP	= WM_CAP_START + 64,
+	WM_CAP_GET_SEQUENCE_SETUP	= WM_CAP_START + 65,
+	WM_CAP_SET_MCI_DEVICEA		= WM_CAP_START + 66,
+	WM_CAP_GET_MCI_DEVICEA		= WM_CAP_START + 67,
+
+	WM_CAP_SET_MCI_DEVICEW		= WM_CAP_UNICODE_START + 66,
+	WM_CAP_GET_MCI_DEVICEW		= WM_CAP_UNICODE_START + 67,
+}
+
+version(Unicode) {
+	alias WM_CAP_SET_MCI_DEVICEW	WM_CAP_SET_MCI_DEVICE;
+	alias WM_CAP_GET_MCI_DEVICEW	WM_CAP_GET_MCI_DEVICE;
+} else { // Unicode
+	alias WM_CAP_SET_MCI_DEVICEA	WM_CAP_SET_MCI_DEVICE;
+	alias WM_CAP_GET_MCI_DEVICEA	WM_CAP_GET_MCI_DEVICE;
+}
+
+enum {
+	WM_CAP_STOP					= WM_CAP_START + 68,
+	WM_CAP_ABORT				= WM_CAP_START + 69,
+	WM_CAP_SINGLE_FRAME_OPEN	= WM_CAP_START + 70,
+	WM_CAP_SINGLE_FRAME_CLOSE	= WM_CAP_START + 71,
+	WM_CAP_SINGLE_FRAME			= WM_CAP_START + 72,
+	WM_CAP_PAL_OPENA			= WM_CAP_START + 80,
+	WM_CAP_PAL_SAVEA			= WM_CAP_START + 81,
+
+	WM_CAP_PAL_OPENW			= WM_CAP_UNICODE_START + 80,
+	WM_CAP_PAL_SAVEW			= WM_CAP_UNICODE_START + 81,
+}
+
+version(Unicode) {
+	alias WM_CAP_PAL_OPENW	WM_CAP_PAL_OPEN;
+	alias WM_CAP_PAL_SAVEW	WM_CAP_PAL_SAVE;
+} else { // Unicode
+	alias WM_CAP_PAL_OPENA	WM_CAP_PAL_OPEN;
+	alias WM_CAP_PAL_SAVEA	WM_CAP_PAL_SAVE;
+}
+
+enum {
+	WM_CAP_PAL_PASTE				= WM_CAP_START + 82,
+	WM_CAP_PAL_AUTOCREATE			= WM_CAP_START + 83,
+	WM_CAP_PAL_MANUALCREATE			= WM_CAP_START + 84,
+	WM_CAP_SET_CALLBACK_CAPCONTROL	= WM_CAP_START + 85,
+	WM_CAP_UNICODE_END				= WM_CAP_PAL_SAVEW,
+	WM_CAP_END						= WM_CAP_UNICODE_END,
+}
+
+/**
+ * message wrapper
+ */
+
+BOOL capSetCallbackOnError(HWND hWnd, LPVOID fpProc)				{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SET_CALLBACK_ERROR, 0, cast(LPARAM)fpProc); }
+BOOL capSetCallbackOnStatus(HWND hWnd, LPVOID fpProc)				{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SET_CALLBACK_STATUS, 0, cast(LPARAM)fpProc); }
+BOOL capSetCallbackOnYield(HWND hWnd, LPVOID fpProc)				{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SET_CALLBACK_YIELD, 0, cast(LPARAM)fpProc); }
+BOOL capSetCallbackOnFrame(HWND hWnd, LPVOID fpProc)				{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SET_CALLBACK_FRAME, 0, cast(LPARAM)fpProc); }
+BOOL capSetCallbackOnVideoStream(HWND hWnd, LPVOID fpProc)			{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SET_CALLBACK_VIDEOSTREAM, 0, cast(LPARAM)fpProc); }
+BOOL capSetCallbackOnWaveStream(HWND hWnd, LPVOID fpProc)			{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SET_CALLBACK_WAVESTREAM, 0, cast(LPARAM)fpProc); }
+BOOL capSetCallbackOnCapControl(HWND hWnd, LPVOID fpProc)			{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SET_CALLBACK_CAPCONTROL, 0, cast(LPARAM)fpProc); }
+
+BOOL capSetUserData(HWND hWnd, LPARAM lUser)						{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SET_USER_DATA, 0, lUser); }
+BOOL capGetUserData(HWND hWnd)										{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_GET_USER_DATA, 0, 0); }
+
+BOOL capDriverConnect(HWND hWnd, WPARAM i)							{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_DRIVER_CONNECT, i, 0); }
+BOOL capDriverDisconnect(HWND hWnd)									{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_DRIVER_DISCONNECT, 0, 0); }
+BOOL capDriverGetName(HWND hWnd, LPTSTR szName, WPARAM wSize)		{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_DRIVER_GET_NAME, wSize, cast(LPARAM)szName); }
+BOOL capDriverGetVersion(HWND hWnd, LPTSTR szVer, WPARAM wSize)		{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_DRIVER_GET_VERSION, wSize, cast(LPARAM)szVer); }
+BOOL capDriverGetCaps(HWND hWnd, LPCAPDRIVERCAPS s, WPARAM wSize)	{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_DRIVER_GET_CAPS, wSize, cast(LPARAM)s); }
+
+BOOL capFileSetCaptureFile(HWND hWnd, LPTSTR szName)				{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_FILE_SET_CAPTURE_FILE, 0, cast(LPARAM)szName); }
+BOOL capFileGetCaptureFile(HWND hWnd, LPTSTR szName, WPARAM wSize)	{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_FILE_GET_CAPTURE_FILE, wSize, cast(LPARAM)szName); }
+BOOL capFileAlloc(HWND hWnd, WPARAM wSize)							{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_FILE_ALLOCATE, wSize, 0); }
+BOOL capFileSaveAs(HWND hWnd, LPTSTR szName)						{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_FILE_SAVEAS, 0, cast(LPARAM)szName); }
+BOOL capFileSetInfoChunk(HWND hWnd, LPCAPINFOCHUNK lpInfoChunk)		{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_FILE_SET_INFOCHUNK, 0, cast(LPARAM)lpInfoChunk); }
+BOOL capFileSaveDIB(HWND hWnd, LPTSTR szName)						{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_FILE_SAVEDIB, 0, cast(LPARAM)szName); }
+
+BOOL capEditCopy(HWND hWnd)											{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_EDIT_COPY, 0, 0); }
+
+BOOL capSetAudioFormat(HWND hWnd, LPWAVEFORMATEX s, WPARAM wSize)	{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SET_AUDIOFORMAT, wSize, cast(LPARAM)s); }
+DWORD capGetAudioFormat(HWND hWnd, LPWAVEFORMATEX s, WPARAM wSize)	{ return cast(DWORD)AVICapSM(hWnd, WM_CAP_GET_AUDIOFORMAT, wSize, cast(LPARAM)s); }
+DWORD capGetAudioFormatSize(HWND hWnd)								{ return cast(DWORD)AVICapSM(hWnd, WM_CAP_GET_AUDIOFORMAT, 0, 0); }
+
+BOOL capDlgVideoFormat(HWND hWnd)									{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_DLG_VIDEOFORMAT, 0, 0); }
+BOOL capDlgVideoSource(HWND hWnd)									{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_DLG_VIDEOSOURCE, 0, 0); }
+BOOL capDlgVideoDisplay(HWND hWnd)									{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_DLG_VIDEODISPLAY, 0, 0); }
+BOOL capDlgVideoCompression(HWND hWnd)								{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_DLG_VIDEOCOMPRESSION, 0, 0); }
+
+DWORD capGetVideoFormat(HWND hWnd, void* s, WPARAM wSize)			{ return cast(DWORD)AVICapSM(hWnd, WM_CAP_GET_VIDEOFORMAT, wSize, cast(LPARAM)s); }
+DWORD capGetVideoFormatSize(HWND hWnd)								{ return cast(DWORD)AVICapSM(hWnd, WM_CAP_GET_VIDEOFORMAT, 0, 0); }
+BOOL capSetVideoFormat(HWND hWnd, void* s, WPARAM wSize)			{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SET_VIDEOFORMAT, wSize, cast(LPARAM)s); }
+
+BOOL capPreview(HWND hWnd, BOOL f)									{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SET_PREVIEW, cast(WPARAM)f, 0); }
+BOOL capPreviewRate(HWND hWnd, WPARAM wMS)							{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SET_PREVIEWRATE, wMS, 0); }
+BOOL capOverlay(HWND hWnd, BOOL f)									{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SET_OVERLAY, cast(WPARAM)f, 0); }
+BOOL capPreviewScale(HWND hWnd, BOOL f)								{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SET_SCALE, cast(WPARAM)f, 0); }
+BOOL capGetStatus(HWND hWnd, LPCAPSTATUS s, WPARAM wSize)			{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_GET_STATUS, wSize, cast(LPARAM)s); }
+BOOL capSetScrollPos(HWND hWnd, LPPOINT lpP)						{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SET_SCROLL, 0, cast(LPARAM)lpP); }
+
+BOOL capGrabFrame(HWND hWnd)										{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_GRAB_FRAME, 0, 0); }
+BOOL capGrabFrameNoStop(HWND hWnd)									{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_GRAB_FRAME_NOSTOP, 0, 0); }
+
+BOOL capCaptureSequence(HWND hWnd)									{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SEQUENCE, 0, 0); }
+BOOL capCaptureSequenceNoFile(HWND hWnd)							{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SEQUENCE_NOFILE, 0, 0); }
+BOOL capCaptureStop(HWND hWnd)										{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_STOP, 0, 0); }
+BOOL capCaptureAbort(HWND hWnd)										{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_ABORT, 0, 0); }
+
+BOOL capCaptureSingleFrameOpen(HWND hWnd)							{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SINGLE_FRAME_OPEN, 0, 0); }
+BOOL capCaptureSingleFrameClose(HWND hWnd)							{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SINGLE_FRAME_CLOSE, 0, 0); }
+BOOL capCaptureSingleFrame(HWND hWnd)								{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SINGLE_FRAME, 0, 0); }
+
+BOOL capCaptureGetSetup(HWND hWnd, LPCAPTUREPARMS s, WPARAM wSize)	{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_GET_SEQUENCE_SETUP, wSize, cast(LPARAM)s); }
+BOOL capCaptureSetSetup(HWND hWnd, LPCAPTUREPARMS s, WPARAM wSize)	{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SET_SEQUENCE_SETUP, wSize, cast(LPARAM)s); }
+
+BOOL capSetMCIDeviceName(HWND hWnd, LPTSTR szName)					{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_SET_MCI_DEVICE, 0, cast(LPARAM)szName); }
+BOOL capGetMCIDeviceName(HWND hWnd, LPTSTR szName, WPARAM wSize)	{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_GET_MCI_DEVICE, wSize, cast(LPARAM)szName); }
+
+BOOL capPaletteOpen(HWND hWnd, LPTSTR szName)						{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_PAL_OPEN, 0, cast(LPARAM)szName); }
+BOOL capPaletteSave(HWND hWnd, LPTSTR szName)						{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_PAL_SAVE, 0, cast(LPARAM)szName); }
+BOOL capPalettePaste(HWND hWnd)										{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_PAL_PASTE, 0, 0); }
+BOOL capPaletteAuto(HWND hWnd, WPARAM iFrames, LPARAM iColors)		{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_PAL_AUTOCREATE, iFrames, iColors); }
+BOOL capPaletteManual(HWND hWnd, WPARAM fGrab, LPARAM iColors)		{ return cast(BOOL)AVICapSM(hWnd, WM_CAP_PAL_MANUALCREATE, fGrab, iColors); }
+
+/**
+ * structs
+ */
+
+struct CAPDRIVERCAPS {
+	UINT	wDeviceIndex;
+	BOOL	fHasOverlay;
+	BOOL	fHasDlgVideoSource;
+	BOOL	fHasDlgVideoFormat;
+	BOOL	fHasDlgVideoDisplay;
+	BOOL	fCaptureInitialized;
+	BOOL	fDriverSuppliesPalettes;
+	HANDLE	hVideoIn;
+	HANDLE	hVideoOut;
+	HANDLE	hVideoExtIn;
+	HANDLE	hVideoExtOut;
+}
+alias CAPDRIVERCAPS* PCAPDRIVERCAPS, LPCAPDRIVERCAPS;
+
+struct CAPSTATUS {
+	UINT		uiImageWidth;
+	UINT		uiImageHeight;
+	BOOL		fLiveWindow;
+	BOOL		fOverlayWindow;
+	BOOL		fScale;
+	POINT		ptScroll;
+	BOOL		fUsingDefaultPalette;
+	BOOL		fAudioHardware;
+	BOOL		fCapFileExists;
+	DWORD		dwCurrentVideoFrame;
+	DWORD		dwCurrentVideoFramesDropped;
+	DWORD		dwCurrentWaveSamples;
+	DWORD		dwCurrentTimeElapsedMS;
+	HPALETTE	hPalCurrent;
+	BOOL		fCapturingNow;
+	DWORD		dwReturn;
+	UINT		wNumVideoAllocated;
+	UINT		wNumAudioAllocated;
+}
+alias CAPSTATUS* PCAPSTATUS, LPCAPSTATUS;
+
+struct CAPTUREPARMS {
+	DWORD	dwRequestMicroSecPerFrame;
+	BOOL	fMakeUserHitOKToCapture;
+	UINT	wPercentDropForError;
+	BOOL	fYield;
+	DWORD	dwIndexSize;
+	UINT	wChunkGranularity;
+	BOOL	fUsingDOSMemory;
+	UINT	wNumVideoRequested;
+	BOOL	fCaptureAudio;
+	UINT	wNumAudioRequested;
+	UINT	vKeyAbort;
+	BOOL	fAbortLeftMouse;
+	BOOL	fAbortRightMouse;
+	BOOL	fLimitEnabled;
+	UINT	wTimeLimit;
+	BOOL	fMCIControl;
+	BOOL	fStepMCIDevice;
+	DWORD	dwMCIStartTime;
+	DWORD	dwMCIStopTime;
+	BOOL	fStepCaptureAt2x;
+	UINT	wStepCaptureAverageFrames;
+	DWORD	dwAudioBufferSize;
+	BOOL	fDisableWriteCache;
+	UINT	AVStreamMaster;
+}
+alias CAPTUREPARMS* PCAPTUREPARMS, LPCAPTUREPARMS;
+
+const AVSTREAMMASTER_AUDIO = 0;
+const AVSTREAMMASTER_NONE  = 1;
+
+struct CAPINFOCHUNK {
+	FOURCC	fccInfoID;
+	LPVOID	lpData;
+	LONG	cbData;
+}
+alias CAPINFOCHUNK* PCAPINFOCHUNK, LPCAPINFOCHUNK;
+
+// Callback Definitions
+
+extern (Windows) {
+	alias LRESULT function(HWND hWnd) CAPYIELDCALLBACK;
+	alias LRESULT function(HWND hWnd, int nID, LPCWSTR lpsz) CAPSTATUSCALLBACKW;
+	alias LRESULT function(HWND hWnd, int nID, LPCWSTR lpsz) CAPERRORCALLBACKW;
+	alias LRESULT function(HWND hWnd, int nID, LPCSTR lpsz) CAPSTATUSCALLBACKA;
+	alias LRESULT function(HWND hWnd, int nID, LPCSTR lpsz) CAPERRORCALLBACKA;
+}
+
+version(Unicode) {
+	alias CAPSTATUSCALLBACKW	CAPSTATUSCALLBACK;
+	alias CAPERRORCALLBACKW		CAPERRORCALLBACK;
+} else { // Unicode
+	alias CAPSTATUSCALLBACKA	CAPSTATUSCALLBACK;
+	alias CAPERRORCALLBACKA		CAPERRORCALLBACK;
+}
+
+extern (Windows) {
+	alias LRESULT function(HWND hWnd, LPVIDEOHDR lpVHdr) CAPVIDEOCALLBACK;
+	alias LRESULT function(HWND hWnd, LPWAVEHDR lpWHdr) CAPWAVECALLBACK;
+	alias LRESULT function(HWND hWnd, int nState) CAPCONTROLCALLBACK;
+}
+
+//  CapControlCallback states
+const CONTROLCALLBACK_PREROLL	= 1;
+const CONTROLCALLBACK_CAPTURING	= 2;
+
+extern (Windows) {
+	HWND capCreateCaptureWindowA(LPCSTR lpszWindowName, DWORD dwStyle, int x, int y, int nWidth, int nHeight, HWND hwndParent, int nID);
+	BOOL capGetDriverDescriptionA(UINT wDriverIndex, LPSTR lpszName, int cbName, LPSTR lpszVer, int cbVer);
+	HWND capCreateCaptureWindowW(LPCWSTR lpszWindowName, DWORD dwStyle, int x, int y, int nWidth, int nHeight, HWND hwndParent, int nID);
+	BOOL capGetDriverDescriptionW(UINT wDriverIndex, LPWSTR lpszName, int cbName, LPWSTR lpszVer, int cbVer);
+}
+
+version(Unicode) {
+	alias capCreateCaptureWindowW	capCreateCaptureWindow;
+	alias capGetDriverDescriptionW	capGetDriverDescription;
+} else { // Unicode
+	alias capCreateCaptureWindowA	capCreateCaptureWindow;
+	alias capGetDriverDescriptionA	capGetDriverDescription;
+}
+
+// New Information chunk IDs
+const infotypeDIGITIZATION_TIME	= mmioFOURCC!('I', 'D', 'I', 'T');
+const infotypeSMPTE_TIME		= mmioFOURCC!('I', 'S', 'M', 'P');
+
+// status and error callbacks
+enum {
+	IDS_CAP_BEGIN					= 300,
+	IDS_CAP_END						= 301,
+
+	IDS_CAP_INFO					= 401,
+	IDS_CAP_OUTOFMEM				= 402,
+	IDS_CAP_FILEEXISTS				= 403,
+	IDS_CAP_ERRORPALOPEN			= 404,
+	IDS_CAP_ERRORPALSAVE			= 405,
+	IDS_CAP_ERRORDIBSAVE			= 406,
+	IDS_CAP_DEFAVIEXT				= 407,
+	IDS_CAP_DEFPALEXT				= 408,
+	IDS_CAP_CANTOPEN				= 409,
+	IDS_CAP_SEQ_MSGSTART			= 410,
+	IDS_CAP_SEQ_MSGSTOP				= 411,
+
+	IDS_CAP_VIDEDITERR				= 412,
+	IDS_CAP_READONLYFILE			= 413,
+	IDS_CAP_WRITEERROR				= 414,
+	IDS_CAP_NODISKSPACE				= 415,
+	IDS_CAP_SETFILESIZE				= 416,
+	IDS_CAP_SAVEASPERCENT			= 417,
+
+	IDS_CAP_DRIVER_ERROR			= 418,
+
+	IDS_CAP_WAVE_OPEN_ERROR			= 419,
+	IDS_CAP_WAVE_ALLOC_ERROR		= 420,
+	IDS_CAP_WAVE_PREPARE_ERROR		= 421,
+	IDS_CAP_WAVE_ADD_ERROR			= 422,
+	IDS_CAP_WAVE_SIZE_ERROR			= 423,
+
+	IDS_CAP_VIDEO_OPEN_ERROR		= 424,
+	IDS_CAP_VIDEO_ALLOC_ERROR		= 425,
+	IDS_CAP_VIDEO_PREPARE_ERROR		= 426,
+	IDS_CAP_VIDEO_ADD_ERROR			= 427,
+	IDS_CAP_VIDEO_SIZE_ERROR		= 428,
+
+	IDS_CAP_FILE_OPEN_ERROR			= 429,
+	IDS_CAP_FILE_WRITE_ERROR		= 430,
+	IDS_CAP_RECORDING_ERROR			= 431,
+	IDS_CAP_RECORDING_ERROR2		= 432,
+	IDS_CAP_AVI_INIT_ERROR			= 433,
+	IDS_CAP_NO_FRAME_CAP_ERROR		= 434,
+	IDS_CAP_NO_PALETTE_WARN			= 435,
+	IDS_CAP_MCI_CONTROL_ERROR		= 436,
+	IDS_CAP_MCI_CANT_STEP_ERROR		= 437,
+	IDS_CAP_NO_AUDIO_CAP_ERROR		= 438,
+	IDS_CAP_AVI_DRAWDIB_ERROR		= 439,
+	IDS_CAP_COMPRESSOR_ERROR		= 440,
+	IDS_CAP_AUDIO_DROP_ERROR		= 441,
+	IDS_CAP_AUDIO_DROP_COMPERROR	= 442,
+
+	IDS_CAP_STAT_LIVE_MODE			= 500,
+	IDS_CAP_STAT_OVERLAY_MODE		= 501,
+	IDS_CAP_STAT_CAP_INIT			= 502,
+	IDS_CAP_STAT_CAP_FINI			= 503,
+	IDS_CAP_STAT_PALETTE_BUILD		= 504,
+	IDS_CAP_STAT_OPTPAL_BUILD		= 505,
+	IDS_CAP_STAT_I_FRAMES			= 506,
+	IDS_CAP_STAT_L_FRAMES			= 507,
+	IDS_CAP_STAT_CAP_L_FRAMES		= 508,
+	IDS_CAP_STAT_CAP_AUDIO			= 509,
+	IDS_CAP_STAT_VIDEOCURRENT		= 510,
+	IDS_CAP_STAT_VIDEOAUDIO			= 511,
+	IDS_CAP_STAT_VIDEOONLY			= 512,
+	IDS_CAP_STAT_FRAMESDROPPED		= 513,
+}
+
+/**
+ * FilePreview dialog.
+ */
+
+extern (Windows) {
+	BOOL GetOpenFileNamePreviewA(LPOPENFILENAMEA lpofn);
+	BOOL GetSaveFileNamePreviewA(LPOPENFILENAMEA lpofn);
+	BOOL GetOpenFileNamePreviewW(LPOPENFILENAMEW lpofn);
+	BOOL GetSaveFileNamePreviewW(LPOPENFILENAMEW lpofn);
+}
+
+version(Unicode) {
+	alias GetOpenFileNamePreviewW	GetOpenFileNamePreview;
+	alias GetSaveFileNamePreviewW	GetSaveFileNamePreview;
+} else { // Unicode
+	alias GetOpenFileNamePreviewA	GetOpenFileNamePreview;
+	alias GetSaveFileNamePreviewA	GetSaveFileNamePreview;
 }
