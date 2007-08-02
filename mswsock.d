@@ -140,7 +140,7 @@ version(Win32_Winsock1) {
 			union {
 				struct {
 					LARGE_INTEGER nFileOffset;
-					HANLDE        hFile;
+					HANDLE        hFile;
 				}
 				PVOID pBuffer;
 			}
