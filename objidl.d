@@ -624,7 +624,7 @@ interface ISequentialStream : public IUnknown {
 interface IStream : public ISequentialStream {
 	HRESULT Seek(LARGE_INTEGER, DWORD, ULARGE_INTEGER*);
 	HRESULT SetSize(ULARGE_INTEGER);
-	HRESULT CopyTo(IStream*, ULARGE_INTEGER, ULARGE_INTEGER*, ULARGE_INTEGER*);
+	HRESULT CopyTo(IStream, ULARGE_INTEGER, ULARGE_INTEGER*, ULARGE_INTEGER*);
 	HRESULT Commit(DWORD);
 	HRESULT Revert();
 	HRESULT LockRegion(ULARGE_INTEGER, ULARGE_INTEGER, DWORD);
@@ -636,9 +636,9 @@ interface IStream : public ISequentialStream {
 interface IMarshal : public IUnknown {
 	HRESULT GetUnmarshalClass(REFIID, PVOID, DWORD, PVOID, DWORD, CLSID*);
 	HRESULT GetMarshalSizeMax(REFIID, PVOID, DWORD, PVOID, PDWORD, ULONG*);
-	HRESULT MarshalInterface(IStream*, REFIID, PVOID, DWORD, PVOID, DWORD);
-	HRESULT UnmarshalInterface(IStream*, REFIID, void**);
-	HRESULT ReleaseMarshalData(IStream*);
+	HRESULT MarshalInterface(IStream, REFIID, PVOID, DWORD, PVOID, DWORD);
+	HRESULT UnmarshalInterface(IStream, REFIID, void**);
+	HRESULT ReleaseMarshalData(IStream);
 	HRESULT DisconnectObject(DWORD);
 }
 
@@ -784,15 +784,15 @@ interface IDataAdviseHolder : public IUnknown {
 }
 
 interface IStorage : public IUnknown {
-	HRESULT CreateStream(LPCWSTR, DWORD, DWORD, DWORD, IStream**);
-	HRESULT OpenStream(LPCWSTR, PVOID, DWORD, DWORD, IStream**);
-	HRESULT CreateStorage(LPCWSTR, DWORD, DWORD, DWORD, IStorage**);
-	HRESULT OpenStorage(LPCWSTR, IStorage*, DWORD, SNB, DWORD, IStorage**);
-	HRESULT CopyTo(DWORD, IID* , SNB, IStorage*);
-	HRESULT MoveElementTo(LPCWSTR, IStorage*, LPCWSTR, DWORD);
+	HRESULT CreateStream(LPCWSTR, DWORD, DWORD, DWORD, IStream*);
+	HRESULT OpenStream(LPCWSTR, PVOID, DWORD, DWORD, IStream*);
+	HRESULT CreateStorage(LPCWSTR, DWORD, DWORD, DWORD, IStorage*);
+	HRESULT OpenStorage(LPCWSTR, IStorage, DWORD, SNB, DWORD, IStorage*);
+	HRESULT CopyTo(DWORD, IID* , SNB, IStorage);
+	HRESULT MoveElementTo(LPCWSTR, IStorage, LPCWSTR, DWORD);
 	HRESULT Commit(DWORD);
 	HRESULT Revert();
-	HRESULT EnumElements(DWORD, PVOID, DWORD, IEnumSTATSTG**);
+	HRESULT EnumElements(DWORD, PVOID, DWORD, IEnumSTATSTG*);
 	HRESULT DestroyElement(LPCWSTR);
 	HRESULT RenameElement(LPCWSTR, LPCWSTR);
 	HRESULT SetElementTimes(LPCWSTR, FILETIME* , FILETIME* , FILETIME* );

@@ -159,7 +159,7 @@ extern(Windows) {
 	HRESULT CreateDataCache(LPUNKNOWN, REFCLSID, REFIID, PVOID*);
 	HRESULT StgCreateDocfile(OLECHAR*, DWORD, DWORD, IStorage**);
 	HRESULT StgCreateDocfileOnILockBytes(ILockBytes*, DWORD, DWORD, IStorage**);
-	HRESULT StgOpenStorage(OLECHAR*, IStorage*, DWORD, SNB, DWORD, IStorage**);
+	HRESULT StgOpenStorage(OLECHAR*, IStorage, DWORD, SNB, DWORD, IStorage*);
 	HRESULT StgOpenStorageOnILockBytes(ILockBytes*, IStorage*, DWORD, SNB, DWORD, IStorage**);
 	HRESULT StgIsStorageFile(OLECHAR*);
 	HRESULT StgIsStorageILockBytes(ILockBytes*);
