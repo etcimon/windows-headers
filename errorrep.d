@@ -12,11 +12,9 @@ module win32.errorrep;
 
 private import win32.w32api, win32.windef;
 
-static if (_WIN32_WINNT < 0x501) {
-	pragma(msg,
-"win32.errorrep is available only if version WindowsXP or Windows2003 is set");
-	static assert (false);
-}
+static assert (_WIN32_WINNT >= 0x501,
+	"win32.errorrep is available only if version WindowsXP, Windows2003 "
+	"or WindowsVista is set");
 
 enum EFaultRepRetVal {
 	frrvOk,

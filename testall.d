@@ -9,7 +9,6 @@ import win32.setupapi;
 import win32.dxerr8;
 import win32.dxerr9;
 import win32.oleacc;
-import win32.aclui;
 import win32.comcat;
 import win32.cpl;
 import win32.cplext;
@@ -92,5 +91,8 @@ version (WINDOWS_XP_UP) {
 	import win32.reason;
 	import win32.secext;
 } else version (WindowsNTonly) {
-	version (Windows2000) import win32.dhcpcsdk;
+	version (Windows2000) {
+		import win32.dhcpcsdk;
+		import win32.aclui;
+	}
 }

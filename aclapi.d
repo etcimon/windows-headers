@@ -14,8 +14,8 @@ pragma(lib, "advapi32.lib");
 import win32.windows, win32.accctrl;
 
 static assert (_WIN32_WINNT_ONLY,
-	"win32.aclapi is available only if version WindowsNTonly, WindowsXP "
-	"or Windows2003 is set");
+	"win32.aclapi is available only if version WindowsNTonly, WindowsXP, "
+	"Windows2003 or WindowsVista is set");
 
 extern (Windows) {
 	VOID BuildExplicitAccessWithNameA(PEXPLICIT_ACCESS_A, LPSTR, DWORD,

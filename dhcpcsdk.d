@@ -12,12 +12,9 @@ module win32.dhcpcsdk;
 
 private import win32.w32api, win32.windef;
 
-static if (!_WIN32_WINNT_ONLY || _WIN32_WINNT < 0x500) {
-	pragma(msg,
-"win32.dhcpcsdk is available only if version WindowsXP or Windows2003 is set,
-or both Windows2000 and WindowsNTonly are set");
-	static assert (false);
-}
+static assert (_WIN32_WINNT_ONLY && _WIN32_WINNT >= 0x500,
+"win32.dhcpcsdk is available only if version WindowsXP, Windows2003
+or WindowsVista is set, or both Windows2000 and WindowsNTonly are set");
 
 //#if (_WIN32_WINNT >= 0x0500)
 

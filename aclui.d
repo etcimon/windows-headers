@@ -11,9 +11,16 @@
 module win32.aclui;
 pragma(lib, "aclui.lib");
 
+private import win32.w32api;
+
+static assert (_WIN32_WINNT_ONLY && _WIN32_WINNT >= 0x500,
+	"win32.aclui is available only if version WindowsXP, Windows2003 "
+	"or WindowsVista is set, or both Windows2000 and WindowsNTonly are set");
+
 import win32.accctrl, win32.commctrl, win32.objbase;
 private import win32.basetyps, win32.prsht, win32.unknwn, win32.windef,
   win32.winuser;
+
 
 struct SI_OBJECT_INFO {
 	DWORD     dwFlags;

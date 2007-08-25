@@ -12,11 +12,9 @@ pragma(lib, "netapi32.lib");
 
 private import win32.lmcons, win32.windef, win32.w32api;
 
-static if (!_WIN32_WINNT_ONLY || _WIN32_WINNT < 0x501) {
-	pragma(msg,
-"win32.lmmsg is available only if version WindowsXP or Windows2003 is set");
-	static assert (false);
-}
+static assert (_WIN32_WINNT_ONLY && _WIN32_WINNT >= 0x501,
+	"win32.lmmsg is available only if version WindowsXP, Windows2003 "
+	"or WindowsVista is set");
 
 const MSGNAME_NOT_FORWARDED  = 0;
 const MSGNAME_FORWARDED_TO   = 4;
