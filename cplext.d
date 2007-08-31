@@ -3,17 +3,17 @@
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
-*                 Translated from MinGW Windows headers                 *
+*             Translated from MinGW API for MS-Windows 3.10             *
 *                           by Stewart Gordon                           *
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.cplext;
 
-// FIXME: check types
-
-const CPLPAGE_MOUSE_BUTTONS      = 1;
-const CPLPAGE_MOUSE_PTRMOTION    = 2;
-const CPLPAGE_MOUSE_WHEEL        = 3;
-const CPLPAGE_KEYBOARD_SPEED     = 1;
-const CPLPAGE_DISPLAY_BACKGROUND = 1;
+enum : uint {
+	CPLPAGE_MOUSE_BUTTONS      = 1,
+	CPLPAGE_MOUSE_PTRMOTION    = 2,
+	CPLPAGE_MOUSE_WHEEL        = 3,
+	CPLPAGE_KEYBOARD_SPEED     = 1,
+	CPLPAGE_DISPLAY_BACKGROUND = 1
+}

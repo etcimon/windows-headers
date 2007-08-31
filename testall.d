@@ -60,7 +60,6 @@ import win32.msacm;
 import win32.nspapi;
 
 import win32.ntdef;
-import win32.ntdll;
 import win32.ntldap;
 import win32.ntsecapi;
 
@@ -90,9 +89,11 @@ version (WINDOWS_XP_UP) {
 	import win32.errorrep;
 	import win32.reason;
 	import win32.secext;
+	import win32.ntdll;
 } else version (WindowsNTonly) {
 	version (Windows2000) {
 		import win32.dhcpcsdk;
 		import win32.aclui;
 	}
+	import win32.ntdll;
 }

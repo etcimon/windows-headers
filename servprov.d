@@ -3,7 +3,7 @@
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
-*                 Translated from MinGW Windows headers                 *
+*             Translated from MinGW API for MS-Windows 3.10             *
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/

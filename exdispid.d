@@ -3,16 +3,14 @@
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
-*                 Translated from MinGW Windows headers                 *
+*             Translated from MinGW API for MS-Windows 3.10             *
 *                           by Stewart Gordon                           *
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.exdispid;
 
-// FIXME: check type
-
-enum {
+enum : int {
 	DISPID_STATUSTEXTCHANGE = 102,
 	DISPID_PROGRESSCHANGE   = 108,
 	DISPID_TITLECHANGE      = 113,
