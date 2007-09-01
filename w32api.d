@@ -3,16 +3,16 @@
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
-*                 Translated from MinGW Windows headers                 *
+*             Translated from MinGW API for MS-Windows 3.10             *
 *                           by Stewart Gordon                           *
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.w32api;
 
-const __W32API_VERSION = 3.6;
+const __W32API_VERSION = 3.10;
 const __W32API_MAJOR_VERSION = 3;
-const __W32API_MINOR_VERSION = 6;
+const __W32API_MINOR_VERSION = 10;
 
 /*	These version identifiers are used to specify the minimum version of
  *	Windows that an application will support.
