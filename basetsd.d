@@ -1,9 +1,9 @@
 /***********************************************************************\
-*                               basestd.d                               *
+*                               basetsd.d                               *
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
-*                 Translated from MinGW Windows headers                 *
+*             Translated from MinGW API for MS-Windows 3.10             *
 *                           by Stewart Gordon                           *
 *                                                                       *
 *                       Placed into public domain                       *
@@ -14,7 +14,7 @@ private import win32.winnt;
 
 version (Win64) {
 	alias long __int3264;
-	enum : ulong { ADDRESS_TAG_BIT = 0x40000000000 }
+	const ulong ADDRESS_TAG_BIT = 0x40000000000;
 
 	alias long INT_PTR, LONG_PTR;
 	alias long* PINT_PTR, PLONG_PTR;
@@ -24,10 +24,14 @@ version (Win64) {
 	alias int* PHALF_PTR;
 	alias uint UHALF_PTR;
 	alias uint* PUHALF_PTR;
-	// LATER: translate *To* functions once Win64 is here
+
+	/*	*To* functions are conditioned out in MinGW.
+	 *	Presumably they're not working/tested yet.  Comment:
+			TODO when WIN64 is here
+	 */
 } else {
 	alias int __int3264;
-	enum : uint { ADDRESS_TAG_BIT = 0x80000000 }
+	const uint ADDRESS_TAG_BIT = 0x80000000;
 
 	alias int INT_PTR, LONG_PTR;
 	alias int* PINT_PTR, PLONG_PTR;

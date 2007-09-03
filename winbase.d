@@ -3,7 +3,7 @@
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
-*                 Translated from MinGW Windows headers                 *
+*             Translated from MinGW API for MS-Windows 3.10             *
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
@@ -536,39 +536,41 @@ const NONZEROLPTR = 0;
 
 // used in EXCEPTION_RECORD
 enum : DWORD {
-	STATUS_WAIT_0           = 0,
-	STATUS_ABANDONED_WAIT_0 = 0x80,
-	STATUS_USER_APC         = 0xC0,
-	STATUS_TIMEOUT          = 0x102,
-	STATUS_PENDING          = 0x103,
+	STATUS_WAIT_0                      = 0,
+	STATUS_ABANDONED_WAIT_0            = 0x00000080,
+	STATUS_USER_APC                    = 0x000000C0,
+	STATUS_TIMEOUT                     = 0x00000102,
+	STATUS_PENDING                     = 0x00000103,
 
-	STATUS_SEGMENT_NOTIFICATION  = 0x40000005,
-	STATUS_GUARD_PAGE_VIOLATION  = 0x80000001,
-	STATUS_DATATYPE_MISALIGNMENT = 0x80000002,
-	STATUS_BREAKPOINT            = 0x80000003,
-	STATUS_SINGLE_STEP           = 0x80000004,
+	STATUS_SEGMENT_NOTIFICATION        = 0x40000005,
+	STATUS_GUARD_PAGE_VIOLATION        = 0x80000001,
+	STATUS_DATATYPE_MISALIGNMENT       = 0x80000002,
+	STATUS_BREAKPOINT                  = 0x80000003,
+	STATUS_SINGLE_STEP                 = 0x80000004,
 
-	STATUS_ACCESS_VIOLATION         = 0xC0000005,
-	STATUS_IN_PAGE_ERROR            = 0xC0000006,
-	STATUS_INVALID_HANDLE           = 0xC0000008,
+	STATUS_ACCESS_VIOLATION            = 0xC0000005,
+	STATUS_IN_PAGE_ERROR               = 0xC0000006,
+	STATUS_INVALID_HANDLE              = 0xC0000008,
 
-	STATUS_NO_MEMORY                = 0xC0000017,
-	STATUS_ILLEGAL_INSTRUCTION      = 0xC000001D,
-	STATUS_NONCONTINUABLE_EXCEPTION = 0xC0000025,
-	STATUS_INVALID_DISPOSITION      = 0xC0000026,
-	STATUS_ARRAY_BOUNDS_EXCEEDED    = 0xC000008C,
-	STATUS_FLOAT_DENORMAL_OPERAND   = 0xC000008D,
-	STATUS_FLOAT_DIVIDE_BY_ZERO     = 0xC000008E,
-	STATUS_FLOAT_INEXACT_RESULT     = 0xC000008F,
-	STATUS_FLOAT_INVALID_OPERATION  = 0xC0000090,
-	STATUS_FLOAT_OVERFLOW           = 0xC0000091,
-	STATUS_FLOAT_STACK_CHECK        = 0xC0000092,
-	STATUS_FLOAT_UNDERFLOW          = 0xC0000093,
-	STATUS_INTEGER_DIVIDE_BY_ZERO   = 0xC0000094,
-	STATUS_INTEGER_OVERFLOW         = 0xC0000095,
-	STATUS_PRIVILEGED_INSTRUCTION   = 0xC0000096,
-	STATUS_STACK_OVERFLOW           = 0xC00000FD,
-	STATUS_CONTROL_C_EXIT           = 0xC000013A,
+	STATUS_NO_MEMORY                   = 0xC0000017,
+	STATUS_ILLEGAL_INSTRUCTION         = 0xC000001D,
+	STATUS_NONCONTINUABLE_EXCEPTION    = 0xC0000025,
+	STATUS_INVALID_DISPOSITION         = 0xC0000026,
+	STATUS_ARRAY_BOUNDS_EXCEEDED       = 0xC000008C,
+	STATUS_FLOAT_DENORMAL_OPERAND      = 0xC000008D,
+	STATUS_FLOAT_DIVIDE_BY_ZERO        = 0xC000008E,
+	STATUS_FLOAT_INEXACT_RESULT        = 0xC000008F,
+	STATUS_FLOAT_INVALID_OPERATION     = 0xC0000090,
+	STATUS_FLOAT_OVERFLOW              = 0xC0000091,
+	STATUS_FLOAT_STACK_CHECK           = 0xC0000092,
+	STATUS_FLOAT_UNDERFLOW             = 0xC0000093,
+	STATUS_INTEGER_DIVIDE_BY_ZERO      = 0xC0000094,
+	STATUS_INTEGER_OVERFLOW            = 0xC0000095,
+	STATUS_PRIVILEGED_INSTRUCTION      = 0xC0000096,
+	STATUS_STACK_OVERFLOW              = 0xC00000FD,
+	STATUS_CONTROL_C_EXIT              = 0xC000013A,
+	STATUS_DLL_INIT_FAILED             = 0xC0000142,
+	STATUS_DLL_INIT_FAILED_LOGOFF      = 0xC000026B,
 
 	CONTROL_C_EXIT                     = STATUS_CONTROL_C_EXIT,
 
@@ -616,24 +618,28 @@ const DWORD
 	LOCKFILE_FAIL_IMMEDIATELY = 1,
 	LOCKFILE_EXCLUSIVE_LOCK   = 2;
 
-// for LogonUser()
-enum : DWORD {
-	LOGON32_LOGON_INTERACTIVE = 2,
-	LOGON32_LOGON_BATCH       = 4,
-	LOGON32_LOGON_SERVICE     = 5
-	// TODO(D): More values from MSDN
-	//LOGON32_LOGON_NETWORK
-	//LOGON32_LOGON_NETWORK_CLEARTEXT
-	//LOGON32_LOGON_NEW_CREDENTIALS
-	//LOGON32_LOGON_UNLOCK
-}
+static if (_WIN32_WINNT_ONLY) {
+	// for LogonUser()
+	enum : DWORD {
+		LOGON32_LOGON_INTERACTIVE = 2,
+		LOGON32_LOGON_NETWORK     = 3,
+		LOGON32_LOGON_BATCH       = 4,
+		LOGON32_LOGON_SERVICE     = 5,
+		LOGON32_LOGON_UNLOCK      = 7
+	}
 
-// for LogonUser()
-enum : DWORD {
-	LOGON32_PROVIDER_DEFAULT  = 0,
-	LOGON32_PROVIDER_WINNT35  = 1
-	//LOGON32_PROVIDER_WINNT40 = ?
-	//LOGON32_PROVIDER_WINNT50 = ?
+	static if (_WIN32_WINNT >= 0x500) enum : DWORD {
+		LOGON32_LOGON_NETWORK_CLEARTEXT = 8,
+		LOGON32_LOGON_NEW_CREDENTIALS   = 9
+	}
+
+	// for LogonUser()
+	enum : DWORD {
+		LOGON32_PROVIDER_DEFAULT = 0,
+		LOGON32_PROVIDER_WINNT35 = 1,
+		LOGON32_PROVIDER_WINNT40 = 2,
+		LOGON32_PROVIDER_WINNT50 = 3
+	}
 }
 
 // for MoveFileEx()
@@ -693,6 +699,7 @@ const DWORD
 const DWORD FORMAT_MESSAGE_MAX_WIDTH_MASK = 255;
 
 // also in ddk/ntapi.h
+// To restore default error mode, call SetErrorMode(0)
 enum {
 	SEM_FAILCRITICALERRORS     = 0x0001,
 	SEM_NOGPFAULTERRORBOX      = 0x0002,
@@ -885,6 +892,13 @@ const DWORD INVALID_FILE_SIZE = 0xFFFFFFFF;
 
 const DWORD TLS_OUT_OF_INDEXES = 0xFFFFFFFF;
 
+static if (WINVER >= 0x501) {
+	const DWORD
+		GET_MODULE_HANDLE_EX_FLAG_PIN                = 1,
+		GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT = 2,
+		GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS       = 4;
+}
+
 static if (_WIN32_WINNT >= 0x0501) {
 	// for ACTCTX
 	const DWORD
@@ -907,7 +921,7 @@ static if (_WIN32_WINNT >= 0x0501) {
 		QUERY_ACTCTX_FLAG_ACTCTX_IS_ADDRESS             = 0x00000010;
 }
 
-static if (_WIN32_WINNT >= 0x0500) { // requires XP, or Win 2000 Pro.
+static if (_WIN32_WINNT_ONLY && _WIN32_WINNT >= 0x0500) {
 	// ReplaceFile()
 	const DWORD
 		REPLACEFILE_WRITE_THROUGH       = 0x00000001,
@@ -1140,11 +1154,11 @@ struct DEBUG_EVENT {
 alias DEBUG_EVENT* LPDEBUG_EVENT;
 
 struct OVERLAPPED {
-	DWORD Internal;
-	DWORD InternalHigh;
-	DWORD Offset;
-	DWORD OffsetHigh;
-	HANDLE hEvent;
+	ULONG_PTR Internal;
+	ULONG_PTR InternalHigh;
+	DWORD     Offset;
+	DWORD     OffsetHigh;
+	HANDLE    hEvent;
 }
 alias OVERLAPPED* POVERLAPPED, LPOVERLAPPED;
 
@@ -1244,30 +1258,42 @@ struct WIN32_FILE_ATTRIBUTE_DATA {
 alias WIN32_FILE_ATTRIBUTE_DATA* LPWIN32_FILE_ATTRIBUTE_DATA;
 
 struct WIN32_FIND_DATAA {
-	DWORD dwFileAttributes;
-	FILETIME ftCreationTime;
-	FILETIME ftLastAccessTime;
-	FILETIME ftLastWriteTime;
-	DWORD nFileSizeHigh;
-	DWORD nFileSizeLow;
-	DWORD dwReserved0;
-	DWORD dwReserved1;
-	CHAR cFileName[MAX_PATH];
-	CHAR cAlternateFileName[14];
+	DWORD          dwFileAttributes;
+	FILETIME       ftCreationTime;
+	FILETIME       ftLastAccessTime;
+	FILETIME       ftLastWriteTime;
+	DWORD          nFileSizeHigh;
+	DWORD          nFileSizeLow;
+// #ifdef _WIN32_WCE
+//	DWORD dwOID;
+// #else
+	DWORD          dwReserved0;
+	DWORD          dwReserved1;
+// #endif
+	CHAR[MAX_PATH] cFileName;
+// #ifndef _WIN32_WCE
+	CHAR[14]       cAlternateFileName;
+// #endif
 }
 alias WIN32_FIND_DATAA* PWIN32_FIND_DATAA, LPWIN32_FIND_DATAA;
 
 struct WIN32_FIND_DATAW {
-	DWORD dwFileAttributes;
-	FILETIME ftCreationTime;
-	FILETIME ftLastAccessTime;
-	FILETIME ftLastWriteTime;
-	DWORD nFileSizeHigh;
-	DWORD nFileSizeLow;
-	DWORD dwReserved0;
-	DWORD dwReserved1;
-	WCHAR cFileName[MAX_PATH];
-	WCHAR cAlternateFileName[14];
+	DWORD           dwFileAttributes;
+	FILETIME        ftCreationTime;
+	FILETIME        ftLastAccessTime;
+	FILETIME        ftLastWriteTime;
+	DWORD           nFileSizeHigh;
+	DWORD           nFileSizeLow;
+// #ifdef _WIN32_WCE
+// 	DWORD dwOID;
+// #else
+	DWORD           dwReserved0;
+	DWORD           dwReserved1;
+// #endif
+	WCHAR[MAX_PATH] cFileName;
+// #ifndef _WIN32_WCE
+	WCHAR[14]       cAlternateFileName;
+// #endif
 }
 alias WIN32_FIND_DATAW* PWIN32_FIND_DATAW, LPWIN32_FIND_DATAW;
 
@@ -1555,14 +1581,17 @@ extern(Windows) {
 		DWORD, DWORD, HANDLE, HANDLE, LPVOID)  LPPROGRESS_ROUTINE;
 	alias void function(PVOID) LPFIBER_START_ROUTINE;
 
-	alias BOOL function(HMODULE, LPCTSTR, LPCTSTR, WORD, LONG) ENUMRESLANGPROC;
-	alias BOOL function(HMODULE, LPCTSTR, LPTSTR, LONG) ENUMRESNAMEPROC;
-	alias BOOL function(HMODULE, LPTSTR, LONG) ENUMRESTYPEPROC;
+	alias BOOL function(HMODULE, LPCSTR, LPCSTR, WORD, LONG) ENUMRESLANGPROCA;
+	alias BOOL function(HMODULE, LPCWSTR, LPCWSTR, WORD, LONG) ENUMRESLANGPROCW;
+	alias BOOL function(HMODULE, LPCSTR, LPSTR, LONG) ENUMRESNAMEPROCA;
+	alias BOOL function(HMODULE, LPCWSTR, LPWSTR, LONG) ENUMRESNAMEPROCW;
+	alias BOOL function(HMODULE, LPSTR, LONG) ENUMRESTYPEPROCA;
+	alias BOOL function(HMODULE, LPWSTR, LONG) ENUMRESTYPEPROCW;
 	alias void function(DWORD, DWORD, LPOVERLAPPED) LPOVERLAPPED_COMPLETION_ROUTINE;
 	alias LONG function(LPEXCEPTION_POINTERS) PTOP_LEVEL_EXCEPTION_FILTER;
 	alias PTOP_LEVEL_EXCEPTION_FILTER LPTOP_LEVEL_EXCEPTION_FILTER;
 
-	alias void function(DWORD) PAPCFUNC;
+	alias void function(ULONG_PTR) PAPCFUNC;
 	alias void function(PVOID, DWORD, DWORD) PTIMERAPCROUTINE;
 
 	static if (_WIN32_WINNT >= 0x0500) {
@@ -1575,7 +1604,6 @@ LPTSTR MAKEINTATOM(short i) {
 }
 
 extern (Windows) {
-
 	BOOL AccessCheck(PSECURITY_DESCRIPTOR, HANDLE, DWORD, PGENERIC_MAPPING, PPRIVILEGE_SET, PDWORD, PDWORD, PBOOL);
 	BOOL AccessCheckAndAuditAlarmA(LPCSTR, LPVOID, LPSTR, LPSTR, PSECURITY_DESCRIPTOR, DWORD, PGENERIC_MAPPING, BOOL, PDWORD, PBOOL, PBOOL);
 	BOOL AccessCheckAndAuditAlarmW(LPCWSTR, LPVOID, LPWSTR, LPWSTR, PSECURITY_DESCRIPTOR, DWORD, PGENERIC_MAPPING, BOOL, PDWORD, PBOOL, PBOOL);
@@ -1656,7 +1684,7 @@ extern (Windows) {
 	HANDLE CreateFileW(LPCWSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES, DWORD, DWORD, HANDLE);
 	HANDLE CreateFileMappingA(HANDLE, LPSECURITY_ATTRIBUTES, DWORD, DWORD, DWORD, LPCSTR);
 	HANDLE CreateFileMappingW(HANDLE, LPSECURITY_ATTRIBUTES, DWORD, DWORD, DWORD, LPCWSTR);
-	HANDLE CreateIoCompletionPort(HANDLE, HANDLE, DWORD, DWORD);
+	HANDLE CreateIoCompletionPort(HANDLE, HANDLE, ULONG_PTR, DWORD);
 	HANDLE CreateMailslotA(LPCSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES);
 	HANDLE CreateMailslotW(LPCWSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES);
 	HANDLE CreateMutexA(LPSECURITY_ATTRIBUTES, BOOL, LPCSTR);
@@ -1776,6 +1804,13 @@ extern (Windows) {
 	HANDLE GetCurrentProcess();
 	DWORD GetCurrentProcessId();
 	HANDLE GetCurrentThread();
+/* In MinGW:
+#ifdef _WIN32_WCE
+extern DWORD GetCurrentThreadId(void);
+#else
+WINBASEAPI DWORD WINAPI GetCurrentThreadId(void);
+#endif
+*/
 	DWORD GetCurrentThreadId();
 
 	alias GetTickCount GetCurrentTime;
@@ -1854,7 +1889,7 @@ extern (Windows) {
 	DWORD GetProfileSectionW(LPCWSTR, LPWSTR, DWORD);
 	DWORD GetProfileStringA(LPCSTR, LPCSTR, LPCSTR, LPSTR, DWORD);
 	DWORD GetProfileStringW(LPCWSTR, LPCWSTR, LPCWSTR, LPWSTR, DWORD);
-	BOOL GetQueuedCompletionStatus(HANDLE, PDWORD, PDWORD, LPOVERLAPPED*, DWORD);
+	BOOL GetQueuedCompletionStatus(HANDLE, PDWORD, PULONG_PTR, LPOVERLAPPED*, DWORD);
 	BOOL GetSecurityDescriptorControl(PSECURITY_DESCRIPTOR, PSECURITY_DESCRIPTOR_CONTROL, PDWORD);
 	BOOL GetSecurityDescriptorDacl(PSECURITY_DESCRIPTOR, LPBOOL, PACL*, LPBOOL);
 	BOOL GetSecurityDescriptorGroup(PSECURITY_DESCRIPTOR, PSID*, LPBOOL);
@@ -1978,8 +2013,8 @@ extern (Windows) {
 	BOOL LockFile(HANDLE, DWORD, DWORD, DWORD, DWORD);
 	BOOL LockFileEx(HANDLE, DWORD, DWORD, DWORD, DWORD, LPOVERLAPPED);
 	PVOID LockResource(HGLOBAL);
-	BOOL LogonUserA(LPSTR, LPSTR, LPSTR, DWORD, DWORD, PHANDLE);
-	BOOL LogonUserW(LPWSTR, LPWSTR, LPWSTR, DWORD, DWORD, PHANDLE);
+	BOOL LogonUserA(LPSTR, LPSTR, LPSTR, DWORD, DWORD, PHANDLE); // *** NT only
+	BOOL LogonUserW(LPWSTR, LPWSTR, LPWSTR, DWORD, DWORD, PHANDLE); // *** NT only
 	BOOL LookupAccountNameA(LPCSTR, LPCSTR, PSID, PDWORD, LPSTR, PDWORD, PSID_NAME_USE);
 	BOOL LookupAccountNameW(LPCWSTR, LPCWSTR, PSID, PDWORD, LPWSTR, PDWORD, PSID_NAME_USE);
 	BOOL LookupAccountSidA(LPCSTR, PSID, LPSTR, PDWORD, LPSTR, PDWORD, PSID_NAME_USE);
@@ -2044,7 +2079,7 @@ extern (Windows) {
 	void OutputDebugStringA(LPCSTR);
 	void OutputDebugStringW(LPCWSTR);
 	BOOL PeekNamedPipe(HANDLE, PVOID, DWORD, PDWORD, PDWORD, PDWORD);
-	BOOL PostQueuedCompletionStatus(HANDLE, DWORD, DWORD, LPOVERLAPPED);
+	BOOL PostQueuedCompletionStatus(HANDLE, DWORD, ULONG_PTR, LPOVERLAPPED);
 	DWORD PrepareTape(HANDLE, DWORD, BOOL);
 	BOOL PrivilegeCheck (HANDLE, PPRIVILEGE_SET, PBOOL);
 	BOOL PrivilegedServiceAuditAlarmA(LPCSTR, LPCSTR, HANDLE, PPRIVILEGE_SET, BOOL);
@@ -2055,7 +2090,7 @@ extern (Windows) {
 	DWORD QueryDosDeviceW(LPCWSTR, LPWSTR, DWORD);
 	BOOL QueryPerformanceCounter(PLARGE_INTEGER);
 	BOOL QueryPerformanceFrequency(PLARGE_INTEGER);
-	DWORD QueueUserAPC(PAPCFUNC, HANDLE, DWORD);
+	DWORD QueueUserAPC(PAPCFUNC, HANDLE, ULONG_PTR);
 	void RaiseException(DWORD, DWORD, DWORD, DWORD*);
 	BOOL ReadDirectoryChangesW(HANDLE, PVOID, DWORD, BOOL, DWORD, PDWORD, LPOVERLAPPED, LPOVERLAPPED_COMPLETION_ROUTINE);
 	BOOL ReadEventLogA(HANDLE, DWORD, DWORD, PVOID, DWORD, DWORD* , DWORD* );
@@ -2072,6 +2107,13 @@ extern (Windows) {
 	BOOL RemoveDirectoryW(LPCWSTR);
 	BOOL ReportEventA(HANDLE, WORD, WORD, DWORD, PSID, WORD, DWORD, LPCSTR*, PVOID);
 	BOOL ReportEventW(HANDLE, WORD, WORD, DWORD, PSID, WORD, DWORD, LPCWSTR*, PVOID);
+/* In MinGW:
+#ifdef _WIN32_WCE
+extern BOOL ResetEvent(HANDLE);
+#else
+WINBASEAPI BOOL WINAPI ResetEvent(HANDLE);
+#endif
+*/
 	BOOL ResetEvent(HANDLE);
 	UINT ResetWriteWatch(LPVOID, SIZE_T);
 	DWORD ResumeThread(HANDLE);
@@ -2094,6 +2136,13 @@ extern (Windows) {
 	BOOL SetEnvironmentVariableA(LPCSTR, LPCSTR);
 	BOOL SetEnvironmentVariableW(LPCWSTR, LPCWSTR);
 	UINT SetErrorMode(UINT);
+/* In MinGW:
+#ifdef _WIN32_WCE
+extern BOOL SetEvent(HANDLE);
+#else
+WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
+#endif
+*/
 	BOOL SetEvent(HANDLE);
 	VOID SetFileApisToANSI();
 	VOID SetFileApisToOEM();
@@ -2117,7 +2166,7 @@ extern (Windows) {
 	BOOL SetProcessAffinityMask(HANDLE, DWORD);
 	BOOL SetProcessPriorityBoost(HANDLE, BOOL);
 	BOOL SetProcessShutdownParameters(DWORD, DWORD);
-	BOOL SetProcessWorkingSetSize(HANDLE, DWORD, DWORD);
+	BOOL SetProcessWorkingSetSize(HANDLE, SIZE_T, SIZE_T);
 	BOOL SetSecurityDescriptorControl(PSECURITY_DESCRIPTOR, SECURITY_DESCRIPTOR_CONTROL, SECURITY_DESCRIPTOR_CONTROL);
 	BOOL SetSecurityDescriptorDacl(PSECURITY_DESCRIPTOR, BOOL, PACL, BOOL);
 	BOOL SetSecurityDescriptorGroup(PSECURITY_DESCRIPTOR, PSID, BOOL);
@@ -2229,19 +2278,21 @@ extern (Windows) {
 		HANDLE CreateJobObjectW(LPSECURITY_ATTRIBUTES, LPCWSTR);
 		BOOL TerminateJobObject(HANDLE, UINT);
 		BOOL AssignProcessToJobObject(HANDLE, HANDLE);
+
+		BOOL ChangeTimerQueueTimer(HANDLE,HANDLE,ULONG,ULONG);
 		BOOL DeleteTimerQueue(HANDLE);
 		BOOL DeleteTimerQueueEx(HANDLE, HANDLE);
 		BOOL DeleteTimerQueueTimer(HANDLE, HANDLE, HANDLE);
 		BOOL DeleteVolumeMountPointA(LPCSTR);
 		BOOL DeleteVolumeMountPointW(LPCWSTR);
-		BOOL CreateProcessWithLogonW (LPCWSTR, LPCWSTR, LPCWSTR, DWORD,
-				LPCWSTR, LPWSTR, DWORD, LPVOID,
-				LPCWSTR, LPSTARTUPINFOW,
-				LPPROCESS_INFORMATION);
+
+		BOOL CreateProcessWithLogonW(LPCWSTR, LPCWSTR, LPCWSTR, DWORD, LPCWSTR,
+		  LPWSTR, DWORD, LPVOID, LPCWSTR, LPSTARTUPINFOW, LPPROCESS_INFORMATION);
 		enum {
 			LOGON_WITH_PROFILE=0x00000001,
 			LOGON_NETCREDENTIALS_ONLY=0x00000002
 		}
+
 		HANDLE CreateTimerQueue();
 		BOOL CreateTimerQueueTimer(PHANDLE, HANDLE, WAITORTIMERCALLBACK, PVOID, DWORD, DWORD, ULONG);
 		BOOL DnsHostnameToComputerNameA(LPCSTR, LPSTR, LPDWORD);
@@ -2271,17 +2322,21 @@ extern (Windows) {
 		BOOL GlobalMemoryStatusEx(LPMEMORYSTATUSEX);
 		BOOL SetVolumeMountPointA(LPCSTR, LPCSTR);
 		BOOL SetVolumeMountPointW(LPCWSTR, LPCWSTR);
+		BOOL UnregisterWait(HANDLE);
 		BOOL UnregisterWaitEx(HANDLE, HANDLE);
 		BOOL AllocateUserPhysicalPages(HANDLE, PULONG_PTR, PULONG_PTR);
 		BOOL FreeUserPhysicalPages(HANDLE, PULONG_PTR, PULONG_PTR);
 		BOOL MapUserPhysicalPages(PVOID, ULONG_PTR, PULONG_PTR);
 		BOOL MapUserPhysicalPagesScatter(PVOID*, ULONG_PTR, PULONG_PTR);
 		BOOL ProcessIdToSessionId(DWORD, DWORD*);
+		BOOL QueryInformationJobObject(HANDLE, JOBOBJECTINFOCLASS, LPVOID, DWORD,
+		  LPDWORD);
 		ULONG RemoveVectoredExceptionHandler(PVOID);
 		BOOL ReplaceFileA(LPCSTR, LPCSTR, LPCSTR, DWORD, LPVOID, LPVOID);
 		BOOL ReplaceFileW(LPCWSTR, LPCWSTR, LPCWSTR, DWORD, LPVOID, LPVOID);
 		BOOL SetComputerNameExA(COMPUTER_NAME_FORMAT, LPCSTR);
 		BOOL SetComputerNameExW(COMPUTER_NAME_FORMAT, LPCWSTR);
+		BOOL SetInformationJobObject(HANDLE, JOBOBJECTINFOCLASS, LPVOID, DWORD);
 	}
 
 	static if (_WIN32_WINNT >= 0x0501) {
@@ -2328,28 +2383,29 @@ extern (Windows) {
 		BOOL GetProcessHandleCount(HANDLE, PDWORD);
 		BOOL GetSystemRegistryQuota(PDWORD, PDWORD);
 		BOOL GetThreadIOPendingFlag(HANDLE, PBOOL);
+		HANDLE ReOpenFile(HANDLE, DWORD, DWORD, DWORD);
 		BOOL SetDllDirectoryA(LPCSTR);
 		BOOL SetDllDirectoryW(LPCWSTR);
 		BOOL SetFirmwareEnvironmentVariableA(LPCSTR, LPCSTR, PVOID, DWORD);
 		BOOL SetFirmwareEnvironmentVariableW(LPCWSTR, LPCWSTR, PVOID, DWORD);
-	}
+		}
 
 	static if (_WIN32_WINNT >= 0x0510) {
 		VOID RestoreLastError(DWORD);
 	}
-} // extern(Windows)
+}
 
 
-// ------
-// Aliases for ASCII or Unicode versions
-
-version(Unicode) {
+version (Unicode) {
 	alias STARTUPINFOW STARTUPINFO;
 	alias WIN32_FIND_DATAW WIN32_FIND_DATA;
 	alias HW_PROFILE_INFOW HW_PROFILE_INFO;
 	alias STARTUPINFO* LPSTARTUPINFO;
 	alias WIN32_FIND_DATA* LPWIN32_FIND_DATA;
 	alias HW_PROFILE_INFO* LPHW_PROFILE_INFO;
+	alias ENUMRESLANGPROCW ENUMRESLANGPROC;
+	alias ENUMRESNAMEPROCW ENUMRESNAMEPROC;
+	alias ENUMRESTYPEPROCW ENUMRESTYPEPROC;
 	alias AccessCheckAndAuditAlarmW AccessCheckAndAuditAlarm;
 	alias AddAtomW AddAtom;
 	alias BackupEventLogW BackupEventLog;
@@ -2522,15 +2578,15 @@ version(Unicode) {
 	}
 
 } else {
-	// --------
-	// Aliases for ASCII
-
 	alias STARTUPINFOA STARTUPINFO;
 	alias WIN32_FIND_DATAA WIN32_FIND_DATA;
 	alias HW_PROFILE_INFOA HW_PROFILE_INFO;
 	alias STARTUPINFO* LPSTARTUPINFO;
 	alias WIN32_FIND_DATA* LPWIN32_FIND_DATA;
 	alias HW_PROFILE_INFO* LPHW_PROFILE_INFO;
+	alias ENUMRESLANGPROCW ENUMRESLANGPROC;
+	alias ENUMRESNAMEPROCW ENUMRESNAMEPROC;
+	alias ENUMRESTYPEPROCW ENUMRESTYPEPROC;
 	alias AccessCheckAndAuditAlarmA AccessCheckAndAuditAlarm;
 	alias AddAtomA AddAtom;
 	alias BackupEventLogA BackupEventLog;
