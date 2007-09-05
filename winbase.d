@@ -30,6 +30,9 @@ SetSwapAreaSize(w), LimitEmsPages(n), Yield()
  UINT _lwrite(HFILE, LPCSTR, UINT);
  SIZE_T GlobalCompact(DWORD);
  VOID GlobalFix(HGLOBAL);
+* MSDN contradicts itself on GlobalFlags:
+* "This function is provided only for compatibility with 16-bit versions of Windows."
+* but also requires Windows 2000 or above
  UINT GlobalFlags(HGLOBAL);
  VOID GlobalUnfix(HGLOBAL);
  BOOL GlobalUnWire(HGLOBAL);
@@ -89,63 +92,62 @@ version(UseNtoSKernel) {}else {
 //--------------------------------------
 +/
 
-// ----
 // COMMPROP structure, used by GetCommProperties()
+// -----------------------------------------------
 
 // Communications provider type
 enum : DWORD {
-	PST_UNSPECIFIED=0,
+	PST_UNSPECIFIED,
 	PST_RS232,
 	PST_PARALLELPORT,
 	PST_RS422,
 	PST_RS423,
 	PST_RS449,
-	PST_MODEM, // =6
-	PST_FAX            = 0x21,
-	PST_SCANNER        = 0x22,
-	PST_NETWORK_BRIDGE = 0x100,
-	PST_LAT            = 0x101,
-	PST_TCPIP_TELNET   = 0x102,
-	PST_X25            = 0x103
+	PST_MODEM,      // =      6
+	PST_FAX            = 0x0021,
+	PST_SCANNER        = 0x0022,
+	PST_NETWORK_BRIDGE = 0x0100,
+	PST_LAT            = 0x0101,
+	PST_TCPIP_TELNET   = 0x0102,
+	PST_X25            = 0x0103
 }
 
 // Max baud rate
 enum : DWORD {
-	BAUD_075    = 1,
-	BAUD_110    = 2,
-	BAUD_134_5  = 4,
-	BAUD_150    = 8,
-	BAUD_300    = 16,
-	BAUD_600    = 32,
-	BAUD_1200   = 64,
-	BAUD_1800   = 128,
-	BAUD_2400   = 256,
-	BAUD_4800   = 512,
-	BAUD_7200   = 1024,
-	BAUD_9600   = 2048,
-	BAUD_14400  = 4096,
-	BAUD_19200  = 8192,
-	BAUD_38400  = 16384,
-	BAUD_56K    = 32768,
-	BAUD_128K   = 65536,
-
-	BAUD_57600  = 262144,
-	BAUD_115200 = 131072,
+	BAUD_075    = 0x00000001,
+	BAUD_110    = 0x00000002,
+	BAUD_134_5  = 0x00000004,
+	BAUD_150    = 0x00000008,
+	BAUD_300    = 0x00000010,
+	BAUD_600    = 0x00000020,
+	BAUD_1200   = 0x00000040,
+	BAUD_1800   = 0x00000080,
+	BAUD_2400   = 0x00000100,
+	BAUD_4800   = 0x00000200,
+	BAUD_7200   = 0x00000400,
+	BAUD_9600   = 0x00000800,
+	BAUD_14400  = 0x00001000,
+	BAUD_19200  = 0x00002000,
+	BAUD_38400  = 0x00004000,
+	BAUD_56K    = 0x00008000,
+	BAUD_128K   = 0x00010000,
+	BAUD_115200 = 0x00020000,
+	BAUD_57600  = 0x00040000,
 	BAUD_USER   = 0x10000000
 }
 
 // Comm capabilities
 enum : DWORD {
-	PCF_DTRDSR       = 1,
-	PCF_RTSCTS       = 2,
-	PCF_RLSD         = 4,
-	PCF_PARITY_CHECK = 8,
-	PCF_XONXOFF      = 16,
-	PCF_SETXCHAR     = 32,
-	PCF_TOTALTIMEOUTS= 64,
-	PCF_INTTIMEOUTS  = 128,
-	PCF_SPECIALCHARS = 256,
-	PCF_16BITMODE    = 512
+	PCF_DTRDSR        = 0x0001,
+	PCF_RTSCTS        = 0x0002,
+	PCF_RLSD          = 0x0004,
+	PCF_PARITY_CHECK  = 0x0008,
+	PCF_XONXOFF       = 0x0010,
+	PCF_SETXCHAR      = 0x0020,
+	PCF_TOTALTIMEOUTS = 0x0040,
+	PCF_INTTIMEOUTS   = 0x0080,
+	PCF_SPECIALCHARS  = 0x0100,
+	PCF_16BITMODE     = 0x0200
 }
 
 enum  : DWORD {
@@ -168,42 +170,45 @@ enum : DWORD {
 }
 
 enum : WORD {
-	STOPBITS_10  = 1,
-	STOPBITS_15  = 2,
-	STOPBITS_20  = 4,
-	PARITY_NONE  = 256,
-	PARITY_ODD   = 512,
-	PARITY_EVEN  = 1024,
-	PARITY_MARK  = 2048,
-	PARITY_SPACE = 4096
+	STOPBITS_10  = 0x0001,
+	STOPBITS_15  = 0x0002,
+	STOPBITS_20  = 0x0004,
+	PARITY_NONE  = 0x0100,
+	PARITY_ODD   = 0x0200,
+	PARITY_EVEN  = 0x0400,
+	PARITY_MARK  = 0x0800,
+	PARITY_SPACE = 0x1000
 }
 
 // used by dwServiceMask
 const SP_SERIALCOMM = 1;
 
 struct COMMPROP {
-	WORD     wPacketLength;
-	WORD     wPacketVersion;
-	DWORD    dwServiceMask;
-	DWORD    dwReserved1;
-	DWORD    dwMaxTxQueue;
-	DWORD    dwMaxRxQueue;
-	DWORD    dwMaxBaud;
-	DWORD    dwProvSubType;
-	DWORD    dwProvCapabilities;
-	DWORD    dwSettableParams;
-	DWORD    dwSettableBaud;
-	WORD     wSettableData;
-	WORD     wSettableStopParity;
-	DWORD    dwCurrentTxQueue;
-	DWORD    dwCurrentRxQueue;
-	DWORD    dwProvSpec1;
-	DWORD    dwProvSpec2;
-	WCHAR[1] wcProvChar;
+	WORD  wPacketLength;
+	WORD  wPacketVersion;
+	DWORD dwServiceMask;
+	DWORD dwReserved1;
+	DWORD dwMaxTxQueue;
+	DWORD dwMaxRxQueue;
+	DWORD dwMaxBaud;
+	DWORD dwProvSubType;
+	DWORD dwProvCapabilities;
+	DWORD dwSettableParams;
+	DWORD dwSettableBaud;
+	WORD  wSettableData;
+	WORD  wSettableStopParity;
+	DWORD dwCurrentTxQueue;
+	DWORD dwCurrentRxQueue;
+	DWORD dwProvSpec1;
+	DWORD dwProvSpec2;
+	WCHAR _wcProvChar;
+
+	WCHAR* wcProvChar() { return &_wcProvChar; }
 }
 alias COMMPROP* LPCOMMPROP;
 
-//-------
+// ----------
+
 // for DEBUG_EVENT
 enum : DWORD {
 	EXCEPTION_DEBUG_EVENT = 1,
@@ -217,7 +222,7 @@ enum : DWORD {
 	RIP_EVENT
 }
 
-const HFILE HFILE_ERROR = cast(HFILE)(-1);
+const HFILE HFILE_ERROR = cast(HFILE) (-1);
 
 // for SetFilePointer()
 enum : DWORD {
@@ -230,43 +235,43 @@ const DWORD INVALID_SET_FILE_POINTER = -1;
 
 // for OpenFile()
 deprecated enum : UINT {
-	OF_READ      = 0,
-	OF_WRITE     = 1,
-	OF_READWRITE = 2,
+	OF_READ             = 0,
+	OF_WRITE            = 0x0001,
+	OF_READWRITE        = 0x0002,
 	OF_SHARE_COMPAT     = 0,
-	OF_SHARE_EXCLUSIVE  = 16,
-	OF_SHARE_DENY_WRITE = 32,
-	OF_SHARE_DENY_READ  = 48,
-	OF_SHARE_DENY_NONE  = 64,
-	OF_PARSE   = 256,
-	OF_DELETE  = 512,
-	OF_VERIFY  = 1024,
-	OF_CANCEL  = 2048,
-	OF_CREATE  = 4096,
-	OF_PROMPT  = 8192,
-	OF_EXIST   = 16384,
-	OF_REOPEN  = 32768
+	OF_SHARE_EXCLUSIVE  = 0x0010,
+	OF_SHARE_DENY_WRITE = 0x0020,
+	OF_SHARE_DENY_READ  = 0x0030,
+	OF_SHARE_DENY_NONE  = 0x0040,
+	OF_PARSE            = 0x0100,
+	OF_DELETE           = 0x0200,
+	OF_VERIFY           = 0x0400,
+	OF_CANCEL           = 0x0800,
+	OF_CREATE           = 0x1000,
+	OF_PROMPT           = 0x2000,
+	OF_EXIST            = 0x4000,
+	OF_REOPEN           = 0x8000
 }
 
 enum : DWORD {
-	NMPWAIT_NOWAIT           = 1,
+	NMPWAIT_NOWAIT           =  1,
 	NMPWAIT_WAIT_FOREVER     = -1,
-	NMPWAIT_USE_DEFAULT_WAIT = 0
+	NMPWAIT_USE_DEFAULT_WAIT =  0
 }
 
 // for ClearCommError()
 const DWORD
-	CE_RXOVER   = 1,
-	CE_OVERRUN  = 2,
-	CE_RXPARITY = 4,
-	CE_FRAME    = 8,
-	CE_BREAK    = 16,
-	CE_TXFULL   = 256,
-	CE_PTO      = 512,
-	CE_IOE      = 1024,
-	CE_DNS      = 2048,
-	CE_OOP      = 4096,
-	CE_MODE     = 32768;
+	CE_RXOVER   = 0x0001,
+	CE_OVERRUN  = 0x0002,
+	CE_RXPARITY = 0x0004,
+	CE_FRAME    = 0x0008,
+	CE_BREAK    = 0x0010,
+	CE_TXFULL   = 0x0100,
+	CE_PTO      = 0x0200,
+	CE_IOE      = 0x0400,
+	CE_DNS      = 0x0800,
+	CE_OOP      = 0x1000,
+	CE_MODE     = 0x8000;
 
 // for CopyProgressRoutine callback.
 enum : DWORD {
@@ -291,16 +296,17 @@ enum : DWORD {
 	FILE_MAP_COPY       = 1,
 	FILE_MAP_WRITE      = 2,
 	FILE_MAP_READ       = 4,
-	FILE_MAP_ALL_ACCESS = 0xf001f
+	FILE_MAP_ALL_ACCESS = 0x000F001F
 }
 
-const DWORD
-	MUTEX_ALL_ACCESS       = 0x1f0001,
-	MUTEX_MODIFY_STATE     = 1,
-	SEMAPHORE_ALL_ACCESS   = 0x1f0003,
-	SEMAPHORE_MODIFY_STATE = 2,
-	EVENT_ALL_ACCESS       = 0x1f0003,
-	EVENT_MODIFY_STATE     = 2;
+enum : DWORD {
+	MUTEX_ALL_ACCESS       = 0x001f0001,
+	MUTEX_MODIFY_STATE     = 0x00000001,
+	SEMAPHORE_ALL_ACCESS   = 0x001f0003,
+	SEMAPHORE_MODIFY_STATE = 0x00000002,
+	EVENT_ALL_ACCESS       = 0x001f0003,
+	EVENT_MODIFY_STATE     = 0x00000002
+}
 
 // CreateNamedPipe()
 enum : DWORD {
@@ -325,7 +331,7 @@ const DWORD
 const DWORD PIPE_UNLIMITED_INSTANCES = 255;
 
 // dwCreationFlags for CreateProcess() and CreateProcessAsUser()
-enum : DWORD  {
+enum : DWORD {
 	DEBUG_PROCESS               = 0x00000001,
 	DEBUG_ONLY_THIS_PROCESS     = 0x00000002,
 	CREATE_SUSPENDED            = 0x00000004,
@@ -351,7 +357,7 @@ enum : DWORD  {
 	PROFILE_SERVER              = 0x40000000
 }
 
-const CONSOLE_TEXTMODE_BUFFER = 1;
+const DWORD CONSOLE_TEXTMODE_BUFFER = 1;
 
 // CreateFile()
 enum : DWORD {
@@ -363,39 +369,41 @@ enum : DWORD {
 }
 
 // CreateFile()
-enum : DWORD {
+const DWORD
 	FILE_FLAG_WRITE_THROUGH      = 0x80000000,
-	FILE_FLAG_OVERLAPPED         = 1073741824,
-	FILE_FLAG_NO_BUFFERING       = 536870912,
-	FILE_FLAG_RANDOM_ACCESS      = 268435456,
-	FILE_FLAG_SEQUENTIAL_SCAN    = 134217728,
-	FILE_FLAG_DELETE_ON_CLOSE    = 67108864,
-	FILE_FLAG_BACKUP_SEMANTICS   = 33554432,
-	FILE_FLAG_POSIX_SEMANTICS    = 16777216,
-	FILE_FLAG_OPEN_REPARSE_POINT = 2097152,
-	FILE_FLAG_OPEN_NO_RECALL     = 1048576
+	FILE_FLAG_OVERLAPPED         = 0x40000000,
+	FILE_FLAG_NO_BUFFERING       = 0x20000000,
+	FILE_FLAG_RANDOM_ACCESS      = 0x10000000,
+	FILE_FLAG_SEQUENTIAL_SCAN    = 0x08000000,
+	FILE_FLAG_DELETE_ON_CLOSE    = 0x04000000,
+	FILE_FLAG_BACKUP_SEMANTICS   = 0x02000000,
+	FILE_FLAG_POSIX_SEMANTICS    = 0x01000000,
+	FILE_FLAG_OPEN_REPARSE_POINT = 0x00200000,
+	FILE_FLAG_OPEN_NO_RECALL     = 0x00100000;
+
+static if (_WIN32_WINNT_ONLY && _WIN32_WINNT >= 0x500) {
+	const DWORD FILE_FLAG_FIRST_PIPE_INSTANCE = 0x00080000;
 }
 
 // for CreateFile()
 const DWORD
-	SECURITY_ANONYMOUS        = (SECURITY_IMPERSONATION_LEVEL.SecurityAnonymous<<16),
-	SECURITY_IDENTIFICATION   = (SECURITY_IMPERSONATION_LEVEL.SecurityIdentification<<16),
-	SECURITY_IMPERSONATION    = (SECURITY_IMPERSONATION_LEVEL.SecurityImpersonation<<16),
-	SECURITY_DELEGATION       = (SECURITY_IMPERSONATION_LEVEL.SecurityDelegation<<16),
-	SECURITY_CONTEXT_TRACKING = 0x40000,
-	SECURITY_EFFECTIVE_ONLY   = 0x80000,
-	SECURITY_SQOS_PRESENT     = 0x100000,
-	SECURITY_VALID_SQOS_FLAGS = 0x1F0000;
+	SECURITY_ANONYMOUS        = SECURITY_IMPERSONATION_LEVEL.SecurityAnonymous<<16,
+	SECURITY_IDENTIFICATION   = SECURITY_IMPERSONATION_LEVEL.SecurityIdentification<<16,
+	SECURITY_IMPERSONATION    = SECURITY_IMPERSONATION_LEVEL.SecurityImpersonation<<16,
+	SECURITY_DELEGATION       = SECURITY_IMPERSONATION_LEVEL.SecurityDelegation<<16,
+	SECURITY_CONTEXT_TRACKING = 0x00040000,
+	SECURITY_EFFECTIVE_ONLY   = 0x00080000,
+	SECURITY_SQOS_PRESENT     = 0x00100000,
+	SECURITY_VALID_SQOS_FLAGS = 0x001F0000;
 
-
-static if (_WIN32_WINNT >= 0x0500) {
-	const FILE_FLAG_FIRST_PIPE_INSTANCE = 524288;
-}
 
 // Thread exit code
 const DWORD STILL_ACTIVE = 0x103;
 
-const FIND_FIRST_EX_CASE_SENSITIVE = 1;
+/*	??? The only documentation of this seems to be about Windows CE and to
+ *	state what _doesn't_ support it.
+ */
+const DWORD FIND_FIRST_EX_CASE_SENSITIVE = 1;
 
 // GetBinaryType()
 enum : DWORD {
@@ -407,11 +415,10 @@ enum : DWORD {
 	SCS_OS216_BINARY
 }
 
-const MAX_COMPUTERNAME_LENGTH = 15;
-
-const HW_PROFILE_GUIDLEN = 39;
-
-const MAX_PROFILE_LEN = 80;
+const size_t
+	MAX_COMPUTERNAME_LENGTH = 15,
+	HW_PROFILE_GUIDLEN      = 39,
+	MAX_PROFILE_LEN         = 80;
 
 // HW_PROFILE_INFO
 const DWORD
@@ -420,7 +427,6 @@ const DWORD
 	DOCKINFO_USER_SUPPLIED = 4,
 	DOCKINFO_USER_UNDOCKED = DOCKINFO_USER_SUPPLIED | DOCKINFO_UNDOCKED,
 	DOCKINFO_USER_DOCKED   = DOCKINFO_USER_SUPPLIED | DOCKINFO_DOCKED;
-
 
 // DriveType(), RealDriveType()
 enum : int {
@@ -448,50 +454,59 @@ const DWORD
 	HANDLE_FLAG_PROTECT_FROM_CLOSE = 0x02;
 
 enum : DWORD {
-	STD_INPUT_HANDLE  = 0xfffffff6,
-	STD_OUTPUT_HANDLE = 0xfffffff5,
-	STD_ERROR_HANDLE  = 0xfffffff4
+	STD_INPUT_HANDLE  = 0xFFFFFFF6,
+	STD_OUTPUT_HANDLE = 0xFFFFFFF5,
+	STD_ERROR_HANDLE  = 0xFFFFFFF4
 }
 
-const INVALID_HANDLE_VALUE = cast(HANDLE)(-1);
+const HANDLE INVALID_HANDLE_VALUE = cast(HANDLE) (-1);
 
-const GET_TAPE_MEDIA_INFORMATION = 0;
-const GET_TAPE_DRIVE_INFORMATION = 1;
-const SET_TAPE_MEDIA_INFORMATION = 0;
-const SET_TAPE_DRIVE_INFORMATION = 1;
+enum : DWORD {
+	GET_TAPE_MEDIA_INFORMATION = 0,
+	GET_TAPE_DRIVE_INFORMATION = 1
+}
+
+enum : DWORD {
+	SET_TAPE_MEDIA_INFORMATION = 0,
+	SET_TAPE_DRIVE_INFORMATION = 1
+}
 
 // SetThreadPriority()/GetThreadPriority()
-const int
-	THREAD_PRIORITY_ABOVE_NORMAL  = 1,
-	THREAD_PRIORITY_BELOW_NORMAL  = -1,
-	THREAD_PRIORITY_HIGHEST       = 2,
+enum : int {
 	THREAD_PRIORITY_IDLE          = -15,
-	THREAD_PRIORITY_LOWEST        = -2,
-	THREAD_PRIORITY_NORMAL        = 0,
-	THREAD_PRIORITY_TIME_CRITICAL = 15;
+	THREAD_PRIORITY_LOWEST        =  -2,
+	THREAD_PRIORITY_BELOW_NORMAL  =  -1,
+	THREAD_PRIORITY_NORMAL        =   0,
+	THREAD_PRIORITY_ABOVE_NORMAL  =   1,
+	THREAD_PRIORITY_HIGHEST       =   2,
+	THREAD_PRIORITY_TIME_CRITICAL =  15,
+	THREAD_PRIORITY_ERROR_RETURN  = 2147483647
+}
 
-const int THREAD_PRIORITY_ERROR_RETURN = 2147483647;
+enum : DWORD {
+	TIME_ZONE_ID_UNKNOWN,
+	TIME_ZONE_ID_STANDARD,
+	TIME_ZONE_ID_DAYLIGHT,
+	TIME_ZONE_ID_INVALID = 0xFFFFFFFF
+}
 
-const TIME_ZONE_ID_UNKNOWN  = 0;
-const TIME_ZONE_ID_STANDARD = 1;
-const TIME_ZONE_ID_DAYLIGHT = 2;
-const TIME_ZONE_ID_INVALID  = 0xFFFFFFFF;
-
-const FS_CASE_SENSITIVE         = 1;
-const FS_CASE_IS_PRESERVED      = 2;
-const FS_UNICODE_STORED_ON_DISK = 4;
-const FS_PERSISTENT_ACLS        = 8;
-const FS_FILE_COMPRESSION       = 16;
-const FS_VOL_IS_COMPRESSED      = 32768;
+const DWORD
+	FS_CASE_SENSITIVE         =     1,
+	FS_CASE_IS_PRESERVED      =     2,
+	FS_UNICODE_STORED_ON_DISK =     4,
+	FS_PERSISTENT_ACLS        =     8,
+	FS_FILE_COMPRESSION       =    16,
+	FS_VOL_IS_COMPRESSED      = 32768;
 
 // Flags for GlobalAlloc
-enum : SIZE_T {
-	GMEM_FIXED    = 0,
-	GMEM_MOVEABLE = 2,
-	GMEM_ZEROINIT = 64,
-	GPTR          = 66,
-	// Used only for GlobalRealloc
-	GMEM_MODIFY = 128
+const UINT
+	GMEM_FIXED       = 0,
+	GMEM_MOVEABLE    = 0x0002,
+	GMEM_ZEROINIT    = 0x0040,
+	GPTR             = 0x0040,
+	GHND             = 0x0042,
+	GMEM_MODIFY      = 0x0080,  // used only for GlobalRealloc
+	GMEM_VALID_FLAGS = 0x7F72;
 
 /+  // Obselete flags (Win16 only)
 	GMEM_NOCOMPACT=16;
@@ -503,36 +518,33 @@ enum : SIZE_T {
 	GMEM_DDESHARE=8192;
 
 	GMEM_LOCKCOUNT=255;
+
+// for GlobalFlags()
+	GMEM_DISCARDED      = 16384;
+	GMEM_INVALID_HANDLE = 32768;
+
+	GMEM_NOTIFY         = 16384;
 +/
-}
 
-// for GlobalFlags().
-const GMEM_DISCARDED      = 16384;
-const GMEM_INVALID_HANDLE = 32768;
+const UINT
+	LMEM_FIXED          = 0,
+	LMEM_MOVEABLE       = 0x0002,
+	LMEM_NONZEROLPTR    = 0,
+	NONZEROLPTR         = 0,
+	LMEM_NONZEROLHND    = 0x0002,
+	NONZEROLHND         = 0x0002,
+	LMEM_DISCARDABLE    = 0x0F00,
+	LMEM_NOCOMPACT      = 0x0010,
+	LMEM_NODISCARD      = 0x0020,
+	LMEM_ZEROINIT       = 0x0040,
+	LPTR                = 0x0040,
+	LHND                = 0x0042,
+	LMEM_MODIFY         = 0x0080,
+	LMEM_LOCKCOUNT      = 0x00FF,
+	LMEM_DISCARDED      = 0x4000,
+	LMEM_INVALID_HANDLE = 0x8000;
 
-const GMEM_NOTIFY         = 16384;
-const GMEM_VALID_FLAGS    = 32626;
 
-const GHND = 64;
-
-const LMEM_FIXED          = 0;
-const LMEM_MOVEABLE       = 2;
-const LMEM_NONZEROLHND    = 2;
-const LMEM_NONZEROLPTR    = 0;
-const LMEM_DISCARDABLE    = 3840;
-const LMEM_NOCOMPACT      = 16;
-const LMEM_NODISCARD      = 32;
-const LMEM_ZEROINIT       = 64;
-const LMEM_MODIFY         = 128;
-const LMEM_LOCKCOUNT      = 255;
-const LMEM_DISCARDED      = 16384;
-const LMEM_INVALID_HANDLE = 32768;
-
-const LPTR = 64;
-const LHND = 66;
-
-const NONZEROLHND = 2;
-const NONZEROLPTR = 0;
 
 // used in EXCEPTION_RECORD
 enum : DWORD {
@@ -600,54 +612,23 @@ enum : DWORD {
 
 // for PROCESS_HEAP_ENTRY
 const WORD
-	PROCESS_HEAP_REGION            = 1,
-	PROCESS_HEAP_UNCOMMITTED_RANGE = 2,
-	PROCESS_HEAP_ENTRY_BUSY        = 4,
+	PROCESS_HEAP_REGION            =  1,
+	PROCESS_HEAP_UNCOMMITTED_RANGE =  2,
+	PROCESS_HEAP_ENTRY_BUSY        =  4,
 	PROCESS_HEAP_ENTRY_MOVEABLE    = 16,
 	PROCESS_HEAP_ENTRY_DDESHARE    = 32;
 
 // for LoadLibraryEx()
 const DWORD
-	DONT_RESOLVE_DLL_REFERENCES   = 1, // not for WinME and earlier
-	LOAD_LIBRARY_AS_DATAFILE      = 2,
-	LOAD_WITH_ALTERED_SEARCH_PATH = 8,
+	DONT_RESOLVE_DLL_REFERENCES   = 0x01, // not for WinME and earlier
+	LOAD_LIBRARY_AS_DATAFILE      = 0x02,
+	LOAD_WITH_ALTERED_SEARCH_PATH = 0x08,
 	LOAD_IGNORE_CODE_AUTHZ_LEVEL  = 0x10; // only for XP and later
 
 // for LockFile()
 const DWORD
 	LOCKFILE_FAIL_IMMEDIATELY = 1,
 	LOCKFILE_EXCLUSIVE_LOCK   = 2;
-
-static if (_WIN32_WINNT_ONLY) {
-	// for LogonUser()
-	enum : DWORD {
-		LOGON32_LOGON_INTERACTIVE = 2,
-		LOGON32_LOGON_NETWORK     = 3,
-		LOGON32_LOGON_BATCH       = 4,
-		LOGON32_LOGON_SERVICE     = 5,
-		LOGON32_LOGON_UNLOCK      = 7
-	}
-
-	static if (_WIN32_WINNT >= 0x500) enum : DWORD {
-		LOGON32_LOGON_NETWORK_CLEARTEXT = 8,
-		LOGON32_LOGON_NEW_CREDENTIALS   = 9
-	}
-
-	// for LogonUser()
-	enum : DWORD {
-		LOGON32_PROVIDER_DEFAULT = 0,
-		LOGON32_PROVIDER_WINNT35 = 1,
-		LOGON32_PROVIDER_WINNT40 = 2,
-		LOGON32_PROVIDER_WINNT50 = 3
-	}
-}
-
-// for MoveFileEx()
-const DWORD
-	MOVEFILE_REPLACE_EXISTING   = 1,
-	MOVEFILE_COPY_ALLOWED       = 2,
-	MOVEFILE_DELAY_UNTIL_REBOOT = 4,
-	MOVEFILE_WRITE_THROUGH      = 8;
 
 const MAXIMUM_WAIT_OBJECTS  = 64;
 const MAXIMUM_SUSPEND_COUNT = 0x7F;
@@ -658,8 +639,8 @@ const WAIT_ABANDONED_0 = 128;
 //const WAIT_TIMEOUT=258;  // also in winerror.h
 
 enum : DWORD {
-	WAIT_IO_COMPLETION = 0xC0,
-	WAIT_ABANDONED     = 128,
+	WAIT_IO_COMPLETION = 0x000000C0,
+	WAIT_ABANDONED     = 0x00000080,
 	WAIT_FAILED        = 0xFFFFFFFF
 }
 
@@ -689,12 +670,12 @@ enum : WORD {
 
 // FormatMessage()
 const DWORD
-	FORMAT_MESSAGE_ALLOCATE_BUFFER = 256,
-	FORMAT_MESSAGE_IGNORE_INSERTS  = 512,
-	FORMAT_MESSAGE_FROM_STRING     = 1024,
-	FORMAT_MESSAGE_FROM_HMODULE    = 2048,
-	FORMAT_MESSAGE_FROM_SYSTEM     = 4096,
-	FORMAT_MESSAGE_ARGUMENT_ARRAY  = 8192;
+	FORMAT_MESSAGE_ALLOCATE_BUFFER = 0x0100,
+	FORMAT_MESSAGE_IGNORE_INSERTS  = 0x0200,
+	FORMAT_MESSAGE_FROM_STRING     = 0x0400,
+	FORMAT_MESSAGE_FROM_HMODULE    = 0x0800,
+	FORMAT_MESSAGE_FROM_SYSTEM     = 0x1000,
+	FORMAT_MESSAGE_ARGUMENT_ARRAY  = 0x2000;
 
 const DWORD FORMAT_MESSAGE_MAX_WIDTH_MASK = 255;
 
@@ -718,9 +699,9 @@ const SHUTDOWN_NORETRY = 1;
 
 // Return type for exception filters.
 enum : LONG {
-	EXCEPTION_EXECUTE_HANDLER    = 1,
+	EXCEPTION_EXECUTE_HANDLER    =  1,
 	EXCEPTION_CONTINUE_EXECUTION = -1,
-	EXCEPTION_CONTINUE_SEARCH    = 0
+	EXCEPTION_CONTINUE_SEARCH    =  0
 }
 
 enum  : ATOM {
@@ -728,44 +709,44 @@ enum  : ATOM {
 	INVALID_ATOM = 0
 }
 
-const IGNORE = 0;
+const IGNORE   = 0;
 const INFINITE = 0xFFFFFFFF;
 
 // EscapeCommFunction()
 enum {
-	SETXOFF = 1,
+	SETXOFF    = 1,
 	SETXON,
 	SETRTS,
 	CLRRTS,
 	SETDTR,
-	CLRDTR, // =6
-	SETBREAK = 8,
-	CLRBREAK = 9
+	CLRDTR, // = 6
+	SETBREAK   = 8,
+	CLRBREAK   = 9
 }
 
 
 // for SetCommMask()
 const DWORD
-	EV_RXCHAR   = 1,
-	EV_RXFLAG   = 2,
-	EV_TXEMPTY  = 4,
-	EV_CTS      = 8,
-	EV_DSR      = 16,
-	EV_RLSD     = 32,
-	EV_BREAK    = 64,
-	EV_ERR      = 128,
-	EV_RING     = 256,
-	EV_PERR     = 512,
-	EV_RX80FULL = 1024,
-	EV_EVENT1   = 2048,
-	EV_EVENT2   = 4096;
+	EV_RXCHAR   = 0x0001,
+	EV_RXFLAG   = 0x0002,
+	EV_TXEMPTY  = 0x0004,
+	EV_CTS      = 0x0008,
+	EV_DSR      = 0x0010,
+	EV_RLSD     = 0x0020,
+	EV_BREAK    = 0x0040,
+	EV_ERR      = 0x0080,
+	EV_RING     = 0x0100,
+	EV_PERR     = 0x0200,
+	EV_RX80FULL = 0x0400,
+	EV_EVENT1   = 0x0800,
+	EV_EVENT2   = 0x1000;
 
 // GetCommModemStatus()
 const DWORD
-	MS_CTS_ON  = 16,
-	MS_DSR_ON  = 32,
-	MS_RING_ON = 64,
-	MS_RLSD_ON = 128;
+	MS_CTS_ON  = 0x0010,
+	MS_DSR_ON  = 0x0020,
+	MS_RING_ON = 0x0040,
+	MS_RLSD_ON = 0x0080;
 
 
 // DCB
@@ -784,18 +765,18 @@ enum : BYTE {
 }
 // DCB
 enum : DWORD {
-	CBR_110    = 110,
-	CBR_300    = 300,
-	CBR_600    = 600,
-	CBR_1200   = 1200,
-	CBR_2400   = 2400,
-	CBR_4800   = 4800,
-	CBR_9600   = 9600,
-	CBR_14400  = 14400,
-	CBR_19200  = 19200,
-	CBR_38400  = 38400,
-	CBR_56000  = 56000,
-	CBR_57600  = 57600,
+	CBR_110    =    110,
+	CBR_300    =    300,
+	CBR_600    =    600,
+	CBR_1200   =   1200,
+	CBR_2400   =   2400,
+	CBR_4800   =   4800,
+	CBR_9600   =   9600,
+	CBR_14400  =  14400,
+	CBR_19200  =  19200,
+	CBR_38400  =  38400,
+	CBR_56000  =  56000,
+	CBR_57600  =  57600,
 	CBR_115200 = 115200,
 	CBR_128000 = 128000,
 	CBR_256000 = 256000
@@ -839,16 +820,16 @@ enum : DWORD {
 
 // STARTUPINFO
 const DWORD
-	STARTF_USESHOWWINDOW    = 1,
-	STARTF_USESIZE          = 2,
-	STARTF_USEPOSITION      = 4,
-	STARTF_USECOUNTCHARS    = 8,
-	STARTF_USEFILLATTRIBUTE = 16,
-	STARTF_RUNFULLSCREEN    = 32,
-	STARTF_FORCEONFEEDBACK  = 64,
-	STARTF_FORCEOFFFEEDBACK = 128,
-	STARTF_USESTDHANDLES    = 256,
-	STARTF_USEHOTKEY        = 512;
+	STARTF_USESHOWWINDOW    = 0x0001,
+	STARTF_USESIZE          = 0x0002,
+	STARTF_USEPOSITION      = 0x0004,
+	STARTF_USECOUNTCHARS    = 0x0008,
+	STARTF_USEFILLATTRIBUTE = 0x0010,
+	STARTF_RUNFULLSCREEN    = 0x0020,
+	STARTF_FORCEONFEEDBACK  = 0x0040,
+	STARTF_FORCEOFFFEEDBACK = 0x0080,
+	STARTF_USESTDHANDLES    = 0x0100,
+	STARTF_USEHOTKEY        = 0x0200;
 
 // ???
 enum {
@@ -858,7 +839,7 @@ enum {
 	TC_SIGNAL  = 3
 }
 
-// ???
+/+ These seem to be Windows CE-specific
 enum {
 	AC_LINE_OFFLINE      = 0,
 	AC_LINE_ONLINE       = 1,
@@ -866,7 +847,6 @@ enum {
 	AC_LINE_UNKNOWN      = 255
 }
 
-// ???
 enum {
 	BATTERY_FLAG_HIGH          = 1,
 	BATTERY_FLAG_LOW           = 2,
@@ -877,12 +857,7 @@ enum {
 	BATTERY_PERCENTAGE_UNKNOWN = 255,
 	BATTERY_LIFE_UNKNOWN       = 0xFFFFFFFF
 }
-
-// DefineDosDevice()
-const DWORD
-	DDD_RAW_TARGET_PATH       = 1,
-	DDD_REMOVE_DEFINITION     = 2,
-	DDD_EXACT_MATCH_ON_REMOVE = 4;
++/
 
 // ???
 const HINSTANCE_ERROR = 32;
@@ -892,44 +867,81 @@ const DWORD INVALID_FILE_SIZE = 0xFFFFFFFF;
 
 const DWORD TLS_OUT_OF_INDEXES = 0xFFFFFFFF;
 
-static if (WINVER >= 0x501) {
-	const DWORD
-		GET_MODULE_HANDLE_EX_FLAG_PIN                = 1,
-		GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT = 2,
-		GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS       = 4;
-}
-
-static if (_WIN32_WINNT >= 0x0501) {
-	// for ACTCTX
-	const DWORD
-		ACTCTX_FLAG_PROCESSOR_ARCHITECTURE_VALID = 0x00000001,
-		ACTCTX_FLAG_LANGID_VALID                 = 0x00000002,
-		ACTCTX_FLAG_ASSEMBLY_DIRECTORY_VALID     = 0x00000004,
-		ACTCTX_FLAG_RESOURCE_NAME_VALID          = 0x00000008,
-		ACTCTX_FLAG_SET_PROCESS_DEFAULT          = 0x00000010,
-		ACTCTX_FLAG_APPLICATION_NAME_VALID       = 0x00000020,
-		ACTCTX_FLAG_HMODULE_VALID                = 0x00000080;
-
-	// DeactivateActCtx()
-	const DWORD DEACTIVATE_ACTCTX_FLAG_FORCE_EARLY_DEACTIVATION = 0x00000001;
-	// FindActCtxSectionString()
-	const DWORD FIND_ACTCTX_SECTION_KEY_RETURN_HACTCTX          = 0x00000001;
-	// QueryActCtxW()
-	const DWORD
-		QUERY_ACTCTX_FLAG_USE_ACTIVE_ACTCTX             = 0x00000004,
-		QUERY_ACTCTX_FLAG_ACTCTX_IS_HMODULE             = 0x00000008,
-		QUERY_ACTCTX_FLAG_ACTCTX_IS_ADDRESS             = 0x00000010;
-}
-
-static if (_WIN32_WINNT_ONLY && _WIN32_WINNT >= 0x0500) {
-	// ReplaceFile()
-	const DWORD
-		REPLACEFILE_WRITE_THROUGH       = 0x00000001,
-		REPLACEFILE_IGNORE_MERGE_ERRORS = 0x00000002;
-}
-
 // GetWriteWatch()
 const DWORD WRITE_WATCH_FLAG_RESET = 1;
+
+static if (_WIN32_WINNT_ONLY) {
+	// for LogonUser()
+	enum : DWORD {
+		LOGON32_LOGON_INTERACTIVE = 2,
+		LOGON32_LOGON_NETWORK     = 3,
+		LOGON32_LOGON_BATCH       = 4,
+		LOGON32_LOGON_SERVICE     = 5,
+		LOGON32_LOGON_UNLOCK      = 7
+	}
+
+	static if (_WIN32_WINNT >= 0x500) {
+		enum : DWORD {
+			LOGON32_LOGON_NETWORK_CLEARTEXT = 8,
+			LOGON32_LOGON_NEW_CREDENTIALS   = 9
+		}
+	}
+
+	// for LogonUser()
+	enum : DWORD {
+		LOGON32_PROVIDER_DEFAULT,
+		LOGON32_PROVIDER_WINNT35,
+		LOGON32_PROVIDER_WINNT40,
+		LOGON32_PROVIDER_WINNT50
+	}
+
+	// for MoveFileEx()
+	const DWORD
+		MOVEFILE_REPLACE_EXISTING   = 1,
+		MOVEFILE_COPY_ALLOWED       = 2,
+		MOVEFILE_DELAY_UNTIL_REBOOT = 4,
+		MOVEFILE_WRITE_THROUGH      = 8;
+
+	// DefineDosDevice()
+	const DWORD
+		DDD_RAW_TARGET_PATH       = 1,
+		DDD_REMOVE_DEFINITION     = 2,
+		DDD_EXACT_MATCH_ON_REMOVE = 4;
+
+	static if (_WIN32_WINNT >= 0x500) {
+		// ReplaceFile()
+		const DWORD
+			REPLACEFILE_WRITE_THROUGH       = 1,
+			REPLACEFILE_IGNORE_MERGE_ERRORS = 2;
+	}
+
+	static if (_WIN32_WINNT >= 0x501) {
+		const DWORD
+			GET_MODULE_HANDLE_EX_FLAG_PIN                = 1,
+			GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT = 2,
+			GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS       = 4;
+
+		// for ACTCTX
+		const DWORD
+			ACTCTX_FLAG_PROCESSOR_ARCHITECTURE_VALID = 0x01,
+			ACTCTX_FLAG_LANGID_VALID                 = 0x02,
+			ACTCTX_FLAG_ASSEMBLY_DIRECTORY_VALID     = 0x04,
+			ACTCTX_FLAG_RESOURCE_NAME_VALID          = 0x08,
+			ACTCTX_FLAG_SET_PROCESS_DEFAULT          = 0x10,
+			ACTCTX_FLAG_APPLICATION_NAME_VALID       = 0x20,
+			ACTCTX_FLAG_HMODULE_VALID                = 0x80;
+
+		// DeactivateActCtx()
+		const DWORD DEACTIVATE_ACTCTX_FLAG_FORCE_EARLY_DEACTIVATION = 1;
+		// FindActCtxSectionString()
+		const DWORD FIND_ACTCTX_SECTION_KEY_RETURN_HACTCTX          = 1;
+		// QueryActCtxW()
+		const DWORD
+			QUERY_ACTCTX_FLAG_USE_ACTIVE_ACTCTX             = 0x04,
+			QUERY_ACTCTX_FLAG_ACTCTX_IS_HMODULE             = 0x08,
+			QUERY_ACTCTX_FLAG_ACTCTX_IS_ADDRESS             = 0x10;
+	}
+}
 
 // ----
 
@@ -973,33 +985,33 @@ struct DCB {
 	DWORD fDummy2:17;             // Reserved
 +/
 	uint _bf;
-	void fBinary(bool f)         { _bf = (_bf & ~1) | f; }
-	void fParity(bool f)         { _bf = (_bf & ~2) | (f<<1); }
-	void fOutxCtsFlow(bool f)    { _bf = (_bf & ~4)| (f<<2); }
-	void fOutxDsrFlow(bool f)    { _bf = (_bf & ~8) | (f<<3);}
-	void fDtrControl(byte x)     { _bf = (_bf & ~(32+16)) | (x<<4); }
-	void fDsrSensitivity(bool f) { _bf = (_bf & ~64) | (f<<6); }
-	void fTXContinueOnXoff(bool f) { _bf = (_bf & ~128) | (f<<7); }
-	void fOutX(bool f)           { _bf = (_bf & ~256) | (f<<8); }
-	void fInX(bool f)            { _bf = (_bf & ~512) | (f<<9); }
-	void fErrorChar(bool f)      { _bf = (_bf & ~1024) | (f<<10); }
-	void fNull(bool f)           { _bf = (_bf & ~2048) | (f<<11); }
-	void fRtsControl(byte x)     { _bf = (_bf & ~(4096+8192)) | (x<<12); }
-	void fAbortOnError(bool f)   { _bf = (_bf & ~16384) | (f<<14); }
+	bool fBinary(bool f)           { _bf = (_bf & ~0x0001) | f; return f; }
+	bool fParity(bool f)           { _bf = (_bf & ~0x0002) | (f<<1); return f; }
+	bool fOutxCtsFlow(bool f)      { _bf = (_bf & ~0x0004) | (f<<2); return f; }
+	bool fOutxDsrFlow(bool f)      { _bf = (_bf & ~0x0008) | (f<<3); return f; }
+	byte fDtrControl(byte x)       { _bf = (_bf & ~0x0030) | (x<<4); return x & 3; }
+	bool fDsrSensitivity(bool f)   { _bf = (_bf & ~0x0040) | (f<<6); return f; }
+	bool fTXContinueOnXoff(bool f) { _bf = (_bf & ~0x0080) | (f<<7); return f; }
+	bool fOutX(bool f)             { _bf = (_bf & ~0x0100) | (f<<8); return f; }
+	bool fInX(bool f)              { _bf = (_bf & ~0x0200) | (f<<9); return f; }
+	bool fErrorChar(bool f)        { _bf = (_bf & ~0x0400) | (f<<10); return f; }
+	bool fNull(bool f)             { _bf = (_bf & ~0x0800) | (f<<11); return f; }
+	byte fRtsControl(byte x)       { _bf = (_bf & ~0x3000) | (x<<12); return x & 3; }
+	bool fAbortOnError(bool f)     { _bf = (_bf & ~0x4000) | (f<<14); return f; }
 
-	bool fBinary()         { return cast(bool) (_bf & 1); }
-	bool fParity()         { return cast(bool) (_bf & 2); }
-	bool fOutxCtsFlow()    { return cast(bool) (_bf & 4); }
-	bool fOutxDsrFlow()    { return cast(bool) (_bf & 8); }
-	byte fDtrControl()     { return cast(byte) ((_bf & (32+16))>>4); }
-	bool fDsrSensitivity() { return cast(bool) (_bf & 64); }
+	bool fBinary()           { return cast(bool) (_bf & 1); }
+	bool fParity()           { return cast(bool) (_bf & 2); }
+	bool fOutxCtsFlow()      { return cast(bool) (_bf & 4); }
+	bool fOutxDsrFlow()      { return cast(bool) (_bf & 8); }
+	byte fDtrControl()       { return cast(byte) ((_bf & (32+16))>>4); }
+	bool fDsrSensitivity()   { return cast(bool) (_bf & 64); }
 	bool fTXContinueOnXoff() { return cast(bool) (_bf & 128); }
-	bool fOutX()           { return cast(bool) (_bf & 256); }
-	bool fInX()            { return cast(bool) (_bf & 512); }
-	bool fErrorChar()      { return cast(bool) (_bf & 1024); }
-	bool fNull()           { return cast(bool) (_bf & 2048); }
-	byte fRtsControl()     { return cast(byte) ((_bf & (4096+8192))>>12); }
-	bool fAbortOnError()   { return cast(bool) (_bf & 16384); }
+	bool fOutX()             { return cast(bool) (_bf & 256); }
+	bool fInX()              { return cast(bool) (_bf & 512); }
+	bool fErrorChar()        { return cast(bool) (_bf & 1024); }
+	bool fNull()             { return cast(bool) (_bf & 2048); }
+	byte fRtsControl()       { return cast(byte) ((_bf & (4096+8192))>>12); }
+	bool fAbortOnError()     { return cast(bool) (_bf & 16384); }
 
 	WORD wReserved;
 	WORD XonLim;
@@ -1017,14 +1029,16 @@ struct DCB {
 alias DCB* LPDCB;
 
 struct COMMCONFIG {
-	DWORD dwSize;
+	DWORD dwSize = COMMCONFIG.sizeof;
 	WORD  wVersion;
 	WORD  wReserved;
 	DCB   dcb;
 	DWORD dwProviderSubType;
 	DWORD dwProviderOffset;
 	DWORD dwProviderSize;
-	WCHAR wcProviderData[1];
+	WCHAR _wcProviderData;
+
+	WCHAR* wcProviderData() { return &_wcProviderData; }
 }
 alias COMMCONFIG* LPCOMMCONFIG;
 
@@ -1049,13 +1063,13 @@ struct COMSTAT {
 	DWORD fReserved:25;
 +/
 	DWORD _bf;
-    void fCtsHold(bool f)  { _bf = (_bf & ~1) | f ; }
-	void fDsrHold(bool f)  { _bf = (_bf & ~2) | (f<<1); }
-	void fRlsdHold(bool f) { _bf = (_bf & ~4) | (f<<2); }
-	void fXoffHold(bool f) { _bf = (_bf & ~8) | (f<<3); }
-	void fXoffSent(bool f) { _bf = (_bf & ~16) | (f<<4); }
-	void fEof(bool f)      { _bf = (_bf & ~32) | (f<<5); }
-	void fTxim(bool f)     { _bf = (_bf & ~64) | (f<<6); }
+    bool fCtsHold(bool f)  { _bf = (_bf & ~1) | f; return f; }
+	bool fDsrHold(bool f)  { _bf = (_bf & ~2) | (f<<1); return f; }
+	bool fRlsdHold(bool f) { _bf = (_bf & ~4) | (f<<2); return f; }
+	bool fXoffHold(bool f) { _bf = (_bf & ~8) | (f<<3); return f; }
+	bool fXoffSent(bool f) { _bf = (_bf & ~16) | (f<<4); return f; }
+	bool fEof(bool f)      { _bf = (_bf & ~32) | (f<<5); return f; }
+	bool fTxim(bool f)     { _bf = (_bf & ~64) | (f<<6); return f; }
 
     bool fCtsHold()  { return cast(bool) (_bf & 1); }
 	bool fDsrHold()  { return cast(bool) (_bf & 2); }
@@ -1075,12 +1089,12 @@ struct CREATE_PROCESS_DEBUG_INFO {
 	HANDLE hProcess;
 	HANDLE hThread;
 	LPVOID lpBaseOfImage;
-	DWORD dwDebugInfoFileOffset;
-	DWORD nDebugInfoSize;
+	DWORD  dwDebugInfoFileOffset;
+	DWORD  nDebugInfoSize;
 	LPVOID lpThreadLocalBase;
 	LPTHREAD_START_ROUTINE lpStartAddress;
 	LPVOID lpImageName;
-	WORD fUnicode;
+	WORD   fUnicode;
 }
 alias CREATE_PROCESS_DEBUG_INFO* LPCREATE_PROCESS_DEBUG_INFO;
 
@@ -1093,7 +1107,7 @@ alias CREATE_THREAD_DEBUG_INFO* LPCREATE_THREAD_DEBUG_INFO;
 
 struct EXCEPTION_DEBUG_INFO {
 	EXCEPTION_RECORD ExceptionRecord;
-	DWORD dwFirstChance;
+	DWORD            dwFirstChance;
 }
 alias EXCEPTION_DEBUG_INFO* LPEXCEPTION_DEBUG_INFO;
 
@@ -1110,10 +1124,10 @@ alias EXIT_PROCESS_DEBUG_INFO* LPEXIT_PROCESS_DEBUG_INFO;
 struct LOAD_DLL_DEBUG_INFO {
 	HANDLE hFile;
 	LPVOID lpBaseOfDll;
-	DWORD dwDebugInfoFileOffset;
-	DWORD nDebugInfoSize;
+	DWORD  dwDebugInfoFileOffset;
+	DWORD  nDebugInfoSize;
 	LPVOID lpImageName;
-	WORD fUnicode;
+	WORD   fUnicode;
 }
 alias LOAD_DLL_DEBUG_INFO* LPLOAD_DLL_DEBUG_INFO;
 
@@ -1124,8 +1138,8 @@ alias UNLOAD_DLL_DEBUG_INFO* LPUNLOAD_DLL_DEBUG_INFO;
 
 struct OUTPUT_DEBUG_STRING_INFO {
 	LPSTR lpDebugStringData;
-	WORD fUnicode;
-	WORD nDebugStringLength;
+	WORD  fUnicode;
+	WORD  nDebugStringLength;
 }
 alias OUTPUT_DEBUG_STRING_INFO* LPOUTPUT_DEBUG_STRING_INFO;
 
@@ -1140,15 +1154,15 @@ struct DEBUG_EVENT {
 	DWORD dwProcessId;
 	DWORD dwThreadId;
 	union {
-		EXCEPTION_DEBUG_INFO Exception;
-		CREATE_THREAD_DEBUG_INFO CreateThread;
+		EXCEPTION_DEBUG_INFO      Exception;
+		CREATE_THREAD_DEBUG_INFO  CreateThread;
 		CREATE_PROCESS_DEBUG_INFO CreateProcessInfo;
-		EXIT_THREAD_DEBUG_INFO ExitThread;
-		EXIT_PROCESS_DEBUG_INFO ExitProcess;
-		LOAD_DLL_DEBUG_INFO LoadDll;
-		UNLOAD_DLL_DEBUG_INFO UnloadDll;
-		OUTPUT_DEBUG_STRING_INFO DebugString;
-		RIP_INFO RipInfo;
+		EXIT_THREAD_DEBUG_INFO    ExitThread;
+		EXIT_PROCESS_DEBUG_INFO   ExitProcess;
+		LOAD_DLL_DEBUG_INFO       LoadDll;
+		UNLOAD_DLL_DEBUG_INFO     UnloadDll;
+		OUTPUT_DEBUG_STRING_INFO  DebugString;
+		RIP_INFO                  RipInfo;
 	}
 }
 alias DEBUG_EVENT* LPDEBUG_EVENT;
@@ -1209,29 +1223,29 @@ alias STARTUPINFOW* LPSTARTUPINFOW;
 struct PROCESS_INFORMATION {
 	HANDLE hProcess;
 	HANDLE hThread;
-	DWORD dwProcessId;
-	DWORD dwThreadId;
+	DWORD  dwProcessId;
+	DWORD  dwThreadId;
 }
 alias PROCESS_INFORMATION* PPROCESS_INFORMATION, LPPROCESS_INFORMATION;
 
 struct CRITICAL_SECTION_DEBUG {
-	WORD Type;
-	WORD CreatorBackTraceIndex;
+	WORD              Type;
+	WORD              CreatorBackTraceIndex;
 	CRITICAL_SECTION* CriticalSection;
-	LIST_ENTRY ProcessLocksList;
-	DWORD EntryCount;
-	DWORD ContentionCount;
-	DWORD Spare [2];
+	LIST_ENTRY        ProcessLocksList;
+	DWORD             EntryCount;
+	DWORD             ContentionCount;
+	DWORD[2]          Spare;
 }
 alias CRITICAL_SECTION_DEBUG* PCRITICAL_SECTION_DEBUG;
 
 struct CRITICAL_SECTION {
 	PCRITICAL_SECTION_DEBUG DebugInfo;
-	LONG LockCount;
-	LONG RecursionCount;
+	LONG   LockCount;
+	LONG   RecursionCount;
 	HANDLE OwningThread;
 	HANDLE LockSemaphore;
-	DWORD SpinCount;
+	DWORD  SpinCount;
 }
 alias CRITICAL_SECTION* PCRITICAL_SECTION, LPCRITICAL_SECTION;
 
@@ -1247,15 +1261,17 @@ struct SYSTEMTIME {
 }
 alias SYSTEMTIME* LPSYSTEMTIME;
 
-struct WIN32_FILE_ATTRIBUTE_DATA {
-	DWORD    dwFileAttributes;
-	FILETIME ftCreationTime;
-	FILETIME ftLastAccessTime;
-	FILETIME ftLastWriteTime;
-	DWORD    nFileSizeHigh;
-	DWORD    nFileSizeLow;
+static if (_WIN32_WINDOWS >= 0x410) {
+	struct WIN32_FILE_ATTRIBUTE_DATA {
+		DWORD    dwFileAttributes;
+		FILETIME ftCreationTime;
+		FILETIME ftLastAccessTime;
+		FILETIME ftLastWriteTime;
+		DWORD    nFileSizeHigh;
+		DWORD    nFileSizeLow;
+	}
+	alias WIN32_FILE_ATTRIBUTE_DATA* LPWIN32_FILE_ATTRIBUTE_DATA;
 }
-alias WIN32_FILE_ATTRIBUTE_DATA* LPWIN32_FILE_ATTRIBUTE_DATA;
 
 struct WIN32_FIND_DATAA {
 	DWORD          dwFileAttributes;
@@ -1297,46 +1313,53 @@ struct WIN32_FIND_DATAW {
 }
 alias WIN32_FIND_DATAW* PWIN32_FIND_DATAW, LPWIN32_FIND_DATAW;
 
-struct WIN32_STREAM_ID {
-	DWORD dwStreamId;
-	DWORD dwStreamAttributes;
-	LARGE_INTEGER Size;
-	DWORD dwStreamNameSize;
-	WCHAR cStreamName[ANYSIZE_ARRAY];
-}
-alias WIN32_STREAM_ID* LPWIN32_STREAM_ID;
+static if (_WIN32_WINNT_ONLY) {
+	struct WIN32_STREAM_ID {
+		DWORD         dwStreamId;
+		DWORD         dwStreamAttributes;
+		LARGE_INTEGER Size;
+		DWORD         dwStreamNameSize;
+		WCHAR         _cStreamName;
 
-enum FINDEX_INFO_LEVELS {
-	FindExInfoStandard,
-	FindExInfoMaxInfoLevel
+		WCHAR* cStreamName() { return &_cStreamName; }
+	}
+	alias WIN32_STREAM_ID* LPWIN32_STREAM_ID;
+
+	enum FINDEX_INFO_LEVELS {
+		FindExInfoStandard,
+		FindExInfoMaxInfoLevel
+	}
+
+	enum FINDEX_SEARCH_OPS {
+		FindExSearchNameMatch,
+		FindExSearchLimitToDirectories,
+		FindExSearchLimitToDevices,
+		FindExSearchMaxSearchOp
+	}
+
+	enum ACL_INFORMATION_CLASS {
+		AclRevisionInformation = 1,
+		AclSizeInformation
+	}
+
+	struct HW_PROFILE_INFOA {
+		DWORD dwDockInfo;
+		CHAR[HW_PROFILE_GUIDLEN] szHwProfileGuid;
+		CHAR[MAX_PROFILE_LEN]    szHwProfileName;
+	}
+	alias HW_PROFILE_INFOA* LPHW_PROFILE_INFOA;
+
+	struct HW_PROFILE_INFOW {
+		DWORD dwDockInfo;
+		WCHAR[HW_PROFILE_GUIDLEN] szHwProfileGuid;
+		WCHAR[MAX_PROFILE_LEN]    szHwProfileName;
+	}
+	alias HW_PROFILE_INFOW* LPHW_PROFILE_INFOW;
 }
 
-enum FINDEX_SEARCH_OPS {
-	FindExSearchNameMatch,
-	FindExSearchLimitToDirectories,
-	FindExSearchLimitToDevices,
-	FindExSearchMaxSearchOp
-}
-
-enum ACL_INFORMATION_CLASS {
-	AclRevisionInformation=1,
-	AclSizeInformation
-}
-
-struct HW_PROFILE_INFOA {
-	DWORD dwDockInfo;
-	CHAR szHwProfileGuid[HW_PROFILE_GUIDLEN];
-	CHAR szHwProfileName[MAX_PROFILE_LEN];
-}
-alias HW_PROFILE_INFOA* LPHW_PROFILE_INFOA;
-
-struct HW_PROFILE_INFOW {
-	DWORD dwDockInfo;
-	WCHAR szHwProfileGuid[HW_PROFILE_GUIDLEN];
-	WCHAR szHwProfileName[MAX_PROFILE_LEN];
-}
-alias HW_PROFILE_INFOW* LPHW_PROFILE_INFOW;
-
+/*	??? MSDN documents this only for Windows CE/Mobile, but it's used by
+ *	GetFileAttributesEx, which is in desktop Windows.
+ */
 enum GET_FILEEX_INFO_LEVELS {
 	GetFileExInfoStandard,
 	GetFileExMaxInfoLevel
@@ -1357,32 +1380,35 @@ struct SYSTEM_INFO {
 	DWORD dwNumberOfProcessors;
 	DWORD dwProcessorType;
 	DWORD dwAllocationGranularity;
-	WORD wProcessorLevel;
-	WORD wProcessorRevision;
+	WORD  wProcessorLevel;
+	WORD  wProcessorRevision;
 }
 alias SYSTEM_INFO* LPSYSTEM_INFO;
 
-struct SYSTEM_POWER_STATUS {
-	BYTE ACLineStatus;
-	BYTE BatteryFlag;
-	BYTE BatteryLifePercent;
-	BYTE Reserved1;
-	DWORD BatteryLifeTime;
-	DWORD BatteryFullLifeTime;
+static if (_WIN32_WINNT_ONLY && _WIN32_WINNT >= 0x500) {
+	struct SYSTEM_POWER_STATUS {
+		BYTE ACLineStatus;
+		BYTE BatteryFlag;
+		BYTE BatteryLifePercent;
+		BYTE Reserved1;
+		DWORD BatteryLifeTime;
+		DWORD BatteryFullLifeTime;
+	}
+	alias SYSTEM_POWER_STATUS* LPSYSTEM_POWER_STATUS;
 }
-alias SYSTEM_POWER_STATUS* LPSYSTEM_POWER_STATUS;
 
 struct TIME_ZONE_INFORMATION {
-	LONG Bias;
-	WCHAR StandardName[32];
+	LONG       Bias;
+	WCHAR[32]  StandardName;
 	SYSTEMTIME StandardDate;
-	LONG StandardBias;
-	WCHAR DaylightName[32];
+	LONG       StandardBias;
+	WCHAR[32]  DaylightName;
 	SYSTEMTIME DaylightDate;
-	LONG DaylightBias;
+	LONG       DaylightBias;
 }
 alias TIME_ZONE_INFORMATION* LPTIME_ZONE_INFORMATION;
 
+// MSDN documents this, possibly erroneously, as Win2000+.
 struct MEMORYSTATUS {
 	DWORD dwLength;
 	DWORD dwMemoryLoad;
@@ -1395,10 +1421,10 @@ struct MEMORYSTATUS {
 }
 alias MEMORYSTATUS* LPMEMORYSTATUS;
 
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 	struct MEMORYSTATUSEX {
-		DWORD dwLength;
-		DWORD dwMemoryLoad;
+		DWORD     dwLength;
+		DWORD     dwMemoryLoad;
 		DWORDLONG ullTotalPhys;
 		DWORDLONG ullAvailPhys;
 		DWORDLONG ullTotalPageFile;
@@ -1419,22 +1445,22 @@ struct LDT_ENTRY {
 		BYTE Flags2;
 		BYTE BaseHi;
 
-		void Type(byte f)  { Flags1 = cast(BYTE)((Flags1 & 0xE0) | f); }
-		void Dpl(byte f)   { Flags1 = cast(BYTE)((Flags1 & 0x9F) | (f<<5)); }
-		void Pres(bool f)  { Flags1 = cast(BYTE)((Flags1 & 0x7F) | (f<<7)); }
+		byte Type(byte f)        { Flags1 = cast(BYTE) ((Flags1 & 0xE0) | f); return f & 0x1F; }
+		byte Dpl(byte f)         { Flags1 = cast(BYTE) ((Flags1 & 0x9F) | (f<<5)); return f & 3; }
+		bool Pres(bool f)        { Flags1 = cast(BYTE) ((Flags1 & 0x7F) | (f<<7)); return f; }
 
-		void LimitHi(byte f) { Flags2 = cast(BYTE)((Flags2 & 0xF0) | (f&0x0F)); }
-		void Sys(bool f)     { Flags2 = cast(BYTE)((Flags2 & 0xEF) | (f<<4)); }
+		byte LimitHi(byte f)     { Flags2 = cast(BYTE) ((Flags2 & 0xF0) | (f&0x0F)); return f & 0x0F; }
+		bool Sys(bool f)         { Flags2 = cast(BYTE) ((Flags2 & 0xEF) | (f<<4)); return f; }
 		// Next bit is reserved
-		void Default_Big(bool f) { Flags2 = cast(BYTE)((Flags2 & 0xBF) | (f<<6)); }
-		void Granularity(bool f)  { Flags2 = cast(BYTE)((Flags2 & 0x7F) | (f<<7)); }
+		bool Default_Big(bool f) { Flags2 = cast(BYTE) ((Flags2 & 0xBF) | (f<<6)); return f; }
+		bool Granularity(bool f) { Flags2 = cast(BYTE) ((Flags2 & 0x7F) | (f<<7)); return f; }
 
-		byte Type()  { return cast(byte)(Flags1 & 0x1F); }
-		byte Dpl()   { return cast(byte)((Flags1 & 0x60)>>5); }
-		bool Pres()  {  return cast(bool) (Flags1 & 0x80); }
+		byte Type()        { return cast(byte) (Flags1 & 0x1F); }
+		byte Dpl()         { return cast(byte) ((Flags1 & 0x60)>>5); }
+		bool Pres()        { return cast(bool) (Flags1 & 0x80); }
 
-		byte LimitHi() { return cast(byte)(Flags2 & 0x0F); }
-		bool Sys() { return cast(bool) (Flags2 & 0x10); }
+		byte LimitHi()     { return cast(byte) (Flags2 & 0x0F); }
+		bool Sys()         { return cast(bool) (Flags2 & 0x10); }
 		bool Default_Big() { return cast(bool) (Flags2 & 0x40); }
 		bool Granularity() { return cast(bool) (Flags2 & 0x80); }
 	}
@@ -1463,50 +1489,56 @@ struct LDT_ENTRY {
 }
 alias LDT_ENTRY* PLDT_ENTRY, LPLDT_ENTRY;
 
+/*	As with the other memory management functions and structures, MSDN's
+ *	Windows version info shall be taken with a cup of salt.
+ */
 struct PROCESS_HEAP_ENTRY {
 	PVOID lpData;
 	DWORD cbData;
-	BYTE cbOverhead;
-	BYTE iRegionIndex;
-	WORD wFlags;
+	BYTE  cbOverhead;
+	BYTE  iRegionIndex;
+	WORD  wFlags;
 	union {
 		struct Block {
-			HANDLE hMem;
-			DWORD dwReserved[3];
+			HANDLE   hMem;
+			DWORD[3] dwReserved;
 		}
 		struct Region {
-			DWORD dwCommittedSize;
-			DWORD dwUnCommittedSize;
-			LPVOID lpFirstBlock;
-			LPVOID lpLastBlock;
+			DWORD    dwCommittedSize;
+			DWORD    dwUnCommittedSize;
+			LPVOID   lpFirstBlock;
+			LPVOID   lpLastBlock;
 		}
 	}
 }
 alias PROCESS_HEAP_ENTRY* LPPROCESS_HEAP_ENTRY;
 
 deprecated {
-
-struct OFSTRUCT {
-	BYTE cBytes;
-	BYTE fFixedDisk;
-	WORD nErrCode;
-	WORD Reserved1;
-	WORD Reserved2;
-	CHAR szPathName[128]; // const OFS_MAXPATHNAME = 128;
-}
-alias OFSTRUCT* LPOFSTRUCT, POFSTRUCT;
-
+	struct OFSTRUCT {
+		BYTE      cBytes;
+		BYTE      fFixedDisk;
+		WORD      nErrCode;
+		WORD      Reserved1;
+		WORD      Reserved2;
+		CHAR[128] szPathName; // const OFS_MAXPATHNAME = 128;
+	}
+	alias OFSTRUCT* LPOFSTRUCT, POFSTRUCT;
 }
 
+/*	??? MSDN documents this only for Windows CE, but it's used by
+ *	ImageGetCertificateData, which is in desktop Windows.
+ */
 struct WIN_CERTIFICATE {
 	DWORD dwLength;
-	WORD wRevision;
-	WORD wCertificateType;
-	BYTE bCertificate[1];
+	WORD  wRevision;
+	WORD  wCertificateType;
+	BYTE  _bCertificate;
+
+	BYTE* bCertificate() { return &_bCertificate; }
 }
 alias WIN_CERTIFICATE* LPWIN_CERTIFICATE;
 
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 	enum COMPUTER_NAME_FORMAT {
 		ComputerNameNetBIOS,
 		ComputerNameDnsHostname,
@@ -1521,8 +1553,7 @@ static if (_WIN32_WINNT >= 0x0500) {
 
 }
 
-static if (_WIN32_WINNT >= 0x0501) {
-
+static if (_WIN32_WINNT >= 0x501) {
 	struct ACTCTXA {
 		ULONG cbSize;
 		DWORD dwFlags;
@@ -1575,7 +1606,7 @@ static if ((_WIN32_WINNT >= 0x0500) || (_WIN32_WINDOWS >= 0x0410)) {
 }
 
 // Callbacks
-extern(Windows) {
+extern (Windows) {
 	alias DWORD function(LPVOID) LPTHREAD_START_ROUTINE;
 	alias DWORD function(LARGE_INTEGER, LARGE_INTEGER, LARGE_INTEGER, LARGE_INTEGER,
 		DWORD, DWORD, HANDLE, HANDLE, LPVOID)  LPPROGRESS_ROUTINE;
@@ -1594,7 +1625,7 @@ extern(Windows) {
 	alias void function(ULONG_PTR) PAPCFUNC;
 	alias void function(PVOID, DWORD, DWORD) PTIMERAPCROUTINE;
 
-	static if (_WIN32_WINNT >= 0x0500) {
+	static if (_WIN32_WINNT_ONLY && _WIN32_WINNT >= 0x500) {
 		alias void function(PVOID, BOOLEAN) WAITORTIMERCALLBACK;
 	}
 }
@@ -1604,27 +1635,9 @@ LPTSTR MAKEINTATOM(short i) {
 }
 
 extern (Windows) {
-	BOOL AccessCheck(PSECURITY_DESCRIPTOR, HANDLE, DWORD, PGENERIC_MAPPING, PPRIVILEGE_SET, PDWORD, PDWORD, PBOOL);
-	BOOL AccessCheckAndAuditAlarmA(LPCSTR, LPVOID, LPSTR, LPSTR, PSECURITY_DESCRIPTOR, DWORD, PGENERIC_MAPPING, BOOL, PDWORD, PBOOL, PBOOL);
-	BOOL AccessCheckAndAuditAlarmW(LPCWSTR, LPVOID, LPWSTR, LPWSTR, PSECURITY_DESCRIPTOR, DWORD, PGENERIC_MAPPING, BOOL, PDWORD, PBOOL, PBOOL);
-	BOOL AddAccessAllowedAce(PACL, DWORD, DWORD, PSID);
-	BOOL AddAccessDeniedAce(PACL, DWORD, DWORD, PSID);
-	BOOL AddAce(PACL, DWORD, DWORD, PVOID, DWORD);
 	ATOM AddAtomA(LPCSTR);
 	ATOM AddAtomW(LPCWSTR);
-	BOOL AddAuditAccessAce(PACL, DWORD, DWORD, PSID, BOOL, BOOL);
-	BOOL AdjustTokenGroups(HANDLE, BOOL, PTOKEN_GROUPS, DWORD, PTOKEN_GROUPS, PDWORD);
-	BOOL AdjustTokenPrivileges(HANDLE, BOOL, PTOKEN_PRIVILEGES, DWORD, PTOKEN_PRIVILEGES, PDWORD);
-	BOOL AllocateAndInitializeSid(PSID_IDENTIFIER_AUTHORITY, BYTE, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, PSID*);
-	BOOL AllocateLocallyUniqueId(PLUID);
-	BOOL AreAllAccessesGranted(DWORD, DWORD);
-	BOOL AreAnyAccessesGranted(DWORD, DWORD);
 	BOOL AreFileApisANSI();
-	BOOL BackupEventLogA(HANDLE, LPCSTR);
-	BOOL BackupEventLogW(HANDLE, LPCWSTR);
-	BOOL BackupRead(HANDLE, LPBYTE, DWORD, LPDWORD, BOOL, BOOL, LPVOID*);
-	BOOL BackupSeek(HANDLE, DWORD, DWORD, LPDWORD, LPDWORD, LPVOID*);
-	BOOL BackupWrite(HANDLE, LPBYTE, DWORD, LPDWORD, BOOL, BOOL, LPVOID*);
 	BOOL Beep(DWORD, DWORD);
 	HANDLE BeginUpdateResourceA(LPCSTR, BOOL);
 	HANDLE BeginUpdateResourceW(LPCWSTR, BOOL);
@@ -1635,20 +1648,13 @@ extern (Windows) {
 	BOOL CallNamedPipeA(LPCSTR, PVOID, DWORD, PVOID, DWORD, PDWORD, DWORD);
 	BOOL CallNamedPipeW(LPCWSTR, PVOID, DWORD, PVOID, DWORD, PDWORD, DWORD);
 	BOOL CancelDeviceWakeupRequest(HANDLE);
-	BOOL CancelIo(HANDLE);
-	BOOL CancelWaitableTimer(HANDLE);
 	BOOL ClearCommBreak(HANDLE);
 	BOOL ClearCommError(HANDLE, PDWORD, LPCOMSTAT);
-	BOOL ClearEventLogA(HANDLE, LPCSTR);
-	BOOL ClearEventLogW(HANDLE, LPCWSTR);
-	BOOL CloseEventLog(HANDLE);
 	BOOL CloseHandle(HANDLE);
 	BOOL CommConfigDialogA(LPCSTR, HWND, LPCOMMCONFIG);
 	BOOL CommConfigDialogW(LPCWSTR, HWND, LPCOMMCONFIG);
 	LONG CompareFileTime(FILETIME*, FILETIME*);
-	BOOL ConnectNamedPipe(HANDLE, LPOVERLAPPED);
 	BOOL ContinueDebugEvent(DWORD, DWORD, DWORD);
-	PVOID ConvertThreadToFiber(PVOID);
 	BOOL CopyFileA(LPCSTR, LPCSTR, BOOL);
 	BOOL CopyFileW(LPCWSTR, LPCWSTR, BOOL);
 	BOOL CopyFileExA(LPCSTR, LPCSTR, LPPROGRESS_ROUTINE, LPVOID, LPBOOL, DWORD);
@@ -1671,60 +1677,34 @@ extern (Windows) {
 	alias RtlFillMemory FillMemory;
 	alias RtlZeroMemory ZeroMemory;
 	+/
-
-	BOOL CopySid(DWORD, PSID, PSID);
 	BOOL CreateDirectoryA(LPCSTR, LPSECURITY_ATTRIBUTES);
 	BOOL CreateDirectoryW(LPCWSTR, LPSECURITY_ATTRIBUTES);
 	BOOL CreateDirectoryExA(LPCSTR, LPCSTR, LPSECURITY_ATTRIBUTES);
 	BOOL CreateDirectoryExW(LPCWSTR, LPCWSTR, LPSECURITY_ATTRIBUTES);
 	HANDLE CreateEventA(LPSECURITY_ATTRIBUTES, BOOL, BOOL, LPCSTR);
 	HANDLE CreateEventW(LPSECURITY_ATTRIBUTES, BOOL, BOOL, LPCWSTR);
-	LPVOID CreateFiber(SIZE_T, LPFIBER_START_ROUTINE, LPVOID);
 	HANDLE CreateFileA(LPCSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES, DWORD, DWORD, HANDLE);
 	HANDLE CreateFileW(LPCWSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES, DWORD, DWORD, HANDLE);
-	HANDLE CreateFileMappingA(HANDLE, LPSECURITY_ATTRIBUTES, DWORD, DWORD, DWORD, LPCSTR);
-	HANDLE CreateFileMappingW(HANDLE, LPSECURITY_ATTRIBUTES, DWORD, DWORD, DWORD, LPCWSTR);
 	HANDLE CreateIoCompletionPort(HANDLE, HANDLE, ULONG_PTR, DWORD);
 	HANDLE CreateMailslotA(LPCSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES);
 	HANDLE CreateMailslotW(LPCWSTR, DWORD, DWORD, LPSECURITY_ATTRIBUTES);
 	HANDLE CreateMutexA(LPSECURITY_ATTRIBUTES, BOOL, LPCSTR);
 	HANDLE CreateMutexW(LPSECURITY_ATTRIBUTES, BOOL, LPCWSTR);
-	HANDLE CreateNamedPipeA(LPCSTR, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, LPSECURITY_ATTRIBUTES);
-	HANDLE CreateNamedPipeW(LPCWSTR, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, LPSECURITY_ATTRIBUTES);
 	BOOL CreatePipe(PHANDLE, PHANDLE, LPSECURITY_ATTRIBUTES, DWORD);
-	BOOL CreatePrivateObjectSecurity(PSECURITY_DESCRIPTOR, PSECURITY_DESCRIPTOR, PSECURITY_DESCRIPTOR*, BOOL, HANDLE, PGENERIC_MAPPING);
 	BOOL CreateProcessA(LPCSTR, LPSTR, LPSECURITY_ATTRIBUTES, LPSECURITY_ATTRIBUTES, BOOL, DWORD, PVOID, LPCSTR, LPSTARTUPINFOA, LPPROCESS_INFORMATION);
 	BOOL CreateProcessW(LPCWSTR, LPWSTR, LPSECURITY_ATTRIBUTES, LPSECURITY_ATTRIBUTES, BOOL, DWORD, PVOID, LPCWSTR, LPSTARTUPINFOW, LPPROCESS_INFORMATION);
-	BOOL CreateProcessAsUserA(HANDLE, LPCSTR, LPSTR, LPSECURITY_ATTRIBUTES, LPSECURITY_ATTRIBUTES, BOOL, DWORD, PVOID, LPCSTR, LPSTARTUPINFOA, LPPROCESS_INFORMATION);
-	BOOL CreateProcessAsUserW(HANDLE, LPCWSTR, LPWSTR, LPSECURITY_ATTRIBUTES, LPSECURITY_ATTRIBUTES, BOOL, DWORD, PVOID, LPCWSTR, LPSTARTUPINFOW, LPPROCESS_INFORMATION);
-	HANDLE CreateRemoteThread(HANDLE, LPSECURITY_ATTRIBUTES, DWORD, LPTHREAD_START_ROUTINE, LPVOID, DWORD, LPDWORD);
 	HANDLE CreateSemaphoreA(LPSECURITY_ATTRIBUTES, LONG, LONG, LPCSTR);
 	HANDLE CreateSemaphoreW(LPSECURITY_ATTRIBUTES, LONG, LONG, LPCWSTR);
-	DWORD CreateTapePartition(HANDLE, DWORD, DWORD, DWORD);
 	HANDLE CreateThread(LPSECURITY_ATTRIBUTES, DWORD, LPTHREAD_START_ROUTINE, PVOID, DWORD, PDWORD);
-	HANDLE CreateWaitableTimerA(LPSECURITY_ATTRIBUTES, BOOL, LPCSTR);
-	HANDLE CreateWaitableTimerW(LPSECURITY_ATTRIBUTES, BOOL, LPCWSTR);
 	BOOL DebugActiveProcess(DWORD);
 	void DebugBreak();
-	BOOL DefineDosDeviceA(DWORD, LPCSTR, LPCSTR);
-	BOOL DefineDosDeviceW(DWORD, LPCWSTR, LPCWSTR);
-	BOOL DeleteAce(PACL, DWORD);
 	ATOM DeleteAtom(ATOM);
 	void DeleteCriticalSection(PCRITICAL_SECTION);
-	void DeleteFiber(PVOID);
 	BOOL DeleteFileA(LPCSTR);
 	BOOL DeleteFileW(LPCWSTR);
-	BOOL DeregisterEventSource(HANDLE);
-	BOOL DestroyPrivateObjectSecurity(PSECURITY_DESCRIPTOR*);
-	BOOL DeviceIoControl(HANDLE, DWORD, PVOID, DWORD, PVOID, DWORD, PDWORD, POVERLAPPED);
 	BOOL DisableThreadLibraryCalls(HMODULE);
-	BOOL DisconnectNamedPipe(HANDLE);
 	BOOL DosDateTimeToFileTime(WORD, WORD, LPFILETIME);
 	BOOL DuplicateHandle(HANDLE, HANDLE, HANDLE, PHANDLE, DWORD, BOOL, DWORD);
-	BOOL DuplicateToken(HANDLE, SECURITY_IMPERSONATION_LEVEL, PHANDLE);
-	BOOL DuplicateTokenEx(HANDLE, DWORD, LPSECURITY_ATTRIBUTES, SECURITY_IMPERSONATION_LEVEL, TOKEN_TYPE, PHANDLE);
-	BOOL EncryptFileA(LPCSTR);
-	BOOL EncryptFileW(LPCWSTR);
 	BOOL EndUpdateResourceA(HANDLE, BOOL);
 	BOOL EndUpdateResourceW(HANDLE, BOOL);
 	void EnterCriticalSection(LPCRITICAL_SECTION);
@@ -1734,9 +1714,6 @@ extern (Windows) {
 	BOOL EnumResourceNamesW(HMODULE, LPCWSTR, ENUMRESNAMEPROC, LONG_PTR);
 	BOOL EnumResourceTypesA(HMODULE, ENUMRESTYPEPROC, LONG_PTR);
 	BOOL EnumResourceTypesW(HMODULE, ENUMRESTYPEPROC, LONG_PTR);
-	BOOL EqualPrefixSid(PSID, PSID);
-	BOOL EqualSid(PSID, PSID);
-	DWORD EraseTape(HANDLE, DWORD, BOOL);
 	BOOL EscapeCommFunction(HANDLE, DWORD);
 	void ExitProcess(UINT); // Never returns
 	void ExitThread(DWORD); // Never returns
@@ -1745,8 +1722,6 @@ extern (Windows) {
 	void FatalAppExitA(UINT, LPCSTR);
 	void FatalAppExitW(UINT, LPCWSTR);
 	void FatalExit(int);
-	BOOL FileEncryptionStatusA(LPCSTR, LPDWORD);
-	BOOL FileEncryptionStatusW(LPCWSTR, LPDWORD);
 	BOOL FileTimeToDosDateTime(FILETIME* , LPWORD, LPWORD);
 	BOOL FileTimeToLocalFileTime(FILETIME* , LPFILETIME);
 	BOOL FileTimeToSystemTime(FILETIME* , LPSYSTEMTIME);
@@ -1758,9 +1733,6 @@ extern (Windows) {
 	HANDLE FindFirstChangeNotificationW(LPCWSTR, BOOL, DWORD);
 	HANDLE FindFirstFileA(LPCSTR, LPWIN32_FIND_DATAA);
 	HANDLE FindFirstFileW(LPCWSTR, LPWIN32_FIND_DATAW);
-	HANDLE FindFirstFileExA(LPCSTR, FINDEX_INFO_LEVELS, PVOID, FINDEX_SEARCH_OPS, PVOID, DWORD);
-	HANDLE FindFirstFileExW(LPCWSTR, FINDEX_INFO_LEVELS, PVOID, FINDEX_SEARCH_OPS, PVOID, DWORD);
-	BOOL FindFirstFreeAce(PACL, PVOID*);
 	BOOL FindNextChangeNotification(HANDLE);
 	BOOL FindNextFileA(HANDLE, LPWIN32_FIND_DATAA);
 	BOOL FindNextFileW(HANDLE, LPWIN32_FIND_DATAW);
@@ -1770,7 +1742,6 @@ extern (Windows) {
 	HRSRC FindResourceExW(HINSTANCE, LPCWSTR, LPCWSTR, WORD);
 	BOOL FlushFileBuffers(HANDLE);
 	BOOL FlushInstructionCache(HANDLE, PCVOID, DWORD);
-	BOOL FlushViewOfFile(PCVOID, DWORD);
 	DWORD FormatMessageA(DWORD, PCVOID, DWORD, DWORD, LPSTR, DWORD, va_list*);
 	DWORD FormatMessageW(DWORD, PCVOID, DWORD, DWORD, LPWSTR, DWORD, va_list*);
 	BOOL FreeEnvironmentStringsA(LPSTR);
@@ -1778,13 +1749,8 @@ extern (Windows) {
 	BOOL FreeLibrary(HMODULE);
 	void FreeLibraryAndExitThread(HMODULE, DWORD); // never returns
 	BOOL FreeResource(HGLOBAL);
-	PVOID FreeSid(PSID);
-	BOOL GetAce(PACL, DWORD, LPVOID*);
-	BOOL GetAclInformation(PACL, PVOID, DWORD, ACL_INFORMATION_CLASS);
 	UINT GetAtomNameA(ATOM, LPSTR, int);
 	UINT GetAtomNameW(ATOM, LPWSTR, int);
-	BOOL GetBinaryTypeA(LPCSTR, PDWORD);
-	BOOL GetBinaryTypeW(LPCWSTR, PDWORD);
 	LPSTR GetCommandLineA();
 	LPWSTR GetCommandLineW();
 	BOOL GetCommConfig(HANDLE, LPCOMMCONFIG, PDWORD);
@@ -1793,14 +1759,10 @@ extern (Windows) {
 	BOOL GetCommProperties(HANDLE, LPCOMMPROP);
 	BOOL GetCommState(HANDLE, LPDCB);
 	BOOL GetCommTimeouts(HANDLE, LPCOMMTIMEOUTS);
-	DWORD GetCompressedFileSizeA(LPCSTR, PDWORD);
-	DWORD GetCompressedFileSizeW(LPCWSTR, PDWORD);
 	BOOL GetComputerNameA(LPSTR, PDWORD);
 	BOOL GetComputerNameW(LPWSTR, PDWORD);
 	DWORD GetCurrentDirectoryA(DWORD, LPSTR);
 	DWORD GetCurrentDirectoryW(DWORD, LPWSTR);
-	BOOL GetCurrentHwProfileA(LPHW_PROFILE_INFOA);
-	BOOL GetCurrentHwProfileW(LPHW_PROFILE_INFOW);
 	HANDLE GetCurrentProcess();
 	DWORD GetCurrentProcessId();
 	HANDLE GetCurrentThread();
@@ -1823,7 +1785,7 @@ WINBASEAPI DWORD WINAPI GetCurrentThreadId(void);
 	BOOL GetDiskFreeSpaceExW(LPCWSTR, PULARGE_INTEGER, PULARGE_INTEGER, PULARGE_INTEGER);
 	UINT GetDriveTypeA(LPCSTR);
 	UINT GetDriveTypeW(LPCWSTR);
-	LPSTR GetEnvironmentStrings();
+	LPSTR GetEnvironmentStrings(); // ???
 	LPSTR GetEnvironmentStringsA();
 	LPWSTR GetEnvironmentStringsW();
 	DWORD GetEnvironmentVariableA(LPCSTR, LPSTR, DWORD);
@@ -1832,20 +1794,13 @@ WINBASEAPI DWORD WINAPI GetCurrentThreadId(void);
 	BOOL GetExitCodeThread(HANDLE, PDWORD);
 	DWORD GetFileAttributesA(LPCSTR);
 	DWORD GetFileAttributesW(LPCWSTR);
-	BOOL GetFileAttributesExA(LPCSTR, GET_FILEEX_INFO_LEVELS, PVOID);
-	BOOL GetFileAttributesExW(LPCWSTR, GET_FILEEX_INFO_LEVELS, PVOID);
 	BOOL GetFileInformationByHandle(HANDLE, LPBY_HANDLE_FILE_INFORMATION);
-	BOOL GetFileSecurityA(LPCSTR, SECURITY_INFORMATION, PSECURITY_DESCRIPTOR, DWORD, PDWORD);
-	BOOL GetFileSecurityW(LPCWSTR, SECURITY_INFORMATION, PSECURITY_DESCRIPTOR, DWORD, PDWORD);
 	DWORD GetFileSize(HANDLE, PDWORD);
 	BOOL GetFileTime(HANDLE, LPFILETIME, LPFILETIME, LPFILETIME);
 	DWORD GetFileType(HANDLE);
 	DWORD GetFullPathNameA(LPCSTR, DWORD, LPSTR, LPSTR*);
 	DWORD GetFullPathNameW(LPCWSTR, DWORD, LPWSTR, LPWSTR*);
-	BOOL GetHandleInformation(HANDLE, PDWORD);
-	BOOL GetKernelObjectSecurity(HANDLE, SECURITY_INFORMATION, PSECURITY_DESCRIPTOR, DWORD, PDWORD);
 	DWORD GetLastError();
-	DWORD GetLengthSid(PSID);
 	void GetLocalTime(LPSYSTEMTIME);
 	DWORD GetLogicalDrives();
 	DWORD GetLogicalDriveStringsA(DWORD, LPSTR);
@@ -1858,11 +1813,8 @@ WINBASEAPI DWORD WINAPI GetCurrentThreadId(void);
 	BOOL GetNamedPipeHandleStateA(HANDLE, PDWORD, PDWORD, PDWORD, PDWORD, LPSTR, DWORD);
 	BOOL GetNamedPipeHandleStateW(HANDLE, PDWORD, PDWORD, PDWORD, PDWORD, LPWSTR, DWORD);
 	BOOL GetNamedPipeInfo(HANDLE, PDWORD, PDWORD, PDWORD, PDWORD);
-	BOOL GetNumberOfEventLogRecords(HANDLE, PDWORD);
-	BOOL GetOldestEventLogRecord(HANDLE, PDWORD);
 	BOOL GetOverlappedResult(HANDLE, LPOVERLAPPED, PDWORD, BOOL);
 	DWORD GetPriorityClass(HANDLE);
-	BOOL GetPrivateObjectSecurity(PSECURITY_DESCRIPTOR, SECURITY_INFORMATION, PSECURITY_DESCRIPTOR, DWORD, PDWORD);
 	UINT GetPrivateProfileIntA(LPCSTR, LPCSTR, INT, LPCSTR);
 	UINT GetPrivateProfileIntW(LPCWSTR, LPCWSTR, INT, LPCWSTR);
 	DWORD GetPrivateProfileSectionA(LPCSTR, LPSTR, DWORD, LPCSTR);
@@ -1875,58 +1827,33 @@ WINBASEAPI DWORD WINAPI GetCurrentThreadId(void);
 	BOOL GetPrivateProfileStructW(LPCWSTR, LPCWSTR, LPVOID, UINT, LPCWSTR);
 	FARPROC GetProcAddress(HINSTANCE, LPCSTR);
 	BOOL GetProcessAffinityMask(HANDLE, PDWORD, PDWORD);
-	HANDLE GetProcessHeap();
-	DWORD GetProcessHeaps(DWORD, PHANDLE);
-	BOOL GetProcessPriorityBoost(HANDLE, PBOOL);
-	BOOL GetProcessShutdownParameters(PDWORD, PDWORD);
-	BOOL GetProcessTimes(HANDLE, LPFILETIME, LPFILETIME, LPFILETIME, LPFILETIME);
 	DWORD GetProcessVersion(DWORD);
-	HWINSTA GetProcessWindowStation();
-	BOOL GetProcessWorkingSetSize(HANDLE, PSIZE_T, PSIZE_T);
 	UINT GetProfileIntA(LPCSTR, LPCSTR, INT);
 	UINT GetProfileIntW(LPCWSTR, LPCWSTR, INT);
 	DWORD GetProfileSectionA(LPCSTR, LPSTR, DWORD);
 	DWORD GetProfileSectionW(LPCWSTR, LPWSTR, DWORD);
 	DWORD GetProfileStringA(LPCSTR, LPCSTR, LPCSTR, LPSTR, DWORD);
 	DWORD GetProfileStringW(LPCWSTR, LPCWSTR, LPCWSTR, LPWSTR, DWORD);
-	BOOL GetQueuedCompletionStatus(HANDLE, PDWORD, PULONG_PTR, LPOVERLAPPED*, DWORD);
-	BOOL GetSecurityDescriptorControl(PSECURITY_DESCRIPTOR, PSECURITY_DESCRIPTOR_CONTROL, PDWORD);
-	BOOL GetSecurityDescriptorDacl(PSECURITY_DESCRIPTOR, LPBOOL, PACL*, LPBOOL);
-	BOOL GetSecurityDescriptorGroup(PSECURITY_DESCRIPTOR, PSID*, LPBOOL);
-	DWORD GetSecurityDescriptorLength(PSECURITY_DESCRIPTOR);
-	BOOL GetSecurityDescriptorOwner(PSECURITY_DESCRIPTOR, PSID*, LPBOOL);
-	BOOL GetSecurityDescriptorSacl(PSECURITY_DESCRIPTOR, LPBOOL, PACL*, LPBOOL);
 	DWORD GetShortPathNameA(LPCSTR, LPSTR, DWORD);
 	DWORD GetShortPathNameW(LPCWSTR, LPWSTR, DWORD);
-	PSID_IDENTIFIER_AUTHORITY GetSidIdentifierAuthority(PSID);
-	DWORD GetSidLengthRequired(UCHAR);
-	PDWORD GetSidSubAuthority(PSID, DWORD);
-	PUCHAR GetSidSubAuthorityCount(PSID);
 	VOID GetStartupInfoA(LPSTARTUPINFOA);
 	VOID GetStartupInfoW(LPSTARTUPINFOW);
 	HANDLE GetStdHandle(DWORD);
 	UINT GetSystemDirectoryA(LPSTR, UINT);
 	UINT GetSystemDirectoryW(LPWSTR, UINT);
 	VOID GetSystemInfo(LPSYSTEM_INFO);
-	BOOL GetSystemPowerStatus(LPSYSTEM_POWER_STATUS);
 	VOID GetSystemTime(LPSYSTEMTIME);
 	BOOL GetSystemTimeAdjustment(PDWORD, PDWORD, PBOOL);
 	void GetSystemTimeAsFileTime(LPFILETIME);
-	DWORD GetTapeParameters(HANDLE, DWORD, PDWORD, PVOID);
-	DWORD GetTapePosition(HANDLE, DWORD, PDWORD, PDWORD, PDWORD);
-	DWORD GetTapeStatus(HANDLE);
 	UINT GetTempFileNameA(LPCSTR, LPCSTR, UINT, LPSTR);
 	UINT GetTempFileNameW(LPCWSTR, LPCWSTR, UINT, LPWSTR);
 	DWORD GetTempPathA(DWORD, LPSTR);
 	DWORD GetTempPathW(DWORD, LPWSTR);
 	BOOL GetThreadContext(HANDLE, LPCONTEXT);
 	int GetThreadPriority(HANDLE);
-	BOOL GetThreadPriorityBoost(HANDLE, PBOOL);
 	BOOL GetThreadSelectorEntry(HANDLE, DWORD, LPLDT_ENTRY);
-	BOOL GetThreadTimes(HANDLE, LPFILETIME, LPFILETIME, LPFILETIME, LPFILETIME);
 	DWORD GetTickCount();
 	DWORD GetTimeZoneInformation(LPTIME_ZONE_INFORMATION);
-	BOOL GetTokenInformation(HANDLE, TOKEN_INFORMATION_CLASS, PVOID, DWORD, PDWORD);
 	BOOL GetUserNameA (LPSTR, PDWORD);
 	BOOL GetUserNameW(LPWSTR, PDWORD);
 	DWORD GetVersion();
@@ -1937,94 +1864,41 @@ WINBASEAPI DWORD WINAPI GetCurrentThreadId(void);
 	UINT GetWindowsDirectoryA(LPSTR, UINT);
 	UINT GetWindowsDirectoryW(LPWSTR, UINT);
 	DWORD GetWindowThreadProcessId(HWND, PDWORD);
-	UINT GetWriteWatch(DWORD, PVOID, SIZE_T, PVOID*, PULONG_PTR, PULONG);
 	ATOM GlobalAddAtomA(LPCSTR);
-	ATOM GlobalAddAtomW( LPCWSTR);
-	HGLOBAL GlobalAlloc(UINT, DWORD);
+	ATOM GlobalAddAtomW(LPCWSTR);
 	ATOM GlobalDeleteAtom(ATOM);
-	HGLOBAL GlobalDiscard(HGLOBAL);
 	ATOM GlobalFindAtomA(LPCSTR);
 	ATOM GlobalFindAtomW(LPCWSTR);
-	HGLOBAL GlobalFree(HGLOBAL);
 	UINT GlobalGetAtomNameA(ATOM, LPSTR, int);
 	UINT GlobalGetAtomNameW(ATOM, LPWSTR, int);
-	HGLOBAL GlobalHandle(PCVOID);
-	LPVOID GlobalLock(HGLOBAL);
-	VOID GlobalMemoryStatus(LPMEMORYSTATUS);
-	HGLOBAL GlobalReAlloc(HGLOBAL, DWORD, UINT);
-	DWORD GlobalSize(HGLOBAL);
-	BOOL GlobalUnlock(HGLOBAL);
 
 	bool HasOverlappedIoCompleted(LPOVERLAPPED lpOverlapped) {
 		return lpOverlapped.Internal != STATUS_PENDING;
 	}
 
-	PVOID HeapAlloc(HANDLE, DWORD, DWORD);
-	SIZE_T HeapCompact(HANDLE, DWORD);
-	HANDLE HeapCreate(DWORD, DWORD, DWORD);
-	BOOL HeapDestroy(HANDLE);
-	BOOL HeapFree(HANDLE, DWORD, PVOID);
-	BOOL HeapLock(HANDLE);
-	PVOID HeapReAlloc(HANDLE, DWORD, PVOID, DWORD);
-	DWORD HeapSize(HANDLE, DWORD, PCVOID);
-	BOOL HeapUnlock(HANDLE);
-	BOOL HeapValidate(HANDLE, DWORD, PCVOID);
-	BOOL HeapWalk(HANDLE, LPPROCESS_HEAP_ENTRY);
-	BOOL ImpersonateLoggedOnUser(HANDLE);
-	BOOL ImpersonateNamedPipeClient(HANDLE);
-	BOOL ImpersonateSelf(SECURITY_IMPERSONATION_LEVEL);
 	BOOL InitAtomTable(DWORD);
-	BOOL InitializeAcl(PACL, DWORD, DWORD);
 	VOID InitializeCriticalSection(LPCRITICAL_SECTION);
-	BOOL InitializeCriticalSectionAndSpinCount(LPCRITICAL_SECTION, DWORD);
-	DWORD SetCriticalSectionSpinCount(LPCRITICAL_SECTION, DWORD);
-	BOOL InitializeSecurityDescriptor(PSECURITY_DESCRIPTOR, DWORD);
-	BOOL InitializeSid (PSID, PSID_IDENTIFIER_AUTHORITY, BYTE);
-	BOOL IsBadCodePtr(FARPROC);
+	/*	??? The next two are allegedly obsolete and "supported only for
+	 *	backward compatibility with the 16-bit Windows API".  Yet the
+	 *	replacements IsBadReadPtr and IsBadWritePtr are apparently Win2000+
+	 *	only.  Where's the mistake?
+	 */
 	BOOL IsBadHugeReadPtr(PCVOID, UINT);
 	BOOL IsBadHugeWritePtr(PVOID, UINT);
 	BOOL IsBadReadPtr(PCVOID, UINT);
 	BOOL IsBadStringPtrA(LPCSTR, UINT);
 	BOOL IsBadStringPtrW(LPCWSTR, UINT);
 	BOOL IsBadWritePtr(PVOID, UINT);
-	BOOL IsDebuggerPresent();
-	BOOL IsProcessorFeaturePresent(DWORD);
-	BOOL IsSystemResumeAutomatic();
-	BOOL IsTextUnicode(PCVOID, int, LPINT);
-	BOOL IsValidAcl(PACL);
-	BOOL IsValidSecurityDescriptor(PSECURITY_DESCRIPTOR);
-	BOOL IsValidSid(PSID);
 	void LeaveCriticalSection(LPCRITICAL_SECTION);
 	HINSTANCE LoadLibraryA(LPCSTR);
+	HINSTANCE LoadLibraryW(LPCWSTR);
 	HINSTANCE LoadLibraryExA(LPCSTR, HANDLE, DWORD);
 	HINSTANCE LoadLibraryExW(LPCWSTR, HANDLE, DWORD);
-	HINSTANCE LoadLibraryW(LPCWSTR);
 	DWORD LoadModule(LPCSTR, PVOID);
 	HGLOBAL LoadResource(HINSTANCE, HRSRC);
-	HLOCAL LocalAlloc(UINT, SIZE_T);
-	HLOCAL LocalDiscard(HLOCAL);
 	BOOL LocalFileTimeToFileTime(FILETIME* , LPFILETIME);
-	HLOCAL LocalFree(HLOCAL);
-	HLOCAL LocalHandle(LPCVOID);
-	PVOID LocalLock(HLOCAL);
-	HLOCAL LocalReAlloc(HLOCAL, SIZE_T, UINT);
-	UINT LocalSize(HLOCAL);
-	BOOL LocalUnlock(HLOCAL);
 	BOOL LockFile(HANDLE, DWORD, DWORD, DWORD, DWORD);
-	BOOL LockFileEx(HANDLE, DWORD, DWORD, DWORD, DWORD, LPOVERLAPPED);
 	PVOID LockResource(HGLOBAL);
-	BOOL LogonUserA(LPSTR, LPSTR, LPSTR, DWORD, DWORD, PHANDLE); // *** NT only
-	BOOL LogonUserW(LPWSTR, LPWSTR, LPWSTR, DWORD, DWORD, PHANDLE); // *** NT only
-	BOOL LookupAccountNameA(LPCSTR, LPCSTR, PSID, PDWORD, LPSTR, PDWORD, PSID_NAME_USE);
-	BOOL LookupAccountNameW(LPCWSTR, LPCWSTR, PSID, PDWORD, LPWSTR, PDWORD, PSID_NAME_USE);
-	BOOL LookupAccountSidA(LPCSTR, PSID, LPSTR, PDWORD, LPSTR, PDWORD, PSID_NAME_USE);
-	BOOL LookupAccountSidW(LPCWSTR, PSID, LPWSTR, PDWORD, LPWSTR, PDWORD, PSID_NAME_USE);
-	BOOL LookupPrivilegeDisplayNameA(LPCSTR, LPCSTR, LPSTR, PDWORD, PDWORD);
-	BOOL LookupPrivilegeDisplayNameW(LPCWSTR, LPCWSTR, LPWSTR, PDWORD, PDWORD);
-	BOOL LookupPrivilegeNameA(LPCSTR, PLUID, LPSTR, PDWORD);
-	BOOL LookupPrivilegeNameW(LPCWSTR, PLUID, LPWSTR, PDWORD);
-	BOOL LookupPrivilegeValueA(LPCSTR, LPCSTR, PLUID);
-	BOOL LookupPrivilegeValueW(LPCWSTR, LPCWSTR, PLUID);
 
 	LPSTR lstrcatA(LPSTR, LPCSTR);
 	LPWSTR lstrcatW(LPWSTR, LPCWSTR);
@@ -2039,6 +1913,152 @@ WINBASEAPI DWORD WINAPI GetCurrentThreadId(void);
 	int lstrlenA(LPCSTR);
 	int lstrlenW(LPCWSTR);
 
+	static if (_WIN32_WINDOWS >= 0x410) {
+		BOOL CancelIo(HANDLE);
+		BOOL CancelWaitableTimer(HANDLE);
+		PVOID ConvertThreadToFiber(PVOID);
+		LPVOID CreateFiber(SIZE_T, LPFIBER_START_ROUTINE, LPVOID);
+		HANDLE CreateWaitableTimerA(LPSECURITY_ATTRIBUTES, BOOL, LPCSTR);
+		HANDLE CreateWaitableTimerW(LPSECURITY_ATTRIBUTES, BOOL, LPCWSTR);
+		void DeleteFiber(PVOID);
+		BOOL GetFileAttributesExA(LPCSTR, GET_FILEEX_INFO_LEVELS, PVOID);
+		BOOL GetFileAttributesExW(LPCWSTR, GET_FILEEX_INFO_LEVELS, PVOID);
+		BOOL InitializeCriticalSectionAndSpinCount(LPCRITICAL_SECTION, DWORD);
+		BOOL IsDebuggerPresent();
+	}
+
+	static if (_WIN32_WINNT_ONLY) {
+		BOOL AccessCheck(PSECURITY_DESCRIPTOR, HANDLE, DWORD, PGENERIC_MAPPING, PPRIVILEGE_SET, PDWORD, PDWORD, PBOOL);
+		BOOL AccessCheckAndAuditAlarmA(LPCSTR, LPVOID, LPSTR, LPSTR, PSECURITY_DESCRIPTOR, DWORD, PGENERIC_MAPPING, BOOL, PDWORD, PBOOL, PBOOL);
+		BOOL AccessCheckAndAuditAlarmW(LPCWSTR, LPVOID, LPWSTR, LPWSTR, PSECURITY_DESCRIPTOR, DWORD, PGENERIC_MAPPING, BOOL, PDWORD, PBOOL, PBOOL);
+		BOOL AddAccessAllowedAce(PACL, DWORD, DWORD, PSID);
+		BOOL AddAccessDeniedAce(PACL, DWORD, DWORD, PSID);
+		BOOL AddAce(PACL, DWORD, DWORD, PVOID, DWORD);
+		BOOL AddAuditAccessAce(PACL, DWORD, DWORD, PSID, BOOL, BOOL);
+		BOOL AdjustTokenGroups(HANDLE, BOOL, PTOKEN_GROUPS, DWORD, PTOKEN_GROUPS, PDWORD);
+		BOOL AdjustTokenPrivileges(HANDLE, BOOL, PTOKEN_PRIVILEGES, DWORD, PTOKEN_PRIVILEGES, PDWORD);
+		BOOL AllocateAndInitializeSid(PSID_IDENTIFIER_AUTHORITY, BYTE, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, PSID*);
+		BOOL AllocateLocallyUniqueId(PLUID);
+		BOOL AreAllAccessesGranted(DWORD, DWORD);
+		BOOL AreAnyAccessesGranted(DWORD, DWORD);
+		BOOL BackupEventLogA(HANDLE, LPCSTR);
+		BOOL BackupEventLogW(HANDLE, LPCWSTR);
+		BOOL BackupRead(HANDLE, LPBYTE, DWORD, LPDWORD, BOOL, BOOL, LPVOID*);
+		BOOL BackupSeek(HANDLE, DWORD, DWORD, LPDWORD, LPDWORD, LPVOID*);
+		BOOL BackupWrite(HANDLE, LPBYTE, DWORD, LPDWORD, BOOL, BOOL, LPVOID*);
+		BOOL ClearEventLogA(HANDLE, LPCSTR);
+		BOOL ClearEventLogW(HANDLE, LPCWSTR);
+		BOOL CloseEventLog(HANDLE);
+		BOOL ConnectNamedPipe(HANDLE, LPOVERLAPPED);
+		BOOL CopySid(DWORD, PSID, PSID);
+		HANDLE CreateNamedPipeA(LPCSTR, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, LPSECURITY_ATTRIBUTES);
+		HANDLE CreateNamedPipeW(LPCWSTR, DWORD, DWORD, DWORD, DWORD, DWORD, DWORD, LPSECURITY_ATTRIBUTES);
+		BOOL CreatePrivateObjectSecurity(PSECURITY_DESCRIPTOR, PSECURITY_DESCRIPTOR, PSECURITY_DESCRIPTOR*, BOOL, HANDLE, PGENERIC_MAPPING);
+		BOOL CreateProcessAsUserA(HANDLE, LPCSTR, LPSTR, LPSECURITY_ATTRIBUTES, LPSECURITY_ATTRIBUTES, BOOL, DWORD, PVOID, LPCSTR, LPSTARTUPINFOA, LPPROCESS_INFORMATION);
+		BOOL CreateProcessAsUserW(HANDLE, LPCWSTR, LPWSTR, LPSECURITY_ATTRIBUTES, LPSECURITY_ATTRIBUTES, BOOL, DWORD, PVOID, LPCWSTR, LPSTARTUPINFOW, LPPROCESS_INFORMATION);
+		HANDLE CreateRemoteThread(HANDLE, LPSECURITY_ATTRIBUTES, DWORD, LPTHREAD_START_ROUTINE, LPVOID, DWORD, LPDWORD);
+		DWORD CreateTapePartition(HANDLE, DWORD, DWORD, DWORD);
+		BOOL DefineDosDeviceA(DWORD, LPCSTR, LPCSTR);
+		BOOL DefineDosDeviceW(DWORD, LPCWSTR, LPCWSTR);
+		BOOL DeleteAce(PACL, DWORD);
+		BOOL DeregisterEventSource(HANDLE);
+		BOOL DestroyPrivateObjectSecurity(PSECURITY_DESCRIPTOR*);
+		BOOL DeviceIoControl(HANDLE, DWORD, PVOID, DWORD, PVOID, DWORD, PDWORD, POVERLAPPED);
+		BOOL DisconnectNamedPipe(HANDLE);
+		BOOL DuplicateToken(HANDLE, SECURITY_IMPERSONATION_LEVEL, PHANDLE);
+		BOOL DuplicateTokenEx(HANDLE, DWORD, LPSECURITY_ATTRIBUTES, SECURITY_IMPERSONATION_LEVEL, TOKEN_TYPE, PHANDLE);
+		BOOL EqualPrefixSid(PSID, PSID);
+		BOOL EqualSid(PSID, PSID);
+		DWORD EraseTape(HANDLE, DWORD, BOOL);
+		HANDLE FindFirstFileExA(LPCSTR, FINDEX_INFO_LEVELS, PVOID, FINDEX_SEARCH_OPS, PVOID, DWORD);
+		HANDLE FindFirstFileExW(LPCWSTR, FINDEX_INFO_LEVELS, PVOID, FINDEX_SEARCH_OPS, PVOID, DWORD);
+		BOOL FindFirstFreeAce(PACL, PVOID*);
+		PVOID FreeSid(PSID);
+		BOOL GetAce(PACL, DWORD, LPVOID*);
+		BOOL GetAclInformation(PACL, PVOID, DWORD, ACL_INFORMATION_CLASS);
+		BOOL GetBinaryTypeA(LPCSTR, PDWORD);
+		BOOL GetBinaryTypeW(LPCWSTR, PDWORD);
+		DWORD GetCompressedFileSizeA(LPCSTR, PDWORD);
+		DWORD GetCompressedFileSizeW(LPCWSTR, PDWORD);
+		BOOL GetCurrentHwProfileA(LPHW_PROFILE_INFOA);
+		BOOL GetCurrentHwProfileW(LPHW_PROFILE_INFOW);
+		BOOL GetFileSecurityA(LPCSTR, SECURITY_INFORMATION, PSECURITY_DESCRIPTOR, DWORD, PDWORD);
+		BOOL GetFileSecurityW(LPCWSTR, SECURITY_INFORMATION, PSECURITY_DESCRIPTOR, DWORD, PDWORD);
+		BOOL GetHandleInformation(HANDLE, PDWORD);
+		BOOL GetKernelObjectSecurity(HANDLE, SECURITY_INFORMATION, PSECURITY_DESCRIPTOR, DWORD, PDWORD);
+		DWORD GetLengthSid(PSID);
+		BOOL GetNumberOfEventLogRecords(HANDLE, PDWORD);
+		BOOL GetOldestEventLogRecord(HANDLE, PDWORD);
+		BOOL GetPrivateObjectSecurity(PSECURITY_DESCRIPTOR, SECURITY_INFORMATION, PSECURITY_DESCRIPTOR, DWORD, PDWORD);
+		BOOL GetProcessPriorityBoost(HANDLE, PBOOL);
+		BOOL GetProcessShutdownParameters(PDWORD, PDWORD);
+		BOOL GetProcessTimes(HANDLE, LPFILETIME, LPFILETIME, LPFILETIME, LPFILETIME);
+		HWINSTA GetProcessWindowStation();
+		BOOL GetProcessWorkingSetSize(HANDLE, PSIZE_T, PSIZE_T);
+		BOOL GetQueuedCompletionStatus(HANDLE, PDWORD, PULONG_PTR, LPOVERLAPPED*, DWORD);
+		BOOL GetSecurityDescriptorControl(PSECURITY_DESCRIPTOR, PSECURITY_DESCRIPTOR_CONTROL, PDWORD);
+		BOOL GetSecurityDescriptorDacl(PSECURITY_DESCRIPTOR, LPBOOL, PACL*, LPBOOL);
+		BOOL GetSecurityDescriptorGroup(PSECURITY_DESCRIPTOR, PSID*, LPBOOL);
+		DWORD GetSecurityDescriptorLength(PSECURITY_DESCRIPTOR);
+		BOOL GetSecurityDescriptorOwner(PSECURITY_DESCRIPTOR, PSID*, LPBOOL);
+		BOOL GetSecurityDescriptorSacl(PSECURITY_DESCRIPTOR, LPBOOL, PACL*, LPBOOL);
+		PSID_IDENTIFIER_AUTHORITY GetSidIdentifierAuthority(PSID);
+		DWORD GetSidLengthRequired(UCHAR);
+		PDWORD GetSidSubAuthority(PSID, DWORD);
+		PUCHAR GetSidSubAuthorityCount(PSID);
+		DWORD GetTapeParameters(HANDLE, DWORD, PDWORD, PVOID);
+		DWORD GetTapePosition(HANDLE, DWORD, PDWORD, PDWORD, PDWORD);
+		DWORD GetTapeStatus(HANDLE);
+		BOOL GetThreadPriorityBoost(HANDLE, PBOOL);
+		BOOL GetThreadTimes(HANDLE, LPFILETIME, LPFILETIME, LPFILETIME, LPFILETIME);
+		BOOL GetTokenInformation(HANDLE, TOKEN_INFORMATION_CLASS, PVOID, DWORD, PDWORD);
+		BOOL ImpersonateLoggedOnUser(HANDLE);
+		BOOL ImpersonateNamedPipeClient(HANDLE);
+		BOOL ImpersonateSelf(SECURITY_IMPERSONATION_LEVEL);
+		BOOL InitializeAcl(PACL, DWORD, DWORD);
+		DWORD SetCriticalSectionSpinCount(LPCRITICAL_SECTION, DWORD);
+		BOOL InitializeSecurityDescriptor(PSECURITY_DESCRIPTOR, DWORD);
+		BOOL InitializeSid(PSID, PSID_IDENTIFIER_AUTHORITY, BYTE);
+		BOOL IsProcessorFeaturePresent(DWORD);
+		BOOL IsTextUnicode(PCVOID, int, LPINT);
+		BOOL IsValidAcl(PACL);
+		BOOL IsValidSecurityDescriptor(PSECURITY_DESCRIPTOR);
+		BOOL IsValidSid(PSID);
+		BOOL LockFileEx(HANDLE, DWORD, DWORD, DWORD, DWORD, LPOVERLAPPED);
+		BOOL LogonUserA(LPSTR, LPSTR, LPSTR, DWORD, DWORD, PHANDLE);
+		BOOL LogonUserW(LPWSTR, LPWSTR, LPWSTR, DWORD, DWORD, PHANDLE);
+		BOOL LookupAccountNameA(LPCSTR, LPCSTR, PSID, PDWORD, LPSTR, PDWORD, PSID_NAME_USE);
+		BOOL LookupAccountNameW(LPCWSTR, LPCWSTR, PSID, PDWORD, LPWSTR, PDWORD, PSID_NAME_USE);
+		BOOL LookupAccountSidA(LPCSTR, PSID, LPSTR, PDWORD, LPSTR, PDWORD, PSID_NAME_USE);
+		BOOL LookupAccountSidW(LPCWSTR, PSID, LPWSTR, PDWORD, LPWSTR, PDWORD, PSID_NAME_USE);
+		BOOL LookupPrivilegeDisplayNameA(LPCSTR, LPCSTR, LPSTR, PDWORD, PDWORD);
+		BOOL LookupPrivilegeDisplayNameW(LPCWSTR, LPCWSTR, LPWSTR, PDWORD, PDWORD);
+		BOOL LookupPrivilegeNameA(LPCSTR, PLUID, LPSTR, PDWORD);
+		BOOL LookupPrivilegeNameW(LPCWSTR, PLUID, LPWSTR, PDWORD);
+		BOOL LookupPrivilegeValueA(LPCSTR, LPCSTR, PLUID);
+		BOOL LookupPrivilegeValueW(LPCWSTR, LPCWSTR, PLUID);
+
+		static if (_WIN32_WINNT >= 0x500) {
+			HANDLE CreateFileMappingA(HANDLE, LPSECURITY_ATTRIBUTES, DWORD, DWORD, DWORD, LPCSTR);
+			HANDLE CreateFileMappingW(HANDLE, LPSECURITY_ATTRIBUTES, DWORD, DWORD, DWORD, LPCWSTR);
+			BOOL EncryptFileA(LPCSTR);
+			BOOL EncryptFileW(LPCWSTR);
+			BOOL FileEncryptionStatusA(LPCSTR, LPDWORD);
+			BOOL FileEncryptionStatusW(LPCWSTR, LPDWORD);
+			BOOL FlushViewOfFile(PCVOID, DWORD);
+			HANDLE GetProcessHeap();
+			DWORD GetProcessHeaps(DWORD, PHANDLE);
+			BOOL GetSystemPowerStatus(LPSYSTEM_POWER_STATUS);
+			BOOL IsBadCodePtr(FARPROC);
+			BOOL IsSystemResumeAutomatic();
+		}
+
+		static if (_WIN32_WINNT >= 0x501) {
+			UINT GetWriteWatch(DWORD, PVOID, SIZE_T, PVOID*, PULONG_PTR, PULONG);
+		}
+	}
+
+// ***
 	BOOL MakeAbsoluteSD(PSECURITY_DESCRIPTOR, PSECURITY_DESCRIPTOR, PDWORD, PACL, PDWORD, PACL, PDWORD, PSID, PDWORD, PSID, PDWORD);
 	BOOL MakeSelfRelativeSD(PSECURITY_DESCRIPTOR, PSECURITY_DESCRIPTOR, PDWORD);
 	VOID MapGenericMask(PDWORD, PGENERIC_MAPPING);
@@ -2120,7 +2140,9 @@ WINBASEAPI BOOL WINAPI ResetEvent(HANDLE);
 	BOOL RevertToSelf();
 	DWORD SearchPathA(LPCSTR, LPCSTR, LPCSTR, DWORD, LPSTR, LPSTR*);
 	DWORD SearchPathW(LPCWSTR, LPCWSTR, LPCWSTR, DWORD, LPWSTR, LPWSTR*);
-	BOOL SetAclInformation(PACL, PVOID, DWORD, ACL_INFORMATION_CLASS);
+	static if (_WIN32_WINNT_ONLY) {
+		BOOL SetAclInformation(PACL, PVOID, DWORD, ACL_INFORMATION_CLASS);
+	}
 	BOOL SetCommBreak(HANDLE);
 	BOOL SetCommConfig(HANDLE, LPCOMMCONFIG, DWORD);
 	BOOL SetCommMask(HANDLE, DWORD);
@@ -2252,6 +2274,39 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 	BOOL WriteProfileStringW(LPCWSTR, LPCWSTR, LPCWSTR);
 	DWORD WriteTapemark(HANDLE, DWORD, DWORD, BOOL);
 
+	/*	Memory allocation functions.
+	 *	MSDN documents these erroneously as Win2000+; thus it is uncertain what
+	 *	version compatibility they really have.
+	 */
+	HGLOBAL GlobalAlloc(UINT, DWORD);
+	HGLOBAL GlobalDiscard(HGLOBAL);
+	HGLOBAL GlobalFree(HGLOBAL);
+	HGLOBAL GlobalHandle(PCVOID);
+	LPVOID GlobalLock(HGLOBAL);
+	VOID GlobalMemoryStatus(LPMEMORYSTATUS);
+	HGLOBAL GlobalReAlloc(HGLOBAL, DWORD, UINT);
+	DWORD GlobalSize(HGLOBAL);
+	BOOL GlobalUnlock(HGLOBAL);
+	PVOID HeapAlloc(HANDLE, DWORD, DWORD);
+	SIZE_T HeapCompact(HANDLE, DWORD);
+	HANDLE HeapCreate(DWORD, DWORD, DWORD);
+	BOOL HeapDestroy(HANDLE);
+	BOOL HeapFree(HANDLE, DWORD, PVOID);
+	BOOL HeapLock(HANDLE);
+	PVOID HeapReAlloc(HANDLE, DWORD, PVOID, DWORD);
+	DWORD HeapSize(HANDLE, DWORD, PCVOID);
+	BOOL HeapUnlock(HANDLE);
+	BOOL HeapValidate(HANDLE, DWORD, PCVOID);
+	BOOL HeapWalk(HANDLE, LPPROCESS_HEAP_ENTRY);
+	HLOCAL LocalAlloc(UINT, SIZE_T);
+	HLOCAL LocalDiscard(HLOCAL);
+	HLOCAL LocalFree(HLOCAL);
+	HLOCAL LocalHandle(LPCVOID);
+	PVOID LocalLock(HLOCAL);
+	HLOCAL LocalReAlloc(HLOCAL, SIZE_T, UINT);
+	UINT LocalSize(HLOCAL);
+	BOOL LocalUnlock(HLOCAL);
+
 	// ------
 	// functions added in later Windows versions
 
@@ -2268,7 +2323,7 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 		HANDLE OpenThread(DWORD, BOOL, DWORD);
 	}
 
-	static if (_WIN32_WINNT >= 0x0500) {
+	static if (_WIN32_WINNT_ONLY && _WIN32_WINNT >= 0x0500) {
 		BOOL AddAccessAllowedAceEx(PACL, DWORD, DWORD, DWORD, PSID);
 		BOOL AddAccessDeniedAceEx(PACL, DWORD, DWORD, DWORD, PSID);
 		PVOID AddVectoredExceptionHandler(ULONG, PVECTORED_EXCEPTION_HANDLER);
@@ -2388,7 +2443,7 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 		BOOL SetDllDirectoryW(LPCWSTR);
 		BOOL SetFirmwareEnvironmentVariableA(LPCSTR, LPCSTR, PVOID, DWORD);
 		BOOL SetFirmwareEnvironmentVariableW(LPCWSTR, LPCWSTR, PVOID, DWORD);
-		}
+	}
 
 	static if (_WIN32_WINNT >= 0x0510) {
 		VOID RestoreLastError(DWORD);
@@ -2399,21 +2454,14 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 version (Unicode) {
 	alias STARTUPINFOW STARTUPINFO;
 	alias WIN32_FIND_DATAW WIN32_FIND_DATA;
-	alias HW_PROFILE_INFOW HW_PROFILE_INFO;
-	alias STARTUPINFO* LPSTARTUPINFO;
-	alias WIN32_FIND_DATA* LPWIN32_FIND_DATA;
-	alias HW_PROFILE_INFO* LPHW_PROFILE_INFO;
 	alias ENUMRESLANGPROCW ENUMRESLANGPROC;
 	alias ENUMRESNAMEPROCW ENUMRESNAMEPROC;
 	alias ENUMRESTYPEPROCW ENUMRESTYPEPROC;
-	alias AccessCheckAndAuditAlarmW AccessCheckAndAuditAlarm;
 	alias AddAtomW AddAtom;
-	alias BackupEventLogW BackupEventLog;
 	alias BeginUpdateResourceW BeginUpdateResource;
 	alias BuildCommDCBW BuildCommDCB;
 	alias BuildCommDCBAndTimeoutsW BuildCommDCBAndTimeouts;
 	alias CallNamedPipeW CallNamedPipe;
-	alias ClearEventLogW ClearEventLog;
 	alias CommConfigDialogW CommConfigDialog;
 	alias CopyFileW CopyFile;
 	alias CopyFileExW CopyFileEx;
@@ -2421,37 +2469,27 @@ version (Unicode) {
 	alias CreateDirectoryExW CreateDirectoryEx;
 	alias CreateEventW CreateEvent;
 	alias CreateFileW CreateFile;
-	alias CreateFileMappingW CreateFileMapping;
 	alias CreateMailslotW CreateMailslot;
 	alias CreateMutexW CreateMutex;
-	alias CreateNamedPipeW CreateNamedPipe;
 	alias CreateProcessW CreateProcess;
-	alias CreateProcessAsUserW CreateProcessAsUser;
 	alias CreateSemaphoreW CreateSemaphore;
-	alias CreateWaitableTimerW CreateWaitableTimer;
-	alias DefineDosDeviceW DefineDosDevice;
 	alias DeleteFileW DeleteFile;
-	alias EncryptFileW EncryptFile;
 	alias EndUpdateResourceW EndUpdateResource;
 	alias EnumResourceLanguagesW EnumResourceLanguages;
 	alias EnumResourceNamesW EnumResourceNames;
 	alias EnumResourceTypesW EnumResourceTypes;
 	alias ExpandEnvironmentStringsW ExpandEnvironmentStrings;
 	alias FatalAppExitW FatalAppExit;
-	alias FileEncryptionStatusW FileEncryptionStatus;
 	alias FindAtomW FindAtom;
 	alias FindFirstChangeNotificationW FindFirstChangeNotification;
 	alias FindFirstFileW FindFirstFile;
-	alias FindFirstFileExW FindFirstFileEx;
 	alias FindNextFileW FindNextFile;
 	alias FindResourceW FindResource;
 	alias FindResourceExW FindResourceEx;
 	alias FormatMessageW FormatMessage;
 	alias FreeEnvironmentStringsW FreeEnvironmentStrings;
 	alias GetAtomNameW GetAtomName;
-	alias GetBinaryTypeW GetBinaryType;
 	alias GetCommandLineW GetCommandLine;
-	alias GetCompressedFileSizeW GetCompressedFileSize;
 	alias GetComputerNameW GetComputerName;
 	alias GetCurrentDirectoryW GetCurrentDirectory;
 	alias GetDefaultCommConfigW GetDefaultCommConfig;
@@ -2461,8 +2499,6 @@ version (Unicode) {
 	alias GetEnvironmentStringsW GetEnvironmentStrings;
 	alias GetEnvironmentVariableW GetEnvironmentVariable;
 	alias GetFileAttributesW GetFileAttributes;
-	alias GetFileSecurityW GetFileSecurity;
-	alias GetFileAttributesExW GetFileAttributesEx;
 	alias GetFullPathNameW GetFullPathName;
 	alias GetLogicalDriveStringsW GetLogicalDriveStrings;
 	alias GetModuleFileNameW GetModuleFileName;
@@ -2491,12 +2527,6 @@ version (Unicode) {
 	alias IsBadStringPtrW IsBadStringPtr;
 	alias LoadLibraryW LoadLibrary;
 	alias LoadLibraryExW LoadLibraryEx;
-	alias LogonUserW LogonUser;
-	alias LookupAccountNameW LookupAccountName;
-	alias LookupAccountSidW LookupAccountSid;
-	alias LookupPrivilegeDisplayNameW LookupPrivilegeDisplayName;
-	alias LookupPrivilegeNameW LookupPrivilegeName;
-	alias LookupPrivilegeValueW LookupPrivilegeValue;
 	alias lstrcatW lstrcat;
 	alias lstrcmpW lstrcmp;
 	alias lstrcmpiW lstrcmpi;
@@ -2539,11 +2569,44 @@ version (Unicode) {
 	alias WriteProfileSectionW WriteProfileSection;
 	alias WriteProfileStringW WriteProfileString;
 
+	static if (_WIN32_WINDOWS >= 0x410) {
+		alias CreateWaitableTimerW CreateWaitableTimer;
+		alias GetFileAttributesExW GetFileAttributesEx;
+	}
+
+	static if (_WIN32_WINNT_ONLY) {
+		alias HW_PROFILE_INFOW HW_PROFILE_INFO;
+		alias AccessCheckAndAuditAlarmW AccessCheckAndAuditAlarm;
+		alias BackupEventLogW BackupEventLog;
+		alias ClearEventLogW ClearEventLog;
+		alias CreateNamedPipeW CreateNamedPipe;
+		alias CreateProcessAsUserW CreateProcessAsUser;
+		alias DefineDosDeviceW DefineDosDevice;
+		alias FindFirstFileExW FindFirstFileEx;
+		alias GetBinaryTypeW GetBinaryType;
+		alias GetCompressedFileSizeW GetCompressedFileSize;
+		alias GetFileSecurityW GetFileSecurity;
+		alias LogonUserW LogonUser;
+		alias LookupAccountNameW LookupAccountName;
+		alias LookupAccountSidW LookupAccountSid;
+		alias LookupPrivilegeDisplayNameW LookupPrivilegeDisplayName;
+		alias LookupPrivilegeNameW LookupPrivilegeName;
+		alias LookupPrivilegeValueW LookupPrivilegeValue;
+
+		static if (_WIN32_WINNT >= 0x500) {
+			alias CreateFileMappingW CreateFileMapping;
+			alias EncryptFileW EncryptFile;
+			alias FileEncryptionStatusW FileEncryptionStatus;
+		}
+	}
+
+	// TODO: cleanup remainder
+
 	static if ((_WIN32_WINNT >= 0x0500) || (_WIN32_WINDOWS >= 0x0410)) {
 		alias GetLongPathNameW GetLongPathName;
 	}
 
-	static if (_WIN32_WINNT >= 0x0500) {
+	static if (_WIN32_WINNT_ONLY && _WIN32_WINNT >= 0x0500) {
 		alias CreateHardLinkW CreateHardLink;
 		alias CreateJobObjectW CreateJobObject;
 		alias DeleteVolumeMountPointW DeleteVolumeMountPoint;
@@ -2580,21 +2643,14 @@ version (Unicode) {
 } else {
 	alias STARTUPINFOA STARTUPINFO;
 	alias WIN32_FIND_DATAA WIN32_FIND_DATA;
-	alias HW_PROFILE_INFOA HW_PROFILE_INFO;
-	alias STARTUPINFO* LPSTARTUPINFO;
-	alias WIN32_FIND_DATA* LPWIN32_FIND_DATA;
-	alias HW_PROFILE_INFO* LPHW_PROFILE_INFO;
 	alias ENUMRESLANGPROCW ENUMRESLANGPROC;
 	alias ENUMRESNAMEPROCW ENUMRESNAMEPROC;
 	alias ENUMRESTYPEPROCW ENUMRESTYPEPROC;
-	alias AccessCheckAndAuditAlarmA AccessCheckAndAuditAlarm;
 	alias AddAtomA AddAtom;
-	alias BackupEventLogA BackupEventLog;
 	alias BeginUpdateResourceA BeginUpdateResource;
 	alias BuildCommDCBA BuildCommDCB;
 	alias BuildCommDCBAndTimeoutsA BuildCommDCBAndTimeouts;
 	alias CallNamedPipeA CallNamedPipe;
-	alias ClearEventLogA ClearEventLog;
 	alias CommConfigDialogA CommConfigDialog;
 	alias CopyFileA CopyFile;
 	alias CopyFileExA CopyFileEx;
@@ -2602,38 +2658,28 @@ version (Unicode) {
 	alias CreateDirectoryExA CreateDirectoryEx;
 	alias CreateEventA CreateEvent;
 	alias CreateFileA CreateFile;
-	alias CreateFileMappingA CreateFileMapping;
 	alias CreateMailslotA CreateMailslot;
 	alias CreateMutexA CreateMutex;
-	alias CreateNamedPipeA CreateNamedPipe;
 	alias CreateProcessA CreateProcess;
-	alias CreateProcessAsUserA CreateProcessAsUser;
 	alias CreateSemaphoreA CreateSemaphore;
-	alias CreateWaitableTimerA CreateWaitableTimer;
-	alias DefineDosDeviceA DefineDosDevice;
 	alias DeleteFileA DeleteFile;
-	alias EncryptFileA EncryptFile;
 	alias EndUpdateResourceA EndUpdateResource;
 	alias EnumResourceLanguagesA EnumResourceLanguages;
 	alias EnumResourceNamesA EnumResourceNames;
 	alias EnumResourceTypesA EnumResourceTypes;
 	alias ExpandEnvironmentStringsA ExpandEnvironmentStrings;
 	alias FatalAppExitA FatalAppExit;
-	alias FileEncryptionStatusA FileEncryptionStatus;
 	alias FindAtomA FindAtom;
 	alias FindFirstChangeNotificationA FindFirstChangeNotification;
 	alias FindFirstFileA FindFirstFile;
-	alias FindFirstFileExA FindFirstFileEx;
 	alias FindNextFileA FindNextFile;
 	alias FindResourceA FindResource;
 	alias FindResourceExA FindResourceEx;
 	alias FormatMessageA FormatMessage;
 	alias FreeEnvironmentStringsA FreeEnvironmentStrings;
 	alias GetAtomNameA GetAtomName;
-	alias GetBinaryTypeA GetBinaryType;
 	alias GetCommandLineA GetCommandLine;
 	alias GetComputerNameA GetComputerName;
-	alias GetCompressedFileSizeA GetCompressedFileSize;
 	alias GetCurrentDirectoryA GetCurrentDirectory;
 	alias GetDefaultCommConfigA GetDefaultCommConfig;
 	alias GetDiskFreeSpaceA GetDiskFreeSpace;
@@ -2641,8 +2687,6 @@ version (Unicode) {
 	alias GetDriveTypeA GetDriveType;
 	alias GetEnvironmentVariableA GetEnvironmentVariable;
 	alias GetFileAttributesA GetFileAttributes;
-	alias GetFileSecurityA GetFileSecurity;
-	alias GetFileAttributesExA GetFileAttributesEx;
 	alias GetFullPathNameA GetFullPathName;
 	alias GetLogicalDriveStringsA GetLogicalDriveStrings;
 	alias GetNamedPipeHandleStateA GetNamedPipeHandleState;
@@ -2671,12 +2715,6 @@ version (Unicode) {
 	alias IsBadStringPtrA IsBadStringPtr;
 	alias LoadLibraryA LoadLibrary;
 	alias LoadLibraryExA LoadLibraryEx;
-	alias LogonUserA LogonUser;
-	alias LookupAccountNameA LookupAccountName;
-	alias LookupAccountSidA LookupAccountSid;
-	alias LookupPrivilegeDisplayNameA LookupPrivilegeDisplayName;
-	alias LookupPrivilegeNameA LookupPrivilegeName;
-	alias LookupPrivilegeValueA LookupPrivilegeValue;
 	alias lstrcatA lstrcat;
 	alias lstrcmpA lstrcmp;
 	alias lstrcmpiA lstrcmpi;
@@ -2719,11 +2757,44 @@ version (Unicode) {
 	alias WriteProfileSectionA WriteProfileSection;
 	alias WriteProfileStringA WriteProfileString;
 
+	static if (_WIN32_WINDOWS >= 0x410) {
+		alias CreateWaitableTimerA CreateWaitableTimer;
+		alias GetFileAttributesExA GetFileAttributesEx;
+	}
+
+	static if (_WIN32_WINNT_ONLY) {
+		alias HW_PROFILE_INFOA HW_PROFILE_INFO;
+		alias AccessCheckAndAuditAlarmA AccessCheckAndAuditAlarm;
+		alias BackupEventLogA BackupEventLog;
+		alias ClearEventLogA ClearEventLog;
+		alias CreateNamedPipeA CreateNamedPipe;
+		alias CreateProcessAsUserA CreateProcessAsUser;
+		alias DefineDosDeviceA DefineDosDevice;
+		alias FindFirstFileExA FindFirstFileEx;
+		alias GetBinaryTypeA GetBinaryType;
+		alias GetCompressedFileSizeA GetCompressedFileSize;
+		alias GetFileSecurityA GetFileSecurity;
+		alias LogonUserA LogonUser;
+		alias LookupAccountNameA LookupAccountName;
+		alias LookupAccountSidA LookupAccountSid;
+		alias LookupPrivilegeDisplayNameA LookupPrivilegeDisplayName;
+		alias LookupPrivilegeNameA LookupPrivilegeName;
+		alias LookupPrivilegeValueA LookupPrivilegeValue;
+
+		static if (_WIN32_WINNT >= 0x500) {
+			alias CreateFileMappingA CreateFileMapping;
+			alias EncryptFileA EncryptFile;
+			alias FileEncryptionStatusA FileEncryptionStatus;
+		}
+	}
+
+	// TODO: cleanup remainder
+
 	static if ((_WIN32_WINNT >= 0x0500) || (_WIN32_WINDOWS >= 0x0410)) {
 		alias GetLongPathNameA GetLongPathName;
 	}
 
-	static if (_WIN32_WINNT >= 0x0500) {
+	static if (_WIN32_WINNT_ONLY && _WIN32_WINNT >= 0x0500) {
 		alias GetVolumeNameForVolumeMountPointA GetVolumeNameForVolumeMountPoint;
 		alias GetVolumePathNameA GetVolumePathName;
 		alias SetVolumeMountPointA SetVolumeMountPoint;
@@ -2758,3 +2829,10 @@ version (Unicode) {
 	}
 
 }
+
+alias STARTUPINFO* LPSTARTUPINFO;
+alias WIN32_FIND_DATA* LPWIN32_FIND_DATA;
+static if (_WIN32_WINNT_ONLY) {
+	alias HW_PROFILE_INFO* LPHW_PROFILE_INFO;
+}
+
