@@ -1,3 +1,6 @@
+# Makefile for the Windows API project
+# Uses GNU Make-specific extensions
+
 DC := dmd.exe
 LIB := lib.exe
 
