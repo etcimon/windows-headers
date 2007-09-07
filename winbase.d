@@ -989,14 +989,14 @@ struct DCB {
 	bool fParity(bool f)           { _bf = (_bf & ~0x0002) | (f<<1); return f; }
 	bool fOutxCtsFlow(bool f)      { _bf = (_bf & ~0x0004) | (f<<2); return f; }
 	bool fOutxDsrFlow(bool f)      { _bf = (_bf & ~0x0008) | (f<<3); return f; }
-	byte fDtrControl(byte x)       { _bf = (_bf & ~0x0030) | (x<<4); return x & 3; }
+	byte fDtrControl(byte x)       { _bf = (_bf & ~0x0030) | (x<<4); return cast(byte)(x & 3); }
 	bool fDsrSensitivity(bool f)   { _bf = (_bf & ~0x0040) | (f<<6); return f; }
 	bool fTXContinueOnXoff(bool f) { _bf = (_bf & ~0x0080) | (f<<7); return f; }
 	bool fOutX(bool f)             { _bf = (_bf & ~0x0100) | (f<<8); return f; }
 	bool fInX(bool f)              { _bf = (_bf & ~0x0200) | (f<<9); return f; }
 	bool fErrorChar(bool f)        { _bf = (_bf & ~0x0400) | (f<<10); return f; }
 	bool fNull(bool f)             { _bf = (_bf & ~0x0800) | (f<<11); return f; }
-	byte fRtsControl(byte x)       { _bf = (_bf & ~0x3000) | (x<<12); return x & 3; }
+	byte fRtsControl(byte x)       { _bf = (_bf & ~0x3000) | (x<<12); return cast(byte)(x & 3); }
 	bool fAbortOnError(bool f)     { _bf = (_bf & ~0x4000) | (f<<14); return f; }
 
 	bool fBinary()           { return cast(bool) (_bf & 1); }
@@ -1445,11 +1445,11 @@ struct LDT_ENTRY {
 		BYTE Flags2;
 		BYTE BaseHi;
 
-		byte Type(byte f)        { Flags1 = cast(BYTE) ((Flags1 & 0xE0) | f); return f & 0x1F; }
-		byte Dpl(byte f)         { Flags1 = cast(BYTE) ((Flags1 & 0x9F) | (f<<5)); return f & 3; }
+		byte Type(byte f)        { Flags1 = cast(BYTE) ((Flags1 & 0xE0) | f); return cast(byte)(f & 0x1F); }
+		byte Dpl(byte f)         { Flags1 = cast(BYTE) ((Flags1 & 0x9F) | (f<<5)); return cast(byte)(f & 3); }
 		bool Pres(bool f)        { Flags1 = cast(BYTE) ((Flags1 & 0x7F) | (f<<7)); return f; }
 
-		byte LimitHi(byte f)     { Flags2 = cast(BYTE) ((Flags2 & 0xF0) | (f&0x0F)); return f & 0x0F; }
+		byte LimitHi(byte f)     { Flags2 = cast(BYTE) ((Flags2 & 0xF0) | (f&0x0F)); return cast(byte)(f & 0x0F); }
 		bool Sys(bool f)         { Flags2 = cast(BYTE) ((Flags2 & 0xEF) | (f<<4)); return f; }
 		// Next bit is reserved
 		bool Default_Big(bool f) { Flags2 = cast(BYTE) ((Flags2 & 0xBF) | (f<<6)); return f; }
