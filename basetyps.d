@@ -11,8 +11,7 @@ module win32.basetyps;
 
 private import win32.windef;
 
-struct GUID {  // size is 16
-align(1):
+align(1) struct GUID {  // size is 16
 	DWORD   Data1;
 	WORD    Data2;
 	WORD    Data3;

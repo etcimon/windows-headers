@@ -1443,7 +1443,6 @@ struct GUID {
 }
 alias GUID* REFGUID, LPGUID;
 */
-const LUID SYSTEM_LUID = { QuadPart:999 };
 
 struct GENERIC_MAPPING {
 	ACCESS_MASK GenericRead;
@@ -1645,6 +1644,8 @@ alias ULARGE_INTEGER* PULARGE_INTEGER;
 
 alias LARGE_INTEGER LUID;
 alias LUID* PLUID;
+
+const LUID SYSTEM_LUID = { QuadPart:999 };
 
 align(4):
 struct LUID_AND_ATTRIBUTES {
@@ -2291,7 +2292,7 @@ struct IMAGE_SECTION_HEADER {
 		DWORD PhysicalAddress;
 		DWORD VirtualSize;
 	}
-	_Misc Misc;	
+	_Misc Misc;
 	DWORD VirtualAddress;
 	DWORD SizeOfRawData;
 	DWORD PointerToRawData;
@@ -2313,7 +2314,7 @@ struct IMAGE_SYMBOL {
 		}
 		PBYTE LongName[2];
 	}
-	_N N;	
+	_N N;
 	DWORD Value;
 	SHORT SectionNumber;
 	WORD Type;
@@ -2332,7 +2333,7 @@ union IMAGE_AUX_SYMBOL {
 			}
 			DWORD TotalSize;
 		}
-		_Misc Misc;	
+		_Misc Misc;
 		union _FcnAry {
 			struct Function {
 				DWORD PointerToLinenumber;
@@ -2342,7 +2343,7 @@ union IMAGE_AUX_SYMBOL {
 				WORD Dimension[4];
 			}
 		}
-		_FcnAry FcnAry;	
+		_FcnAry FcnAry;
 		WORD TvIndex;
 	}
 	struct File {
@@ -2394,7 +2395,7 @@ struct IMAGE_LINENUMBER {
 		DWORD SymbolTableIndex;
 		DWORD VirtualAddress;
 	}
-	_Type Type;	
+	_Type Type;
 	WORD Linenumber;
 }
 alias IMAGE_LINENUMBER* PIMAGE_LINENUMBER;
@@ -2439,7 +2440,7 @@ struct IMAGE_THUNK_DATA32 {
 		DWORD Ordinal;
 		DWORD AddressOfData;
 	}
-	_u1 u1;	
+	_u1 u1;
 }
 alias IMAGE_THUNK_DATA32* PIMAGE_THUNK_DATA32;
 
@@ -2450,7 +2451,7 @@ struct IMAGE_THUNK_DATA64 {
 		ULONGLONG Ordinal;
 		ULONGLONG AddressOfData;
 	}
-	_u1 u1;	
+	_u1 u1;
 }
 alias IMAGE_THUNK_DATA64* PIMAGE_THUNK_DATA64;
 
@@ -2724,7 +2725,7 @@ struct REPARSE_DATA_BUFFER {
 			WCHAR PathBuffer[1];
 		}
 	}
-	_u u;	
+	_u u;
 }
 alias REPARSE_DATA_BUFFER *PREPARSE_DATA_BUFFER;
 
