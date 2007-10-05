@@ -75,6 +75,8 @@ import win32.dbt;
 
 import win32.rpcdce2;
 
+import win32.tlhelp32;
+
 
 version (WindowsVista) {
 	version = WINDOWS_XP_UP;
