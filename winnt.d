@@ -63,11 +63,11 @@ alias HANDLE* PHANDLE, LPHANDLE;
 const char ANSI_NULL = '\0';
 const wchar UNICODE_NULL = '\0';
 
-const APPLICATION_ERROR_MASK    = 0x20000000;
-const ERROR_SEVERITY_SUCCESS    = 0x00000000;
+const APPLICATION_ERROR_MASK       = 0x20000000;
+const ERROR_SEVERITY_SUCCESS       = 0x00000000;
 const ERROR_SEVERITY_INFORMATIONAL = 0x40000000;
-const ERROR_SEVERITY_WARNING    = 0x80000000;
-const ERROR_SEVERITY_ERROR      = 0xC0000000;
+const ERROR_SEVERITY_WARNING       = 0x80000000;
+const ERROR_SEVERITY_ERROR         = 0xC0000000;
 
 // MinGW: also in ddk/ntifs.h
 enum : USHORT {
@@ -373,31 +373,41 @@ enum : DWORD {
 }
 
 const TCHAR[]
-	SE_CREATE_TOKEN_NAME        = "SeCreateTokenPrivilege",
-	SE_ASSIGNPRIMARYTOKEN_NAME  = "SeAssignPrimaryTokenPrivilege",
-	SE_LOCK_MEMORY_NAME         = "SeLockMemoryPrivilege",
-	SE_INCREASE_QUOTA_NAME      = "SeIncreaseQuotaPrivilege",
-	SE_UNSOLICITED_INPUT_NAME   = "SeUnsolicitedInputPrivilege",
-	SE_MACHINE_ACCOUNT_NAME     = "SeMachineAccountPrivilege",
-	SE_TCB_NAME                 = "SeTcbPrivilege",
-	SE_SECURITY_NAME            = "SeSecurityPrivilege",
-	SE_TAKE_OWNERSHIP_NAME      = "SeTakeOwnershipPrivilege",
-	SE_LOAD_DRIVER_NAME         = "SeLoadDriverPrivilege",
-	SE_SYSTEM_PROFILE_NAME      = "SeSystemProfilePrivilege",
-	SE_SYSTEMTIME_NAME          = "SeSystemtimePrivilege",
-	SE_PROF_SINGLE_PROCESS_NAME = "SeProfileSingleProcessPrivilege",
-	SE_INC_BASE_PRIORITY_NAME   = "SeIncreaseBasePriorityPrivilege",
-	SE_CREATE_PAGEFILE_NAME     = "SeCreatePagefilePrivilege",
-	SE_CREATE_PERMANENT_NAME    = "SeCreatePermanentPrivilege",
-	SE_BACKUP_NAME              = "SeBackupPrivilege",
-	SE_RESTORE_NAME             = "SeRestorePrivilege",
-	SE_SHUTDOWN_NAME            = "SeShutdownPrivilege",
-	SE_DEBUG_NAME               = "SeDebugPrivilege",
-	SE_AUDIT_NAME               = "SeAuditPrivilege",
-	SE_SYSTEM_ENVIRONMENT_NAME  = "SeSystemEnvironmentPrivilege",
-	SE_CHANGE_NOTIFY_NAME       = "SeChangeNotifyPrivilege",
-	SE_REMOTE_SHUTDOWN_NAME     = "SeRemoteShutdownPrivilege",
-	SE_CREATE_GLOBAL_NAME       = "SeCreateGlobalPrivilege";
+	SE_CREATE_TOKEN_NAME           = "SeCreateTokenPrivilege",
+	SE_ASSIGNPRIMARYTOKEN_NAME     = "SeAssignPrimaryTokenPrivilege",
+	SE_LOCK_MEMORY_NAME            = "SeLockMemoryPrivilege",
+	SE_INCREASE_QUOTA_NAME         = "SeIncreaseQuotaPrivilege",
+	SE_UNSOLICITED_INPUT_NAME      = "SeUnsolicitedInputPrivilege",
+	SE_MACHINE_ACCOUNT_NAME        = "SeMachineAccountPrivilege",
+	SE_TCB_NAME                    = "SeTcbPrivilege",
+	SE_SECURITY_NAME               = "SeSecurityPrivilege",
+	SE_TAKE_OWNERSHIP_NAME         = "SeTakeOwnershipPrivilege",
+	SE_LOAD_DRIVER_NAME            = "SeLoadDriverPrivilege",
+	SE_SYSTEM_PROFILE_NAME         = "SeSystemProfilePrivilege",
+	SE_SYSTEMTIME_NAME             = "SeSystemtimePrivilege",
+	SE_PROF_SINGLE_PROCESS_NAME    = "SeProfileSingleProcessPrivilege",
+	SE_INC_BASE_PRIORITY_NAME      = "SeIncreaseBasePriorityPrivilege",
+	SE_CREATE_PAGEFILE_NAME        = "SeCreatePagefilePrivilege",
+	SE_CREATE_PERMANENT_NAME       = "SeCreatePermanentPrivilege",
+	SE_BACKUP_NAME                 = "SeBackupPrivilege",
+	SE_RESTORE_NAME                = "SeRestorePrivilege",
+	SE_SHUTDOWN_NAME               = "SeShutdownPrivilege",
+	SE_DEBUG_NAME                  = "SeDebugPrivilege",
+	SE_AUDIT_NAME                  = "SeAuditPrivilege",
+	SE_SYSTEM_ENVIRONMENT_NAME     = "SeSystemEnvironmentPrivilege",
+	SE_CHANGE_NOTIFY_NAME          = "SeChangeNotifyPrivilege",
+	SE_REMOTE_SHUTDOWN_NAME        = "SeRemoteShutdownPrivilege",
+	SE_CREATE_GLOBAL_NAME          = "SeCreateGlobalPrivilege",
+	SE_UNDOCK_NAME                 = "SeUndockPrivilege",
+	SE_MANAGE_VOLUME_NAME          = "SeManageVolumePrivilege",
+	SE_IMPERSONATE_NAME            = "SeImpersonatePrivilege",
+	SE_ENABLE_DELEGATION_NAME      = "SeEnableDelegationPrivilege",
+	SE_SYNC_AGENT_NAME             = "SeSyncAgentPrivilege",
+	SE_TRUSTED_CREDMAN_ACCESS_NAME = "SeTrustedCredManAccessPrivilege",
+	SE_RELABEL_NAME                = "SeRelabelPrivilege",
+	SE_INCREASE_WORKING_SET_NAME   = "SeIncreaseWorkingSetPrivilege",
+	SE_TIME_ZONE_NAME              = "SeTimeZonePrivilege",
+	SE_CREATE_SYMBOLIC_LINK_NAME   = "SeCreateSymbolicLinkPrivilege";
 
 const DWORD
 	SE_GROUP_MANDATORY          = 0x00000001,
@@ -405,8 +415,8 @@ const DWORD
 	SE_GROUP_ENABLED            = 0x00000004,
 	SE_GROUP_OWNER              = 0x00000008,
 	SE_GROUP_USE_FOR_DENY_ONLY  = 0x00000010,
-	SE_GROUP_LOGON_ID           = 0xC0000000,
-	SE_GROUP_RESOURCE           = 0x20000000;
+	SE_GROUP_RESOURCE           = 0x20000000,
+	SE_GROUP_LOGON_ID           = 0xC0000000;
 
 // Primary language identifiers
 enum : USHORT {
@@ -432,11 +442,12 @@ enum : USHORT {
 	LANG_DUTCH,
 	LANG_NORWEGIAN,
 	LANG_POLISH,
-	LANG_PORTUGUESE, // = 0x16
-	LANG_ROMANIAN       = 0x18,
+	LANG_PORTUGUESE,    // = 0x16
+	LANG_ROMANIAN          = 0x18,
 	LANG_RUSSIAN,
-	LANG_CROATIAN,   // = 0x1a
-	LANG_SERBIAN        = 0x1a,
+	LANG_CROATIAN,      // = 0x1A
+	LANG_SERBIAN           = 0x1A,
+	LANG_BOSNIAN           = 0x1A,
 	LANG_SLOVAK,
 	LANG_ALBANIAN,
 	LANG_SWEDISH,
@@ -449,23 +460,31 @@ enum : USHORT {
 	LANG_SLOVENIAN,
 	LANG_ESTONIAN,
 	LANG_LATVIAN,
-	LANG_LITHUANIAN, // = 0x27
-	LANG_FARSI          = 0x29,
+	LANG_LITHUANIAN,    // = 0x27
+	LANG_FARSI             = 0x29,
+	LANG_PERSIAN           = 0x29,
 	LANG_VIETNAMESE,
 	LANG_ARMENIAN,
 	LANG_AZERI,
-	LANG_BASQUE,     // = 0x2d
-	LANG_MACEDONIAN     = 0x2f,
-
-	LANG_AFRIKAANS      = 0x36,
+	LANG_BASQUE,
+	LANG_LOWER_SORBIAN, // = 0x2E
+	LANG_UPPER_SORBIAN     = 0x2E,
+	LANG_MACEDONIAN,    // = 0x2F
+	LANG_TSWANA            = 0x32,
+	LANG_XHOSA             = 0x34,
+	LANG_ZULU,
+	LANG_AFRIKAANS,
 	LANG_GEORGIAN,
 	LANG_FAEROESE,
-	LANG_HINDI,      // = 0x39
-	LANG_MALAY          = 0x3e,
+	LANG_HINDI,
+	LANG_MALTESE,
+	LANG_SAMI,
+	LANG_IRISH,         // = 0x3C
+	LANG_MALAY             = 0x3E,
 	LANG_KAZAK,
 	LANG_KYRGYZ,
-	LANG_SWAHILI,    // = 0x41
-	LANG_UZBEK          = 0x43,
+	LANG_SWAHILI,       // = 0x41
+	LANG_UZBEK             = 0x43,
 	LANG_TATAR,
 	LANG_BENGALI,
 	LANG_PUNJABI,
@@ -478,28 +497,73 @@ enum : USHORT {
 	LANG_ASSAMESE,
 	LANG_MARATHI,
 	LANG_SANSKRIT,
-	LANG_MONGOLIAN,  // = 0x50
-
-	LANG_GALICIAN       = 0x56,
+	LANG_MONGOLIAN,
+	LANG_TIBETAN,
+	LANG_WELSH,
+	LANG_KHMER,
+	LANG_LAO,           // = 0x54
+	LANG_GALICIAN          = 0x56,
 	LANG_KONKANI,
 	LANG_MANIPURI,
 	LANG_SINDHI,
-	LANG_SYRIAC,     // = 0x5a
+	LANG_SYRIAC,
+	LANG_SINHALESE,     // = 0x5B
+	LANG_INUKTITUT         = 0x5D,
+	LANG_AMHARIC,
+	LANG_TAMAZIGHT,
+	LANG_KASHMIRI,
+	LANG_NEPALI,
+	LANG_FRISIAN,
+	LANG_PASHTO,
+	LANG_FILIPINO,
+	LANG_DIVEHI,        // = 0x65
+	LANG_HAUSA             = 0x68,
+	LANG_YORUBA            = 0x6A,
+	LANG_QUECHUA,
+	LANG_SOTHO,
+	LANG_BASHKIR,
+	LANG_LUXEMBOURGISH,
+	LANG_GREENLANDIC,
+	LANG_IGBO,          // = 0x70
+	LANG_TIGRIGNA          = 0x73,
+	LANG_YI                = 0x78,
+	LANG_MAPUDUNGUN        = 0x7A,
+	LANG_MOHAWK            = 0x7C,
+	LANG_BRETON            = 0x7E,
+	LANG_UIGHUR            = 0x80,
+	LANG_MAORI,
+	LANG_OCCITAN,
+	LANG_CORSICAN,
+	LANG_ALSATIAN,
+	LANG_YAKUT,
+	LANG_KICHE,
+	LANG_KINYARWANDA,
+	LANG_WOLOF,         // = 0x88
+	LANG_DARI              = 0x8C,
+	LANG_MALAGASY,      // = 0x8D
 
-	LANG_KASHMIRI       = 0x60,
-	LANG_NEPALI,     // = 0x61
-	LANG_DIVEHI         = 0x65,
+	LANG_SERBIAN_NEUTRAL   = 0x7C1A,
+	LANG_BOSNIAN_NEUTRAL   = 0x781A,
 
-	LANG_INVARIANT      = 0x7f
+	LANG_INVARIANT         = 0x7F
 }
+
 
 // Sublanguage identifiers
 enum : USHORT {
 	SUBLANG_NEUTRAL,
 	SUBLANG_DEFAULT,
-	SUBLANG_SYS_DEFAULT,             // =  2
+	SUBLANG_SYS_DEFAULT,
+	SUBLANG_CUSTOM_DEFAULT,                  // =  3
+	SUBLANG_UI_CUSTOM_DEFAULT                   =  3,
+	SUBLANG_CUSTOM_UNSPECIFIED,              // =  4
 
-	SUBLANG_ARABIC_SAUDI_ARABIA         =  1,
+	SUBLANG_AFRIKAANS_SOUTH_AFRICA              =  1,
+	SUBLANG_ALBANIAN_ALBANIA                    =  1,
+	SUBLANG_ALSATIAN_FRANCE                     =  1,
+	SUBLANG_AMHARIC_ETHIOPIA                    =  1,
+
+	SUBLANG_ARABIC_SAUDI_ARABIA                 =  1,
 	SUBLANG_ARABIC_IRAQ,
 	SUBLANG_ARABIC_EGYPT,
 	SUBLANG_ARABIC_LIBYA,
@@ -514,72 +578,187 @@ enum : USHORT {
 	SUBLANG_ARABIC_KUWAIT,
 	SUBLANG_ARABIC_UAE,
 	SUBLANG_ARABIC_BAHRAIN,
-	SUBLANG_ARABIC_QATAR,            // = 16
+	SUBLANG_ARABIC_QATAR,                    // = 16
 
-	SUBLANG_AZERI_LATIN                 =  1,
-	SUBLANG_AZERI_CYRILLIC,          // =  2
+	SUBLANG_ARMENIAN_ARMENIA                    =  1,
+	SUBLANG_ASSAMESE_INDIA                      =  1,
 
-	SUBLANG_CHINESE_TRADITIONAL         =  1,
+	SUBLANG_AZERI_LATIN                         =  1,
+	SUBLANG_AZERI_CYRILLIC,                  // =  2
+
+	SUBLANG_BASHKIR_RUSSIA                      =  1,
+	SUBLANG_BASQUE_BASQUE                       =  1,
+	SUBLANG_BELARUSIAN_BELARUS                  =  1,
+	SUBLANG_BENGALI_INDIA                       =  1,
+
+	SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_LATIN    =  5,
+	SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_CYRILLIC =  8,
+
+	SUBLANG_BRETON_FRANCE                       =  1,
+	SUBLANG_BULGARIAN_BULGARIA                  =  1,
+	SUBLANG_CATALAN_CATALAN                     =  1,
+
+	SUBLANG_CHINESE_TRADITIONAL                 =  1,
 	SUBLANG_CHINESE_SIMPLIFIED,
 	SUBLANG_CHINESE_HONGKONG,
 	SUBLANG_CHINESE_SINGAPORE,
-	SUBLANG_CHINESE_MACAU,           // =  5
+	SUBLANG_CHINESE_MACAU,                   // =  5
 
-	SUBLANG_DUTCH                       =  1,
-	SUBLANG_DUTCH_BELGIAN,           // =  2
+	SUBLANG_CORSICAN_FRANCE                     =  1,
 
-	SUBLANG_ENGLISH_US                  =  1,
+	SUBLANG_CROATIAN_CROATIA                    =  1,
+	SUBLANG_CROATIAN_BOSNIA_HERZEGOVINA_LATIN   =  4,
+
+	SUBLANG_CZECH_CZECH_REPUBLIC                =  1,
+	SUBLANG_DANISH_DENMARK                      =  1,
+	SUBLANG_DIVEHI_MALDIVES                     =  1,
+
+	SUBLANG_DUTCH                               =  1,
+	SUBLANG_DUTCH_BELGIAN,                   // =  2
+
+	SUBLANG_ENGLISH_US                          =  1,
 	SUBLANG_ENGLISH_UK,
 	SUBLANG_ENGLISH_AUS,
 	SUBLANG_ENGLISH_CAN,
 	SUBLANG_ENGLISH_NZ,
-	SUBLANG_ENGLISH_EIRE,
+	SUBLANG_ENGLISH_EIRE,                    // =  6
+	SUBLANG_ENGLISH_IRELAND                     =  6,
 	SUBLANG_ENGLISH_SOUTH_AFRICA,
 	SUBLANG_ENGLISH_JAMAICA,
 	SUBLANG_ENGLISH_CARIBBEAN,
 	SUBLANG_ENGLISH_BELIZE,
 	SUBLANG_ENGLISH_TRINIDAD,
 	SUBLANG_ENGLISH_ZIMBABWE,
-	SUBLANG_ENGLISH_PHILIPPINES,     // = 13
+	SUBLANG_ENGLISH_PHILIPPINES,             // = 13
+	SUBLANG_ENGLISH_INDIA                       = 16,
+	SUBLANG_ENGLISH_MALAYSIA,
+	SUBLANG_ENGLISH_SINGAPORE,               // = 18
 
-	SUBLANG_FRENCH                      =  1,
+	SUBLANG_ESTONIAN_ESTONIA                    =  1,
+	SUBLANG_FAEROESE_FAROE_ISLANDS              =  1,
+	SUBLANG_FILIPINO_PHILIPPINES                =  1,
+	SUBLANG_FINNISH_FINLAND                     =  1,
+
+	SUBLANG_FRENCH                              =  1,
 	SUBLANG_FRENCH_BELGIAN,
 	SUBLANG_FRENCH_CANADIAN,
 	SUBLANG_FRENCH_SWISS,
 	SUBLANG_FRENCH_LUXEMBOURG,
-	SUBLANG_FRENCH_MONACO,           // =  6
+	SUBLANG_FRENCH_MONACO,                   // =  6
 
-	SUBLANG_GERMAN                      =  1,
+	SUBLANG_FRISIAN_NETHERLANDS                 =  1,
+	SUBLANG_GALICIAN_GALICIAN                   =  1,
+	SUBLANG_GEORGIAN_GEORGIA                    =  1,
+
+	SUBLANG_GERMAN                              =  1,
 	SUBLANG_GERMAN_SWISS,
 	SUBLANG_GERMAN_AUSTRIAN,
 	SUBLANG_GERMAN_LUXEMBOURG,
-	SUBLANG_GERMAN_LIECHTENSTEIN,    // =  5
+	SUBLANG_GERMAN_LIECHTENSTEIN,            // =  5
 
-	SUBLANG_ITALIAN                     =  1,
-	SUBLANG_ITALIAN_SWISS,           // =  2
+	SUBLANG_GREEK_GREECE                        =  1,
+	SUBLANG_GREENLANDIC_GREENLAND               =  1,
+	SUBLANG_GUJARATI_INDIA                      =  1,
+	SUBLANG_HAUSA_NIGERIA                       =  1,
+	SUBLANG_HEBREW_ISRAEL                       =  1,
+	SUBLANG_HINDI_INDIA                         =  1,
+	SUBLANG_HUNGARIAN_HUNGARY                   =  1,
+	SUBLANG_ICELANDIC_ICELAND                   =  1,
+	SUBLANG_IGBO_NIGERIA                        =  1,
+	SUBLANG_INDONESIAN_INDONESIA                =  1,
 
-	SUBLANG_KASHMIRI_INDIA              =  2,
-	SUBLANG_KASHMIRI_SASIA              =  2,
+	SUBLANG_INUKTITUT_CANADA                    =  1,
+	SUBLANG_INUKTITUT_CANADA_LATIN              =  1,
 
-	SUBLANG_KOREAN                      =  1,
+	SUBLANG_IRISH_IRELAND                       =  1,
 
-	SUBLANG_LITHUANIAN                  =  1,
+	SUBLANG_ITALIAN                             =  1,
+	SUBLANG_ITALIAN_SWISS,                   // =  2
 
-	SUBLANG_MALAY_MALAYSIA              =  1,
-	SUBLANG_MALAY_BRUNEI_DARUSSALAM, // =  2
+	SUBLANG_JAPANESE_JAPAN                      =  1,
 
-	SUBLANG_NEPALI_INDIA                =  2,
+	SUBLANG_KASHMIRI_INDIA                      =  2,
+	SUBLANG_KASHMIRI_SASIA                      =  2,
 
-	SUBLANG_NORWEGIAN_BOKMAL            =  1,
-	SUBLANG_NORWEGIAN_NYNORSK,       // =  2
+	SUBLANG_KAZAK_KAZAKHSTAN                    =  1,
+	SUBLANG_KHMER_CAMBODIA                      =  1,
+	SUBLANG_KICHE_GUATEMALA                     =  1,
+	SUBLANG_KINYARWANDA_RWANDA                  =  1,
+	SUBLANG_KONKANI_INDIA                       =  1,
+	SUBLANG_KOREAN                              =  1,
+	SUBLANG_KYRGYZ_KYRGYZSTAN                   =  1,
+	SUBLANG_LAO_LAO_PDR                         =  1,
+	SUBLANG_LATVIAN_LATVIA                      =  1,
 
-	SUBLANG_PORTUGUESE                  =  1,
-	SUBLANG_PORTUGUESE_BRAZILIAN,    // =  2
+	SUBLANG_LITHUANIAN                          =  1,
+	SUBLANG_LITHUANIAN_LITHUANIA                =  1,
 
-	SUBLANG_SERBIAN_LATIN               =  2,
-	SUBLANG_SERBIAN_CYRILLIC,        // =  3
+	SUBLANG_LOWER_SORBIAN_GERMANY               =  1,
+	SUBLANG_LUXEMBOURGISH_LUXEMBOURG            =  1,
+	SUBLANG_MACEDONIAN_MACEDONIA                =  1,
+	SUBLANG_MALAYALAM_INDIA                     =  1,
+	SUBLANG_MALTESE_MALTA                       =  1,
+	SUBLANG_MAORI_NEW_ZEALAND                   =  1,
+	SUBLANG_MAPUDUNGUN_CHILE                    =  1,
+	SUBLANG_MARATHI_INDIA                       =  1,
+	SUBLANG_MOHAWK_MOHAWK                       =  1,
 
-	SUBLANG_SPANISH                     =  1,
+	SUBLANG_MONGOLIAN_CYRILLIC_MONGOLIA         =  1,
+	SUBLANG_MONGOLIAN_PRC,                   // =  2
+
+	SUBLANG_MALAY_MALAYSIA                      =  1,
+	SUBLANG_MALAY_BRUNEI_DARUSSALAM,         // =  2
+
+	SUBLANG_NEPALI_NEPAL                        =  1,
+	SUBLANG_NEPALI_INDIA,                    // =  2
+
+	SUBLANG_NORWEGIAN_BOKMAL                    =  1,
+	SUBLANG_NORWEGIAN_NYNORSK,               // =  2
+
+	SUBLANG_OCCITAN_FRANCE                      =  1,
+	SUBLANG_ORIYA_INDIA                         =  1,
+	SUBLANG_PASHTO_AFGHANISTAN                  =  1,
+	SUBLANG_PERSIAN_IRAN                        =  1,
+	SUBLANG_POLISH_POLAND                       =  1,
+
+	SUBLANG_PORTUGUESE_BRAZILIAN                =  1,
+	SUBLANG_PORTUGUESE                          =  2,
+	SUBLANG_PORTUGUESE_PORTUGAL,             // =  2
+
+	SUBLANG_PUNJABI_INDIA                       =  1,
+
+	SUBLANG_QUECHUA_BOLIVIA                     =  1,
+	SUBLANG_QUECHUA_ECUADOR,
+	SUBLANG_QUECHUA_PERU,                    // =  3
+
+	SUBLANG_ROMANIAN_ROMANIA                    =  1,
+	SUBLANG_ROMANSH_SWITZERLAND                 =  1,
+	SUBLANG_RUSSIAN_RUSSIA                      =  1,
+
+	SUBLANG_SAMI_NORTHERN_NORWAY                =  1,
+	SUBLANG_SAMI_NORTHERN_SWEDEN,
+	SUBLANG_SAMI_NORTHERN_FINLAND,           // =  3
+	SUBLANG_SAMI_SKOLT_FINLAND                  =  3,
+	SUBLANG_SAMI_INARI_FINLAND                  =  3,
+	SUBLANG_SAMI_LULE_NORWAY,
+	SUBLANG_SAMI_LULE_SWEDEN,
+	SUBLANG_SAMI_SOUTHERN_NORWAY,
+	SUBLANG_SAMI_SOUTHERN_SWEDEN,            // =  7
+
+	SUBLANG_SANSKRIT_INDIA                      =  1,
+
+	SUBLANG_SERBIAN_LATIN                       =  2,
+	SUBLANG_SERBIAN_CYRILLIC,                // =  3
+	SUBLANG_SERBIAN_BOSNIA_HERZEGOVINA_LATIN    =  6,
+	SUBLANG_SERBIAN_BOSNIA_HERZEGOVINA_CYRILLIC =  7,
+
+	SUBLANG_SINDHI_AFGHANISTAN                  =  2,
+	SUBLANG_SINHALESE_SRI_LANKA                 =  1,
+	SUBLANG_SOTHO_NORTHERN_SOUTH_AFRICA         =  1,
+	SUBLANG_SLOVAK_SLOVAKIA                     =  1,
+	SUBLANG_SLOVENIAN_SLOVENIA                  =  1,
+
+	SUBLANG_SPANISH                             =  1,
 	SUBLANG_SPANISH_MEXICAN,
 	SUBLANG_SPANISH_MODERN,
 	SUBLANG_SPANISH_GUATEMALA,
@@ -598,16 +777,44 @@ enum : USHORT {
 	SUBLANG_SPANISH_EL_SALVADOR,
 	SUBLANG_SPANISH_HONDURAS,
 	SUBLANG_SPANISH_NICARAGUA,
-	SUBLANG_SPANISH_PUERTO_RICO,     // = 20
+	SUBLANG_SPANISH_PUERTO_RICO,
+	SUBLANG_SPANISH_US,                      // = 21
 
-	SUBLANG_SWEDISH                     =  1,
-	SUBLANG_SWEDISH_FINLAND,         // =  2
+	SUBLANG_SWEDISH                             =  1,
+	SUBLANG_SWEDISH_SWEDEN                      =  1,
+	SUBLANG_SWEDISH_FINLAND,                 // =  2
 
-	SUBLANG_URDU_PAKISTAN               =  1,
-	SUBLANG_URDU_INDIA,              // =  2
+	SUBLANG_SYRIAC                              =  1,
+	SUBLANG_TAJIK_TAJIKISTAN                    =  1,
+	SUBLANG_TAMAZIGHT_ALGERIA_LATIN             =  2,
+	SUBLANG_TAMIL_INDIA                         =  1,
+	SUBLANG_TATAR_RUSSIA                        =  1,
+	SUBLANG_TELUGU_INDIA                        =  1,
+	SUBLANG_THAI_THAILAND                       =  1,
+	SUBLANG_TIBETAN_PRC                         =  1,
+	SUBLANG_TIBETAN_BHUTAN                      =  1,
+	SUBLANG_TIGRIGNA_ERITREA                    =  1,
+	SUBLANG_TSWANA_SOUTH_AFRICA                 =  1,
+	SUBLANG_TURKISH_TURKEY                      =  1,
+	SUBLANG_TURKMEN_TURKMENISTAN                =  1,
+	SUBLANG_UIGHUR_PRC                          =  1,
+	SUBLANG_UKRAINIAN_UKRAINE                   =  1,
+	SUBLANG_UPPER_SORBIAN_GERMANY               =  1,
 
-	SUBLANG_UZBEK_LATIN                 =  1,
-	SUBLANG_UZBEK_CYRILLIC,          // =  2
+	SUBLANG_URDU_PAKISTAN                       =  1,
+	SUBLANG_URDU_INDIA,                      // =  2
+
+	SUBLANG_UZBEK_LATIN                         =  1,
+	SUBLANG_UZBEK_CYRILLIC,                  // =  2
+
+	SUBLANG_VIETNAMESE_VIETNAM                  =  1,
+	SUBLANG_WELSH_UNITED_KINGDOM                =  1,
+	SUBLANG_WOLOF_SENEGAL                       =  1,
+	SUBLANG_YORUBA_NIGERIA                      =  1,
+	SUBLANG_XHOSA_SOUTH_AFRICA                  =  1,
+	SUBLANG_YAKUT_RUSSIA                        =  1,
+	SUBLANG_YI_PRC                              =  1,
+	SUBLANG_ZULU_SOUTH_AFRICA                   =  1
 }
 
 // This is not documented on MSDN
@@ -789,8 +996,8 @@ const SECURITY_INFORMATION
 
 const DWORD MAXIMUM_PROCESSORS = 32;
 
-// ---
 // VirtualAlloc(), etc
+// -------------------
 
 enum : DWORD {
 	PAGE_NOACCESS          = 0x0001,
@@ -848,8 +1055,8 @@ const MESSAGE_RESOURCE_UNICODE = 1;
 const RTL_CRITSECT_TYPE        = 0;
 const RTL_RESOURCE_TYPE        = 1;
 
-// ---
 // COFF file format
+// ----------------
 
 // IMAGE_FILE_HEADER.Characteristics
 const WORD
@@ -871,13 +1078,29 @@ const WORD
 
 // IMAGE_FILE_HEADER.Machine
 enum : WORD {
-	IMAGE_FILE_MACHINE_UNKNOWN = 0,
-	IMAGE_FILE_MACHINE_I386    = 332,
-	IMAGE_FILE_MACHINE_R3000   = 354,
-	IMAGE_FILE_MACHINE_R4000   = 358,
-	IMAGE_FILE_MACHINE_R10000  = 360,
-	IMAGE_FILE_MACHINE_ALPHA   = 388,
-	IMAGE_FILE_MACHINE_POWERPC = 496
+	IMAGE_FILE_MACHINE_UNKNOWN   = 0x0000,
+	IMAGE_FILE_MACHINE_I386      = 0x014C,
+	IMAGE_FILE_MACHINE_R3000     = 0x0162,
+	IMAGE_FILE_MACHINE_R4000     = 0x0166,
+	IMAGE_FILE_MACHINE_R10000    = 0x0168,
+	IMAGE_FILE_MACHINE_WCEMIPSV2 = 0x0169,
+	IMAGE_FILE_MACHINE_ALPHA     = 0x0184,
+	IMAGE_FILE_MACHINE_SH3       = 0x01A2,
+	IMAGE_FILE_MACHINE_SH3DSP    = 0x01A3,
+	IMAGE_FILE_MACHINE_SH4       = 0x01A6,
+	IMAGE_FILE_MACHINE_SH5       = 0x01A8,
+	IMAGE_FILE_MACHINE_ARM       = 0x01C0,
+	IMAGE_FILE_MACHINE_THUMB     = 0x01C2,
+	IMAGE_FILE_MACHINE_AM33      = 0x01D3,
+	IMAGE_FILE_MACHINE_POWERPC   = 0x01F0,
+	IMAGE_FILE_MACHINE_POWERPCFP = 0x01F1,
+	IMAGE_FILE_MACHINE_IA64      = 0x0200,
+	IMAGE_FILE_MACHINE_MIPS16    = 0x0266,
+	IMAGE_FILE_MACHINE_MIPSFPU   = 0x0366,
+	IMAGE_FILE_MACHINE_MIPSFPU16 = 0x0466,
+	IMAGE_FILE_MACHINE_EBC       = 0x0EBC,
+	IMAGE_FILE_MACHINE_AMD64     = 0x8664,
+	IMAGE_FILE_MACHINE_M32R      = 0x9041
 }
 
 // ???
@@ -891,8 +1114,9 @@ enum  {
 
 // IMAGE_OPTIONAL_HEADER.Magic
 enum : WORD {
-	IMAGE_NT_OPTIONAL_HDR_MAGIC  = 0x010B,
-	IMAGE_ROM_OPTIONAL_HDR_MAGIC = 0x0107
+	IMAGE_NT_OPTIONAL_HDR32_MAGIC = 0x010B,
+	IMAGE_ROM_OPTIONAL_HDR_MAGIC  = 0x0107,
+	IMAGE_NT_OPTIONAL_HDR64_MAGIC = 0x020B
 }
 
 // IMAGE_OPTIONAL_HEADER.Subsystem
@@ -903,7 +1127,8 @@ enum : WORD {
 	IMAGE_SUBSYSTEM_WINDOWS_CUI,          // =  3
 	IMAGE_SUBSYSTEM_OS2_CUI                  =  5,
 	IMAGE_SUBSYSTEM_POSIX_CUI                =  7,
-	IMAGE_SUBSYSTEM_WINDOWS_CE_GUI           =  9,
+	IMAGE_SUBSYSTEM_NATIVE_WINDOWS,
+	IMAGE_SUBSYSTEM_WINDOWS_CE_GUI,
 	IMAGE_SUBSYSTEM_EFI_APPLICATION,
 	IMAGE_SUBSYSTEM_EFI_BOOT_SERVICE_DRIVER,
 	IMAGE_SUBSYSTEM_EFI_RUNTIME_DRIVER,
@@ -911,6 +1136,17 @@ enum : WORD {
 	IMAGE_SUBSYSTEM_XBOX,                 // = 14
 	IMAGE_SUBSYSTEM_WINDOWS_BOOT_APPLICATION = 16
 }
+
+// IMAGE_OPTIONAL_HEADER.DllCharacteristics
+const WORD
+	IMAGE_DLL_CHARACTERISTICS_DYNAMIC_BASE         = 0x0040,
+	IMAGE_DLL_CHARACTERISTICS_FORCE_INTEGRITY      = 0x0080,
+	IMAGE_DLL_CHARACTERISTICS_NX_COMPAT            = 0x0100,
+	IMAGE_DLLCHARACTERISTICS_NO_ISOLATION          = 0x0200,
+	IMAGE_DLLCHARACTERISTICS_NO_SEH	               = 0x0400,
+	IMAGE_DLLCHARACTERISTICS_NO_BIND               = 0x0800,
+	IMAGE_DLLCHARACTERISTICS_WDM_DRIVER            = 0x2000,
+	IMAGE_DLLCHARACTERISTICS_TERMINAL_SERVER_AWARE = 0x8000;
 
 // ???
 const IMAGE_SEPARATE_DEBUG_SIGNATURE = 0x4944;
@@ -937,32 +1173,42 @@ PIMAGE_SECTION_HEADER IMAGE_FIRST_SECTION(PIMAGE_NT_HEADERS h) {
 
 // ImageDirectoryEntryToDataEx()
 enum : USHORT {
-	IMAGE_DIRECTORY_ENTRY_EXPORT = 0,
+	IMAGE_DIRECTORY_ENTRY_EXPORT             =  0,
 	IMAGE_DIRECTORY_ENTRY_IMPORT,
 	IMAGE_DIRECTORY_ENTRY_RESOURCE,
 	IMAGE_DIRECTORY_ENTRY_EXCEPTION,
 	IMAGE_DIRECTORY_ENTRY_SECURITY,
 	IMAGE_DIRECTORY_ENTRY_BASERELOC,
 	IMAGE_DIRECTORY_ENTRY_DEBUG,
-	IMAGE_DIRECTORY_ENTRY_COPYRIGHT,
+	IMAGE_DIRECTORY_ENTRY_COPYRIGHT,      // =  7
+	IMAGE_DIRECTORY_ENTRY_ARCHITECTURE       =  7,
 	IMAGE_DIRECTORY_ENTRY_GLOBALPTR,
 	IMAGE_DIRECTORY_ENTRY_TLS,
 	IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG,
 	IMAGE_DIRECTORY_ENTRY_BOUND_IMPORT,
-	IMAGE_DIRECTORY_ENTRY_IAT // = 12
+	IMAGE_DIRECTORY_ENTRY_IAT,
+	IMAGE_DIRECTORY_ENTRY_DELAY_IMPORT,
+	IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR, // = 14
 }
 
 // IMAGE_SECTION_HEADER.Characteristics
 const DWORD
+	IMAGE_SCN_TYPE_REG               = 0x00000000,
+	IMAGE_SCN_TYPE_DSECT             = 0x00000001,
+	IMAGE_SCN_TYPE_NOLOAD            = 0x00000002,
+	IMAGE_SCN_TYPE_GROUP             = 0x00000004,
 	IMAGE_SCN_TYPE_NO_PAD            = 0x00000008,
+	IMAGE_SCN_TYPE_COPY              = 0x00000010,
 	IMAGE_SCN_CNT_CODE               = 0x00000020,
 	IMAGE_SCN_CNT_INITIALIZED_DATA   = 0x00000040,
 	IMAGE_SCN_CNT_UNINITIALIZED_DATA = 0x00000080,
 	IMAGE_SCN_LNK_OTHER              = 0x00000100,
 	IMAGE_SCN_LNK_INFO               = 0x00000200,
+	IMAGE_SCN_TYPE_OVER              = 0x00000400,
 	IMAGE_SCN_LNK_REMOVE             = 0x00000800,
 	IMAGE_SCN_LNK_COMDAT             = 0x00001000,
 	IMAGE_SCN_MEM_FARDATA            = 0x00008000,
+	IMAGE_SCN_GPREL                  = 0x00008000,
 	IMAGE_SCN_MEM_PURGEABLE          = 0x00020000,
 	IMAGE_SCN_MEM_16BIT              = 0x00020000,
 	IMAGE_SCN_MEM_LOCKED             = 0x00040000,
@@ -974,6 +1220,13 @@ const DWORD
 	IMAGE_SCN_ALIGN_16BYTES          = 0x00500000,
 	IMAGE_SCN_ALIGN_32BYTES          = 0x00600000,
 	IMAGE_SCN_ALIGN_64BYTES          = 0x00700000,
+	IMAGE_SCN_ALIGN_128BYTES         = 0x00800000,
+	IMAGE_SCN_ALIGN_256BYTES         = 0x00900000,
+	IMAGE_SCN_ALIGN_512BYTES         = 0x00A00000,
+	IMAGE_SCN_ALIGN_1024BYTES        = 0x00B00000,
+	IMAGE_SCN_ALIGN_2048BYTES        = 0x00C00000,
+	IMAGE_SCN_ALIGN_4096BYTES        = 0x00D00000,
+	IMAGE_SCN_ALIGN_8192BYTES        = 0x00E00000,
 	IMAGE_SCN_LNK_NRELOC_OVFL        = 0x01000000,
 	IMAGE_SCN_MEM_DISCARDABLE        = 0x02000000,
 	IMAGE_SCN_MEM_NOT_CACHED         = 0x04000000,
@@ -1047,7 +1300,8 @@ enum : BYTE {
 	IMAGE_SYM_CLASS_END_OF_STRUCT,
 	IMAGE_SYM_CLASS_FILE,
 	IMAGE_SYM_CLASS_SECTION,
-	IMAGE_SYM_CLASS_WEAK_EXTERNAL // = 105
+	IMAGE_SYM_CLASS_WEAK_EXTERNAL,// = 105
+	IMAGE_SYM_CLASS_CLR_TOKEN        = 107
 }
 
 enum : BYTE {
@@ -1067,33 +1321,136 @@ enum : DWORD {
 }
 
 enum : WORD {
-	IMAGE_REL_I386_ABSOLUTE =  0,
-	IMAGE_REL_I386_DIR16    =  1,
-	IMAGE_REL_I386_REL16    =  2,
-	IMAGE_REL_I386_DIR32    =  6,
-	IMAGE_REL_I386_DIR32NB  =  7,
-	IMAGE_REL_I386_SEG12    =  9,
-	IMAGE_REL_I386_SECTION  = 10,
-	IMAGE_REL_I386_SECREL   = 11,
-	IMAGE_REL_I386_REL32    = 20
+	IMAGE_REL_I386_ABSOLUTE       = 0x0000,
+	IMAGE_REL_I386_DIR16          = 0x0001,
+	IMAGE_REL_I386_REL16          = 0x0002,
+	IMAGE_REL_I386_DIR32          = 0x0006,
+	IMAGE_REL_I386_DIR32NB        = 0x0007,
+	IMAGE_REL_I386_SEG12          = 0x0009,
+	IMAGE_REL_I386_SECTION        = 0x000A,
+	IMAGE_REL_I386_SECREL         = 0x000B,
+	IMAGE_REL_I386_TOKEN          = 0x000C,
+	IMAGE_REL_I386_SECREL7        = 0x000D,
+	IMAGE_REL_I386_REL32          = 0x0014
 }
 
 enum : WORD {
-	IMAGE_REL_MIPS_ABSOLUTE,
-	IMAGE_REL_MIPS_REFHALF,
-	IMAGE_REL_MIPS_REFWORD,
-	IMAGE_REL_MIPS_JMPADDR,
-	IMAGE_REL_MIPS_REFHI,
-	IMAGE_REL_MIPS_REFLO,
-	IMAGE_REL_MIPS_GPREL,
-	IMAGE_REL_MIPS_LITERAL,  // =  7
-	IMAGE_REL_MIPS_SECTION      = 10,
-	IMAGE_REL_MIPS_SECREL,
-	IMAGE_REL_MIPS_SECRELLO,
-	IMAGE_REL_MIPS_SECRELHI, // = 13
-	IMAGE_REL_MIPS_REFWORDNB    = 34,
-	IMAGE_REL_MIPS_PAIR      // = 35
+	IMAGE_REL_AMD64_ABSOLUTE      = 0x0000,
+	IMAGE_REL_AMD64_ADDR64        = 0x0001,
+	IMAGE_REL_AMD64_ADDR32        = 0x0002,
+	IMAGE_REL_AMD64_ADDR32NB      = 0x0003,
+	IMAGE_REL_AMD64_REL32         = 0x0004,
+	IMAGE_REL_AMD64_REL32_1       = 0x0005,
+	IMAGE_REL_AMD64_REL32_2       = 0x0006,
+	IMAGE_REL_AMD64_REL32_3       = 0x0007,
+	IMAGE_REL_AMD64_REL32_4       = 0x0008,
+	IMAGE_REL_AMD64_REL32_5       = 0x0009,
+	IMAGE_REL_AMD64_SECTION       = 0x000A,
+	IMAGE_REL_AMD64_SECREL        = 0x000B,
+	IMAGE_REL_AMD64_SECREL7       = 0x000C,
+	IMAGE_REL_AMD64_TOKEN         = 0x000D,
+	IMAGE_REL_AMD64_SREL32        = 0x000E,
+	IMAGE_REL_AMD64_PAIR          = 0x000F,
+	IMAGE_REL_AMD64_SSPAN32       = 0x0010
 }
+
+enum : WORD {
+	IMAGE_REL_IA64_ABSOLUTE       = 0x0000,
+	IMAGE_REL_IA64_IMM14          = 0x0001,
+	IMAGE_REL_IA64_IMM22          = 0x0002,
+	IMAGE_REL_IA64_IMM64          = 0x0003,
+	IMAGE_REL_IA64_DIR32          = 0x0004,
+	IMAGE_REL_IA64_DIR64          = 0x0005,
+	IMAGE_REL_IA64_PCREL21B       = 0x0006,
+	IMAGE_REL_IA64_PCREL21M       = 0x0007,
+	IMAGE_REL_IA64_PCREL21F       = 0x0008,
+	IMAGE_REL_IA64_GPREL22        = 0x0009,
+	IMAGE_REL_IA64_LTOFF22        = 0x000A,
+	IMAGE_REL_IA64_SECTION        = 0x000B,
+	IMAGE_REL_IA64_SECREL22       = 0x000C,
+	IMAGE_REL_IA64_SECREL64I      = 0x000D,
+	IMAGE_REL_IA64_SECREL32       = 0x000E,
+	IMAGE_REL_IA64_DIR32NB        = 0x0010,
+	IMAGE_REL_IA64_SREL14         = 0x0011,
+	IMAGE_REL_IA64_SREL22         = 0x0012,
+	IMAGE_REL_IA64_SREL32         = 0x0013,
+	IMAGE_REL_IA64_UREL32         = 0x0014,
+	IMAGE_REL_IA64_PCREL60X       = 0x0015,
+	IMAGE_REL_IA64_PCREL60B       = 0x0016,
+	IMAGE_REL_IA64_PCREL60F       = 0x0017,
+	IMAGE_REL_IA64_PCREL60I       = 0x0018,
+	IMAGE_REL_IA64_PCREL60M       = 0x0019,
+	IMAGE_REL_IA64_IMMGPREL64     = 0x001A,
+	IMAGE_REL_IA64_TOKEN          = 0x001B,
+	IMAGE_REL_IA64_GPREL32        = 0x001C,
+	IMAGE_REL_IA64_ADDEND         = 0x001F
+}
+
+enum : WORD {
+	IMAGE_REL_SH3_ABSOLUTE        = 0x0000,
+	IMAGE_REL_SH3_DIRECT16        = 0x0001,
+	IMAGE_REL_SH3_DIRECT32        = 0x0002,
+	IMAGE_REL_SH3_DIRECT8         = 0x0003,
+	IMAGE_REL_SH3_DIRECT8_WORD    = 0x0004,
+	IMAGE_REL_SH3_DIRECT8_LONG    = 0x0005,
+	IMAGE_REL_SH3_DIRECT4         = 0x0006,
+	IMAGE_REL_SH3_DIRECT4_WORD    = 0x0007,
+	IMAGE_REL_SH3_DIRECT4_LONG    = 0x0008,
+	IMAGE_REL_SH3_PCREL8_WORD     = 0x0009,
+	IMAGE_REL_SH3_PCREL8_LONG     = 0x000A,
+	IMAGE_REL_SH3_PCREL12_WORD    = 0x000B,
+	IMAGE_REL_SH3_STARTOF_SECTION = 0x000C,
+	IMAGE_REL_SH3_SIZEOF_SECTION  = 0x000D,
+	IMAGE_REL_SH3_SECTION         = 0x000E,
+	IMAGE_REL_SH3_SECREL          = 0x000F,
+	IMAGE_REL_SH3_DIRECT32_NB     = 0x0010,
+	IMAGE_REL_SH3_GPREL4_LONG     = 0x0011,
+	IMAGE_REL_SH3_TOKEN           = 0x0012,
+	IMAGE_REL_SHM_PCRELPT         = 0x0013,
+	IMAGE_REL_SHM_REFLO           = 0x0014,
+	IMAGE_REL_SHM_REFHALF         = 0x0015,
+	IMAGE_REL_SHM_RELLO           = 0x0016,
+	IMAGE_REL_SHM_RELHALF         = 0x0017,
+	IMAGE_REL_SHM_PAIR            = 0x0018,
+	IMAGE_REL_SHM_NOMODE          = 0x8000
+}
+
+enum : WORD {
+	IMAGE_REL_M32R_ABSOLUTE       = 0x0000,
+	IMAGE_REL_M32R_ADDR32         = 0x0001,
+	IMAGE_REL_M32R_ADDR32NB       = 0x0002,
+	IMAGE_REL_M32R_ADDR24         = 0x0003,
+	IMAGE_REL_M32R_GPREL16        = 0x0004,
+	IMAGE_REL_M32R_PCREL24        = 0x0005,
+	IMAGE_REL_M32R_PCREL16        = 0x0006,
+	IMAGE_REL_M32R_PCREL8         = 0x0007,
+	IMAGE_REL_M32R_REFHALF        = 0x0008,
+	IMAGE_REL_M32R_REFHI          = 0x0009,
+	IMAGE_REL_M32R_REFLO          = 0x000A,
+	IMAGE_REL_M32R_PAIR           = 0x000B,
+	IMAGE_REL_M32R_SECTION        = 0x000C,
+	IMAGE_REL_M32R_SECREL         = 0x000D,
+	IMAGE_REL_M32R_TOKEN          = 0x000E
+}
+
+enum : WORD {
+	IMAGE_REL_MIPS_ABSOLUTE       = 0x0000,
+	IMAGE_REL_MIPS_REFHALF        = 0x0001,
+	IMAGE_REL_MIPS_REFWORD        = 0x0002,
+	IMAGE_REL_MIPS_JMPADDR        = 0x0003,
+	IMAGE_REL_MIPS_REFHI          = 0x0004,
+	IMAGE_REL_MIPS_REFLO          = 0x0005,
+	IMAGE_REL_MIPS_GPREL          = 0x0006,
+	IMAGE_REL_MIPS_LITERAL        = 0x0007,
+	IMAGE_REL_MIPS_SECTION        = 0x000A,
+	IMAGE_REL_MIPS_SECREL         = 0x000B,
+	IMAGE_REL_MIPS_SECRELLO       = 0x000C,
+	IMAGE_REL_MIPS_SECRELHI       = 0x000D,
+	IMAGE_REL_MIPS_JMPADDR16      = 0x0010,
+	IMAGE_REL_MIPS_REFWORDNB      = 0x0022,
+	IMAGE_REL_MIPS_PAIR           = 0x0025
+}
+
 
 enum : WORD {
 	IMAGE_REL_ALPHA_ABSOLUTE,
@@ -1180,16 +1537,6 @@ bool IMAGE_SNAP_BY_ORDINAL64(ulong Ordinal) {
 	return (Ordinal & IMAGE_ORDINAL_FLAG64) != 0;
 }
 
-version (Win64) {
-	alias IMAGE_ORDINAL_FLAG64 IMAGE_ORDINAL_FLAG;
-	alias IMAGE_SNAP_BY_ORDINAL64 IMAGE_SNAP_BY_ORDINAL;
-	alias IMAGE_ORDINAL64 IMAGE_ORDINAL;
-} else {
-	alias IMAGE_ORDINAL_FLAG32 IMAGE_ORDINAL_FLAG;
-	alias IMAGE_ORDINAL32 IMAGE_ORDINAL;
-	alias IMAGE_SNAP_BY_ORDINAL32 IMAGE_SNAP_BY_ORDINAL;
-}
-
 // ???
 const IMAGE_RESOURCE_NAME_IS_STRING    = 0x80000000;
 const IMAGE_RESOURCE_DATA_IS_DIRECTORY = 0x80000000;
@@ -1203,7 +1550,8 @@ enum : DWORD {
 	IMAGE_DEBUG_TYPE_EXCEPTION,
 	IMAGE_DEBUG_TYPE_FIXUP,
 	IMAGE_DEBUG_TYPE_OMAP_TO_SRC,
-	IMAGE_DEBUG_TYPE_OMAP_FROM_SRC
+	IMAGE_DEBUG_TYPE_OMAP_FROM_SRC,
+	IMAGE_DEBUG_TYPE_BORLAND // = 9
 }
 
 enum : ubyte {
@@ -1486,9 +1834,13 @@ const USHORT
 	VER_SUITE_BACKOFFICE               = 0x0004,
 	VER_SUITE_TERMINAL                 = 0x0010,
 	VER_SUITE_SMALLBUSINESS_RESTRICTED = 0x0020,
+	VER_SUITE_EMBEDDEDNT               = 0x0040,
 	VER_SUITE_DATACENTER               = 0x0080,
+	VER_SUITE_SINGLEUSERTS             = 0x0100,
 	VER_SUITE_PERSONAL                 = 0x0200,
-	VER_SUITE_BLADE                    = 0x0400;
+	VER_SUITE_BLADE                    = 0x0400,
+	VER_SUITE_STORAGE_SERVER           = 0x2000,
+	VER_SUITE_COMPUTE_SERVER           = 0x4000;
 
 const ULONG
 	WT_EXECUTEDEFAULT            = 0x00000000,
@@ -1561,6 +1913,7 @@ const ULONG
 	IO_REPARSE_TAG_RESERVED_RANGE = IO_REPARSE_TAG_RESERVED_ONE,
 	IO_REPARSE_TAG_SYMBOLIC_LINK  = IO_REPARSE_TAG_RESERVED_ZERO,
 	IO_REPARSE_TAG_MOUNT_POINT    = 0xA0000003,
+	IO_REPARSE_TAG_SYMLINK        = 0xA000000C,
 	IO_REPARSE_TAG_VALID_VALUES   = 0xE000FFFF;
 
 /*	Although these are semantically boolean, they are documented and
@@ -1572,6 +1925,11 @@ ULONG IsReparseTagNameSurrogate(ULONG x) { return x & 0x20000000; }
 
 bool IsReparseTagValid(ULONG x) {
 	return !(x & ~IO_REPARSE_TAG_VALID_VALUES) && (x > IO_REPARSE_TAG_RESERVED_RANGE);
+}
+
+// Doesn't seem to make sense, but anyway....
+ULONG WT_SET_MAX_THREADPOOL_THREADS(inout ULONG Flags, ushort Limit) {
+	return Flags |= Limit << 16;
 }
 
 import win32.basetyps;
@@ -2301,7 +2659,7 @@ struct IMAGE_DATA_DIRECTORY {
 }
 alias IMAGE_DATA_DIRECTORY* PIMAGE_DATA_DIRECTORY;
 
-struct IMAGE_OPTIONAL_HEADER {
+struct IMAGE_OPTIONAL_HEADER32 {
 	WORD  Magic;
 	BYTE  MajorLinkerVersion;
 	BYTE  MinorLinkerVersion;
@@ -2320,7 +2678,7 @@ struct IMAGE_OPTIONAL_HEADER {
 	WORD  MinorImageVersion;
 	WORD  MajorSubsystemVersion;
 	WORD  MinorSubsystemVersion;
-	DWORD Reserved1;
+	DWORD Win32VersionValue;
 	DWORD SizeOfImage;
 	DWORD SizeOfHeaders;
 	DWORD CheckSum;
@@ -2334,7 +2692,41 @@ struct IMAGE_OPTIONAL_HEADER {
 	DWORD NumberOfRvaAndSizes;
 	IMAGE_DATA_DIRECTORY[IMAGE_NUMBEROF_DIRECTORY_ENTRIES] DataDirectory;
 }
-alias IMAGE_OPTIONAL_HEADER* PIMAGE_OPTIONAL_HEADER;
+alias IMAGE_OPTIONAL_HEADER32* PIMAGE_OPTIONAL_HEADER32;
+
+struct IMAGE_OPTIONAL_HEADER64 {
+	WORD      Magic;
+	BYTE      MajorLinkerVersion;
+	BYTE      MinorLinkerVersion;
+	DWORD     SizeOfCode;
+	DWORD     SizeOfInitializedData;
+	DWORD     SizeOfUninitializedData;
+	DWORD     AddressOfEntryPoint;
+	DWORD     BaseOfCode;
+	ULONGLONG ImageBase;
+	DWORD     SectionAlignment;
+	DWORD     FileAlignment;
+	WORD      MajorOperatingSystemVersion;
+	WORD      MinorOperatingSystemVersion;
+	WORD      MajorImageVersion;
+	WORD      MinorImageVersion;
+	WORD      MajorSubsystemVersion;
+	WORD      MinorSubsystemVersion;
+	DWORD     Win32VersionValue;
+	DWORD     SizeOfImage;
+	DWORD     SizeOfHeaders;
+	DWORD     CheckSum;
+	WORD      Subsystem;
+	WORD      DllCharacteristics;
+	ULONGLONG SizeOfStackReserve;
+	ULONGLONG SizeOfStackCommit;
+	ULONGLONG SizeOfHeapReserve;
+	ULONGLONG SizeOfHeapCommit;
+	DWORD     LoaderFlags;
+	DWORD     NumberOfRvaAndSizes;
+	IMAGE_DATA_DIRECTORY[IMAGE_NUMBEROF_DIRECTORY_ENTRIES] DataDirectory;
+}
+alias IMAGE_OPTIONAL_HEADER64* PIMAGE_OPTIONAL_HEADER64;
 
 struct IMAGE_ROM_OPTIONAL_HEADER {
 	WORD     Magic;
@@ -2411,12 +2803,19 @@ struct IMAGE_OS2_HEADER {
 }
 alias IMAGE_OS2_HEADER* PIMAGE_OS2_HEADER;
 
-align(4) struct IMAGE_NT_HEADERS {
+align(4) struct IMAGE_NT_HEADERS32 {
 	DWORD                 Signature;
 	IMAGE_FILE_HEADER     FileHeader;
 	IMAGE_OPTIONAL_HEADER OptionalHeader;
 }
-alias IMAGE_NT_HEADERS* PIMAGE_NT_HEADERS;
+alias IMAGE_NT_HEADERS32* PIMAGE_NT_HEADERS32;
+
+align(4) struct IMAGE_NT_HEADERS64 {
+	DWORD                 Signature;
+	IMAGE_FILE_HEADER     FileHeader;
+	IMAGE_OPTIONAL_HEADER OptionalHeader;
+}
+alias IMAGE_NT_HEADERS64* PIMAGE_NT_HEADERS64;
 
 struct IMAGE_ROM_HEADERS {
 	IMAGE_FILE_HEADER         FileHeader;
@@ -2600,14 +2999,6 @@ struct IMAGE_THUNK_DATA64 {
 }
 alias IMAGE_THUNK_DATA64* PIMAGE_THUNK_DATA64;
 
-version (Win64) {
-	alias IMAGE_THUNK_DATA64  IMAGE_THUNK_DATA;
-	alias PIMAGE_THUNK_DATA64 PIMAGE_THUNK_DATA;
-} else {
-	alias IMAGE_THUNK_DATA32  IMAGE_THUNK_DATA;
-	alias PIMAGE_THUNK_DATA32 PIMAGE_THUNK_DATA;
-}
-
 struct IMAGE_IMPORT_DESCRIPTOR {
 	union {
 		DWORD Characteristics;
@@ -2653,14 +3044,6 @@ struct IMAGE_TLS_DIRECTORY64 {
 	DWORD     Characteristics;
 }
 alias IMAGE_TLS_DIRECTORY64* PIMAGE_TLS_DIRECTORY64;
-
-version (Win64) {
-	alias IMAGE_TLS_DIRECTORY64  IMAGE_TLS_DIRECTORY;
-	alias PIMAGE_TLS_DIRECTORY64 PIMAGE_TLS_DIRECTORY;
-} else {
-	alias IMAGE_TLS_DIRECTORY32  IMAGE_TLS_DIRECTORY;
-	alias PIMAGE_TLS_DIRECTORY32 PIMAGE_TLS_DIRECTORY;
-}
 
 struct IMAGE_RESOURCE_DIRECTORY {
 	DWORD Characteristics;
@@ -2754,6 +3137,28 @@ struct IMAGE_LOAD_CONFIG_DIRECTORY {
 }
 alias IMAGE_LOAD_CONFIG_DIRECTORY* PIMAGE_LOAD_CONFIG_DIRECTORY;
 
+struct IMAGE_LOAD_CONFIG_DIRECTORY64 {
+	DWORD     Characteristics;
+	DWORD     TimeDateStamp;
+	WORD      MajorVersion;
+	WORD      MinorVersion;
+	DWORD     GlobalFlagsClear;
+	DWORD     GlobalFlagsSet;
+	DWORD     CriticalSectionDefaultTimeout;
+	ULONGLONG DeCommitFreeBlockThreshold;
+	ULONGLONG DeCommitTotalFreeThreshold;
+	ULONGLONG LockPrefixTable;
+	ULONGLONG MaximumAllocationSize;
+	ULONGLONG VirtualMemoryThreshold;
+	ULONGLONG ProcessAffinityMask;
+	DWORD     ProcessHeapFlags;
+	WORD      CSDFlags;
+	WORD      Reserved1;
+	ULONGLONG EditList;
+	DWORD[2]  Reserved;
+}
+alias IMAGE_LOAD_CONFIG_DIRECTORY64* PIMAGE_LOAD_CONFIG_DIRECTORY64;
+
 struct IMAGE_RUNTIME_FUNCTION_ENTRY {
 	DWORD BeginAddress;
 	DWORD EndAddress;
@@ -2762,6 +3167,35 @@ struct IMAGE_RUNTIME_FUNCTION_ENTRY {
 	DWORD PrologEndAddress;
 }
 alias IMAGE_RUNTIME_FUNCTION_ENTRY* PIMAGE_RUNTIME_FUNCTION_ENTRY;
+
+struct IMAGE_CE_RUNTIME_FUNCTION_ENTRY {
+	uint      FuncStart;
+	union {
+		ubyte PrologLen;
+		uint  _bf;
+	}
+/+
+	unsigned int FuncLen:22;
+	unsigned int ThirtyTwoBit:1;
+	unsigned int ExceptionFlag:1;
++/
+	uint FuncLen()       { return (_bf >> 8) & 0x3FFFFF; }
+	bool ThirtyTwoBit()  { return _bf & 0x40000000; }
+	bool ExceptionFlag() { return _bf & 0x80000000; }
+
+	uint FuncLen(uint f) {
+		_bf = (_bf & ~0x3FFFFF00) | ((f & 0x3FFFFF) << 8); return f & 0x3FFFFF;
+	}
+
+	bool ThirtyTwoBit(bool t) {
+		_bf = (_bf & ~0x40000000) | (t << 30); return t;
+	}
+
+	bool ExceptionFlag(bool e) {
+		_bf = (_bf & ~0x80000000) | (e << 31); return t;
+	}
+}
+alias IMAGE_CE_RUNTIME_FUNCTION_ENTRY* PIMAGE_CE_RUNTIME_FUNCTION_ENTRY;
 
 struct IMAGE_DEBUG_DIRECTORY {
 	DWORD Characteristics;
@@ -2828,6 +3262,16 @@ struct IMAGE_FUNCTION_ENTRY {
 	DWORD EndOfPrologue;
 }
 alias IMAGE_FUNCTION_ENTRY* PIMAGE_FUNCTION_ENTRY;
+
+struct IMAGE_FUNCTION_ENTRY64 {
+	ULONGLONG     StartingAddress;
+	ULONGLONG     EndingAddress;
+	union {
+		ULONGLONG EndOfPrologue;
+		ULONGLONG UnwindInfoAddress;
+	}
+}
+alias IMAGE_FUNCTION_ENTRY64* PIMAGE_FUNCTION_ENTRY64;
 
 struct IMAGE_SEPARATE_DEBUG_HEADER {
 	WORD     Signature;
@@ -2907,7 +3351,7 @@ struct REPARSE_DATA_BUFFER {
 			WORD  PrintNameOffset;
 			WORD  PrintNameLength;
 			// ??? This is in MinGW, but absent in MSDN docs
-			// ULONG Flags;
+			ULONG Flags;
 			WCHAR _PathBuffer;
 
 			WCHAR* PathBuffer() { return &_PathBuffer; }
@@ -3468,6 +3912,33 @@ static if (_WIN32_WINNT_ONLY && _WIN32_WINNT >= 0x500) {
 	extern (Windows) ULONGLONG VerSetConditionMask(ULONGLONG, DWORD, BYTE);
 }
 
-//TODO: These are actually macros, and were introduced with Win98.
+version (Win64) {
+	const WORD IMAGE_NT_OPTIONAL_HDR_MAGIC = IMAGE_NT_OPTIONAL_HDR64_MAGIC;
+
+	alias IMAGE_ORDINAL_FLAG64 IMAGE_ORDINAL_FLAG;
+	alias IMAGE_SNAP_BY_ORDINAL64 IMAGE_SNAP_BY_ORDINAL;
+	alias IMAGE_ORDINAL64 IMAGE_ORDINAL;
+	alias IMAGE_OPTIONAL_HEADER64 IMAGE_OPTIONAL_HEADER;
+	alias IMAGE_NT_HEADERS64 IMAGE_NT_HEADERS;
+	alias IMAGE_THUNK_DATA64 IMAGE_THUNK_DATA;
+	alias IMAGE_TLS_DIRECTORY64 IMAGE_TLS_DIRECTORY;
+} else {
+	const WORD IMAGE_NT_OPTIONAL_HDR_MAGIC = IMAGE_NT_OPTIONAL_HDR32_MAGIC;
+
+	alias IMAGE_ORDINAL_FLAG32 IMAGE_ORDINAL_FLAG;
+	alias IMAGE_ORDINAL32 IMAGE_ORDINAL;
+	alias IMAGE_SNAP_BY_ORDINAL32 IMAGE_SNAP_BY_ORDINAL;
+	alias IMAGE_OPTIONAL_HEADER32 IMAGE_OPTIONAL_HEADER;
+	alias IMAGE_NT_HEADERS32 IMAGE_NT_HEADERS;
+	alias IMAGE_THUNK_DATA32 IMAGE_THUNK_DATA;
+	alias IMAGE_TLS_DIRECTORY32 IMAGE_TLS_DIRECTORY;
+}
+
+alias IMAGE_OPTIONAL_HEADER* PIMAGE_OPTIONAL_HEADER;
+alias IMAGE_NT_HEADERS* PIMAGE_NT_HEADERS;
+alias IMAGE_THUNK_DATA* PIMAGE_THUNK_DATA;
+alias IMAGE_TLS_DIRECTORY* PIMAGE_TLS_DIRECTORY;
+
+// TODO: MinGW implements these in assembly.  How to translate?
 PVOID GetCurrentFiber();
 PVOID GetFiberData();
