@@ -5,6 +5,8 @@ DC := dmd.exe
 LIB := lib.exe
 
 DFLAGS := -inline -I.. -O -release -w
+#DFLAGS := -debug -g -I.. -unittest -w
+
 DFLAGS += -version=Unicode -version=WindowsVista
 
 ########################################
