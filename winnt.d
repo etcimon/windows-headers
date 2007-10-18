@@ -839,9 +839,9 @@ enum : WORD {
 	SORT_GEORGIAN_MODERN      = 1
 }
 
-WORD MAKELANGID(USHORT p, USHORT s) { return (s << 10) | p; }
-WORD PRIMARYLANGID(WORD lgid) { return lgid & 0x3FF; }
-WORD SUBLANGID(WORD lgid) { return lgid >>> 10; }
+WORD MAKELANGID(USHORT p, USHORT s) { return cast(WORD)((s << 10) | p); }
+WORD PRIMARYLANGID(WORD lgid) { return cast(WORD)(lgid & 0x3FF); }
+WORD SUBLANGID(WORD lgid) { return cast(WORD)(lgid >>> 10); }
 
 DWORD MAKELCID(WORD lgid, WORD srtid) { return (cast(DWORD) srtid << 16) | cast(DWORD) lgid; }
 // ???
@@ -1168,7 +1168,7 @@ const size_t
 
 PIMAGE_SECTION_HEADER IMAGE_FIRST_SECTION(PIMAGE_NT_HEADERS h) {
 	return cast(PIMAGE_SECTION_HEADER)
-	  (cast(void) &h.OptionalHeader + h.FileHeader.SizeOfOptionalHeader);
+		(&h.OptionalHeader + h.FileHeader.SizeOfOptionalHeader);
 }
 
 // ImageDirectoryEntryToDataEx()
@@ -3071,9 +3071,9 @@ struct IMAGE_RESOURCE_DIRECTORY_ENTRY {
 		}+/
 
 	uint NameOffset()        { return Name & 0x7FFFFFFF; }
-	bool NameIsString()      { return cast(bool) Name & 0x80000000; }
+	bool NameIsString()      { return cast(bool)(Name & 0x80000000); }
 	uint OffsetToDirectory() { return OffsetToData & 0x7FFFFFFF; }
-	bool DataIsDirectory()   { return cast(bool) OffsetToData & 0x80000000; }
+	bool DataIsDirectory()   { return cast(bool)(OffsetToData & 0x80000000); }
 
 	uint NameOffset(uint n) {
 		Name = (Name & 0x80000000) | (n & 0x7FFFFFFF);
@@ -3180,8 +3180,8 @@ struct IMAGE_CE_RUNTIME_FUNCTION_ENTRY {
 	unsigned int ExceptionFlag:1;
 +/
 	uint FuncLen()       { return (_bf >> 8) & 0x3FFFFF; }
-	bool ThirtyTwoBit()  { return _bf & 0x40000000; }
-	bool ExceptionFlag() { return _bf & 0x80000000; }
+	bool ThirtyTwoBit()  { return cast(bool)(_bf & 0x40000000); }
+	bool ExceptionFlag() { return cast(bool)(_bf & 0x80000000); }
 
 	uint FuncLen(uint f) {
 		_bf = (_bf & ~0x3FFFFF00) | ((f & 0x3FFFFF) << 8); return f & 0x3FFFFF;
@@ -3192,7 +3192,7 @@ struct IMAGE_CE_RUNTIME_FUNCTION_ENTRY {
 	}
 
 	bool ExceptionFlag(bool e) {
-		_bf = (_bf & ~0x80000000) | (e << 31); return t;
+		_bf = (_bf & ~0x80000000) | (e << 31); return e;
 	}
 }
 alias IMAGE_CE_RUNTIME_FUNCTION_ENTRY* PIMAGE_CE_RUNTIME_FUNCTION_ENTRY;
@@ -3223,24 +3223,24 @@ struct FPO_DATA {
 	WORD reserved:1;
 	WORD cbFrame:2;
 +/
-	ubyte cbRegs()  { return _bf & 0x07; }
-	bool fHasSEH()  { return _bf & 0x08; }
-	bool fUseBP()   { return _bf & 0x10; }
-	bool reserved() { return _bf & 0x20; }
-	ubyte cbFrame() { return _bf >> 6; }
+	ubyte cbRegs()  { return cast(ubyte)(_bf & 0x07); }
+	bool fHasSEH()  { return cast(bool)(_bf & 0x08); }
+	bool fUseBP()   { return cast(bool)(_bf & 0x10); }
+	bool reserved() { return cast(bool)(_bf & 0x20); }
+	ubyte cbFrame() { return cast(ubyte)(_bf >> 6); }
 
 	ubyte cbRegs(ubyte c) {
 		_bf = cast(ubyte) ((_bf & ~0x07) | (c & 0x07));
-		return c & 0x07;
+		return cast(ubyte)(c & 0x07);
 	}
 
-	bool fHasSEH(bool f)  { _bf = (&bf & ~0x08) | (f << 3); return f; }
-	bool fUseBP(bool f)   { _bf = (&bf & ~0x10) | (f << 4); return f; }
-	bool reserved(bool r) { _bf = (&bf & ~0x20) | (r << 5); return r; }
+	bool fHasSEH(bool f)  { _bf = cast(ubyte)((_bf & ~0x08) | (f << 3)); return f; }
+	bool fUseBP(bool f)   { _bf = cast(ubyte)((_bf & ~0x10) | (f << 4)); return f; }
+	bool reserved(bool r) { _bf = cast(ubyte)((_bf & ~0x20) | (r << 5)); return r; }
 
 	ubyte cbFrame(ubyte c) {
 		_bf = cast(ubyte) ((_bf & ~0xC0) | ((c & 0x03) << 6));
-		return c & 0x03;
+		return cast(ubyte)(c & 0x03);
 	}
 }
 alias FPO_DATA* PFPO_DATA;
@@ -3779,8 +3779,8 @@ struct PROCESSOR_POWER_POLICY_INFO {
 	UCHAR[2] Spare;
 	uint     _bf;
 
-	bool AllowDemotion()  { return _bf & 1; }
-	bool AllowPromotion() { return _bf & 2; }
+	bool AllowDemotion()  { return cast(bool)(_bf & 1); }
+	bool AllowPromotion() { return cast(bool)(_bf & 2); }
 
 	bool AllowDemotion(bool a)  { _bf = (_bf & ~1) | a; return a; }
 	bool AllowPromotion(bool a) { _bf = (_bf & ~2) | (a << 1); return a; }

@@ -37,7 +37,7 @@ struct DDEACK {
 
 	ubyte reserved(ubyte r) {
 		_bf = cast(ubyte) ((_bf & ~0x3F) | (r & 0x3F));
-		return r & 0x3F;
+		return cast(ubyte)(r & 0x3F);
 	}
 
 	bool fBusy(bool f) { _bf = cast(ubyte) ((_bf & ~0x40) | (f << 6)); return f; }
@@ -54,7 +54,7 @@ struct DDEADVISE {
 
 	ushort reserved(ushort r) {
 		_bf = cast(ushort) ((_bf & ~0x3FFF) | (r & 0x3FFF));
-		return r & 0x3FFF;
+		return cast(ushort)(r & 0x3FFF);
 	}
 
 	bool   fDeferUpd(bool f) { _bf = cast(ushort) ((_bf & ~0x4000) | (f << 14)); return f; }
@@ -76,7 +76,7 @@ struct DDEDATA {
 
 	ushort unused(ushort r) {
 		_bf = cast(ushort) ((_bf & ~0x0FFF) | (r & 0x0FFF));
-		return r & 0x0FFF;
+		return cast(ushort)(r & 0x0FFF);
 	}
 
 	bool   fResponse(bool f) { _bf = cast(ushort) ((_bf & ~0x1000) | (f << 12)); return f; }
@@ -98,7 +98,7 @@ struct DDEPOKE {
 
 	ushort unused(ushort u) {
 		_bf = cast(ushort) ((_bf & ~0x1FFF) | (u & 0x1FFF));
-		return u & 0x1FFF;
+		return cast(ushort)(u & 0x1FFF);
 	}
 
 	bool   fRelease(bool f)   { _bf = cast(ushort) ((_bf & ~0x2000) | (f << 13)); return f; }
@@ -116,7 +116,7 @@ deprecated struct DDELN {
 
 	ushort unused(ushort u) {
 		_bf = cast(ushort)((_bf & ~0x1FFF) | (u & 0x1FFF));
-		return u & 0x1FFF;
+		return cast(ushort)(u & 0x1FFF);
 	}
 
 	bool   fRelease(bool f)  { _bf = cast(ushort) ((_bf & ~0x2000) | (f << 13)); return f; }
@@ -139,7 +139,7 @@ deprecated struct DDEUP {
 
 	ushort unused(ushort r) {
 		_bf = cast(ushort) ((_bf & ~0x0FFF) | (r & 0x0FFF));
-		return r & 0x0FFF;
+		return cast(ushort)(r & 0x0FFF);
 	}
 
 	bool   fAck(bool f)      { _bf = cast(ushort) ((_bf & ~0x1000) | (f << 12)); return f; }
