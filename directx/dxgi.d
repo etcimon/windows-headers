@@ -1,3 +1,10 @@
+/***********************************************************************\
+*                                 dxgi.d                                *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 module win32.directx.dxgi;
 
 private import win32.windows;

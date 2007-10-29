@@ -1,3 +1,10 @@
+/***********************************************************************\
+*                                 d3d10.d                               *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 module win32.directx.d3d10;
 
 private import win32.windows;

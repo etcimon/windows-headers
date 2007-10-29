@@ -1,3 +1,10 @@
+/***********************************************************************\
+*                               d3d10misc.d                             *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                       Placed into public domain                       *
+\***********************************************************************/
 module win32.directx.d3d10misc;
 
 enum D3D10_DRIVER_TYPE {

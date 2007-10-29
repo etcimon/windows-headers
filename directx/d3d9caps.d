@@ -7,10 +7,10 @@
  *
  ***************************************************************************/
 
-module win32.d3d9caps;
+module win32.directx.d3d9caps;
 
 private import win32.windows,
-               win32.d3d9types;
+               win32.directx.d3d9types;
 
 align(4):
 

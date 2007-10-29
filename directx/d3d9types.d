@@ -7,7 +7,7 @@
  *
  ***************************************************************************/
 
-module win32.d3d9types;
+module win32.directx.d3d9types;
 
 private import win32.windows;
 

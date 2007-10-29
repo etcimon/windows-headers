@@ -6,11 +6,11 @@
  *  Content:    Direct3D include file
  *
  ****************************************************************************/
-module win32.d3d9;
+module win32.directx.d3d9;
 
 import win32.windows;
-public import win32.d3d9types;
-public import win32.d3d9caps;
+public import win32.directx.d3d9types;
+public import win32.directx.d3d9caps;
 
 const DIRECT3D_VERSION = 0x0900;
 
