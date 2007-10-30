@@ -85,6 +85,16 @@ enum : HALF_PTR {
 	MINHALF_PTR = HALF_PTR.min
 }
 
+alias byte INT8;
+alias byte* PINT8;
+alias ubyte UINT8;
+alias ubyte* PUINT8;
+
+alias short INT16;
+alias short* PINT16;
+alias ushort UINT16;
+alias ushort* PUINT16;
+
 alias int LONG32, INT32;
 alias int* PLONG32, PINT32;
 alias uint ULONG32, DWORD32, UINT32;
