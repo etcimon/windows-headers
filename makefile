@@ -25,15 +25,19 @@ win32.lib : $(OBJECTS) $(LIBRARIES)
 %.obj : %.d
 	$(DC) $^ -c $(DFLAGS)
 
-lib/%.lib :
+lib/%.lib : lib
 	$(MAKE) -C $*
 	move "$*\$*.lib" "$@"
+
+lib :
+	mkdir lib
 
 clean :
 	del win32.lib *.obj
 
 cleanall : clean
 	del lib\*.lib
+	rmdir lib
 	for %%f in ($(LIBS)) do ($(MAKE) -C %%f cleanall)
 
 .PHONY : clean cleanall
