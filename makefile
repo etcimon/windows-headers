@@ -33,11 +33,11 @@ lib :
 	mkdir lib
 
 clean :
-	del win32.lib *.obj
+	-del win32.lib *.obj
 
 cleanall : clean
-	del lib\*.lib
-	rmdir lib
-	for %%f in ($(LIBS)) do ($(MAKE) -C %%f cleanall)
+	-del lib\*.lib
+	-rmdir lib
+	-for %%f in ($(LIBS)) do ($(MAKE) -C %%f cleanall)
 
 .PHONY : clean cleanall

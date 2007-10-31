@@ -23,7 +23,7 @@ directx.lib : $(OBJECTS)
 	$(DC) $^ -c $(DFLAGS)
 
 clean :
-	del directx.lib *.obj
+	-del directx.lib *.obj
 
 cleanall : clean
 	
