@@ -153,18 +153,13 @@ interface ID3DX10Font : IUnknown {
 	HRESULT PreloadTextW(LPCWSTR pString, INT Count);
 	INT DrawTextA(ID3DX10Sprite pSprite, LPCSTR pString, INT Count, LPRECT pRect, UINT Format, D3DXCOLOR Color);
 	INT DrawTextW(ID3DX10Sprite pSprite, LPCWSTR pString, INT Count, LPRECT pRect, UINT Format, D3DXCOLOR Color);
-}
-
-version(Unicode) {
-	alias GetTextMetricsW GetTextMetrics;
-} else {
-	alias GetTextMetricsA GetTextMetrics;
-}
-
-version(Unicode) {
-	alias DrawTextW DrawText;
-} else {
-	alias DrawTextA DrawText;
+	version(Unicode) {
+		alias GetTextMetricsW GetTextMetrics;
+		alias DrawTextW DrawText;
+	} else {
+		alias GetTextMetricsA GetTextMetrics;
+		alias DrawTextA DrawText;
+	}
 }
 
 extern(Windows) {
