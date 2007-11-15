@@ -13,6 +13,27 @@ pragma(lib, "advapi32.lib");
 
 private import win32.w32api, win32.winbase, win32.windef;
 
+static if (_WIN32_WINNT >= 0x0600) {
+	//
+	// RRF - Registry Routine Flags (for RegGetValue)
+	//
+
+	enum : DWORD {
+		RRF_RT_REG_NONE      = 0x00000001,
+		RRF_RT_REG_SZ        = 0x00000002,
+		RRF_RT_REG_EXPAND_SZ = 0x00000004,
+		RRF_RT_REG_BINARY    = 0x00000008,
+		RRF_RT_REG_DWORD     = 0x00000010,
+		RRF_RT_REG_MULTI_SZ  = 0x00000020,
+		RRF_RT_REG_QWORD     = 0x00000040,
+		RRF_RT_DWORD         = RRF_RT_REG_BINARY | RRF_RT_REG_DWORD,
+		RRF_RT_QWORD         = RRF_RT_REG_BINARY | RRF_RT_REG_QWORD,
+		RRF_RT_ANY           = 0x0000FFFF,
+		RRF_NOEXPAND         = 0x10000000,
+		RRF_ZEROONFAILURE    = 0x20000000,
+	}
+}
+
 const HKEY
 	HKEY_CLASSES_ROOT     = cast(HKEY) 0x80000000,
 	HKEY_CURRENT_USER     = cast(HKEY) 0x80000001,
@@ -115,6 +136,10 @@ extern (Windows) {
 	LONG RegSetValueExW(HKEY, LPCWSTR, DWORD, DWORD, BYTE*, DWORD);
 	LONG RegUnLoadKeyA(HKEY, LPCSTR);
 	LONG RegUnLoadKeyW(HKEY, LPCWSTR);
+	static if (_WIN32_WINNT >= 0x0600) {
+		LONG RegGetValueA(HKEY hkey, LPCSTR lpSubKey, LPCSTR lpValue, DWORD dwFlags, LPDWORD pdwType, PVOID pvData, LPDWORD pcbData);
+		LONG RegGetValueW(HKEY hkey, LPCWSTR lpSubKey, LPCWSTR lpValue, DWORD dwFlags, LPDWORD pdwType, PVOID pvData, LPDWORD pcbData);
+	}
 
 	static if (_WIN32_WINDOWS >= 0x410) {
 		LONG RegNotifyChangeKeyValue(HKEY, BOOL, DWORD, HANDLE, BOOL);
@@ -175,6 +200,9 @@ version (Unicode) {
 	alias RegSaveKeyW RegSaveKey;
 	alias RegSetValueExW RegSetValueEx;
 	alias RegUnLoadKeyW RegUnLoadKey;
+	static if (_WIN32_WINNT >= 0x0600) {
+		alias RegGetValueW RegGetValue;
+	}
 	static if (_WIN32_WINNT_ONLY) {
 		alias AbortSystemShutdownW AbortSystemShutdown;
 		alias InitiateSystemShutdownW InitiateSystemShutdown;
@@ -207,6 +235,9 @@ version (Unicode) {
 	alias RegSaveKeyA RegSaveKey;
 	alias RegSetValueExA RegSetValueEx;
 	alias RegUnLoadKeyA RegUnLoadKey;
+	static if (_WIN32_WINNT >= 0x0600) {
+		alias RegGetValueA RegGetValue;
+	}
 	static if (_WIN32_WINNT_ONLY) {
 		alias AbortSystemShutdownA AbortSystemShutdown;
 		alias InitiateSystemShutdownA InitiateSystemShutdown;
