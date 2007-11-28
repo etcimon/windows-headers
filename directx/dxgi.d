@@ -1,9 +1,9 @@
 /***********************************************************************\
-*                                 dxgi.d                               * 
-*                                                                      * 
-*                       Windows API header module                      * 
-*                                                                      * 
-*                       Placed into public domain                      * 
+*                                 dxgi.d                                *
+*                                                                       *
+*                       Windows API header module                       *
+*                                                                       *
+*                       Placed into public domain                       *
 \***********************************************************************/
 module win32.directx.dxgi;
 
@@ -157,6 +157,14 @@ interface IDXGIOutput : IDXGIObject {
 	HRESULT SetDisplaySurface(IDXGISurface pScanoutSurface);
 	HRESULT GetDisplaySurfaceData(IDXGISurface pDestination);
 	HRESULT GetFrameStatistics(DXGI_FRAME_STATISTICS* pStats);
+}
+
+const DXGI_MAX_SWAP_CHAIN_BUFFERS = 16;
+
+enum {
+	DXGI_PRESENT_TEST				= 0x00000001,
+	DXGI_PRESENT_DO_NOT_SEQUENCE	= 0x00000002,
+	DXGI_PRESENT_RESTART			= 0x00000004
 }
 
 interface IDXGISwapChain : IDXGIDeviceSubObject {
