@@ -153,8 +153,11 @@ enum D3D10_INCLUDE_TYPE {
 }
 
 interface ID3D10Include {
+/* TODO: fix vtbl[0] bug
+	extern(Windows) :
 	HRESULT Open(D3D10_INCLUDE_TYPE IncludeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID* ppData, UINT* pBytes);
 	HRESULT Close(LPCVOID pData);
+	*/
 }
 
 struct D3D10_SHADER_DESC {
@@ -238,30 +241,40 @@ struct D3D10_SIGNATURE_PARAMETER_DESC {
 extern(C) const GUID IID_ID3D10ShaderReflectionType = {0xc530ad7d, 0x9b16, 0x4395, [0xa9, 0x79, 0xba, 0x2e, 0xcf, 0xf8, 0x3a, 0xdd]};
 
 interface ID3D10ShaderReflectionType {
+/* TODO: fix vtbl[0] bug
+	extern(Windows) :
 	HRESULT GetDesc(D3D10_SHADER_TYPE_DESC* pDesc);
 	ID3D10ShaderReflectionType* GetMemberTypeByIndex(UINT Index);
 	ID3D10ShaderReflectionType* GetMemberTypeByName(LPCSTR Name);
 	LPCSTR GetMemberTypeName(UINT Index);
+	*/
 }
 
 extern(C) const GUID IID_ID3D10ShaderReflectionVariable = {0x1bf63c95, 0x2650, 0x405d, [0x99, 0xc1, 0x36, 0x36, 0xbd, 0x1d, 0xa0, 0xa1]};
 
 interface ID3D10ShaderReflectionVariable {
+/* TODO: fix vtbl[0] bug
+	extern(Windows) :
 	HRESULT GetDesc(D3D10_SHADER_VARIABLE_DESC* pDesc);
 	ID3D10ShaderReflectionType* GetType();
+	*/
 }
 
 extern(C) const GUID IID_ID3D10ShaderReflectionConstantBuffer = {0x66c66a94, 0xdddd, 0x4b62, [0xa6, 0x6a, 0xf0, 0xda, 0x33, 0xc2, 0xb4, 0xd0]};
 
 interface ID3D10ShaderReflectionConstantBuffer {
+/* TODO: fix vtbl[0] bug
+	extern(Windows) :
 	HRESULT GetDesc(D3D10_SHADER_BUFFER_DESC* pDesc);
 	ID3D10ShaderReflectionVariable* GetVariableByIndex(UINT Index);
 	ID3D10ShaderReflectionVariable* GetVariableByName(LPCSTR Name);
+	*/
 }
 
 extern(C) const GUID IID_ID3D10ShaderReflection = {0xd40e20b6, 0xf8f7, 0x42ad, [0xab, 0x20, 0x4b, 0xaf, 0x8f, 0x15, 0xdf, 0xaa]};
 
 interface ID3D10ShaderReflection : IUnknown {
+	extern(Windows) :
 	HRESULT QueryInterface(REFIID iid, LPVOID* ppv);
 	ULONG AddRef();
 	ULONG Release();

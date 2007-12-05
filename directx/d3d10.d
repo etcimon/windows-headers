@@ -843,7 +843,6 @@ interface ID3D10PixelShader : ID3D10DeviceChild { }
 
 interface ID3D10InputLayout : ID3D10DeviceChild { }
 
-
 enum D3D10_FILTER {
 	D3D10_FILTER_MIN_MAG_MIP_POINT							= 0x00,
 	D3D10_FILTER_MIN_MAG_POINT_MIP_LINEAR					= 0x01,

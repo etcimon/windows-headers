@@ -76,17 +76,21 @@ interface ID3DX10Sprite : IUnknown {
 extern(Windows) HRESULT D3DX10CreateSprite(ID3D10Device pDevice, UINT cDeviceBufferSize, ID3DX10Sprite* ppSprite);
 
 interface ID3DX10DataLoader {
+/* TODO: fix vtbl[0] bug
 	extern(Windows) :
 	HRESULT Load();
 	HRESULT Decompress(void** ppData, SIZE_T* pcBytes);
 	HRESULT Destroy();
+	*/
 }
 
 interface ID3DX10DataProcessor {
+/* TODO: fix vtbl[0] bug
 	extern(Windows) :
 	HRESULT Process(void* pData, SIZE_T cBytes);
 	HRESULT CreateDeviceObject(void** ppDataObject);
 	HRESULT Destroy();
+	*/
 }
 
 extern(C) const GUID IID_ID3DX10ThreadPump = {0xc93fecfa, 0x6967, 0x478a, [0xab, 0xbc, 0x40, 0x2d, 0x90, 0x62, 0x1f, 0xcb]};

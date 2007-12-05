@@ -60,12 +60,14 @@ struct D3DX10_INTERSECT_INFO {
 }
 
 interface ID3DX10MeshBuffer : IUnknown {
+	extern(Windows) :
     HRESULT Map(void** ppData, SIZE_T* pSize);
     HRESULT Unmap();
     SIZE_T GetSize();
 }
 
 interface ID3DX10Mesh : IUnknown {
+	extern(Windows) :
     UINT GetFaceCount();
     UINT GetVertexCount();
     UINT GetVertexBufferCount();
@@ -123,6 +125,7 @@ struct D3DX10_SKINNING_CHANNEL {
 }
 
 interface ID3DX10SkinInfo : IUnknown {
+	extern(Windows) :
 	HRESULT QueryInterface(REFIID iid, LPVOID* ppv);
 	ULONG AddRef();
 	ULONG Release();
