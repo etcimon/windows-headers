@@ -12,6 +12,8 @@ private import win32.windows;
 public import win32.directx.dxgitype;
 public import win32.directx.dxgi;
 public import win32.directx.d3d10misc;
+public import win32.directx.d3d10shader;
+public import win32.directx.d3d10effect;
 
 pragma(lib, "d3d10.lib");
 

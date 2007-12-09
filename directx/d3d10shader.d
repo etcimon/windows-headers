@@ -10,6 +10,10 @@ module win32.directx.d3d10shader;
 private import win32.windows;
 private import win32.directx.d3d10;
 
+// some forward references...
+enum D3D10_PRIMITIVE_TOPOLOGY;
+enum D3D10_SRV_DIMENSION;
+
 uint D3D10_TX_VERSION(uint _Major, uint _Minor) {
 	return ('T' << 24) | ('X' << 16) | (_Major << 8) | _Minor;
 }
