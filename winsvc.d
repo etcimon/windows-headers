@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.winsvc;
-pragma(lib, "advapi.lib");
+pragma(lib, "advapi32.lib");
 
 private import win32.w32api, win32.windef;
 
