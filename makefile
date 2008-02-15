@@ -11,9 +11,9 @@ DFLAGS += -version=Unicode -version=WindowsVista
 
 ########################################
 
-EXCEPTIONS := winsock.d
+EXCLUSIONS := winsock.d
 
-SOURCES := $(filter-out $(EXCEPTIONS), $(wildcard *.d))
+SOURCES := $(filter-out $(EXCLUSIONS), $(wildcard *.d))
 OBJECTS := $(SOURCES:.d=.obj)
 
 LIBS := directx
