@@ -1176,7 +1176,6 @@ extern(C) {
 	alias int function(LPWSABUF, LPWSABUF, LPQOS, LPQOS, LPWSABUF, LPWSABUF, GROUP *, DWORD) LPCONDITIONPROC;
 }
 
-// TODO: Below fptr was defined as "WINAPI" for linkage; is this right?
 extern(Windows) {
 	alias void function(DWORD, DWORD, LPWSAOVERLAPPED, DWORD) LPWSAOVERLAPPED_COMPLETION_ROUTINE;
 }

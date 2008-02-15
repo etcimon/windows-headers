@@ -1172,8 +1172,13 @@ alias DEBUG_EVENT* LPDEBUG_EVENT;
 struct OVERLAPPED {
 	ULONG_PTR Internal;
 	ULONG_PTR InternalHigh;
-	DWORD     Offset;
-	DWORD     OffsetHigh;
+	union {
+		struct {
+			DWORD     Offset;
+			DWORD     OffsetHigh;
+		}
+		PVOID     Pointer;
+	}
 	HANDLE    hEvent;
 }
 alias OVERLAPPED* POVERLAPPED, LPOVERLAPPED;
