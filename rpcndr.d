@@ -214,6 +214,16 @@ struct MIDL_STUB_MESSAGE {
 }
 alias MIDL_STUB_MESSAGE * PMIDL_STUB_MESSAGE;
 
+extern (Windows) {
+	alias void* function (void*) GENERIC_BINDING_ROUTINE;
+	alias void function (void*,ubyte*) GENERIC_UNBIND_ROUTINE;
+	alias uint function (uint *,uint,void *) USER_MARSHAL_SIZING_ROUTINE;
+	alias ubyte * function (uint *,ubyte *,void *) USER_MARSHAL_MARSHALLING_ROUTINE;
+	alias ubyte * function (uint *,ubyte *,void *) USER_MARSHAL_UNMARSHALLING_ROUTINE;
+	alias void function (uint *,void *) USER_MARSHAL_FREEING_ROUTINE;
+	alias void function () NDR_NOTIFY_ROUTINE;
+}
+
 align:
 struct GENERIC_BINDING_ROUTINE_PAIR {
 	GENERIC_BINDING_ROUTINE pfnBind;
@@ -379,14 +389,7 @@ typedef void * RPC_SS_THREAD_HANDLE;
 extern (Windows) {
 alias void function (void*) NDR_RUNDOWN;
 alias void function (_MIDL_STUB_MESSAGE*) EXPR_EVAL;
-alias void* function (void*) GENERIC_BINDING_ROUTINE;
-alias void function (void*,ubyte*) GENERIC_UNBIND_ROUTINE;
 alias void function(PMIDL_STUB_MESSAGE) XMIT_HELPER_ROUTINE;
-alias uint function (uint *,uint,void *) USER_MARSHAL_SIZING_ROUTINE;
-alias ubyte * function (uint *,ubyte *,void *) USER_MARSHAL_MARSHALLING_ROUTINE;
-alias ubyte * function (uint *,ubyte *,void *) USER_MARSHAL_UNMARSHALLING_ROUTINE;
-alias void function (uint *,void *) USER_MARSHAL_FREEING_ROUTINE;
-alias void function () NDR_NOTIFY_ROUTINE;
 alias void function (RPC_BINDING_HANDLE,uint,uint,IDL_CS_CONVERT*,uint*,error_status_t*) CS_TYPE_NET_SIZE_ROUTINE;
 alias void function (RPC_BINDING_HANDLE,uint,uint,IDL_CS_CONVERT*,uint*,error_status_t*) CS_TYPE_LOCAL_SIZE_ROUTINE;
 alias void function (RPC_BINDING_HANDLE,uint,void*,uint,byte*,uint*,error_status_t*) CS_TYPE_TO_NETCS_ROUTINE;

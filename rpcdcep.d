@@ -105,6 +105,8 @@ struct RPC_TRANSFER_SYNTAX {
 alias RPC_STATUS function(void*, void*, void*) RPC_BLOCKING_FN;
 
 extern (Windows) {
+	alias void function(void*) PRPC_RUNDOWN;
+	
 	int    I_RpcGetBuffer(RPC_MESSAGE*);
 	int    I_RpcSendReceive(RPC_MESSAGE*);
 	int    I_RpcSend(RPC_MESSAGE*);
@@ -147,8 +149,6 @@ extern (Windows) {
 	int   I_RpcServerThreadContinueListening();
 	int   I_RpcServerUnregisterEndpointA(ubyte*, ubyte*);
 	int   I_RpcServerUnregisterEndpointW(ushort*, ushort*);
-
-	alias void function(void*) PRPC_RUNDOWN;
 }
 
 version(Unicode) {
