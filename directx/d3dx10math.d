@@ -7,7 +7,12 @@
 \***********************************************************************/
 module win32.directx.d3dx10math;
 
-import std.c.math;
+version(Tango) {
+    import tango.math.Math;
+    alias sqrt sqrtf;
+} else {
+    import std.c.math;
+}
 
 private import win32.windows;
 private import win32.directx.d3dx10;
