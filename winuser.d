@@ -3607,6 +3607,40 @@ struct RAWINPUTDEVICELIST {
 	DWORD dwType;
 }
 alias RAWINPUTDEVICELIST* PRAWINPUTDEVICELIST;
+
+struct RID_DEVICE_INFO_MOUSE {
+	DWORD dwId;
+	DWORD dwNumberOfButtons;
+	DWORD dwSampleRate;
+	BOOL  fHasHorizontalWheel;
+}
+
+struct RID_DEVICE_INFO_KEYBOARD {
+	DWORD dwType;
+	DWORD dwSubType;
+	DWORD dwKeyboardMode;
+	DWORD dwNumberOfFunctionKeys;
+	DWORD dwNumberOfIndicators;
+	DWORD dwNumberOfKeysTotal;
+}
+
+struct RID_DEVICE_INFO_HID {
+	DWORD dwVendorId;
+	DWORD dwProductId;
+	DWORD dwVersionNumber;
+	USHORT usUsagePage;
+	USHORT usUsage;
+}
+
+struct RID_DEVICE_INFO {
+	DWORD cbSize;
+	DWORD dwType;
+	union {
+		RID_DEVICE_INFO_MOUSE mouse;
+		RID_DEVICE_INFO_KEYBOARD keyboard;
+		RID_DEVICE_INFO_HID hid;
+	}
+}
 }// (_WIN32_WINNT >= 0x501)
 
 struct MSLLHOOKSTRUCT {
