@@ -156,12 +156,13 @@ interface LPDIRECT3D9 : public IUnknown
     HRESULT GetDeviceCaps( UINT Adapter,D3DDEVTYPE DeviceType,D3DCAPS9* pCaps);
     HMONITOR GetAdapterMonitor(UINT Adapter);
     HRESULT CreateDevice( UINT Adapter,D3DDEVTYPE DeviceType,HWND hFocusWindow,DWORD BehaviorFlags,D3DPRESENT_PARAMETERS* pPresentationParameters,LPDIRECT3DDEVICE9* ppReturnedDeviceInterface);
-    
+/*
     debug {
         LPCWSTR Version;
     }
+*/
 }
-//alias IDirect3D9 LPDIRECT3D9, PDIRECT3D9;
+alias LPDIRECT3D9 IDirect3D9;
 
 interface LPDIRECT3DDEVICE9 : public IUnknown
 {
@@ -281,13 +282,13 @@ interface LPDIRECT3DDEVICE9 : public IUnknown
     HRESULT DrawTriPatch( UINT Handle, float* pNumSegs, D3DTRIPATCH_INFO* pTriPatchInfo);
     HRESULT DeletePatch( UINT Handle);
     HRESULT CreateQuery( D3DQUERYTYPE Type,LPDIRECT3DQUERY9* ppQuery);
-    
+/*
     debug {
         D3DDEVICE_CREATION_PARAMETERS CreationParameters;
         D3DPRESENT_PARAMETERS PresentParameters;
         D3DDISPLAYMODE DisplayMode;
         D3DCAPS9 Caps;
-        
+
         UINT AvailableTextureMem;
         UINT SwapChains;
         UINT Textures;
@@ -295,29 +296,31 @@ interface LPDIRECT3DDEVICE9 : public IUnknown
         UINT IndexBuffers;
         UINT VertexShaders;
         UINT PixelShaders;
-        
+
         D3DVIEWPORT9 Viewport;
         D3DMATRIX ProjectionMatrix;
         D3DMATRIX ViewMatrix;
         D3DMATRIX WorldMatrix;
         D3DMATRIX TextureMatrices[8];
-        
+
         DWORD FVF;
         UINT VertexSize;
         DWORD VertexShaderVersion;
         DWORD PixelShaderVersion;
         BOOL SoftwareVertexProcessing;
-        
+
         D3DMATERIAL9 Material;
         D3DLIGHT9 Lights[16];
         BOOL LightsEnabled[16];
-        
+
         D3DGAMMARAMP GammaRamp;
         RECT ScissorRect;
         BOOL DialogBoxMode;
     }
+*/
 }
-//alias IDirect3DDevice9 LPDIRECT3DDEVICE9, PDIRECT3DDEVICE9;
+
+alias LPDIRECT3DDEVICE9 IDirect3DDevice9;
 
 
 interface LPDIRECT3DSTATEBLOCK9 : public IUnknown
@@ -325,12 +328,14 @@ interface LPDIRECT3DSTATEBLOCK9 : public IUnknown
     HRESULT GetDevice(LPDIRECT3DDEVICE9* ppDevice);
     HRESULT Capture();
     HRESULT Apply();
-    
+/*
     debug {
         LPCWSTR CreationCallStack;
     }
-} 
-//alias IDirect3DStateBlock9 LPDIRECT3DSTATEBLOCK9, PDIRECT3DSTATEBLOCK9;
+*/
+}
+
+alias LPDIRECT3DSTATEBLOCK9 IDirect3DStateBlock9;
 
 interface LPDIRECT3DSWAPCHAIN9 : public IUnknown
 {
@@ -341,14 +346,16 @@ interface LPDIRECT3DSWAPCHAIN9 : public IUnknown
     HRESULT GetDisplayMode( D3DDISPLAYMODE* pMode);
     HRESULT GetDevice( LPDIRECT3DDEVICE9 * ppDevice);
     HRESULT GetPresentParameters( D3DPRESENT_PARAMETERS* pPresentationParameters);
-    
+/*
     debug {
         D3DPRESENT_PARAMETERS PresentParameters;
         D3DDISPLAYMODE DisplayMode;
         LPCWSTR CreationCallStack;
     }
+*/
 }
-//alias IDirect3DSwapChain9 LPDIRECT3DSWAPCHAIN9, PDIRECT3DSWAPCHAIN9;
+
+alias LPDIRECT3DSWAPCHAIN9 IDirect3DSwapChain9;
 
 interface LPDIRECT3DRESOURCE9 : public IUnknown
 {
@@ -361,42 +368,49 @@ interface LPDIRECT3DRESOURCE9 : public IUnknown
     void PreLoad();
     D3DRESOURCETYPE GetType();
 }
-//alias IDirect3DResource9 LPDIRECT3DRESOURCE9, PDIRECT3DRESOURCE9;
+
+alias LPDIRECT3DRESOURCE9 IDirect3DResource9;
 
 interface LPDIRECT3DVERTEXDECLARATION9 : public IUnknown
 {
     HRESULT GetDevice( LPDIRECT3DDEVICE9* ppDevice);
     HRESULT GetDeclaration( D3DVERTEXELEMENT9* pElement,UINT* pNumElements);
-    
+/*
     debug {
         LPCWSTR CreationCallStack;
     }
-} 
-//alias IDirect3DVertexDeclaration9 LPDIRECT3DVERTEXDECLARATION9, PDIRECT3DVERTEXDECLARATION9;
+*/
+}
+
+alias LPDIRECT3DVERTEXDECLARATION9 IDirect3DVertexDeclaration9;
 
 interface LPDIRECT3DVERTEXSHADER9 : public IUnknown
 {
     HRESULT GetDevice( LPDIRECT3DDEVICE9 * ppDevice);
     HRESULT GetFunction( void*,UINT* pSizeOfData);
-    
+/*
     debug {
         DWORD Version;
         LPCWSTR CreationCallStack;
     }
+*/
 }
-//alias IDirect3DVertexShader9 LPDIRECT3DVERTEXSHADER9, PDIRECT3DVERTEXSHADER9;
+
+alias LPDIRECT3DVERTEXSHADER9 IDirect3DVertexShader9;
 
 interface LPDIRECT3DPIXELSHADER9 : public IUnknown
 {
     HRESULT GetDevice( LPDIRECT3DDEVICE9 * ppDevice);
     HRESULT GetFunction( void*,UINT* pSizeOfData);
-    
+/*
     debug {
         DWORD Version;
         LPCWSTR CreationCallStack;
     }
+*/
 }
-//alias IDirect3DPixelShader9 LPDIRECT3DPIXELSHADER9, PDIRECT3DPIXELSHADER9;
+
+alias LPDIRECT3DPIXELSHADER9 IDirect3DPixelShader9;
 
 interface LPDIRECT3DBASETEXTURE9 : public LPDIRECT3DRESOURCE9
 {
@@ -407,7 +421,8 @@ interface LPDIRECT3DBASETEXTURE9 : public LPDIRECT3DRESOURCE9
     D3DTEXTUREFILTERTYPE GetAutoGenFilterType();
     void GenerateMipSubLevels();
 }
-//alias IDirect3DBaseTexture9 LPDIRECT3DBASETEXTURE9, PDIRECT3DBASETEXTURE9;
+
+alias LPDIRECT3DBASETEXTURE9 IDirect3DBaseTexture9;
 
 interface LPDIRECT3DTEXTURE9 : public LPDIRECT3DBASETEXTURE9
 {
@@ -416,7 +431,7 @@ interface LPDIRECT3DTEXTURE9 : public LPDIRECT3DBASETEXTURE9
     HRESULT LockRect( UINT Level,D3DLOCKED_RECT* pLockedRect,RECT* pRect,DWORD Flags);
     HRESULT UnlockRect( UINT Level);
     HRESULT AddDirtyRect(RECT* pDirtyRect);
-    
+/*
     debug {
         LPCWSTR Name;
         UINT Width;
@@ -431,8 +446,10 @@ interface LPDIRECT3DTEXTURE9 : public LPDIRECT3DBASETEXTURE9
         UINT LockCount;
         LPCWSTR CreationCallStack;
     }
+*/
 }
-//alias IDirect3DTexture9 LPDIRECT3DTEXTURE9, PDIRECT3DTEXTURE9;
+
+alias LPDIRECT3DTEXTURE9 IDirect3DTexture9;
 
 interface LPDIRECT3DVOLUMETEXTURE9 : public LPDIRECT3DBASETEXTURE9
 {
@@ -441,7 +458,7 @@ interface LPDIRECT3DVOLUMETEXTURE9 : public LPDIRECT3DBASETEXTURE9
     HRESULT LockBox( UINT Level,D3DLOCKED_BOX* pLockedVolume, D3DBOX* pBox,DWORD Flags);
     HRESULT UnlockBox( UINT Level);
     HRESULT AddDirtyBox( D3DBOX* pDirtyBox);
-    
+/*
     debug {
         LPCWSTR Name;
         UINT Width;
@@ -457,8 +474,10 @@ interface LPDIRECT3DVOLUMETEXTURE9 : public LPDIRECT3DBASETEXTURE9
         UINT LockCount;
         LPCWSTR CreationCallStack;
     }
+*/
 }
-//alias IDirect3DVolumeTexture9 LPDIRECT3DVOLUMETEXTURE9, PDIRECT3DVOLUMETEXTURE9;
+
+alias LPDIRECT3DVOLUMETEXTURE9 IDirect3DVolumeTexture9;
 
 interface LPDIRECT3DCUBETEXTURE9 : public LPDIRECT3DBASETEXTURE9
 {
@@ -467,7 +486,7 @@ interface LPDIRECT3DCUBETEXTURE9 : public LPDIRECT3DBASETEXTURE9
     HRESULT LockRect( D3DCUBEMAP_FACES FaceType,UINT Level,D3DLOCKED_RECT* pLockedRect, RECT* pRect,DWORD Flags);
     HRESULT UnlockRect( D3DCUBEMAP_FACES FaceType,UINT Level);
     HRESULT AddDirtyRect( D3DCUBEMAP_FACES FaceType, RECT* pDirtyRect);
-    
+/*
     debug {
         LPCWSTR Name;
         UINT Width;
@@ -482,15 +501,17 @@ interface LPDIRECT3DCUBETEXTURE9 : public LPDIRECT3DBASETEXTURE9
         UINT LockCount;
         LPCWSTR CreationCallStack;
     }
+*/
 }
-//alias IDirect3DCubeTexture9 LPDIRECT3DCUBETEXTURE9, PDIRECT3DCUBETEXTURE9;
+
+alias LPDIRECT3DCUBETEXTURE9 IDirect3DCubeTexture9;
 
 interface LPDIRECT3DVERTEXBUFFER9 : public LPDIRECT3DRESOURCE9
 {
     HRESULT Lock( UINT OffsetToLock,UINT SizeToLock,void** ppbData,DWORD Flags);
     HRESULT Unlock();
     HRESULT GetDesc( D3DVERTEXBUFFER_DESC *pDesc);
-    
+/*
     debug {
         LPCWSTR Name;
         UINT Length;
@@ -501,15 +522,17 @@ interface LPDIRECT3DVERTEXBUFFER9 : public LPDIRECT3DRESOURCE9
         UINT LockCount;
         LPCWSTR CreationCallStack;
     }
+*/
 }
-//alias IDirect3DVertexBuffer9 LPDIRECT3DVERTEXBUFFER9, PDIRECT3DVERTEXBUFFER9;
+
+alias LPDIRECT3DVERTEXBUFFER9 IDirect3DVertexBuffer9;
 
 interface LPDIRECT3DINDEXBUFFER9 : public LPDIRECT3DRESOURCE9
 {
     HRESULT Lock( UINT OffsetToLock,UINT SizeToLock,void** ppbData,DWORD Flags);
     HRESULT Unlock();
     HRESULT GetDesc( D3DINDEXBUFFER_DESC *pDesc);
-    
+/*
     debug {
         LPCWSTR Name;
         UINT Length;
@@ -520,8 +543,10 @@ interface LPDIRECT3DINDEXBUFFER9 : public LPDIRECT3DRESOURCE9
         UINT LockCount;
         LPCWSTR CreationCallStack;
     }
+*/
 }
-//alias IDirect3DIndexBuffer9 LPDIRECT3DINDEXBUFFER9, PDIRECT3DINDEXBUFFER9;
+
+alias LPDIRECT3DINDEXBUFFER9 IDirect3DIndexBuffer9;
 
 interface LPDIRECT3DSURFACE9 : public LPDIRECT3DRESOURCE9
 {
@@ -531,7 +556,7 @@ interface LPDIRECT3DSURFACE9 : public LPDIRECT3DRESOURCE9
     HRESULT UnlockRect();
     HRESULT GetDC( HDC *phdc);
     HRESULT ReleaseDC( HDC hdc);
-    
+/*
     debug {
         LPCWSTR Name;
         UINT Width;
@@ -546,8 +571,10 @@ interface LPDIRECT3DSURFACE9 : public LPDIRECT3DRESOURCE9
         UINT DCCount;
         LPCWSTR CreationCallStack;
     }
+*/
 }
-//alias IDirect3DSurface9 LPDIRECT3DSURFACE9, PDIRECT3DSURFACE9;
+
+alias LPDIRECT3DSURFACE9 IDirect3DSurface9;
 
 interface LPDIRECT3DVOLUME9 : public IUnknown
 {
@@ -559,7 +586,7 @@ interface LPDIRECT3DVOLUME9 : public IUnknown
     HRESULT GetDesc( D3DVOLUME_DESC *pDesc);
     HRESULT LockBox( D3DLOCKED_BOX * pLockedVolume, D3DBOX* pBox,DWORD Flags);
     HRESULT UnlockBox();
-    
+/*
     debug {
         LPCWSTR Name;
         UINT Width;
@@ -571,8 +598,10 @@ interface LPDIRECT3DVOLUME9 : public IUnknown
         UINT LockCount;
         LPCWSTR CreationCallStack;
     }
+*/
 }
-//alias IDirect3DVolume9 LPDIRECT3DVOLUME9, PDIRECT3DVOLUME9;
+
+alias LPDIRECT3DVOLUME9 IDirect3DVolume9;
 
 interface LPDIRECT3DQUERY9 : public IUnknown
 {
@@ -581,14 +610,16 @@ interface LPDIRECT3DQUERY9 : public IUnknown
     DWORD GetDataSize();
     HRESULT Issue( DWORD dwIssueFlags);
     HRESULT GetData( void* pData,DWORD dwSize,DWORD dwGetDataFlags);
-    
+/*
     debug {
         D3DQUERYTYPE Type;
         DWORD DataSize;
         LPCWSTR CreationCallStack;
     }
+*/
 }
-//alias IDirect3DQuery9 LPDIRECT3DQUERY9, PDIRECT3DQUERY9;
+
+alias LPDIRECT3DQUERY9 IDirect3DQuery9;
 
 /****************************************************************************
  * Flags for SetPrivateData method on all D3D9 interfaces
@@ -619,9 +650,9 @@ const D3DCREATE_DISABLE_DRIVER_MANAGEMENT = 0x00000100L;
 const D3DCREATE_ADAPTERGROUP_DEVICE = 0x00000200L;
 const D3DCREATE_DISABLE_DRIVER_MANAGEMENT_EX = 0x00000400L;
 
-// This flag causes the D3D runtime not to alter the focus 
+// This flag causes the D3D runtime not to alter the focus
 // window in any way. Use with caution- the burden of supporting
-// focus management events (alt-tab, etc.) falls on the 
+// focus management events (alt-tab, etc.) falls on the
 // application, and appropriate responses (switching display
 // mode, etc.) should be coded.
 const D3DCREATE_NOWINDOWCHANGES = 0x00000800L;
@@ -772,7 +803,8 @@ interface LPDIRECT3D9EX : public LPDIRECT3D9
     HRESULT CreateDeviceEx( UINT Adapter,D3DDEVTYPE DeviceType,HWND hFocusWindow,DWORD BehaviorFlags,D3DPRESENT_PARAMETERS* pPresentationParameters,D3DDISPLAYMODEEX* pFullscreenDisplayMode,LPDIRECT3DDEVICE9EX* ppReturnedDeviceInterface);
     HRESULT GetAdapterLUID( UINT Adapter,LUID * pLUID);
 }
-//alias IDirect3D9Ex LPDIRECT3D9EX, PDIRECT3D9EX;
+
+alias LPDIRECT3D9EX IDirect3D9Ex;
 
 interface LPDIRECT3DDEVICE9EX : public LPDIRECT3DDEVICE9
 {
@@ -792,7 +824,8 @@ interface LPDIRECT3DDEVICE9EX : public LPDIRECT3DDEVICE9
     HRESULT ResetEx( D3DPRESENT_PARAMETERS* pPresentationParameters,D3DDISPLAYMODEEX *pFullscreenDisplayMode);
     HRESULT GetDisplayModeEx( UINT iSwapChain,D3DDISPLAYMODEEX* pMode,D3DDISPLAYROTATION* pRotation);
 }
-//alias IDirect3DDevice9Ex LPDIRECT3DDEVICE9EX, PDIRECT3DDEVICE9EX;
+
+alias LPDIRECT3DDEVICE9EX IDirect3DDevice9Ex;
 
 interface LPDIRECT3DSWAPCHAIN9EX : public LPDIRECT3DSWAPCHAIN9
 {
@@ -800,4 +833,5 @@ interface LPDIRECT3DSWAPCHAIN9EX : public LPDIRECT3DSWAPCHAIN9
     HRESULT GetPresentStats( D3DPRESENTSTATS* pPresentationStatistics);
     HRESULT GetDisplayModeEx( D3DDISPLAYMODEEX* pMode,D3DDISPLAYROTATION* pRotation);
 }
-//alias IDirect3DSwapChain9Ex LPDIRECT3DSWAPCHAIN9EX, PDIRECT3DSWAPCHAIN9EX;
+
+alias LPDIRECT3DSWAPCHAIN9EX IDirect3DSwapChain9Ex;
