@@ -4337,6 +4337,7 @@ alias INT function(PVOID, PVOID) PFNDSAENUMCALLBACK;
 alias INT function(PVOID, PVOID, LPARAM) PFNDPACOMPARE;
 
 static if (_WIN32_WINNT >= 0x501) {
+	extern (Windows)
 	alias LRESULT function(HWND, UINT, WPARAM, LPARAM, UINT_PTR, DWORD_PTR)
 	  SUBCLASSPROC;
 }
