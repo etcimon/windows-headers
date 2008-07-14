@@ -24,12 +24,12 @@ module win32.directx.dxerr9;
 private import win32.windef;
 
 extern (Windows) {
-	char* DXGetErrorString9A (HRESULT);
-	WCHAR* DXGetErrorString9W (HRESULT);
-	char* DXGetErrorDescription9A (HRESULT);
-	WCHAR* DXGetErrorDescription9W (HRESULT);
-	HRESULT DXTraceA (char*, DWORD, HRESULT, char*, BOOL);
-	HRESULT DXTraceW (char*, DWORD, HRESULT, WCHAR*, BOOL);
+	char* DXGetErrorString9A(HRESULT);
+	WCHAR* DXGetErrorString9W(HRESULT);
+	char* DXGetErrorDescription9A(HRESULT);
+	WCHAR* DXGetErrorDescription9W(HRESULT);
+	HRESULT DXTraceA(char*, DWORD, HRESULT, char*, BOOL);
+	HRESULT DXTraceW(char*, DWORD, HRESULT, WCHAR*, BOOL);
 }
 
 version (Unicode) {

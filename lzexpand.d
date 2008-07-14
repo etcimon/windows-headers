@@ -25,28 +25,24 @@ enum : LONG {
 
 extern (Windows):
 deprecated {
-LONG CopyLZFile(INT,INT);
-void LZDone();
-INT LZStart();
+	LONG CopyLZFile(INT, INT);
+	void LZDone();
+	INT LZStart();
 }
-INT GetExpandedNameA(LPSTR,LPSTR);
-INT GetExpandedNameW(LPWSTR,LPWSTR);
+INT GetExpandedNameA(LPSTR, LPSTR);
+INT GetExpandedNameW(LPWSTR, LPWSTR);
 void LZClose(INT);
-LONG LZCopy(INT,INT);
+LONG LZCopy(INT, INT);
 INT LZInit(INT);
-INT LZOpenFileA(LPSTR,LPOFSTRUCT,WORD);
-INT LZOpenFileW(LPWSTR,LPOFSTRUCT,WORD);
-INT LZRead(INT,LPSTR,INT);
-LONG LZSeek(INT,LONG,INT);
+INT LZOpenFileA(LPSTR, LPOFSTRUCT, WORD);
+INT LZOpenFileW(LPWSTR, LPOFSTRUCT, WORD);
+INT LZRead(INT, LPSTR, INT);
+LONG LZSeek(INT, LONG, INT);
 
-version(Unicode) {
-
-alias GetExpandedNameW GetExpandedName;
-alias LZOpenFileW LZOpenFile;
-
+version (Unicode) {
+	alias GetExpandedNameW GetExpandedName;
+	alias LZOpenFileW LZOpenFile;
 } else {
-
-alias GetExpandedNameA GetExpandedName;
-alias LZOpenFileA LZOpenFile;
-
+	alias GetExpandedNameA GetExpandedName;
+	alias LZOpenFileA LZOpenFile;
 }

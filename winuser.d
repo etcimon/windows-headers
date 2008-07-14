@@ -380,21 +380,21 @@ const SS_PATHELLIPSIS = 0x00008000L;
 const SS_WORDELLIPSIS = 0x0000C000L;
 const SS_ELLIPSISMASK = 0x0000C000L;
 
-const DS_3DLOOK = 4;
-const DS_ABSALIGN = 1;
-const DS_CENTER = 0x800;
-const DS_CENTERMOUSE = 4096;
-const DS_CONTEXTHELP = 0x2000;
-const DS_CONTROL = 0x400;
-const DS_FIXEDSYS = 8;
-const DS_LOCALEDIT = 32;
-const DS_MODALFRAME = 128;
-const DS_NOFAILCREATE = 16;
-const DS_NOIDLEMSG = 256;
-const DS_SETFONT = 64;
-const DS_SETFOREGROUND = 512;
-const DS_SYSMODAL = 2;
-const DS_SHELLFONT = DS_SETFONT | DS_FIXEDSYS;
+const DS_ABSALIGN      = 0x0001;
+const DS_3DLOOK        = 0x0004;
+const DS_SYSMODAL      = 0x0002;
+const DS_FIXEDSYS      = 0x0008;
+const DS_NOFAILCREATE  = 0x0010;
+const DS_LOCALEDIT     = 0x0020;
+const DS_SETFONT       = 0x0040;
+const DS_MODALFRAME    = 0x0080;
+const DS_NOIDLEMSG     = 0x0100;
+const DS_SETFOREGROUND = 0x0200;
+const DS_CONTROL       = 0x0400;
+const DS_CENTER        = 0x0800;
+const DS_CENTERMOUSE   = 0x1000;
+const DS_CONTEXTHELP   = 0x2000;
+const DS_SHELLFONT     = DS_SETFONT | DS_FIXEDSYS;
 
 const WS_EX_ACCEPTFILES = 16;
 const WS_EX_APPWINDOW = 0x40000;
@@ -3589,7 +3589,7 @@ struct RAWINPUT {
 		RAWKEYBOARD keyboard;
 		RAWHID      hid;
 	}
-	_data data;	
+	_data data;
 }
 alias RAWINPUT* PRAWINPUT, LPRAWINPUT;
 

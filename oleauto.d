@@ -214,17 +214,17 @@ struct NUMPARSE {
 // The SDK docs suggest they belong in this file instead.
 
 deprecated {  // not actually deprecated, but they aren't converted yet.
+              // (will need to reinstate CreateTypeLib as well)
 	interface ICreateTypeInfo {};
 	interface ICreateTypeInfo2 {};
 	interface ICreateTypeLib {};
 	interface ICreateTypeLib2 {};
+
+	alias ICreateTypeInfo* LPCREATETYPEINFO;
+	alias ICreateTypeInfo2* LPCREATETYPEINFO2;
+	alias ICreateTypeLib* LPCREATETYPELIB;
+	alias ICreateTypeLib2* LPCREATETYPELIB2;
 }
-
-alias ICreateTypeInfo* LPCREATETYPEINFO;
-alias ICreateTypeInfo2* LPCREATETYPEINFO2;
-alias ICreateTypeLib* LPCREATETYPELIB;
-alias ICreateTypeLib2* LPCREATETYPELIB2;
-
 
 extern (Windows) {
 	BSTR SysAllocString(OLECHAR*);
@@ -366,7 +366,8 @@ extern (Windows) {
 	HRESULT QueryPathOfRegTypeLib(REFGUID, ushort, ushort, LCID, LPBSTR);
 	HRESULT RegisterTypeLib(LPTYPELIB, OLECHAR*, OLECHAR*);
 	HRESULT UnRegisterTypeLib(REFGUID, WORD, WORD, LCID, SYSKIND);
-	HRESULT CreateTypeLib(SYSKIND, OLECHAR*, LPCREATETYPELIB*);
+	// not actually deprecated, but depends on unconverted ICreateTypeLib
+	deprecated HRESULT CreateTypeLib(SYSKIND, OLECHAR*, LPCREATETYPELIB*);
 	HRESULT DispGetParam(DISPPARAMS*, UINT, VARTYPE, VARIANT*, UINT*);
 	HRESULT DispGetIDsOfNames(LPTYPEINFO, OLECHAR**, UINT, DISPID*);
 	HRESULT DispInvoke(void*, LPTYPEINFO, DISPID, WORD, DISPPARAMS*, VARIANT*, EXCEPINFO*, UINT*);

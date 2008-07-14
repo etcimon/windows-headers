@@ -1520,17 +1520,15 @@ struct PROCESS_HEAP_ENTRY {
 }
 alias PROCESS_HEAP_ENTRY* LPPROCESS_HEAP_ENTRY;
 
-deprecated {
-	struct OFSTRUCT {
-		BYTE      cBytes;
-		BYTE      fFixedDisk;
-		WORD      nErrCode;
-		WORD      Reserved1;
-		WORD      Reserved2;
-		CHAR[128] szPathName; // const OFS_MAXPATHNAME = 128;
-	}
-	alias OFSTRUCT* LPOFSTRUCT, POFSTRUCT;
+struct OFSTRUCT {
+	BYTE      cBytes = OFSTRUCT.sizeof;
+	BYTE      fFixedDisk;
+	WORD      nErrCode;
+	WORD      Reserved1;
+	WORD      Reserved2;
+	CHAR[128] szPathName; // const OFS_MAXPATHNAME = 128;
 }
+alias OFSTRUCT* LPOFSTRUCT, POFSTRUCT;
 
 /*	??? MSDN documents this only for Windows CE, but it's used by
  *	ImageGetCertificateData, which is in desktop Windows.
@@ -1557,7 +1555,6 @@ static if (_WIN32_WINNT >= 0x500) {
 		ComputerNamePhysicalDnsFullyQualified,
 		ComputerNameMax
 	}
-
 }
 
 static if (_WIN32_WINNT >= 0x501) {

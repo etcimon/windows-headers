@@ -18,6 +18,7 @@ deprecated {
 		LPWSTR cfgi0_key;
 		LPWSTR cfgi0_data;
 	}
+
 	alias CONFIG_INFO_0* PCONFIG_INFO_0, LPCONFIG_INFO_0;
 
 	extern (Windows) {

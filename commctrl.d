@@ -2778,35 +2778,35 @@ struct HD_HITTESTINFO {
 alias HD_HITTESTINFO* LPHDHITTESTINFO;
 
 struct HD_NOTIFYA {
-	NMHDR     hdr;
-	int       iItem;
-	int       iButton;
-	HD_ITEMA* pitem;
+	NMHDR    hdr;
+	int      iItem;
+	int      iButton;
+	HDITEMA* pitem;
 }
 
 struct HD_NOTIFYW {
-	NMHDR     hdr;
-	int       iItem;
-	int       iButton;
-	HD_ITEMW* pitem;
+	NMHDR    hdr;
+	int      iItem;
+	int      iButton;
+	HDITEMW* pitem;
 }
 
 /* FIXME: NMHEADER structure (base for all events of the comctl controls)
    is the same as HD_NOTIFY depending on the value of _WIN32_IE macro.
    I'm defining both for now. */
 struct NMHEADERA {
-	NMHDR     hdr;
-	int       iItem;
-	int       iButton;
-	HD_ITEMA* pitem;
+	NMHDR    hdr;
+	int      iItem;
+	int      iButton;
+	HDITEMA* pitem;
 }
 alias NMHEADERA* LPNMHEADERA;
 
 struct NMHEADERW {
-	NMHDR     hdr;
-	int       iItem;
-	int       iButton;
-	HD_ITEMW* pitem;
+	NMHDR    hdr;
+	int      iItem;
+	int      iButton;
+	HDITEMW* pitem;
 }
 alias NMHEADERW* LPNMHEADERW;
 

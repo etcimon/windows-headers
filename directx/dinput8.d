@@ -5,13 +5,11 @@ module win32.directx.dinput8;
 
 import win32.windows;
 
-enum
-{
-	CLASS_E_NOAGGREGATION = cast(int)0x80040110,
+enum {
+	CLASS_E_NOAGGREGATION = cast(int) 0x80040110,
 }
 
-interface IUnknown
-{
+interface IUnknown {
     HRESULT QueryInterface(IID* riid, void** pvObject);
     ULONG AddRef();
     ULONG Release();
@@ -141,29 +139,29 @@ struct DIDEVICEOBJECTDATA
 
 struct DIENVELOPE
 {
-    DWORD dwSize;                   /* sizeof(DIENVELOPE)   */
+    DWORD dwSize = DIENVELOPE.sizeof;
     DWORD dwAttackLevel;
-    DWORD dwAttackTime;             /* Microseconds         */
+    DWORD dwAttackTime;             // Microseconds
     DWORD dwFadeLevel;
-    DWORD dwFadeTime;               /* Microseconds         */
+    DWORD dwFadeTime;               // Microseconds
 }
 
 struct DIEFFECT
 {
-    DWORD dwSize;                   /* sizeof(DIEFFECT)     */
-    DWORD dwFlags;                  /* DIEFF_*              */
-    DWORD dwDuration;               /* Microseconds         */
-    DWORD dwSamplePeriod;           /* Microseconds         */
+    DWORD dwSize = DIEFFECT.sizeof;
+    DWORD dwFlags;                  // DIEFF_*
+    DWORD dwDuration;               // Microseconds
+    DWORD dwSamplePeriod;           // Microseconds
     DWORD dwGain;
-    DWORD dwTriggerButton;          /* or DIEB_NOTRIGGER    */
-    DWORD dwTriggerRepeatInterval;  /* Microseconds         */
-    DWORD cAxes;                    /* Number of axes       */
-    LPDWORD rgdwAxes;               /* Array of axes        */
-    LPLONG rglDirection;            /* Array of directions  */
-    DIENVELOPE* lpEnvelope;        /* Optional             */
-    DWORD cbTypeSpecificParams;     /* Size of params       */
-    LPVOID lpvTypeSpecificParams;   /* Pointer to params    */
-    DWORD  dwStartDelay;            /* Microseconds         */
+    DWORD dwTriggerButton;          // or DIEB_NOTRIGGER
+    DWORD dwTriggerRepeatInterval;  // Microseconds
+    DWORD cAxes;                    // Number of axes
+    LPDWORD rgdwAxes;               // Array of axes
+    LPLONG rglDirection;            // Array of directions
+    DIENVELOPE* lpEnvelope;         // Optional
+    DWORD cbTypeSpecificParams;     // Size of params
+    LPVOID lpvTypeSpecificParams;   // Pointer to params
+    DWORD  dwStartDelay;            // Microseconds
 }
 
 struct DIEFFESCAPE
@@ -223,14 +221,14 @@ struct DIDEVICEIMAGEINFOHEADERA
 
 struct DICONFIGUREDEVICESPARAMSA
 {
-     DWORD             dwSize;
-     DWORD             dwcUsers;
-     LPSTR             lptszUserNames;
-     DWORD             dwcFormats;
-     DIACTIONFORMATA* lprgFormats;
-     HWND              hwnd;
-     DICOLORSET        dics;
-     IUnknown    lpUnkDDSTarget;
+	 DWORD            dwSize;
+	 DWORD            dwcUsers;
+	 LPSTR            lptszUserNames;
+	 DWORD            dwcFormats;
+	 DIACTIONFORMATA* lprgFormats;
+	 HWND             hwnd;
+	 DICOLORSET       dics;
+	 IUnknown         lpUnkDDSTarget;
 }
 
 struct DICOLORSET
@@ -276,12 +274,11 @@ struct DIPROPRANGE
 
 interface IDirectInputEffect : IUnknown
 {
-    /*** IDirectInputEffect methods ***/
-    HRESULT Initialize(HINSTANCE,DWORD,GUID*);
+    HRESULT Initialize(HINSTANCE, DWORD, GUID*);
     HRESULT GetEffectGuid(GUID*);
-    HRESULT GetParameters(DIEFFECT*,DWORD);
-    HRESULT SetParameters(DIEFFECT*,DWORD);
-    HRESULT Start(DWORD,DWORD);
+    HRESULT GetParameters(DIEFFECT*, DWORD);
+    HRESULT SetParameters(DIEFFECT*, DWORD);
+    HRESULT Start(DWORD, DWORD);
     HRESULT Stop();
     HRESULT GetEffectStatus(LPDWORD);
     HRESULT Download();
@@ -301,35 +298,34 @@ extern(Windows) alias bool function(IUnknown, LPVOID) LPDICONFIGUREDEVICESCALLBA
 
 interface IDirectInputDevice8A : IUnknown
 {
-	/*** IDirectInputDevice8A methods ***/
     HRESULT GetCapabilities(DIDEVCAPS*);
-    HRESULT EnumObjects(LPDIENUMDEVICEOBJECTSCALLBACKA,VOID*,DWORD);
-    HRESULT GetProperty(GUID*,DIPROPHEADER*);
-    HRESULT SetProperty(GUID*,DIPROPHEADER*);
+    HRESULT EnumObjects(LPDIENUMDEVICEOBJECTSCALLBACKA, VOID*, DWORD);
+    HRESULT GetProperty(GUID*, DIPROPHEADER*);
+    HRESULT SetProperty(GUID*, DIPROPHEADER*);
     HRESULT Acquire();
     HRESULT Unacquire();
-    HRESULT GetDeviceState(DWORD,LPVOID);
-    HRESULT GetDeviceData(DWORD,DIDEVICEOBJECTDATA*,LPDWORD,DWORD);
+    HRESULT GetDeviceState(DWORD, LPVOID);
+    HRESULT GetDeviceData(DWORD, DIDEVICEOBJECTDATA*, LPDWORD, DWORD);
     HRESULT SetDataFormat(DIDATAFORMAT*);
     HRESULT SetEventNotification(HANDLE);
-    HRESULT SetCooperativeLevel(HWND,DWORD);
-    HRESULT GetObjectInfo(DIDEVICEOBJECTINSTANCEA*,DWORD,DWORD);
+    HRESULT SetCooperativeLevel(HWND, DWORD);
+    HRESULT GetObjectInfo(DIDEVICEOBJECTINSTANCEA*, DWORD, DWORD);
     HRESULT GetDeviceInfo(DIDEVICEINSTANCEA*);
-    HRESULT RunControlPanel(HWND,DWORD);
-    HRESULT Initialize(HINSTANCE,DWORD,GUID*);
-    HRESULT CreateEffect(GUID*,DIEFFECT*,IDirectInputEffect*,IUnknown);
-    HRESULT EnumEffects(LPDIENUMEFFECTSCALLBACKA,LPVOID,DWORD);
-    HRESULT GetEffectInfo(DIEFFECTINFOA*,GUID*);
+    HRESULT RunControlPanel(HWND, DWORD);
+    HRESULT Initialize(HINSTANCE, DWORD, GUID*);
+    HRESULT CreateEffect(GUID*, DIEFFECT*, IDirectInputEffect*, IUnknown);
+    HRESULT EnumEffects(LPDIENUMEFFECTSCALLBACKA, LPVOID, DWORD);
+    HRESULT GetEffectInfo(DIEFFECTINFOA*, GUID*);
     HRESULT GetForceFeedbackState(LPDWORD);
     HRESULT SendForceFeedbackCommand(DWORD);
-    HRESULT EnumCreatedEffectObjects(LPDIENUMCREATEDEFFECTOBJECTSCALLBACK,LPVOID,DWORD);
+    HRESULT EnumCreatedEffectObjects(LPDIENUMCREATEDEFFECTOBJECTSCALLBACK, LPVOID, DWORD);
     HRESULT Escape(DIEFFESCAPE*);
     HRESULT Poll();
-    HRESULT SendDeviceData(DWORD,DIDEVICEOBJECTDATA*,LPDWORD,DWORD);
-    HRESULT EnumEffectsInFile(LPCSTR,LPDIENUMEFFECTSINFILECALLBACK,LPVOID,DWORD);
-    HRESULT WriteEffectToFile(LPCSTR,DWORD,DIFILEEFFECT*,DWORD);
-    HRESULT BuildActionMap(DIACTIONFORMATA*,LPCSTR,DWORD);
-    HRESULT SetActionMap(DIACTIONFORMATA*,LPCSTR,DWORD);
+    HRESULT SendDeviceData(DWORD, DIDEVICEOBJECTDATA*, LPDWORD, DWORD);
+    HRESULT EnumEffectsInFile(LPCSTR, LPDIENUMEFFECTSINFILECALLBACK, LPVOID, DWORD);
+    HRESULT WriteEffectToFile(LPCSTR, DWORD, DIFILEEFFECT*, DWORD);
+    HRESULT BuildActionMap(DIACTIONFORMATA*, LPCSTR, DWORD);
+    HRESULT SetActionMap(DIACTIONFORMATA*, LPCSTR, DWORD);
     HRESULT GetImageInfo(DIDEVICEIMAGEINFOHEADERA*);
 }
 alias IDirectInputDevice8A IDirectInputDevice8;
@@ -337,33 +333,32 @@ alias IDirectInputDevice8A IDirectInputDevice8;
 interface IDirectInput8A : IUnknown
 {
 extern(Windows):
-    /*** IDirectInput8A methods ***/
-    HRESULT CreateDevice(GUID*, IDirectInputDevice8A*,IUnknown);
-    HRESULT EnumDevices(DWORD,LPDIENUMDEVICESCALLBACKA,LPVOID,DWORD);
+    HRESULT CreateDevice(GUID*, IDirectInputDevice8A*, IUnknown);
+    HRESULT EnumDevices(DWORD, LPDIENUMDEVICESCALLBACKA, LPVOID, DWORD);
     HRESULT GetDeviceStatus(GUID*);
-    HRESULT RunControlPanel(HWND,DWORD);
-    HRESULT Initialize(HINSTANCE,DWORD);
-    HRESULT FindDevice(GUID*,LPCSTR,GUID*);
-    HRESULT EnumDevicesBySemantics(LPCSTR,DIACTIONFORMATA*,LPDIENUMDEVICESBYSEMANTICSCBA,LPVOID,DWORD);
-    HRESULT ConfigureDevices(LPDICONFIGUREDEVICESCALLBACK,DICONFIGUREDEVICESPARAMSA*,DWORD,LPVOID);
+    HRESULT RunControlPanel(HWND, DWORD);
+    HRESULT Initialize(HINSTANCE, DWORD);
+    HRESULT FindDevice(GUID*, LPCSTR, GUID*);
+    HRESULT EnumDevicesBySemantics(LPCSTR, DIACTIONFORMATA*, LPDIENUMDEVICESBYSEMANTICSCBA, LPVOID, DWORD);
+    HRESULT ConfigureDevices(LPDICONFIGUREDEVICESCALLBACK, DICONFIGUREDEVICESPARAMSA*, DWORD, LPVOID);
 }
 alias IDirectInput8A IDirectInput8;
 
 extern(Windows) HRESULT DirectInput8Create(HINSTANCE hinst, DWORD dwVersion, GUID* riidltf, void** ppvOut, IUnknown punkOuter);
 
-const GUID IID_IDirectInput8A={0xBF798030,0x483A,0x4DA2,[0xAA,0x99,0x5D,0x64,0xED,0x36,0x97,0x00]};
+const GUID IID_IDirectInput8A={0xBF798030, 0x483A, 0x4DA2, [0xAA, 0x99, 0x5D, 0x64, 0xED, 0x36, 0x97, 0x00]};
 alias IID_IDirectInput8A IID_IDirectInput8;
-const GUID GUID_SysKeyboard = {0x6F1D2B61,0xD5A0,0x11CF,[0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00]};
-const GUID GUID_SysMouse =    {0x6F1D2B60,0xD5A0,0x11CF,[0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00]};
-const GUID GUID_XAxis =       {0xA36D02E0,0xC9F3,0x11CF,[0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00]};
-const GUID GUID_YAxis =       {0xA36D02E1,0xC9F3,0x11CF,[0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00]};
-const GUID GUID_ZAxis =       {0xA36D02E2,0xC9F3,0x11CF,[0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00]};
-const GUID GUID_RxAxis =      {0xA36D02F4,0xC9F3,0x11CF,[0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00]};
-const GUID GUID_RyAxis =      {0xA36D02F5,0xC9F3,0x11CF,[0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00]};
-const GUID GUID_RzAxis =      {0xA36D02E3,0xC9F3,0x11CF,[0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00]};
-const GUID GUID_Slider =      {0xA36D02E4,0xC9F3,0x11CF,[0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00]};
-const GUID GUID_Key =         {0x55728220,0xD33C,0x11CF,[0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00]};
-const GUID GUID_POV =         {0xA36D02F2,0xC9F3,0x11CF,[0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00]};
+const GUID GUID_SysKeyboard = {0x6F1D2B61, 0xD5A0, 0x11CF, [0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00]};
+const GUID GUID_SysMouse =    {0x6F1D2B60, 0xD5A0, 0x11CF, [0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00]};
+const GUID GUID_XAxis =       {0xA36D02E0, 0xC9F3, 0x11CF, [0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00]};
+const GUID GUID_YAxis =       {0xA36D02E1, 0xC9F3, 0x11CF, [0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00]};
+const GUID GUID_ZAxis =       {0xA36D02E2, 0xC9F3, 0x11CF, [0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00]};
+const GUID GUID_RxAxis =      {0xA36D02F4, 0xC9F3, 0x11CF, [0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00]};
+const GUID GUID_RyAxis =      {0xA36D02F5, 0xC9F3, 0x11CF, [0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00]};
+const GUID GUID_RzAxis =      {0xA36D02E3, 0xC9F3, 0x11CF, [0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00]};
+const GUID GUID_Slider =      {0xA36D02E4, 0xC9F3, 0x11CF, [0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00]};
+const GUID GUID_Key =         {0x55728220, 0xD33C, 0x11CF, [0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00]};
+const GUID GUID_POV =         {0xA36D02F2, 0xC9F3, 0x11CF, [0xBF, 0xC7, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00]};
 
 enum : uint
 {
