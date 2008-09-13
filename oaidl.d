@@ -555,9 +555,9 @@ interface IDispatch : public IUnknown {
 	HRESULT GetTypeInfoCount(UINT*);
 	HRESULT GetTypeInfo(UINT, LCID, LPTYPEINFO*);
 	HRESULT GetIDsOfNames(REFIID, LPOLESTR*, UINT, LCID, DISPID*);
-	HRESULT Invoke(DISPID, REFIID, LCID, WORD, DISPPARAMS*, VARIANT*,
-	  EXCEPINFO*, UINT*);
+	HRESULT Invoke(DISPID, REFIID, LCID, WORD, DISPPARAMS*, VARIANT*, EXCEPINFO*, UINT*);
 }
+alias IDispatch* LPDISPATCH;
 
 interface IEnumVARIANT : public IUnknown {
 	HRESULT Next(ULONG, VARIANT*, ULONG*);
@@ -565,11 +565,13 @@ interface IEnumVARIANT : public IUnknown {
 	HRESULT Reset();
 	HRESULT Clone(IEnumVARIANT**);
 }
+alias IEnumVARIANT LPENUMVARIANT;
 
 interface ITypeComp : public IUnknown {
 	HRESULT Bind(LPOLESTR, ULONG, WORD, LPTYPEINFO*, DESCKIND*, LPBINDPTR);
 	HRESULT BindType(LPOLESTR, ULONG, LPTYPEINFO*, LPTYPECOMP*);
 }
+alias ITypeComp LPTYPECOMP;
 
 interface ITypeInfo : public IUnknown {
 	HRESULT GetTypeAttr(LPTYPEATTR*);
@@ -593,6 +595,7 @@ interface ITypeInfo : public IUnknown {
 	void ReleaseFuncDesc(LPFUNCDESC);
 	void ReleaseVarDesc(LPVARDESC);
 }
+alias ITypeInfo LPTYPEINFO;
 
 interface ITypeInfo2 : public ITypeInfo {
 	HRESULT GetTypeKind(TYPEKIND*);
@@ -611,6 +614,7 @@ interface ITypeInfo2 : public ITypeInfo {
 	HRESULT GetAllVarCustData(UINT, CUSTDATA*);
 	HRESULT GetAllImplTypeCustData(UINT, CUSTDATA*);
 }
+alias ITypeInfo2 LPTYPEINFO2;
 
 interface ITypeLib : public IUnknown {
 	UINT GetTypeInfoCount();
@@ -624,6 +628,7 @@ interface ITypeLib : public IUnknown {
 	HRESULT FindName(LPOLESTR, ULONG, ITypeInfo**, MEMBERID*, USHORT*);
 	void ReleaseTLibAttr(TLIBATTR*);
 }
+alias ITypeLib LPTYPELIB;
 
 interface ITypeLib2 : public ITypeLib {
 	HRESULT GetCustData(REFGUID, VARIANT*);
@@ -631,6 +636,7 @@ interface ITypeLib2 : public ITypeLib {
 	HRESULT GetDocumentation2(INT, LCID, BSTR*, DWORD*, BSTR*);
 	HRESULT GetAllCustData(CUSTDATA*);
 }
+alias ITypeLib2 LPTYPELIB2;
 
 interface IErrorInfo : public IUnknown {
 	HRESULT GetGUID(GUID*);
@@ -639,6 +645,7 @@ interface IErrorInfo : public IUnknown {
 	HRESULT GetHelpFile(BSTR*);
 	HRESULT GetHelpContext(DWORD*);
 }
+alias IErrorInfo LPERRORINFO;
 
 interface ICreateErrorInfo : public IUnknown {
 	HRESULT SetGUID(REFGUID);
@@ -647,10 +654,12 @@ interface ICreateErrorInfo : public IUnknown {
 	HRESULT SetHelpFile(LPOLESTR);
 	HRESULT SetHelpContext(DWORD);
 }
+alias ICreateErrorInfo* LPCREATEERRORINFO;
 
 interface ISupportErrorInfo : public IUnknown {
 	HRESULT InterfaceSupportsErrorInfo(REFIID);
 }
+alias ISupportErrorInfo LPSUPPORTERRORINFO;
 
 interface IRecordInfo : public IUnknown {
 	HRESULT RecordInit(PVOID);
@@ -670,6 +679,7 @@ interface IRecordInfo : public IUnknown {
 	HRESULT RecordCreateCopy(PVOID, PVOID*);
 	HRESULT RecordDestroy (PVOID);
 }
+alias IRecordInfo LPRECORDINFO;
 
 interface ITypeMarshal : public IUnknown {
 	HRESULT Size(PVOID, DWORD, PVOID, ULONG*);
@@ -677,15 +687,3 @@ interface ITypeMarshal : public IUnknown {
 	HRESULT Unmarshal(PVOID, DWORD, ULONG, BYTE*, ULONG*);
 	HRESULT Free(PVOID);
 }
-
-alias ITypeLib* LPTYPELIB;
-alias ITypeLib2* LPTYPELIB2;
-alias ITypeComp* LPTYPECOMP;
-alias ITypeInfo* LPTYPEINFO;
-alias ITypeInfo2* LPTYPEINFO2;
-alias IErrorInfo* LPERRORINFO;
-alias IDispatch* LPDISPATCH;
-alias IEnumVARIANT* LPENUMVARIANT;
-alias ICreateErrorInfo* LPCREATEERRORINFO;
-alias ISupportErrorInfo* LPSUPPORTERRORINFO;
-alias IRecordInfo* LPRECORDINFO;
