@@ -75,9 +75,16 @@ enum REGCLS {
 	REGCLS_MULTI_SEPARATE = 2
 }
 
+/*
 BOOL IsEqualGUID(GUID rguid1, GUID rguid2) {
 	return rguid1 == rguid2;
 }
+*/
+
+extern (Windows) BOOL IsEqualGUID(
+  REFGUID rguid1,
+  REFGUID rguid2
+);
 
 alias IsEqualGUID IsEqualIID;
 alias IsEqualGUID IsEqualCLSID;
