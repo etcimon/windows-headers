@@ -245,7 +245,8 @@ struct VARIANT {
 				UINT*  puintVal;
 				struct {
 					PVOID pvRecord;
-					IRecordInfo* pRecInfo;
+					//IRecordInfo* pRecInfo;
+					LPRECORDINFO pRecInfo;
 				}
 			}
 		}

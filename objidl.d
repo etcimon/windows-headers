@@ -140,7 +140,7 @@ enum EXTCONN {
 
 struct MULTI_QI {
 	IID*      pIID;
-	IUnknown* pItf;
+	IUnknown  pItf;
 	HRESULT   hr;
 }
 
