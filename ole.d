@@ -10,7 +10,7 @@
 \***********************************************************************/
 module win32.ole;
 
-private import win32.windef, win32.wingdi;
+private import win32.windef, win32.wingdi, win32.uuid;
 
 alias LPCSTR OLE_LPCSTR;
 

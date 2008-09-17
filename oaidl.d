@@ -54,23 +54,6 @@ const IMPLTYPEFLAG_FSOURCE        = 2;
 const IMPLTYPEFLAG_FRESTRICTED    = 4;
 const IMPLTYPEFLAG_FDEFAULTVTABLE = 8;
 
-extern (Windows) {
-	extern  IID IID_ITypeLib;
-	extern  IID IID_ITypeLib2;
-	extern  IID IID_ICreateTypeInfo;
-	extern  IID IID_ICreateTypeInfo2;
-	extern  IID IID_ICreateTypeLib;
-	extern  IID IID_ICreateTypeLib2;
-	extern  IID IID_ITypeInfo;
-	extern  IID IID_ITypeInfo2;
-	extern  IID IID_IErrorInfo;
-	extern  IID IID_IDispatch;
-	extern  IID IID_IEnumVARIANT;
-	extern  IID IID_ICreateErrorInfo;
-	extern  IID IID_ISupportErrorInfo;
-	extern  IID IID_IRecordInfo;
-	extern  IID IID_ITypeMarshal;
-}
 
 enum SYSKIND {
 	SYS_WIN16,

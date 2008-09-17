@@ -17,11 +17,6 @@ extern (Windows) {
 	void MIDL_user_free(void*);
 }
 
-extern (C)
-{
-	extern IID IID_IUnknown;
-	extern IID IID_IClassFactory;
-}
 
 extern (Windows) {
 

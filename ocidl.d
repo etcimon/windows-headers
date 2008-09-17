@@ -19,7 +19,7 @@ private import win32.winuser; // for LPMSG
 interface IBindHost : public IUnknown {}
 interface IServiceProvider {}
 
-/+
+/*
 // TODO:
 //private import win32.servprov; // for IServiceProvider
 // private import win32.urlmon; // for IBindHost. This is not included in MinGW.
@@ -31,18 +31,9 @@ interface IBindHost : public IUnknown
 	HRESULT MonikerBindToObject(IMoniker* pMk, IBindCtx* pBC, IBindStatusCallback* pBSC, REFIID, void** );
 	HRESULT MonikerBindToStorage(IMoniker* pMk, IBindCtx* pBC, IBindStatusCallback* pBSC, REFIID, void** );
 }
-+/
+*/
 
-alias IErrorLog* LPERRORLOG;
-alias IPropertyBag* LPPROPERTYBAG;
-alias IPropertyBag2* LPPROPERTYBAG2;
-alias IEnumConnections* LPENUMCONNECTIONS;
-alias IConnectionPoint* LPCONNECTIONPOINT;
-alias IEnumConnectionPoints* LPENUMCONNECTIONPOINTS;
-alias IPropertyPageSite* LPPROPERTYPAGESITE;
-alias IFont* LPFONT;
-alias IFontDisp* LPFONTDISP;
-alias IOleUndoManager* LPOLEUNDOMANAGER;
+
 
 
 //[Yes] #ifndef OLE2ANSI
@@ -180,47 +171,6 @@ struct PROPPAGEINFO {
 }
 alias PROPPAGEINFO* LPPROPPAGEINFO;
 
-extern (C)
-{
-	//extern IID IID_IOleControl;
-	//extern IID IID_IOleControlSite;
-	//extern IID IID_ISimpleFrameSite;
-	//extern IID IID_IErrorLog;
-	//extern IID IID_IPropertyBag;
-	extern IID IID_IPropertyBag2;
-	//extern IID IID_IPersistPropertyBag;
-	extern IID IID_IPersistPropertyBag2;
-	//extern IID IID_IPersistStreamInit;
-	//extern IID IID_IPersistMemory;
-	//extern IID IID_IPropertyNotifySink;
-	//extern IID IID_IProvideClassInfo;
-	//extern IID IID_IProvideClassInfo2;
-	//extern IID IID_IConnectionPointContainer;
-	//extern IID IID_IEnumConnectionPoints;
-	//extern IID IID_IConnectionPoint;
-	//extern IID IID_IEnumConnections;
-	//extern IID IID_IClassFactory2;
-	//extern IID IID_ISpecifyPropertyPages;
-	//extern IID IID_IPerPropertyBrowsing;
-	//extern IID IID_IPropertyPageSite;
-	//extern IID IID_IPropertyPage;
-	//extern IID IID_IPropertyPage2;
-	//extern IID IID_IFont;
-	//extern IID IID_IFontDisp;
-	//extern IID IID_IPicture;
-	//extern IID IID_IPictureDisp;
-	extern IID IID_IOleInPlaceSiteEx;
-	extern IID IID_IObjectWithSite;
-	extern IID IID_IOleInPlaceSiteWindowless;
-	extern IID IID_IAdviseSinkEx;
-	extern IID IID_IPointerInactive;
-	extern IID IID_IOleUndoUnit;
-	extern IID IID_IOleParentUndoUnit;
-	extern IID IID_IEnumOleUndoUnits;
-	extern IID IID_IOleUndoManager;
-	extern IID IID_IQuickActivate;
-}
-
 interface IOleControl : public IUnknown {
 	HRESULT GetControlInfo(LPCONTROLINFO);
 	HRESULT OnMnemonic(LPMSG);
@@ -246,11 +196,13 @@ interface ISimpleFrameSite : public IUnknown {
 interface IErrorLog : public IUnknown {
 	HRESULT AddError(LPCOLESTR, LPEXCEPINFO);
 }
+alias IErrorLog LPERRORLOG;
 
 interface IPropertyBag : public IUnknown {
 	HRESULT Read(LPCOLESTR, LPVARIANT, LPERRORLOG);
 	HRESULT Write(LPCOLESTR, LPVARIANT);
 }
+alias IPropertyBag LPPROPERTYBAG;
 
 interface IPropertyBag2 : public IUnknown {
 	HRESULT Read(ULONG, PROPBAG2*, LPERRORLOG, VARIANT*, HRESULT*);
@@ -259,6 +211,7 @@ interface IPropertyBag2 : public IUnknown {
 	HRESULT GetPropertyInfo(ULONG, ULONG, PROPBAG2*, ULONG*);
 	HRESULT LoadObject(LPCOLESTR, DWORD, IUnknown*, LPERRORLOG);
 }
+alias IPropertyBag2 LPPROPERTYBAG2;
 
 interface IPersistPropertyBag : public IPersist {
 	HRESULT InitNew();
@@ -313,6 +266,7 @@ interface IEnumConnectionPoints : public IUnknown {
 	HRESULT Reset();
 	HRESULT Clone(LPENUMCONNECTIONPOINTS*);
 }
+alias IEnumConnectionPoints LPENUMCONNECTIONPOINTS;
 
 interface IConnectionPoint : public IUnknown {
 	HRESULT GetConnectionInterface(IID*);
@@ -321,6 +275,7 @@ interface IConnectionPoint : public IUnknown {
 	HRESULT Unadvise(DWORD);
 	HRESULT EnumConnections(LPENUMCONNECTIONS*);
 }
+alias IConnectionPoint LPCONNECTIONPOINT;
 
 interface IEnumConnections : public IUnknown {
 	HRESULT Next(ULONG, LPCONNECTDATA, PULONG);
@@ -328,6 +283,7 @@ interface IEnumConnections : public IUnknown {
 	HRESULT Reset();
 	HRESULT Clone(LPENUMCONNECTIONS*);
 }
+alias IEnumConnections LPENUMCONNECTIONS;
 
 interface IClassFactory2 : public IClassFactory {
 	HRESULT GetLicInfo(LPLICINFO);
@@ -352,6 +308,7 @@ interface IPropertyPageSite : public IUnknown {
 	HRESULT GetPageContainer(LPUNKNOWN*);
 	HRESULT TranslateAccelerator(LPMSG);
 }
+alias IPropertyPageSite LPPROPERTYPAGESITE;
 
 interface IPropertyPage : public IUnknown {
 	HRESULT SetPageSite(LPPROPERTYPAGESITE);
@@ -398,9 +355,11 @@ interface IFont : public IUnknown {
 	HRESULT ReleaseHfont(HFONT);
 	HRESULT SetHdc(HDC);
 }
+alias IFont LPFONT;
 
 interface IFontDisp : public IDispatch {
 }
+alias IFontDisp LPFONTDISP;
 
 interface IPicture : public IUnknown {
 	HRESULT get_Handle(OLE_HANDLE*);
@@ -500,6 +459,7 @@ interface IOleUndoManager : public IUnknown {
 	HRESULT GetLastRedoDescription(BSTR*);
 	HRESULT Enable(BOOL);
 }
+alias IOleUndoManager LPOLEUNDOMANAGER;
 
 interface IQuickActivate : public IUnknown {
 	HRESULT QuickActivate(QACONTAINER*, QACONTROL*);

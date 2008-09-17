@@ -11,7 +11,7 @@ module win32.wtypes;
 
 import win32.rpc, win32.rpcndr;
 private import win32.windef;
-private import win32.cguid; // for GUID_NULL
+private import win32.uuid; // for GUID_NULL
 
 alias GUID_NULL IID_NULL, CLSID_NULL;
 

@@ -507,51 +507,6 @@ struct SOLE_AUTHENTICATION_LIST {
 	SOLE_AUTHENTICATION_INFO* aAuthInfo;
 }
 
-extern (C) {
-	extern IID IID_ISequentialStream;
-	extern IID IID_IStream;
-	extern IID IID_IMarshal;
-	extern IID IID_IStdMarshalInfo;
-	extern IID IID_IMalloc;
-	extern IID IID_IMallocSpy;
-	extern IID IID_IMessageFilter;
-	extern IID IID_IPersist;
-	extern IID IID_IPersistStream;
-	extern IID IID_IRunningObjectTable;
-	extern IID IID_IBindCtx;
-	extern IID IID_IMoniker;
-	extern IID IID_IPersistStorage;
-	extern IID IID_IPersistFile;
-	extern IID IID_IAdviseSink;
-	extern IID IID_IAdviseSink2;
-	extern IID IID_IDataObject;
-	extern IID IID_IDataAdviseHolder;
-	extern IID IID_IStorage;
-	extern IID IID_IRootStorage;
-	extern IID IID_IRpcChannelBuffer;
-	extern IID IID_IRpcProxyBuffer;
-	extern IID IID_IRpcStubBuffer;
-	extern IID IID_IPSFactoryBuffer;
-	extern IID IID_ILockBytes;
-	extern IID IID_IExternalConnection;
-	extern IID IID_IRunnableObject;
-	extern IID IID_IROTData;
-	extern IID IID_IChannelHook;
-	extern IID IID_IPropertyStorage;
-	extern IID IID_IPropertySetStorage;
-	extern IID IID_IClientSecurity;
-	extern IID IID_IServerSecurity;
-	extern IID IID_IClassActivator;
-	extern IID IID_IFillLockBytes;
-	extern IID IID_IProgressNotify;
-	extern IID IID_ILayoutStorage;
-	extern IID IID_IGlobalInterfaceTable;
-
-	extern FMTID FMTID_SummaryInformation;
-	extern FMTID FMTID_DocSummaryInformation;
-	extern FMTID FMTID_UserDefinedProperties;
-}
-
 interface IEnumFORMATETC : public IUnknown {
 	  HRESULT Next(ULONG, FORMATETC*, ULONG*);
 	  HRESULT Skip(ULONG);

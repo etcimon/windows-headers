@@ -17,9 +17,6 @@ enum {
 	INTERFACESAFE_FOR_UNTRUSTED_DATA
 }
 
-extern (C) extern const IID IID_IObjectSafety;
-
-
 interface IObjectSafety : IUnknown {
 	HRESULT GetInterfaceSafetyOptions(REFIID, DWORD*, DWORD*);
 	HRESULT SetInterfaceSafetyOptions(REFIID, DWORD, DWORD);

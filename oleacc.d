@@ -155,12 +155,6 @@ enum SELFLAG
 
 const SELFLAG_VALID = 0x0000001F;
 
-extern (Windows) {
-	/* DEFINE_GUID(LIBID_Accessibility, 0x1ea4dbf0, 0x3c3b, 0x11cf, 0x81, 0x0c, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71); */
-	/* DEFINE_GUID(IID_IAccessible,     0x618736e0, 0x3c3d, 0x11cf, 0x81, 0x0c, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71); */
-	extern IID LIBID_Accessibility;
-	extern IID IID_IAccessible;
-}
 
 interface IAccessible : public IDispatch {
 	HRESULT get_accParent(IDispatch**);

@@ -23,16 +23,6 @@ enum BrowserNavConstants {
 	navHyperLink       = 0x40
 }
 
-extern (C) {
-	extern const CLSID CLSID_WebBrowser;
-	extern const IID
-		DIID_DWebBrowserEvents,
-		IID_IWebBrowser,
-		IID_IWebBrowserApp,
-		IID_IWebBrowser2,
-		DIID_DWebBrowserEvents2;
-}
-
 interface IWebBrowser : public IDispatch {
 	HRESULT GoBack();
 	HRESULT GoForward();

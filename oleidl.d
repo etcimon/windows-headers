@@ -20,30 +20,6 @@ private import win32.wingdi; // for LPLOGPALETTE
 
 const MK_ALT = 32;
 
-extern (C) {
-	extern IID IID_IParseDisplayName;
-	extern IID IID_IOleContainer;
-	extern IID IID_IOleItemContainer;
-	//extern IID IID_IOleClientSite;
-	//extern IID IID_IOleObject;
-	extern IID IID_IOleWindow;
-	extern IID IID_IOleInPlaceUIWindow;
-	//extern IID IID_IOleInPlaceObject;
-	extern IID IID_IOleInPlaceActiveObject;
-	//extern IID IID_IOleInPlaceFrame;
-	//extern IID IID_IOleInPlaceSite;
-	extern IID IID_IOleAdviseHolder;
-	extern IID IID_IDropSource;
-	extern IID IID_IDropTarget;
-	extern IID IID_IViewObject;
-	extern IID IID_IViewObject2;
-	extern IID IID_IOleCache;
-	extern IID IID_IOleCache2;
-	extern IID IID_IOleCacheControl;
-	// add miss IID_IDocHostUiHandler
-	extern IID IID_IDocHostUIHandler;
-}
-
 enum BINDSPEED {
 	BINDSPEED_INDEFINITE = 1,
 	BINDSPEED_MODERATE,

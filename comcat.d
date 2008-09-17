@@ -35,35 +35,6 @@ struct CATEGORYINFO {
 }
 alias CATEGORYINFO* LPCATEGORYINFO;
 
-extern (C) {
-	const CATID
-		CATID_Insertable,
-		CATID_Control,
-		CATID_Programmable,
-		CATID_IsShortcut,
-		CATID_NeverShowExt,
-		CATID_DocObject,
-		CATID_Printable,
-		CATID_RequiresDataPathHost,
-		CATID_PersistsToMoniker,
-		CATID_PersistsToStorage,
-		CATID_PersistsToStreamInit,
-		CATID_PersistsToStream,
-		CATID_PersistsToMemory,
-		CATID_PersistsToFile,
-		CATID_PersistsToPropertyBag,
-		CATID_InternetAware,
-		CATID_DesignTimeUIActivatableControl;
-
-	const CLSID CLSID_StdComponentCategoriesMgr;
-
-	const IID
-		IID_IEnumGUID,
-		IID_ICatInformation,
-		IID_ICatRegister,
-		IID_IEnumCATEGORYINFO;
-}
-
 alias IEnumGUID IEnumCATID;
 alias LPENUMGUID LPENUMCATID;
 alias IID_IEnumGUID IID_IEnumCATID;
