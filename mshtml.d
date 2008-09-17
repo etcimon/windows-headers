@@ -14,35 +14,29 @@ private import win32.basetyps, win32.oaidl, win32.unknwn,
 
 // These are used in this file, but not defined in MinGW.
 interface IHTMLStyleSheet {};
+alias IHTMLStyle LPHTMLSTYLE;
+alias IHTMLStyleSheet LPHTMLSTYLESHEET;
 interface IHTMLLocation {};
+alias IHTMLLocation LPHTMLLOCATION;
 interface IHTMLFramesCollection {};
+alias IHTMLFramesCollection LPHTMLFRAMESCOLLECTION;
 interface IHTMLStyleSheetsCollection {};
+alias IHTMLStyleSheetsCollection LPHTMLSTYLESHEETSCOLLECTION;
 interface IHTMLStyle {};
 interface IHTMLFiltersCollection {};
+alias IHTMLFiltersCollection LPHTMLFILTERSCOLLECTION;
 interface IOmHistory {};
+alias IOmHistory LPOMHISTORY;
 interface IOmNavigator {};
+alias IOmNavigator LPOMNAVIGATOR;
 interface IHTMLImageElementFactory {};
+alias IHTMLImageElementFactory LPHTMLIMAGEELEMENTFACTORY;
 interface IHTMLEventObj {};
+alias IHTMLEventObj LPHTMLEVENTOBJ;
 interface IHTMLScreen {};
+alias IHTMLScreen LPHTMLSCREEN;
 interface IHTMLOptionElementFactory {};
-
-
-extern (C) extern const IID
-	IID_IHTMLLinkElement,
-	IID_IHTMLImgElement,
-	IID_IHTMLElementCollection,
-	IID_IHTMLDocument,
-	IID_IHTMLDocument2,
-	IID_IHTMLSelectionObject,
-	IID_IHTMLTxtRange,
-	IID_IHTMLElement,
-	IID_IHTMLFramesCollection2,
-	IID_IHTMLWindow2,
-	IID_IHTMLFrameBase,
-	IID_IHTMLFrameBase2,
-	IID_IHTMLFrameBase3,
-	IID_IHTMLBodyElement,
-	IID_IHTMLBodyElement2;
+alias IHTMLOptionElementFactory LPHTMLOPTIONELEMENTFACTORY;
 
 interface IHTMLLinkElement : public IDispatch {
 	HRESULT put_href(BSTR);
@@ -66,6 +60,7 @@ interface IHTMLLinkElement : public IDispatch {
 	HRESULT put_media(BSTR);
 	HRESULT get_media(BSTR*);
 }
+alias IHTMLLinkElement LPHTMLLINKELEMENT;
 
 interface IHTMLImgElement : public IDispatch {
 	HRESULT put_isMap(VARIANT_BOOL);
@@ -117,6 +112,7 @@ interface IHTMLImgElement : public IDispatch {
 	HRESULT put_start(BSTR);
 	HRESULT get_start(BSTR*);
 }
+alias IHTMLImgElement LPHTMLIMGELEMENT;
 
 interface IHTMLElementCollection : public IDispatch {
 	HRESULT toString(BSTR*);
@@ -126,6 +122,7 @@ interface IHTMLElementCollection : public IDispatch {
 	HRESULT item(VARIANT,VARIANT,IDispatch**);
 	HRESULT tags(VARIANT,IDispatch**);
 }
+alias IHTMLElementCollection LPHTMLELEMENTCOLLECTION;
 
 interface IHTMLDocument : public IDispatch {
 	HRESULT get_Script(IDispatch**);
@@ -248,6 +245,7 @@ interface IHTMLSelectionObject : public IDispatch {
 	HRESULT clear();
 	HRESULT get_type(BSTR*);
 }
+alias IHTMLSelectionObject LPHTMLSELECTIONOBJECT;
 
 interface IHTMLTxtRange : public IDispatch {
 	HRESULT get_htmlText(BSTR*);
@@ -371,6 +369,7 @@ interface IHTMLElement : public IDispatch {
 	HRESULT get_children(IDispatch**);
 	HRESULT get_all(IDispatch**);
 }
+alias IHTMLElement LPHTMLELEMENT;
 
 interface IHTMLFramesCollection2 : public IDispatch {
 	HRESULT item(VARIANT*,VARIANT*);
@@ -447,6 +446,7 @@ interface IHTMLWindow2 : public IHTMLFramesCollection2 {
 	HRESULT resizeBy(long,long);
 	HRESULT get_external(IDispatch**);
 }
+alias IHTMLWindow2 LPHTMLWINDOW2;
 
 interface IHTMLFrameBase : public IDispatch {
 	HRESULT put_src(BSTR);
@@ -529,22 +529,3 @@ interface IHTMLBodyElement2 : public IDispatch {
 	HRESULT put_onafterprint(VARIANT);
 	HRESULT get_onafterprint(VARIANT*);
 }
-
-alias IHTMLElementCollection* LPHTMLELEMENTCOLLECTION;
-alias IHTMLElement* LPHTMLELEMENT;
-alias IHTMLSelectionObject* LPHTMLSELECTIONOBJECT;
-alias IHTMLFramesCollection* LPHTMLFRAMESCOLLECTION;
-alias IHTMLLocation* LPHTMLLOCATION;
-alias IHTMLWindow2* LPHTMLWINDOW2;
-alias IHTMLStyleSheetsCollection* LPHTMLSTYLESHEETSCOLLECTION;
-alias IHTMLStyleSheet* LPHTMLSTYLESHEET;
-alias IHTMLStyle* LPHTMLSTYLE;
-alias IHTMLFiltersCollection* LPHTMLFILTERSCOLLECTION;
-alias IHTMLLinkElement* LPHTMLLINKELEMENT;
-alias IHTMLImgElement* LPHTMLIMGELEMENT;
-alias IHTMLImageElementFactory* LPHTMLIMAGEELEMENTFACTORY;
-alias IHTMLEventObj* LPHTMLEVENTOBJ;
-alias IHTMLScreen* LPHTMLSCREEN;
-alias IHTMLOptionElementFactory* LPHTMLOPTIONELEMENTFACTORY;
-alias IOmHistory* LPOMHISTORY;
-alias IOmNavigator* LPOMNAVIGATOR;
