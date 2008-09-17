@@ -195,8 +195,8 @@ struct VARIANT {
 				CY cyVal;
 				DATE date;
 				BSTR bstrVal;
-				IUnknown* punkVal;
-				LPDISPATCH pdispVal;
+				IUnknown punkVal;
+				IDispatch pdispVal;
 				SAFEARRAY* parray;
 				ubyte* pbVal;
 				short* piVal;
@@ -209,8 +209,8 @@ struct VARIANT {
 				CY* pcyVal;
 				DATE* pdate;
 				BSTR* pbstrVal;
-				IUnknown** ppunkVal;
-				LPDISPATCH* ppdispVal;
+				IUnknown* ppunkVal;
+				IDispatch* ppdispVal;
 				SAFEARRAY** pparray;
 				VARIANT* pvarVal;
 				void* byref;
@@ -228,8 +228,7 @@ struct VARIANT {
 				UINT*  puintVal;
 				struct {
 					PVOID pvRecord;
-					//IRecordInfo* pRecInfo;
-					LPRECORDINFO pRecInfo;
+					IRecordInfo pRecInfo;
 				}
 			}
 		}
@@ -541,7 +540,7 @@ interface IDispatch : public IUnknown {
 	HRESULT GetIDsOfNames(REFIID, LPOLESTR*, UINT, LCID, DISPID*);
 	HRESULT Invoke(DISPID, REFIID, LCID, WORD, DISPPARAMS*, VARIANT*, EXCEPINFO*, UINT*);
 }
-alias IDispatch* LPDISPATCH;
+alias IDispatch LPDISPATCH;
 
 interface IEnumVARIANT : public IUnknown {
 	HRESULT Next(ULONG, VARIANT*, ULONG*);

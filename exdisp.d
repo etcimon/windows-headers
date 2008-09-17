@@ -104,10 +104,10 @@ interface DWebBrowserEvents2 : public IDispatch {
 	void DownloadComplete();
 	void TitleChange(BSTR);
 	void PropertyChange(BSTR);
-	void BeforeNavigate2(IDispatch*, VARIANT*, VARIANT*, VARIANT*, VARIANT*, VARIANT*, VARIANT_BOOL*);
-	void NewWindow2(IDispatch**, VARIANT_BOOL*);
-	void NavigateComplete(IDispatch*, VARIANT*);
-	void DocumentComplete(IDispatch*, VARIANT*);
+	void BeforeNavigate2(IDispatch, VARIANT*, VARIANT*, VARIANT*, VARIANT*, VARIANT*, VARIANT_BOOL*);
+	void NewWindow2(IDispatch*, VARIANT_BOOL*);
+	void NavigateComplete(IDispatch, VARIANT*);
+	void DocumentComplete(IDispatch, VARIANT*);
 	void OnQuit();
 	void OnVisible(VARIANT_BOOL);
 	void OnToolBar(VARIANT_BOOL);
