@@ -220,7 +220,7 @@ interface IOleInPlaceSite  : public IOleWindow {
 	HRESULT CanInPlaceActivate();
 	HRESULT OnInPlaceActivate();
 	HRESULT OnUIActivate();
-	HRESULT GetWindowContext(IOleInPlaceFrame**,IOleInPlaceUIWindow**,LPRECT,LPRECT,LPOLEINPLACEFRAMEINFO);
+	HRESULT GetWindowContext(IOleInPlaceFrame*,IOleInPlaceUIWindow*,LPRECT,LPRECT,LPOLEINPLACEFRAMEINFO);
 	HRESULT Scroll(SIZE);
 	HRESULT OnUIDeactivate(BOOL);
 	HRESULT OnInPlaceDeactivate();
