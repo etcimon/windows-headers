@@ -11,7 +11,11 @@
 module win32.iptypes;
 
 import win32.windef;
-private import std.c.time;
+version(Tango){
+    private import tango.stdc.time;
+}else{
+    private import std.c.time;
+}
 //#include <sys/types.h>
 
 const size_t
