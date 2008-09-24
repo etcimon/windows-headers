@@ -51,6 +51,7 @@ template min(T) {
 	}
 }
 
+const void* NULL = null;
 alias ubyte   BYTE;
 alias ubyte*  PBYTE, LPBYTE;
 alias ushort  USHORT, WORD, ATOM;
