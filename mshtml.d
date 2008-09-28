@@ -118,9 +118,9 @@ interface IHTMLElementCollection : public IDispatch {
 	HRESULT toString(BSTR*);
 	HRESULT put_length(long);
 	HRESULT get_length(long*);
-	HRESULT get__newEnum(IUnknown**);
-	HRESULT item(VARIANT,VARIANT,IDispatch**);
-	HRESULT tags(VARIANT,IDispatch**);
+	HRESULT get__newEnum(IUnknown*);
+	HRESULT item(VARIANT,VARIANT,IDispatch* pDisp);
+	HRESULT tags(VARIANT,out IDispatch* pdisp);
 }
 alias IHTMLElementCollection LPHTMLELEMENTCOLLECTION;
 
