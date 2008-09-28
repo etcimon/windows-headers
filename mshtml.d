@@ -313,7 +313,7 @@ interface IHTMLElement : public IDispatch {
 	HRESULT get_onmousedown(VARIANT*);
 	HRESULT put_onmouseup(VARIANT);
 	HRESULT get_onmouseup(VARIANT*);
-	HRESULT get_document(IDispatch**);
+	HRESULT get_document(IDispatch*);
 	HRESULT put_title(BSTR);
 	HRESULT get_title(out BSTR);
 	HRESULT put_language(BSTR);
@@ -366,8 +366,8 @@ interface IHTMLElement : public IDispatch {
 	HRESULT get_ondatasetcomplete(VARIANT*);
 	HRESULT put_onfilterchange(VARIANT);
 	HRESULT get_onfilterchange(VARIANT*);
-	HRESULT get_children(IDispatch**);
-	HRESULT get_all(IDispatch**);
+	HRESULT get_children(IDispatch*);
+	HRESULT get_all(IDispatch*);
 }
 alias IHTMLElement LPHTMLELEMENT;
 
