@@ -120,7 +120,7 @@ interface IHTMLElementCollection : public IDispatch {
 	HRESULT get_length(long*);
 	HRESULT get__newEnum(IUnknown*);
 	HRESULT item(VARIANT,VARIANT,IDispatch* pDisp);
-	HRESULT tags(VARIANT,out IDispatch* pdisp);
+	HRESULT tags(VARIANT,IDispatch* pdisp);
 }
 alias IHTMLElementCollection LPHTMLELEMENTCOLLECTION;
 
@@ -281,14 +281,14 @@ interface IHTMLTxtRange : public IDispatch {
 }
 
 interface IHTMLElement : public IDispatch {
-	HRESULT setAttribute(BSTR,VARIANT,long);
-	HRESULT getAttribute(BSTR,long,VARIANT*);
-	HRESULT removeAttribute(BSTR,long,VARIANT_BOOL*);
+	HRESULT setAttribute(BSTR,VARIANT,LONG);
+	HRESULT getAttribute(BSTR,LONG,VARIANT*);
+	HRESULT removeAttribute(BSTR,LONG,VARIANT_BOOL*);
 	HRESULT put_className(BSTR);
-	HRESULT get_className(out BSTR);
+	HRESULT get_className(ref BSTR);
 	HRESULT put_id(BSTR);
-	HRESULT get_id(out BSTR);
-	HRESULT get_tagName(out BSTR);
+	HRESULT get_id(ref BSTR);
+	HRESULT get_tagName(ref BSTR);
 	HRESULT get_parentElement(LPHTMLELEMENT*);
 	HRESULT get_style(LPHTMLSTYLE*);
 	HRESULT put_onhelp(VARIANT);
@@ -315,9 +315,9 @@ interface IHTMLElement : public IDispatch {
 	HRESULT get_onmouseup(VARIANT*);
 	HRESULT get_document(IDispatch*);
 	HRESULT put_title(BSTR);
-	HRESULT get_title(out BSTR);
+	HRESULT get_title(ref BSTR);
 	HRESULT put_language(BSTR);
-	HRESULT get_language(out BSTR);
+	HRESULT get_language(ref BSTR);
 	HRESULT put_onselectstart(VARIANT);
 	HRESULT get_onselectstart(VARIANT*);
 	HRESULT scrollIntoView(VARIANT);
@@ -325,7 +325,7 @@ interface IHTMLElement : public IDispatch {
 	HRESULT get_source3Index(long*);
 	HRESULT get_recordNumber(VARIANT*);
 	HRESULT put_lang(BSTR);
-	HRESULT get_lang(out BSTR);
+	HRESULT get_lang(ref BSTR);
 	HRESULT get_offsetLeft(long*);
 	HRESULT get_offsetTop(long*);
 	HRESULT get_offsetWidth(long*);
@@ -334,11 +334,11 @@ interface IHTMLElement : public IDispatch {
 	HRESULT put_innerHTML(BSTR);
 	HRESULT get_innerHTML(out BSTR);
 	HRESULT put_innerText(BSTR);
-	HRESULT get_innerText(out BSTR);
+	HRESULT get_innerText(ref BSTR);
 	HRESULT put_outerHTML(BSTR);
-	HRESULT get_outerHTML(out BSTR);
+	HRESULT get_outerHTML(ref BSTR);
 	HRESULT put_outerText(BSTR);
-	HRESULT get_outerText(out BSTR);
+	HRESULT get_outerText(ref BSTR);
 	HRESULT insertAdjacentHTML(BSTR,BSTR);
 	HRESULT insertAdjacentText(BSTR,BSTR);
 	HRESULT get_parentTextEdit(LPHTMLELEMENT*);
