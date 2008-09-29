@@ -125,7 +125,7 @@ interface IHTMLElementCollection : public IDispatch {
 alias IHTMLElementCollection LPHTMLELEMENTCOLLECTION;
 
 interface IHTMLDocument : public IDispatch {
-	HRESULT get_Script(IDispatch**);
+	HRESULT get_Script(IDispatch*);
 }
 
 interface IHTMLDocument2 : public IHTMLDocument {
@@ -182,7 +182,7 @@ interface IHTMLDocument2 : public IHTMLDocument {
 	HRESULT get_nameProp(BSTR*);
 	HRESULT write(SAFEARRAY*);
 	HRESULT writeln(SAFEARRAY*);
-	HRESULT open(BSTR,VARIANT,VARIANT,VARIANT,IDispatch**);
+	HRESULT open(BSTR,VARIANT,VARIANT,VARIANT,IDispatch*);
 	HRESULT close();
 	HRESULT clear();
 	HRESULT queryCommandSupported(BSTR,VARIANT_BOOL*);
@@ -240,7 +240,7 @@ interface IHTMLDocument2 : public IHTMLDocument {
 }
 
 interface IHTMLSelectionObject : public IDispatch {
-	HRESULT createRange(IDispatch**);
+	HRESULT createRange(IDispatch*);
 	HRESULT empty();
 	HRESULT clear();
 	HRESULT get_type(BSTR*);
@@ -252,9 +252,9 @@ interface IHTMLTxtRange : public IDispatch {
 	HRESULT put_text(BSTR);
 	HRESULT get_text(BSTR*);
 	HRESULT parentElement(LPHTMLELEMENT*);
-	HRESULT duplicate(IHTMLTxtRange**);
-	HRESULT inRange(IHTMLTxtRange*,VARIANT_BOOL*);
-	HRESULT isEqual(IHTMLTxtRange*,VARIANT_BOOL*);
+	HRESULT duplicate(IHTMLTxtRange*);
+	HRESULT inRange(IHTMLTxtRange,VARIANT_BOOL*);
+	HRESULT isEqual(IHTMLTxtRange,VARIANT_BOOL*);
 	HRESULT scrollIntoView(VARIANT_BOOL);
 	HRESULT collapse(VARIANT_BOOL);
 	HRESULT expand(BSTR,VARIANT_BOOL*);
@@ -264,8 +264,8 @@ interface IHTMLTxtRange : public IDispatch {
 	HRESULT select();
 	HRESULT pasteHTML(BSTR);
 	HRESULT moveToElementText(LPHTMLELEMENT);
-	HRESULT setEndPoint(BSTR,IHTMLTxtRange*);
-	HRESULT compareEndPoints(BSTR,IHTMLTxtRange*,long*);
+	HRESULT setEndPoint(BSTR,IHTMLTxtRange);
+	HRESULT compareEndPoints(BSTR,IHTMLTxtRange,long*);
 	HRESULT findText(BSTR,long,long,VARIANT_BOOL*);
 	HRESULT moveToPoint(long,long);
 	HRESULT getBookmark(BSTR*);
@@ -377,7 +377,7 @@ interface IHTMLFramesCollection2 : public IDispatch {
 }
 
 interface IHTMLWindow2 : public IHTMLFramesCollection2 {
-	HRESULT get_frames(IHTMLFramesCollection2**);
+	HRESULT get_frames(IHTMLFramesCollection2*);
 	HRESULT put_defaultStatus(BSTR);
 	HRESULT get_defaultStatus(BSTR*);
 	HRESULT put_status(BSTR);
@@ -420,9 +420,9 @@ interface IHTMLWindow2 : public IHTMLFramesCollection2 {
 	HRESULT get_onresize(VARIANT*);
 	HRESULT put_onscroll(VARIANT);
 	HRESULT get_onscroll(VARIANT*);
-	HRESULT get_document(IHTMLDocument2**);
+	HRESULT get_document(IHTMLDocument2*);
 	HRESULT get_event(LPHTMLEVENTOBJ*);
-	HRESULT get__newEnum(IUnknown**);
+	HRESULT get__newEnum(IUnknown*);
 	HRESULT showModalDialog(BSTR,VARIANT*,VARIANT*,VARIANT*);
 	HRESULT showHelp(BSTR,VARIANT,BSTR);
 	HRESULT get_screen(LPHTMLSCREEN*);
@@ -444,7 +444,7 @@ interface IHTMLWindow2 : public IHTMLFramesCollection2 {
 	HRESULT moveBy(long,long);
 	HRESULT resizeTo(long,long);
 	HRESULT resizeBy(long,long);
-	HRESULT get_external(IDispatch**);
+	HRESULT get_external(IDispatch*);
 }
 alias IHTMLWindow2 LPHTMLWINDOW2;
 
@@ -470,7 +470,7 @@ interface IHTMLFrameBase : public IDispatch {
 }
 
 interface IHTMLFrameBase2 : public IDispatch {
-	HRESULT get_contentWindow(IHTMLWindow2 **);
+	HRESULT get_contentWindow(IHTMLWindow2 *);
 	HRESULT put_onload(VARIANT);
 	HRESULT get_onload(VARIANT*);
 	HRESULT put_onreadystatechange(VARIANT);
@@ -520,7 +520,7 @@ interface IHTMLBodyElement : public IDispatch {
 	HRESULT get_onselect(VARIANT*);
 	HRESULT put_onbeforeunload(VARIANT);
 	HRESULT get_onbeforeunload(VARIANT*);
-	HRESULT createTextRange(IHTMLTxtRange**);
+	HRESULT createTextRange(IHTMLTxtRange*);
 }
 
 interface IHTMLBodyElement2 : public IDispatch {
