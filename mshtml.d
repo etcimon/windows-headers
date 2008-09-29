@@ -144,7 +144,7 @@ interface IHTMLDocument2 : public IHTMLDocument {
 	HRESULT get_designMode(BSTR*);
 	HRESULT get_selection(LPHTMLSELECTIONOBJECT*);
 	HRESULT get_readyState(BSTR*);
-	HRESULT get_frames(LPHTMLFRAMESCOLLECTION*);
+	HRESULT get_frames(IHTMLFramesCollection2*);
 	HRESULT get_embeds(LPHTMLELEMENTCOLLECTION*);
 	HRESULT get_plugins(LPHTMLELEMENTCOLLECTION*);
 	HRESULT put_alinkColor(VARIANT);
