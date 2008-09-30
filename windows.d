@@ -46,12 +46,12 @@ public import win32.mmsystem;
 public import win32.nb30;
 
 
-//can't pass
-//public import win32.rpc;
+
+public import win32.rpc;
 public import win32.shellapi;
 public import win32.winperf;
 public import win32.commdlg;
-//public import win32.winspool;
+public import win32.winspool;
 public import win32.ole2;
 
 // Select correct version of winsock.  Importing the incorrect
