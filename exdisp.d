@@ -38,14 +38,14 @@ interface IWebBrowser : public IDispatch {
 	HRESULT get_Document(IDispatch* ppDisp);
 	HRESULT get_TopLevelContainer(VARIANT_BOOL*);
 	HRESULT get_Type(BSTR*);
-	HRESULT get_Left(long*);
-	HRESULT put_Left(long);
-	HRESULT get_Top(long*);
-	HRESULT put_Top(long);
-	HRESULT get_Width(long*);
-	HRESULT put_Width(long);
-	HRESULT get_Height(long*);
-	HRESULT put_Height(long);
+	HRESULT get_Left(LONG*);
+	HRESULT put_Left(LONG);
+	HRESULT get_Top(LONG*);
+	HRESULT put_Top(LONG);
+	HRESULT get_Width(LONG*);
+	HRESULT put_Width(LONG);
+	HRESULT get_Height(LONG*);
+	HRESULT put_Height(LONG);
 	HRESULT get_LocationName(BSTR*);
 	HRESULT get_LocationURL(BSTR*);
 	HRESULT get_Busy(VARIANT_BOOL*);
@@ -57,7 +57,7 @@ interface IWebBrowserApp : public IWebBrowser {
 	HRESULT PutProperty(BSTR, VARIANT);
 	HRESULT GetProperty(BSTR, VARIANT*);
 	HRESULT get_Name(BSTR*);
-	HRESULT get_HWND(long*);
+	HRESULT get_HWND(LONG*);
 	HRESULT get_FullName(BSTR*);
 	HRESULT get_Path(BSTR*);
 	HRESULT get_Visible(VARIANT_BOOL*);
@@ -98,8 +98,8 @@ interface IWebBrowser2 : public IWebBrowserApp {
 
 interface DWebBrowserEvents2 : public IDispatch {
 	void StatusTextChange(BSTR);
-	void ProgressChange(long, long);
-	void CommandStateChange(long, VARIANT_BOOL);
+	void ProgressChange(LONG, LONG);
+	void CommandStateChange(LONG, VARIANT_BOOL);
 	void DownloadBegin();
 	void DownloadComplete();
 	void TitleChange(BSTR);
@@ -116,12 +116,12 @@ interface DWebBrowserEvents2 : public IDispatch {
 	void OnFullScreen(VARIANT_BOOL);
 	void OnTheaterMode(VARIANT_BOOL);
 	void WindowSetResizable(VARIANT_BOOL);
-	void WindowSetLeft(long);
-	void WindowSetTop(long);
-	void WindowSetWidth(long);
-	void WindowSetHeight(long);
+	void WindowSetLeft(LONG);
+	void WindowSetTop(LONG);
+	void WindowSetWidth(LONG);
+	void WindowSetHeight(LONG);
 	void WindowClosing(VARIANT_BOOL, VARIANT_BOOL*);
-	void ClientToHostWindow(long*, long*);
-	void SetSecureLockIcon(long);
+	void ClientToHostWindow(LONG*, LONG*);
+	void SetSecureLockIcon(LONG);
 	void FileDownload(VARIANT_BOOL*);
 }
