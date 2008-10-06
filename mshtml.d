@@ -77,10 +77,10 @@ interface IHTMLImgElement : public IDispatch {
 	HRESULT get_nameProp(BSTR*);
 	HRESULT put_border(VARIANT);
 	HRESULT get_border(VARIANT*);
-	HRESULT put_vspace(long);
-	HRESULT get_vspace(long*);
-	HRESULT put_hspace(long);
-	HRESULT get_hspace(long*);
+	HRESULT put_vspace(LONG);
+	HRESULT get_vspace(LONG*);
+	HRESULT put_hspace(LONG);
+	HRESULT get_hspace(LONG*);
 	HRESULT put_alt(BSTR);
 	HRESULT get_alt(BSTR*);
 	HRESULT put_src(BSTR);
@@ -105,10 +105,10 @@ interface IHTMLImgElement : public IDispatch {
 	HRESULT get_onabort(VARIANT*);
 	HRESULT put_name(BSTR);
 	HRESULT get_name(BSTR*);
-	HRESULT put_width(long);
-	HRESULT get_width(long*);
-	HRESULT put_height(long);
-	HRESULT get_height(long*);
+	HRESULT put_width(LONG);
+	HRESULT get_width(LONG*);
+	HRESULT put_height(LONG);
+	HRESULT get_height(LONG*);
 	HRESULT put_start(BSTR);
 	HRESULT get_start(BSTR*);
 }
@@ -116,8 +116,8 @@ alias IHTMLImgElement LPHTMLIMGELEMENT;
 
 interface IHTMLElementCollection : public IDispatch {
 	HRESULT toString(BSTR*);
-	HRESULT put_length(long);
-	HRESULT get_length(long*);
+	HRESULT put_length(LONG);
+	HRESULT get_length(LONG*);
 	HRESULT get__newEnum(IUnknown*);
 	HRESULT item(VARIANT,VARIANT,IDispatch* pDisp);
 	HRESULT tags(VARIANT,IDispatch* pdisp);
@@ -228,7 +228,7 @@ interface IHTMLDocument2 : public IHTMLDocument {
 	HRESULT get_ondragstart(VARIANT*);
 	HRESULT put_onselectstart(VARIANT);
 	HRESULT get_onselectstart(VARIANT*);
-	HRESULT elementFromPoint(long,long,LPHTMLELEMENT*);
+	HRESULT elementFromPoint(LONG,LONG,LPHTMLELEMENT*);
 	HRESULT get_parentWindow(LPHTMLWINDOW2*);
 	HRESULT get_styleSheets(LPHTMLSTYLESHEETSCOLLECTION*);
 	HRESULT put_onbeforeupdate(VARIANT);
@@ -236,7 +236,7 @@ interface IHTMLDocument2 : public IHTMLDocument {
 	HRESULT put_onerrorupdate(VARIANT);
 	HRESULT get_onerrorupdate(VARIANT*);
 	HRESULT toString(BSTR*);
-	HRESULT createStyleSheet(BSTR,long,LPHTMLSTYLESHEET*);
+	HRESULT createStyleSheet(BSTR,LONG,LPHTMLSTYLESHEET*);
 }
 
 interface IHTMLSelectionObject : public IDispatch {
@@ -258,16 +258,16 @@ interface IHTMLTxtRange : public IDispatch {
 	HRESULT scrollIntoView(VARIANT_BOOL);
 	HRESULT collapse(VARIANT_BOOL);
 	HRESULT expand(BSTR,VARIANT_BOOL*);
-	HRESULT move(BSTR,long,long*);
-	HRESULT moveStart(BSTR,long,long*);
-	HRESULT moveEnd(BSTR,long,long*);
+	HRESULT move(BSTR,LONG,LONG*);
+	HRESULT moveStart(BSTR,LONG,LONG*);
+	HRESULT moveEnd(BSTR,LONG,LONG*);
 	HRESULT select();
 	HRESULT pasteHTML(BSTR);
 	HRESULT moveToElementText(LPHTMLELEMENT);
 	HRESULT setEndPoint(BSTR,IHTMLTxtRange);
-	HRESULT compareEndPoints(BSTR,IHTMLTxtRange,long*);
-	HRESULT findText(BSTR,long,long,VARIANT_BOOL*);
-	HRESULT moveToPoint(long,long);
+	HRESULT compareEndPoints(BSTR,IHTMLTxtRange,LONG*);
+	HRESULT findText(BSTR,LONG,LONG,VARIANT_BOOL*);
+	HRESULT moveToPoint(LONG,LONG);
 	HRESULT getBookmark(BSTR*);
 	HRESULT moveToBookbark(BSTR,VARIANT_BOOL*);
 	HRESULT queryCommandSupported(BSTR,VARIANT_BOOL*);
@@ -322,17 +322,17 @@ interface IHTMLElement : public IDispatch {
 	HRESULT get_onselectstart(VARIANT*);
 	HRESULT scrollIntoView(VARIANT);
 	HRESULT contains(LPHTMLELEMENT,VARIANT_BOOL*);
-	HRESULT get_source3Index(long*);
+	HRESULT get_source3Index(LONG*);
 	HRESULT get_recordNumber(VARIANT*);
 	HRESULT put_lang(BSTR);
 	HRESULT get_lang(ref BSTR);
-	HRESULT get_offsetLeft(long*);
-	HRESULT get_offsetTop(long*);
-	HRESULT get_offsetWidth(long*);
-	HRESULT get_offsetHeight(long*);
+	HRESULT get_offsetLeft(LONG*);
+	HRESULT get_offsetTop(LONG*);
+	HRESULT get_offsetWidth(LONG*);
+	HRESULT get_offsetHeight(LONG*);
 	HRESULT get_offsetParent(LPHTMLELEMENT*);
 	HRESULT put_innerHTML(BSTR);
-	HRESULT get_innerHTML(out BSTR);
+	HRESULT get_innerHTML(ref BSTR);
 	HRESULT put_innerText(BSTR);
 	HRESULT get_innerText(ref BSTR);
 	HRESULT put_outerHTML(BSTR);
@@ -373,7 +373,7 @@ alias IHTMLElement LPHTMLELEMENT;
 
 interface IHTMLFramesCollection2 : public IDispatch {
 	HRESULT item(VARIANT*,VARIANT*);
-	HRESULT get_length(long*);
+	HRESULT get_length(LONG*);
 }
 
 interface IHTMLWindow2 : public IHTMLFramesCollection2 {
@@ -382,8 +382,8 @@ interface IHTMLWindow2 : public IHTMLFramesCollection2 {
 	HRESULT get_defaultStatus(BSTR*);
 	HRESULT put_status(BSTR);
 	HRESULT get_status(BSTR*);
-	HRESULT setTimeout(BSTR,long,VARIANT*,long*);
-	HRESULT clearTimeout(long);
+	HRESULT setTimeout(BSTR,LONG,VARIANT*,LONG*);
+	HRESULT clearTimeout(LONG);
 	HRESULT alert(BSTR);
 	HRESULT confirm(BSTR,VARIANT_BOOL*);
 	HRESULT prompt(BSTR,BSTR,VARIANT*);
@@ -438,12 +438,12 @@ interface IHTMLWindow2 : public IHTMLFramesCollection2 {
 	HRESULT get_offscreenBuffering(VARIANT*);
 	HRESULT execScript(BSTR,BSTR,VARIANT*);
 	HRESULT toString(BSTR*);
-	HRESULT scrollBy(long,long);
-	HRESULT scrollTo(long,long);
-	HRESULT moveTo(long,long);
-	HRESULT moveBy(long,long);
-	HRESULT resizeTo(long,long);
-	HRESULT resizeBy(long,long);
+	HRESULT scrollBy(LONG,LONG);
+	HRESULT scrollTo(LONG,LONG);
+	HRESULT moveTo(LONG,LONG);
+	HRESULT moveBy(LONG,LONG);
+	HRESULT resizeTo(LONG,LONG);
+	HRESULT resizeBy(LONG,LONG);
 	HRESULT get_external(IDispatch*);
 }
 alias IHTMLWindow2 LPHTMLWINDOW2;
