@@ -2554,36 +2554,36 @@ const RIDEV_NOHOTKEYS    = 0x00000200;
 const RIDEV_APPKEYS      = 0x00000400;
 }
 
-// Callbacks ----
+// Callbacks
+// ---------
 extern (Windows) {
-alias BOOL function (HWND, UINT, WPARAM, LPARAM)    DLGPROC;
-alias void function (HWND, UINT, UINT, DWORD)       TIMERPROC;
-alias BOOL function (HDC, LPARAM, int)             GRAYSTRINGPROC;
-alias LRESULT function (int, WPARAM, LPARAM)       HOOKPROC;
-alias BOOL function (HWND, LPCSTR, HANDLE)         PROPENUMPROCA;
-alias BOOL function (HWND, LPCWSTR, HANDLE)        PROPENUMPROCW;
-alias BOOL function (HWND, LPSTR, HANDLE, DWORD)    PROPENUMPROCEXA;
-alias BOOL function (HWND, LPWSTR, HANDLE, DWORD)   PROPENUMPROCEXW;
-alias int function (LPSTR, int, int, int)           EDITWORDBREAKPROCA;
-alias int function (LPWSTR, int, int, int)          EDITWORDBREAKPROCW;
-alias LRESULT function (HWND, UINT, WPARAM, LPARAM) WNDPROC;
-alias BOOL function (HDC, LPARAM, WPARAM, int, int)  DRAWSTATEPROC;
-alias BOOL function (HWND, LPARAM)                WNDENUMPROC;
-alias BOOL function (HWND, LPARAM)                ENUMWINDOWSPROC;
-alias void function (LPHELPINFO)                 MSGBOXCALLBACK;
+	alias BOOL function (HWND, UINT, WPARAM, LPARAM)    DLGPROC;
+	alias void function (HWND, UINT, UINT, DWORD)       TIMERPROC;
+	alias BOOL function (HDC, LPARAM, int)              GRAYSTRINGPROC;
+	alias LRESULT function (int, WPARAM, LPARAM)        HOOKPROC;
+	alias BOOL function (HWND, LPCSTR, HANDLE)          PROPENUMPROCA;
+	alias BOOL function (HWND, LPCWSTR, HANDLE)         PROPENUMPROCW;
+	alias BOOL function (HWND, LPSTR, HANDLE, DWORD)    PROPENUMPROCEXA;
+	alias BOOL function (HWND, LPWSTR, HANDLE, DWORD)   PROPENUMPROCEXW;
+	alias int function (LPSTR, int, int, int)           EDITWORDBREAKPROCA;
+	alias int function (LPWSTR, int, int, int)          EDITWORDBREAKPROCW;
+	alias LRESULT function (HWND, UINT, WPARAM, LPARAM) WNDPROC;
+	alias BOOL function (HDC, LPARAM, WPARAM, int, int) DRAWSTATEPROC;
+	alias BOOL function (HWND, LPARAM)                  WNDENUMPROC;
+	alias BOOL function (HWND, LPARAM)                  ENUMWINDOWSPROC;
+	alias void function (LPHELPINFO)                    MSGBOXCALLBACK;
 
-static if (WINVER >= 0x410) {
-alias BOOL function (HMONITOR, HDC, LPRECT, LPARAM) MONITORENUMPROC;
-}
-alias BOOL function (LPSTR, LPARAM)               NAMEENUMPROCA;
-alias BOOL function (LPWSTR, LPARAM)              NAMEENUMPROCW;
-alias void function (HWND, UINT, DWORD, LRESULT)    SENDASYNCPROC;
+	static if (WINVER >= 0x410) {
+		alias BOOL function (HMONITOR, HDC, LPRECT, LPARAM) MONITORENUMPROC;
+	}
+	alias BOOL function (LPSTR, LPARAM)                 NAMEENUMPROCA;
+	alias BOOL function (LPWSTR, LPARAM)                NAMEENUMPROCW;
+	alias void function (HWND, UINT, DWORD, LRESULT)    SENDASYNCPROC;
 
-alias NAMEENUMPROCA DESKTOPENUMPROCA;
-alias NAMEENUMPROCW DESKTOPENUMPROCW;
-alias NAMEENUMPROCA WINSTAENUMPROCA;
-alias NAMEENUMPROCW WINSTAENUMPROCW;
-
+	alias NAMEENUMPROCA DESKTOPENUMPROCA;
+	alias NAMEENUMPROCW DESKTOPENUMPROCW;
+	alias NAMEENUMPROCA WINSTAENUMPROCA;
+	alias NAMEENUMPROCW WINSTAENUMPROCW;
 }
 
 typedef HANDLE HHOOK;
@@ -2745,7 +2745,7 @@ alias DLGITEMTEMPLATE* LPDLGITEMTEMPLATE;
 struct DLGTEMPLATE {
 	DWORD style;
 	DWORD dwExtendedStyle;
-	WORD cdit;
+	WORD  cdit;
 	short x;
 	short y;
 	short cx;
@@ -2789,19 +2789,19 @@ struct PAINTSTRUCT {
 alias PAINTSTRUCT* LPPAINTSTRUCT;
 
 struct MSG {
-	HWND hwnd;
-	UINT message;
+	HWND   hwnd;
+	UINT   message;
 	WPARAM wParam;
 	LPARAM lParam;
-	DWORD time;
-	POINT pt;
+	DWORD  time;
+	POINT  pt;
 }
 alias MSG* LPMSG, PMSG;
 
 struct ICONINFO {
-	BOOL fIcon;
-	DWORD xHotspot;
-	DWORD yHotspot;
+	BOOL    fIcon;
+	DWORD   xHotspot;
+	DWORD   yHotspot;
 	HBITMAP hbmMask;
 	HBITMAP hbmColor;
 }
@@ -2815,30 +2815,30 @@ struct NMHDR {
 alias NMHDR* LPNMHDR;
 
 struct WNDCLASSA {
-	UINT style;
-	WNDPROC lpfnWndProc;
-	int cbClsExtra;
-	int cbWndExtra;
+	UINT      style;
+	WNDPROC   lpfnWndProc;
+	int       cbClsExtra;
+	int       cbWndExtra;
 	HINSTANCE hInstance;
-	HICON hIcon;
-	HCURSOR hCursor;
-	HBRUSH hbrBackground;
-	LPCSTR lpszMenuName;
-	LPCSTR lpszClassName;
+	HICON     hIcon;
+	HCURSOR   hCursor;
+	HBRUSH    hbrBackground;
+	LPCSTR    lpszMenuName;
+	LPCSTR    lpszClassName;
 }
 alias WNDCLASSA* LPWNDCLASSA, PWNDCLASSA;
 
 struct WNDCLASSW {
-	UINT style;
-	WNDPROC lpfnWndProc;
-	int cbClsExtra;
-	int cbWndExtra;
+	UINT      style;
+	WNDPROC   lpfnWndProc;
+	int       cbClsExtra;
+	int       cbWndExtra;
 	HINSTANCE hInstance;
-	HICON hIcon;
-	HCURSOR hCursor;
-	HBRUSH hbrBackground;
-	LPCWSTR lpszMenuName;
-	LPCWSTR lpszClassName;
+	HICON     hIcon;
+	HCURSOR   hCursor;
+	HBRUSH    hbrBackground;
+	LPCWSTR   lpszMenuName;
+	LPCWSTR   lpszClassName;
 }
 alias WNDCLASSW* LPWNDCLASSW, PWNDCLASSW;
 

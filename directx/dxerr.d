@@ -11,16 +11,18 @@ import win32.windows;
 
 pragma(lib, "dxerr.lib");
 
-extern(Windows) {
-	CHAR* DXGetErrorStringA(HRESULT hr);
+extern (Windows) {
+	CHAR*  DXGetErrorStringA(HRESULT hr);
 	WCHAR* DXGetErrorStringW(HRESULT hr);
-	CHAR* DXGetErrorDescriptionA(HRESULT hr);
+	CHAR*  DXGetErrorDescriptionA(HRESULT hr);
 	WCHAR* DXGetErrorDescriptionW(HRESULT hr);
-	HRESULT DXTraceA(CHAR* strFile, DWORD dwLine, HRESULT hr, CHAR* strMsg, BOOL bPopMsgBox);
-	HRESULT DXTraceW(CHAR* strFile, DWORD dwLine, HRESULT hr, WCHAR* strMsg, BOOL bPopMsgBox);
+	HRESULT DXTraceA(CHAR* strFile, DWORD dwLine, HRESULT hr, CHAR* strMsg,
+	  BOOL bPopMsgBox);
+	HRESULT DXTraceW(CHAR* strFile, DWORD dwLine, HRESULT hr, WCHAR* strMsg,
+	  BOOL bPopMsgBox);
 }
 
-version(Unicode) {
+version (Unicode) {
 	alias DXGetErrorStringW DXGetErrorString;
 	alias DXGetErrorDescriptionW DXGetErrorDescription;
 	alias DXTraceW DXTrace;
@@ -30,14 +32,14 @@ version(Unicode) {
 	alias DXTraceA DXTrace;
 }
 
-debug(dxerr) {
-	HRESULT DXTRACE_MSG(str) {
+debug (dxerr) {
+	HRESULT DXTRACE_MSG(TCHAR* str) {
 		return DXTrace(__FILE__, __LINE__, 0, str, false);
 	}
-	HRESULT DXTRACE_ERR(str,hr) {
+	HRESULT DXTRACE_ERR(TCHAR* str, HRESULT hr) {
 		return DXTrace(__FILE__, __LINE__, hr, str, false);
 	}
-	HRESULT DXTRACE_ERR_MSGBOX(str,hr) {
+	HRESULT DXTRACE_ERR_MSGBOX(TCHAR* str, HRESULT hr) {
 		return DXTrace(__FILE__, __LINE__, hr, str, true);
 	}
 } else {
