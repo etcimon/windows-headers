@@ -12,28 +12,28 @@ private import win32.directx.d3d10;
 private import win32.directx.d3dx10core;
 
 enum D3DX10_FILTER_FLAG {
-    D3DX10_FILTER_NONE				= 1 << 0,
-    D3DX10_FILTER_POINT				= 2 << 0,
-    D3DX10_FILTER_LINEAR			= 3 << 0,
-    D3DX10_FILTER_TRIANGLE			= 4 << 0,
-    D3DX10_FILTER_BOX				= 5 << 0,
-    D3DX10_FILTER_MIRROR_U			= 1 << 16,
-    D3DX10_FILTER_MIRROR_V			= 2 << 16,
-    D3DX10_FILTER_MIRROR_W			= 4 << 16,
-    D3DX10_FILTER_MIRROR			= 7 << 16,
-    D3DX10_FILTER_DITHER			= 1 << 19,
-    D3DX10_FILTER_DITHER_DIFFUSION	= 2 << 19,
-    D3DX10_FILTER_SRGB_IN			= 1 << 21,
-    D3DX10_FILTER_SRGB_OUT			= 2 << 21,
-    D3DX10_FILTER_SRGB				= 3 << 21                 
+	D3DX10_FILTER_NONE				= 1 << 0,
+	D3DX10_FILTER_POINT				= 2 << 0,
+	D3DX10_FILTER_LINEAR			= 3 << 0,
+	D3DX10_FILTER_TRIANGLE			= 4 << 0,
+	D3DX10_FILTER_BOX				= 5 << 0,
+	D3DX10_FILTER_MIRROR_U			= 1 << 16,
+	D3DX10_FILTER_MIRROR_V			= 2 << 16,
+	D3DX10_FILTER_MIRROR_W			= 4 << 16,
+	D3DX10_FILTER_MIRROR			= 7 << 16,
+	D3DX10_FILTER_DITHER			= 1 << 19,
+	D3DX10_FILTER_DITHER_DIFFUSION	= 2 << 19,
+	D3DX10_FILTER_SRGB_IN			= 1 << 21,
+	D3DX10_FILTER_SRGB_OUT			= 2 << 21,
+	D3DX10_FILTER_SRGB				= 3 << 21
 }
 
 enum D3DX10_NORMALMAP_FLAG {
-    D3DX10_NORMALMAP_MIRROR_U			= 1 << 16,
-    D3DX10_NORMALMAP_MIRROR_V			= 2 << 16,
-    D3DX10_NORMALMAP_MIRROR				= 3 << 16,
-    D3DX10_NORMALMAP_INVERTSIGN			= 8 << 16,
-    D3DX10_NORMALMAP_COMPUTE_OCCLUSION	= 16 << 16
+	D3DX10_NORMALMAP_MIRROR_U			= 1 << 16,
+	D3DX10_NORMALMAP_MIRROR_V			= 2 << 16,
+	D3DX10_NORMALMAP_MIRROR				= 3 << 16,
+	D3DX10_NORMALMAP_INVERTSIGN			= 8 << 16,
+	D3DX10_NORMALMAP_COMPUTE_OCCLUSION	= 16 << 16
 }
 
 enum D3DX10_CHANNEL_FLAG {
@@ -56,7 +56,7 @@ enum D3DX10_IMAGE_FILE_FORMAT {
 }
 
 enum D3DX10_SAVE_TEXTURE_FLAG {
-    D3DX10_STF_USEINPUTBLOB = 0x0001
+	D3DX10_STF_USEINPUTBLOB = 0x0001
 }
 
 struct D3DX10_IMAGE_INFO {
@@ -133,9 +133,7 @@ version(Unicode) {
 	alias D3DX10CreateShaderResourceViewFromResourceA D3DX10CreateShaderResourceViewFromResource;
 }
 
-HRESULT D3DX10CreateTextureFromResourceA(ID3D10Device pDevice, HMODULE hSrcModule, LPCSTR pSrcResource, D3DX10_IMAGE_LOAD_INFO* pLoadInfo,  
-        ID3DX10ThreadPump pPump,   
-        ID3D10Resource* ppTexture, HRESULT* pHResult);
+HRESULT D3DX10CreateTextureFromResourceA(ID3D10Device pDevice, HMODULE hSrcModule, LPCSTR pSrcResource, D3DX10_IMAGE_LOAD_INFO* pLoadInfo, ID3DX10ThreadPump pPump, ID3D10Resource* ppTexture, HRESULT* pHResult);
 HRESULT D3DX10CreateTextureFromResourceW(ID3D10Device pDevice, HMODULE hSrcModule, LPCWSTR pSrcResource, D3DX10_IMAGE_LOAD_INFO* pLoadInfo, ID3DX10ThreadPump pPump, ID3D10Resource* ppTexture, HRESULT* pHResult);
 
 version(Unicode) {
