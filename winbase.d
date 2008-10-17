@@ -1655,6 +1655,7 @@ extern (Windows) {
 	BOOL CallNamedPipeA(LPCSTR, PVOID, DWORD, PVOID, DWORD, PDWORD, DWORD);
 	BOOL CallNamedPipeW(LPCWSTR, PVOID, DWORD, PVOID, DWORD, PDWORD, DWORD);
 	BOOL CancelDeviceWakeupRequest(HANDLE);
+	BOOL CheckTokenMembership(HANDLE, PSID, PBOOL);
 	BOOL ClearCommBreak(HANDLE);
 	BOOL ClearCommError(HANDLE, PDWORD, LPCOMSTAT);
 	BOOL CloseHandle(HANDLE);
@@ -2392,14 +2393,20 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 			BOOL DebugActiveProcessStop(DWORD);
 			BOOL DebugBreakProcess(HANDLE);
 			BOOL DebugSetProcessKillOnExit(BOOL);
-			BOOL FindActCtxSectionGuid(DWORD, GUID*, ULONG, GUID*, PACTCTX_SECTION_KEYED_DATA);
-			BOOL FindActCtxSectionStringA(DWORD, GUID*, ULONG, LPCSTR, PACTCTX_SECTION_KEYED_DATA);
-			BOOL FindActCtxSectionStringW(DWORD, GUID*, ULONG, LPCWSTR, PACTCTX_SECTION_KEYED_DATA);
+			BOOL FindActCtxSectionGuid(DWORD, GUID*, ULONG, GUID*,
+			  PACTCTX_SECTION_KEYED_DATA);
+			BOOL FindActCtxSectionStringA(DWORD, GUID*, ULONG, LPCSTR,
+			  PACTCTX_SECTION_KEYED_DATA);
+			BOOL FindActCtxSectionStringW(DWORD, GUID*, ULONG, LPCWSTR,
+			  PACTCTX_SECTION_KEYED_DATA);
 			BOOL GetCurrentActCtx(HANDLE*);
 			VOID GetNativeSystemInfo(LPSYSTEM_INFO);
+			BOOL GetProcessHandleCount(HANDLE, PDWORD);
+			BOOL GetSystemRegistryQuota(PDWORD, PDWORD);
 			BOOL GetSystemTimes(LPFILETIME, LPFILETIME, LPFILETIME);
 			UINT GetSystemWow64DirectoryA(LPSTR, UINT);
 			UINT GetSystemWow64DirectoryW(LPWSTR, UINT);
+			BOOL GetThreadIOPendingFlag(HANDLE, PBOOL);
 			BOOL GetVolumePathNamesForVolumeNameA(LPCSTR, LPSTR, DWORD, PDWORD);
 			BOOL GetVolumePathNamesForVolumeNameW(LPCWSTR, LPWSTR, DWORD, PDWORD);
 			UINT GetWriteWatch(DWORD, PVOID, SIZE_T, PVOID*, PULONG_PTR, PULONG);
@@ -2423,9 +2430,6 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 			DWORD GetDllDirectoryA(DWORD, LPSTR);
 			DWORD GetDllDirectoryW(DWORD, LPWSTR);
 			DWORD GetProcessId(HANDLE);
-			BOOL GetProcessHandleCount(HANDLE, PDWORD);
-			BOOL GetSystemRegistryQuota(PDWORD, PDWORD);
-			BOOL GetThreadIOPendingFlag(HANDLE, PBOOL);
 			HANDLE ReOpenFile(HANDLE, DWORD, DWORD, DWORD);
 			BOOL SetDllDirectoryA(LPCSTR);
 			BOOL SetDllDirectoryW(LPCWSTR);
@@ -2435,7 +2439,7 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 	}
 
 	// ???
-	static if (_WIN32_WINNT >= 0x0510) {
+	static if (_WIN32_WINNT >= 0x510) {
 		VOID RestoreLastError(DWORD);
 	}
 }
