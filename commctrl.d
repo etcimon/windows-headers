@@ -19,32 +19,34 @@ import win32.prsht;
 
 const COMCTL32_VERSION = 6;
 
-const TCHAR[] DRAGLISTMSGSTRING  = "commctrl_DragListMsg";
-const TCHAR[] HOTKEY_CLASS       = "msctls_hotkey32";
-const TCHAR[] PROGRESS_CLASS     = "msctls_progress32";
-const TCHAR[] STATUSCLASSNAME    = "msctls_statusbar32";
-const TCHAR[] TOOLBARCLASSNAME   = "ToolbarWindow32";
-const TCHAR[] TOOLTIPS_CLASS     = "tooltips_class32";
-const TCHAR[] TRACKBAR_CLASS     = "msctls_trackbar32";
-const TCHAR[] UPDOWN_CLASS       = "msctls_updown32";
-const TCHAR[] ANIMATE_CLASS      = "SysAnimate32";
-const TCHAR[] DATETIMEPICK_CLASS = "SysDateTimePick32";
-const TCHAR[] MONTHCAL_CLASS     = "SysMonthCal32";
-const TCHAR[] REBARCLASSNAME     = "ReBarWindow32";
-const TCHAR[] WC_COMBOBOXEX      = "ComboBoxEx32";
-const TCHAR[] WC_IPADDRESS       = "SysIPAddress32";
-const TCHAR[] WC_LISTVIEW        = "SysListView32";
-const TCHAR[] WC_TABCONTROL      = "SysTabControl32";
-const TCHAR[] WC_TREEVIEW        = "SysTreeView32";
-const TCHAR[] WC_HEADER          = "SysHeader32";
-const TCHAR[] WC_PAGESCROLLER    = "SysPager";
-const TCHAR[] WC_NATIVEFONTCTL   = "NativeFontCtl";
-const TCHAR[] WC_BUTTON          = "Button";
-const TCHAR[] WC_STATIC          = "Static";
-const TCHAR[] WC_EDIT            = "Edit";
-const TCHAR[] WC_LISTBOX         = "ListBox";
-const TCHAR[] WC_COMBOBOX        = "ComboBox";
-const TCHAR[] WC_SCROLLBAR       = "ScrollBar";
+const TCHAR[]
+	DRAGLISTMSGSTRING  = "commctrl_DragListMsg",
+	HOTKEY_CLASS       = "msctls_hotkey32",
+	PROGRESS_CLASS     = "msctls_progress32",
+	STATUSCLASSNAME    = "msctls_statusbar32",
+	TOOLBARCLASSNAME   = "ToolbarWindow32",
+	TOOLTIPS_CLASS     = "tooltips_class32",
+	TRACKBAR_CLASS     = "msctls_trackbar32",
+	UPDOWN_CLASS       = "msctls_updown32",
+	ANIMATE_CLASS      = "SysAnimate32",
+	DATETIMEPICK_CLASS = "SysDateTimePick32",
+	MONTHCAL_CLASS     = "SysMonthCal32",
+	REBARCLASSNAME     = "ReBarWindow32",
+	WC_COMBOBOXEX      = "ComboBoxEx32",
+	WC_IPADDRESS       = "SysIPAddress32",
+	WC_LISTVIEW        = "SysListView32",
+	WC_TABCONTROL      = "SysTabControl32",
+	WC_TREEVIEW        = "SysTreeView32",
+	WC_HEADER          = "SysHeader32",
+	WC_PAGESCROLLER    = "SysPager",
+	WC_NATIVEFONTCTL   = "NativeFontCtl",
+	WC_BUTTON          = "Button",
+	WC_STATIC          = "Static",
+	WC_EDIT            = "Edit",
+	WC_LISTBOX         = "ListBox",
+	WC_COMBOBOX        = "ComboBox",
+	WC_SCROLLBAR       = "ScrollBar",
+	WC_LINKA           = "SysLink";
 
 enum {
 	LVM_FIRST = 0x1000,
@@ -874,7 +876,7 @@ static if (_WIN32_IE >= 0x300) {
 	}
 }
 
-static if (_WIN32_IE >= 0x400) {  /* IE4.0 ??? */
+static if (_WIN32_IE >= 0x400) {  // IE4.0 ???
 	enum {
 		TTM_UPDATE = WM_USER + 29,
 		TTM_GETBUBBLESIZE,
@@ -1129,10 +1131,10 @@ enum {
 	LVS_AUTOARRANGE     = 256,
 	LVS_EDITLABELS      = 512,
 	LVS_NOSCROLL        = 0x2000,
-	LVS_TYPESTYLEMASK   = 0xfc00,
+	LVS_TYPESTYLEMASK   = 0xFC00,
 	LVS_ALIGNTOP        = 0,
 	LVS_ALIGNLEFT       = 0x800,
-	LVS_ALIGNMASK       = 0xc00,
+	LVS_ALIGNMASK       = 0xC00,
 	LVS_OWNERDRAWFIXED  = 0x400,
 	LVS_NOCOLUMNHEADER  = 0x4000,
 	LVS_NOSORTHEADER    = 0x8000
@@ -1251,11 +1253,49 @@ enum {
 }
 
 enum {
-	LVM_GETBKCOLOR = LVM_FIRST,
+	LVM_GETBKCOLOR             = LVM_FIRST,
 	LVM_SETBKCOLOR,
 	LVM_GETIMAGELIST,
 	LVM_SETIMAGELIST,
-	LVM_GETITEMCOUNT // = LVM_FIRST+4)
+	LVM_GETITEMCOUNT,       // = LVM_FIRST +   4
+	LVM_SORTITEMSEX            = LVM_FIRST +  81,
+	LVM_SETVIEW                = LVM_FIRST + 142,
+	LVM_GETVIEW,            // = LVM_FIRST + 143
+	LVM_INSERTGROUP            = LVM_FIRST + 145,
+	LVM_SETGROUPINFO           = LVM_FIRST + 147,
+	LVM_GETGROUPINFO           = LVM_FIRST + 149,
+	LVM_REMOVEGROUP,
+	LVM_MOVEGROUP,          // = LVM_FIRST + 151
+	LVM_SETGROUPMETRICS        = LVM_FIRST + 155,
+	LVM_GETGROUPMETRICS,
+	LVM_ENABLEGROUPVIEW,
+	LVM_SORTGROUPS,
+	LVM_INSERTGROUPSORTED,
+	LVM_REMOVEALLGROUPS,
+	LVM_HASGROUP,
+	LVM_SETTILEVIEWINFO,
+	LVM_GETTILEVIEWINFO,
+	LVM_SETTILEINFO,
+	LVM_GETTILEINFO,
+	LVM_SETINSERTMARK,
+	LVM_GETINSERTMARK,
+	LVM_INSERTMARKHITTEST,
+	LVM_GETINSERTMARKRECT,
+	LVM_SETINSERTMARKCOLOR,
+	LVM_GETINSERTMARKCOLOR, // = LVM_FIRST + 171
+	LVM_SETINFOTIP             = LVM_FIRST + 173,
+	LVM_GETSELECTEDCOLUMN,
+	LVM_ISGROUPVIEWENABLED,
+	LVM_GETOUTLINECOLOR,
+	LVM_SETOUTLINECOLOR,    // = LVM_FIRST + 177
+	LVM_CANCELEDITLABEL        = LVM_FIRST + 179,
+	LVM_MAPIDTOINDEX           = LVM_FIRST + 181
+}
+
+static if (_WIN32_WINNT >= 0x501) {
+	enum {
+		LVM_SETSELECTEDCOLUMN  = LVM_FIRST + 140
+	}
 }
 
 enum {
@@ -1500,12 +1540,13 @@ enum {
 
 static if (_WIN32_IE >= 0x400) {
 	enum {
-		LVN_GETINFOTIPA = LVN_FIRST - 57,
-		LVN_GETINFOTIPW = LVN_FIRST - 58,
-		LVKF_ALT        = 0x0001,
-		LVKF_CONTROL    = 0x0002,
-		LVKF_SHIFT      = 0x0004,
-		LVGIT_UNFOLDED  = 1
+		LVN_MARQUEEBEGIN = LVN_FIRST - 56,
+		LVN_GETINFOTIPA  = LVN_FIRST - 57,
+		LVN_GETINFOTIPW  = LVN_FIRST - 58,
+		LVKF_ALT         = 1,
+		LVKF_CONTROL     = 2,
+		LVKF_SHIFT       = 4,
+		LVGIT_UNFOLDED   = 1
 	}
 }
 
@@ -1537,7 +1578,7 @@ static if (_WIN32_IE >= 0x400) {
 	}
 }
 
-static if(_WIN32_IE >= 0x500) {
+static if (_WIN32_IE >= 0x500) {
 	enum {
 		TVS_NOHSCROLL = 0x8000
 	}
@@ -2120,12 +2161,12 @@ static if (_WIN32_IE >= 0x500) {
 	enum {
 		RBBS_USECHEVRON = 0x0200
 	}
+}
 
-	static if (_WIN32_IE >= 0x501) {
-		enum {
-			RBBS_HIDETITLE = 0x0400,
-			RBBS_TOPALIGN  = 0x0800
-		}
+static if (_WIN32_IE >= 0x501) {
+	enum {
+		RBBS_HIDETITLE = 0x0400,
+		RBBS_TOPALIGN  = 0x0800
 	}
 }
 
@@ -2181,12 +2222,12 @@ static if (_WIN32_IE >= 0x300) {
 
 static if (_WIN32_IE >= 0x400) {
 	enum {
-		SB_SETICON = 1039,
+		SB_SETICON          = 1039,
 		SB_SETTIPTEXTA,
 		SB_SETTIPTEXTW,
 		SB_GETTIPTEXTA,
 		SB_GETTIPTEXTW,
-		SB_GETICON, // = 1044
+		SB_GETICON,      // = 1044
 		SB_SETUNICODEFORMAT = 0x2005,
 		SB_GETUNICODEFORMAT = 0x2006
 	}
@@ -2389,6 +2430,32 @@ static if (_WIN32_IE >= 0x400) {
 		FSB_REGULAR_MODE   = 0
 	}
 }
+
+static if (_WIN32_WINNT >= 0x0501) {
+	enum {
+		LIF_ITEMINDEX = 1,
+		LIF_STATE     = 2,
+		LIF_ITEMID    = 4,
+		LIF_URL	      = 8
+	}
+
+	enum {
+		LIS_FOCUSED = 1,
+		LIS_ENABLED = 2,
+		LIS_VISITED = 4
+	}
+
+	enum {
+		LM_HITTEST        = WM_USER + 768,
+		LM_GETIDEALHEIGHT,
+		LM_SETITEM,
+		LM_GETITEM     // = WM_USER + 771
+	}
+
+	const size_t MAX_LINKID_TEXT  =   48;
+	const size_t L_MAX_URL_LENGTH = 2084;
+}
+
 
 struct COMBOBOXEXITEMA {
 	UINT   mask;
@@ -3379,7 +3446,107 @@ alias LVCOLUMNW* LPLVCOLUMNW;
 alias LVCOLUMNA LV_COLUMNA;
 alias LVCOLUMNW LV_COLUMNW;
 
+static if (_WIN32_WINNT >= 0x501) {
+	/*	SG: The definitions in this static if block are from the MSDN docs.
+	 *	They are not in MinGW, but nonetheless required for macros that are.
+	 */
+	struct LVGROUP {
+		UINT    cbSize = LVGROUP.sizeof;
+		UINT    mask;
+		LPWSTR  pszHeader;
+		int     cchHeader;
+		LPWSTR  pszFooter;
+		int     cchFooter;
+		int     iGroupId;
+		UINT    stateMask;
+		UINT    state;
+		UINT    uAlign;
+		static if (_WIN32_WINNT >= 0x600) {
+			LPWSTR  pszSubtitle;
+			UINT    cchSubtitle;
+			LPWSTR  pszTask;
+			UINT    cchTask;
+			LPWSTR  pszDescriptionTop;
+			UINT    cchDescriptionTop;
+			LPWSTR  pszDescriptionBottom;
+			UINT    cchDescriptionBottom;
+			int     iTitleImage;
+			int     iExtendedImage;
+			int     iFirstItem;         // Read only
+			UINT    cItems;             // Read only
+			LPWSTR  pszSubsetTitle;     // NULL if group is not subset
+			UINT    cchSubsetTitle;
+		}
+	}
+	alias LVGROUP* PLVGROUP;
+
+	struct LVGROUPMETRICS {
+		UINT     cbSize = LVGROUPMETRICS.sizeof;
+		UINT     mask;
+		UINT     Left;
+		UINT     Top;
+		UINT     Right;
+		UINT     Bottom;
+		COLORREF crLeft;
+		COLORREF crTop;
+		COLORREF crRight;
+		COLORREF crBottom;
+		COLORREF crHeader;
+		COLORREF crFooter;
+	}
+	alias LVGROUPMETRICS* PLVGROUPMETRICS;
+
+	struct LVINSERTMARK {
+		UINT  cbSize = LVINSERTMARK.sizeof;
+		DWORD dwFlags;
+		int   iItem;
+		DWORD dwReserved;
+	}
+	alias LVINSERTMARK* PLVINSERTMARK;
+
+	struct LVTILEINFO {
+		UINT     cbSize = LVTILEINFO.sizeof;
+		int      iItem;
+		UINT     cColumns;
+		PUINT    puColumns;
+		static if (_WIN32_WINNT >= 0x600) {
+			int* piColFmt;
+		}
+	}
+	alias LVTILEINFO* PLVTILEINFO;
+
+	struct LVTILEVIEWINFO {
+		UINT  cbSize = LVTILEVIEWINFO.sizeof;
+		DWORD dwMask;
+		DWORD dwFlags;
+		SIZE  sizeTile;
+		int   cLines;
+		RECT  rcLabelMargin;
+	}
+	alias LVTILEVIEWINFO* PLVTILEVIEWINFO;
+
+	struct LVINSERTGROUPSORTED {
+		PFNLVGROUPCOMPARE pfnGroupCompare;
+		LPVOID* pvData;
+		LVGROUP lvGroup;
+	}
+	alias LVINSERTGROUPSORTED* PLVINSERTGROUPSORTED;
+
+	alias int function(INT, INT, VOID*) PFNLVGROUPCOMPARE;
+
+	struct LVSETINFOTIP {
+		UINT    cbSize = LVSETINFOTIP.sizeof;
+		DWORD   dwFlags;
+		LPWSTR  pszText;
+		int     iItem;
+		int     iSubItem;
+		HBITMAP hbmp;
+	}
+	alias LVSETINFOTIP* PLVSETINFOTIP;
+}
+
 alias int function(LPARAM, LPARAM, LPARAM) PFNLVCOMPARE;
+
 struct NMLISTVIEW {
 	NMHDR  hdr;
 	int    iItem;
@@ -3422,7 +3589,7 @@ struct NMLVCACHEHINT {
 	int   iFrom;
 	int   iTo;
 }
-alias NMLVCACHEHINT* PNMLVCACHEHINT;
+alias NMLVCACHEHINT* LPNMLVCACHEHINT, PNM_CACHEHINT, LPNM_CACHEHINT;
 alias NMLVCACHEHINT NM_CACHEHINT;
 
 struct TVITEMA {
@@ -3819,6 +3986,15 @@ alias REBARBANDINFOA* LPREBARBANDINFOA, LPCREBARBANDINFOA;
 alias REBARBANDINFOW* LPREBARBANDINFOW, LPCREBARBANDINFOW;
 
 static if (_WIN32_IE >= 0x300) {
+	struct NMLVODSTATECHANGE {
+		NMHDR hdr;
+		int iFrom;
+		int iTo;
+		UINT uNewState;
+		UINT uOldState;
+	}
+	alias NMLVODSTATECHANGE* LPNMLVODSTATECHANGE;
+
 	static if (_WIN32_WINNT >= 0x501) {
 		struct IMAGELISTDRAWPARAMS {
 			DWORD      cbSize;
@@ -3992,9 +4168,6 @@ version (Unicode) {
 
 	static if (_WIN32_IE >= 0x400) {
 		alias TBN_GETBUTTONINFOW TBN_GETBUTTONINFO;  // fixme
-	}
-
-	static if (_WIN32_IE >= 0x400) {
 		alias TB_GETBUTTONINFOW TB_GETBUTTONINFO;
 		alias TB_SETBUTTONINFOW TB_SETBUTTONINFO;
 		alias TB_INSERTBUTTONW TB_INSERTBUTTON;
@@ -4340,6 +4513,28 @@ static if (_WIN32_WINNT >= 0x501) {
 	extern (Windows)
 	alias LRESULT function(HWND, UINT, WPARAM, LPARAM, UINT_PTR, DWORD_PTR)
 	  SUBCLASSPROC;
+
+	struct LITEM {
+		UINT mask;
+		int  iLink;
+		UINT state;
+		UINT stateMask;
+		WCHAR[MAX_LINKID_TEXT]  szID;
+		WCHAR[L_MAX_URL_LENGTH] szUrl;
+	}
+	alias LITEM* PLITEM;
+
+	struct LHITTESTINFO {
+		POINT pt;
+		LITEM item;
+	}
+	alias LHITTESTINFO* PLHITTESTINFO;
+
+	struct NMLINK {
+		NMHDR hdr;
+		LITEM item;
+	}
+	alias NMLINK* PNMLINK;
 }
 
 uint INDEXTOOVERLAYMASK(uint i) { return i << 8; }
@@ -4702,8 +4897,8 @@ BOOL ListView_DeleteAllItems(HWND w) {
 	return cast(BOOL) SendMessage(w, LVM_DELETEALLITEMS, 0, 0);
 }
 
-BOOL ListView_GetCallbackMask(HWND w) {
-	return cast(BOOL) SendMessage(w, LVM_GETCALLBACKMASK, 0, 0);
+UINT ListView_GetCallbackMask(HWND w) {
+	return cast(UINT) SendMessage(w, LVM_GETCALLBACKMASK, 0, 0);
 }
 
 BOOL ListView_SetCallbackMask(HWND w, UINT m) {
@@ -4747,8 +4942,8 @@ BOOL ListView_EnsureVisible(HWND w, int i, BOOL f) {
 	return cast(BOOL) SendMessage(w, LVM_ENSUREVISIBLE, i, MAKELPARAM(cast(ushort)f, 0));
 }
 
-BOOL ListView_Scroll(HWND w, int dx, int dy) {
-	return cast(BOOL) SendMessage(w, LVM_SCROLL, dx, dy);
+BOOL ListView_Scroll(HWND w, int d, int d) {
+	return cast(BOOL) SendMessage(w, LVM_SCROLL, d, d);
 }
 
 BOOL ListView_RedrawItems(HWND w, int f, int l) {
@@ -4828,7 +5023,7 @@ BOOL ListView_GetOrigin(HWND w, LPPOINT p) {
 	return cast(BOOL) SendMessage(w, LVM_GETORIGIN, 0, cast(LPARAM) p);
 }
 
-BOOL ListView_Update(HWND w, int i) {
+BOOL ListView_Update(HWND w, WPARAM i) {
 	return cast(BOOL) SendMessage(w, LVM_UPDATE, i, 0);
 }
 
@@ -4889,6 +5084,145 @@ void ListView_SetCheckState(HWND w, UINT i, BOOL f) {
 BOOL ListView_GetISearchString(HWND w, LPSTR lpsz) {
 	return cast(BOOL) SendMessage(w, LVM_GETISEARCHSTRING, 0,
 	  cast(LPARAM) lpsz);
+}
+
+void ListView_CancelEditLabel(HWND w) {
+	SendMessage(w, LVM_CANCELEDITLABEL, 0, 0);
+}
+
+int ListView_EnableGroupView(HWND w, BOOL i) {
+	return cast(int) SendMessage(w, LVM_ENABLEGROUPVIEW, i, 0);
+}
+
+static if (_WIN32_WINDOWS >= 0x410 && (_WIN32_WINNT >= 0x500 || _WIN32_IE >= 0x500)) {
+	BOOL ListView_SortItemsEx(HWND w, PFNLVCOMPARE c, LPARAM p) {
+		return SendMessage(w, LVM_SORTITEMSEX, cast(WPARAM) p, c);
+	}
+}
+
+static if (_WIN32_WINNT >= 0x501) {
+	int ListView_GetGroupInfo(HWND w, int i, PLVGROUP p) {
+		return SendMessage(w, LVM_GETGROUPINFO, i, cast(LPARAM) p);
+	}
+
+	void ListView_GetGroupMetrics(HWND w, PLVGROUPMETRICS p) {
+		SendMessage(w, LVM_GETGROUPMETRICS, 0, cast(LPARAM) p);
+	}
+
+	BOOL ListView_GetInsertMark(HWND w, PLVINSERTMARK p) {
+		return SendMessage(w, LVM_GETINSERTMARK, 0, cast(LPARAM) p);
+	}
+
+	COLORREF ListView_GetInsertMarkColor(HWND w) {
+		return SendMessage(w, LVM_GETINSERTMARKCOLOR, 0, 0);
+	}
+
+	int ListView_GetInsertMarkRect(HWND w, LPRECT p) {
+		return SendMessage(w, LVM_GETINSERTMARKRECT, 0, cast(LPARAM) p);
+	}
+
+	COLORREF ListView_GetOutlineColor(HWND w) {
+		return SendMessage(w, LVM_GETOUTLINECOLOR, 0, 0);
+	}
+
+	UINT ListView_GetSelectedColumn(HWND w) {
+		return SendMessage(w, LVM_GETSELECTEDCOLUMN, 0, 0);
+	}
+
+	void ListView_GetTileInfo(HWND w, PLVTILEINFO p) {
+		SendMessage(w, LVM_GETTILEINFO, 0, cast(LPARAM) p);
+	}
+
+	void ListView_GetTileViewInfo(HWND w, PLVTILEVIEWINFO p) {
+		SendMessage(w, LVM_GETTILEVIEWINFO, 0, cast(LPARAM) p);
+	}
+
+	DWORD ListView_GetView(HWND w) {
+		return SendMessage(w, LVM_GETVIEW, 0, 0);
+	}
+
+	BOOL ListView_HasGroup(HWND w, int i) {
+		return SendMessage(w, LVM_HASGROUP, i, 0);
+	}
+
+	int ListView_InsertGroup(HWND w, int i, PLVGROUP p) {
+		return SendMessage(w, LVM_INSERTGROUP, i, cast(LPARAM) p);
+	}
+
+	void ListView_InsertGroupSorted(HWND w, PLVINSERTGROUPSORTED p) {
+		SendMessage(w, LVM_INSERTGROUPSORTED, cast(WPARAM) p, 0);
+	}
+
+	BOOL ListView_InsertMarkHitTest(HWND w, LPPOINT p, PLVINSERTMARK t) {
+		return SendMessage(w, LVM_INSERTMARKHITTEST, cast(WPARAM) p, cast(LPARAM) t);
+	}
+
+	BOOL ListView_IsGroupViewEnabled(HWND w) {
+		return SendMessage(w, LVM_ISGROUPVIEWENABLED, 0, 0);
+	}
+
+	UINT ListView_MapIDToIndex(HWND w, UINT i) {
+		return SendMessage(w, LVM_MAPIDTOINDEX, i, 0);
+	}
+
+	/*	??? MSDN documents this as "Not implemented", except in relation to
+	 *	Windows CE/Mobile.
+	 */
+	void ListView_MoveGroup(HWND w, int i, int t) {
+		SendMessage(w, LVM_MOVEGROUP, i, t);
+	}
+
+	void ListView_RemoveAllGroups(HWND w) {
+		SendMessage(w, LVM_REMOVEALLGROUPS, 0, 0);
+	}
+
+	int ListView_RemoveGroup(HWND w, int i) {
+		return SendMessage(w, LVM_REMOVEGROUP, i, 0);
+	}
+
+	int ListView_SetGroupInfo(HWND w, int i, PLVGROUP p) {
+		return SendMessage(w, LVM_SETGROUPINFO, i, cast(LPARAM) p);
+	}
+
+	void ListView_SetGroupMetrics(HWND w, PLVGROUPMETRICS p) {
+		SendMessage(w, LVM_SETGROUPMETRICS, 0, cast(LPARAM) p);
+	}
+
+	BOOL ListView_SetInfoTip(HWND w, PLVSETINFOTIP p) {
+		return SendMessage(w, LVM_SETINFOTIP, 0, cast(LPARAM) p);
+	}
+
+	BOOL ListView_SetInsertMark(HWND w, PLVINSERTMARK p) {
+		return SendMessage(w, LVM_SETINSERTMARK, 0, cast(LPARAM) p);
+	}
+
+	COLORREF ListView_SetInsertMarkColor(HWND w, COLORREF c) {
+		return SendMessage(w, LVM_SETINSERTMARKCOLOR, 0, c);
+	}
+
+	COLORREF ListView_SetOutlineColor(HWND w, COLORREF c) {
+		return SendMessage(w, LVM_SETOUTLINECOLOR, 0, c);
+	}
+
+	void ListView_SetSelectedColumn(HWND w, int i) {
+		SendMessage(w, LVM_SETSELECTEDCOLUMN, i, 0);
+	}
+
+	BOOL ListView_SetTileInfo(HWND w, PLVTILEINFO p) {
+		return SendMessage(w, LVM_SETTILEINFO, 0, cast(LPARAM) p);
+	}
+
+	BOOL ListView_SetTileViewInfo(HWND w, PLVTILEVIEWINFO p) {
+		return SendMessage(w, LVM_SETTILEVIEWINFO, 0, cast(LPARAM) p);
+	}
+
+	int ListView_SetView(HWND w, DWORD i) {
+		return SendMessage(w, LVM_SETVIEW, i, 0);
+	}
+
+	int ListView_SortGroups(HWND w, PFNLVGROUPCOMPARE c, LPVOID p) {
+		return SendMessage(w, LVM_SORTGROUPS, cast(WPARAM) c, cast(LPARAM) p);
+	}
 }
 
 static if (_WIN32_WINNT >= 0x501) {
@@ -5510,3 +5844,27 @@ static if (_WIN32_IE >= 0x500) {
 		return cast(BOOL) SendMessage(w, TVM_SETITEM, 0, cast(LPARAM) &_tvi);
 	}
 }
+
+
+//#ifdef _WIN32_WCE               // these are PPC only
+/+
+extern (Windows) {
+	HWND  CommandBar_Create(HINSTANCE, HWND, int);
+	BOOL  CommandBar_Show(HWND, BOOL);
+	int   CommandBar_AddBitmap(HWND, HINSTANCE, int, int, int, int);
+	HWND  CommandBar_InsertComboBox(HWND, HINSTANCE, int, UINT, WORD, WORD);
+	BOOL  CommandBar_InsertMenubar(HWND, HINSTANCE, WORD, WORD );
+	BOOL  CommandBar_InsertMenubarEx(HWND, HINSTANCE, LPTSTR, WORD);
+	BOOL  CommandBar_DrawMenuBar(HWND, WORD);
+	HMENU CommandBar_GetMenu(HWND, WORD);
+	BOOL  CommandBar_AddAdornments(HWND, DWORD, DWORD);
+	int   CommandBar_Height(HWND hwndCB);
+}
+
+// MinGW: These two are not in the DLL
+void CommandBar_InsertButton(HWND hwnd, int i, LPTBBUTTON lptbbutton) {
+    SendMessage(hwnd, TB_INSERTBUTTON, i, lptbbutton);
+}
+alias DestroyWindow CommandBar_Destroy;
++/
+//#endif // _WIN32_WCE

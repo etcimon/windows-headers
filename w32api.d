@@ -3,16 +3,16 @@
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
-*             Translated from MinGW API for MS-Windows 3.10             *
+*             Translated from MinGW API for MS-Windows 3.12             *
 *                           by Stewart Gordon                           *
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.w32api;
 
-const __W32API_VERSION = 3.10;
+const __W32API_VERSION = 3.12;
 const __W32API_MAJOR_VERSION = 3;
-const __W32API_MINOR_VERSION = 10;
+const __W32API_MINOR_VERSION = 12;
 
 /*	These version identifiers are used to specify the minimum version of
  *	Windows that an application will support.
@@ -71,7 +71,13 @@ const uint WINVER = _WIN32_WINDOWS < _WIN32_WINNT ?
                     _WIN32_WINDOWS : _WIN32_WINNT;
 const bool _WIN32_WINNT_ONLY = _WIN32_WINDOWS == uint.max;
 
-version (IE6) {
+version (IE7) {
+	const uint _WIN32_IE = 0x700;
+} else version (IE602) {
+	const uint _WIN32_IE = 0x603;
+} else version (IE601) {
+	const uint _WIN32_IE = 0x601;
+} else version (IE6) {
 	const uint _WIN32_IE = 0x600;
 } else version (IE56) {
 	const uint _WIN32_IE = 0x560;
