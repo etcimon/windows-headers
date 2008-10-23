@@ -25,7 +25,7 @@ alias IHTMLStyleSheetsCollection LPHTMLSTYLESHEETSCOLLECTION;
 interface IHTMLStyle {};
 interface IHTMLFiltersCollection {};
 alias IHTMLFiltersCollection LPHTMLFILTERSCOLLECTION;
-interface IOmHistory {
+interface IOmHistory : IDispatch {
 	HRESULT get_length(short* p);
 	HRESULT back(VARIANT*);
 	HRESULT forward(VARIANT*);
