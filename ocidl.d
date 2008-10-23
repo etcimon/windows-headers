@@ -17,7 +17,10 @@ private import win32.wingdi;  // for TEXTMETRICW
 private import win32.winuser; // for LPMSG
 
 interface IBindHost : public IUnknown {}
-interface IServiceProvider {}
+
+interface IServiceProvider : IUnknown{
+	HRESULT QueryService(REFGUID,REFIID,void**);
+}
 
 /*
 // TODO:
