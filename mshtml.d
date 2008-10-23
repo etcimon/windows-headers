@@ -25,7 +25,12 @@ alias IHTMLStyleSheetsCollection LPHTMLSTYLESHEETSCOLLECTION;
 interface IHTMLStyle {};
 interface IHTMLFiltersCollection {};
 alias IHTMLFiltersCollection LPHTMLFILTERSCOLLECTION;
-interface IOmHistory {};
+interface IOmHistory {
+	HRESULT get_length(short* p);
+	HRESULT back(VARIANT*);
+	HRESULT forward(VARIANT*);
+	HRESULT go(VARIANT*);
+};
 alias IOmHistory LPOMHISTORY;
 interface IOmNavigator {};
 alias IOmNavigator LPOMNAVIGATOR;
