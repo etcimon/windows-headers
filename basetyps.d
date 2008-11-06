@@ -9,7 +9,7 @@
 \***********************************************************************/
 module win32.basetyps;
 
-private import win32.windef;
+private import win32.windef, win32.basetsd;
 
 align(1) struct GUID {  // size is 16
 	DWORD   Data1;
@@ -18,6 +18,7 @@ align(1) struct GUID {  // size is 16
 	BYTE[8] Data4;
 }
 alias GUID UUID, IID, CLSID, FMTID, uuid_t;
-alias GUID* REFGUID, LPGUID, LPCLSID, REFCLSID, LPIID, REFIID, REFFMTID;
+alias GUID* LPGUID, LPCLSID, LPIID;
+alias CPtr!(GUID) REFGUID, REFIID, REFCLSID, REFFMTID;
 
 alias uint error_status_t, PROPID;

@@ -44,8 +44,10 @@ alias ulong* PDWORDLONG, PULONGLONG;
 alias void*  PVOID64;
 
 // const versions
-alias char*  LPCCH, PCSTR, LPCSTR;
-alias wchar* LPCWCH, PCWCH, LPCWSTR, PCWSTR;
+//alias char*  LPCCH, PCSTR, LPCSTR;
+alias CPtr!(char) LPCCH, PCSTR, LPCSTR;
+//alias wchar* LPCWCH, PCWCH, LPCWSTR, PCWSTR;
+alias CPtr!(wchar) LPCWCH, PCWCH, LPCWSTR, PCWSTR;
 
 version (Unicode) {
 	alias WCHAR TCHAR, _TCHAR;

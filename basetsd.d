@@ -12,6 +12,18 @@ module win32.basetsd;
 
 private import win32.winnt;
 
+/*	This template is used in these modules to declare constant pointer types,
+ *	in order to support both D 1.x and 2.x.
+ */
+template CPtr(T) {
+	version (D_Version2) {
+		// must use mixin so that it doesn't cause a syntax error under D1
+		mixin("alias const(T)* CPtr;");
+	} else {
+		alias T* CPtr;
+	}
+}
+
 version (Win64) {
 	alias long __int3264;
 	const ulong ADDRESS_TAG_BIT = 0x40000000000;
@@ -42,16 +54,16 @@ version (Win64) {
 	alias ushort UHALF_PTR;
 	alias ushort* PUHALF_PTR;
 
-	uint HandleToUlong(HANDLE h)    { return cast(uint) h; }
-	int HandleToLong(HANDLE h)      { return cast(int) h; }
-	HANDLE LongToHandle(LONG_PTR h) { return cast(HANDLE) h; }
-	uint PtrToUlong(void* p)        { return cast(uint) p; }
-	uint PtrToUint(void* p)         { return cast(uint) p; }
-	int PtrToInt(void* p)           { return cast(int) p; }
-	ushort PtrToUshort(void* p)     { return cast(ushort) p; }
-	short PtrToShort(void* p)       { return cast(short) p; }
-	void* IntToPtr(int i)           { return cast(void*) i; }
-	void* UIntToPtr(uint ui)        { return cast(void*) ui; }
+	uint HandleToUlong(HANDLE h)      { return cast(uint) h; }
+	int HandleToLong(HANDLE h)        { return cast(int) h; }
+	HANDLE LongToHandle(LONG_PTR h)   { return cast(HANDLE) h; }
+	uint PtrToUlong(CPtr!(void) p)    { return cast(uint) p; }
+	uint PtrToUint(CPtr!(void) p)     { return cast(uint) p; }
+	int PtrToInt(CPtr!(void) p)       { return cast(int) p; }
+	ushort PtrToUshort(CPtr!(void) p) { return cast(ushort) p; }
+	short PtrToShort(CPtr!(void) p)   { return cast(short) p; }
+	void* IntToPtr(int i)             { return cast(void*) i; }
+	void* UIntToPtr(uint ui)          { return cast(void*) ui; }
 	alias IntToPtr LongToPtr;
 	alias UIntToPtr ULongToPtr;
 }

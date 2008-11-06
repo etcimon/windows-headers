@@ -61,7 +61,7 @@ const DWORD
 	                              | SI_EDIT_AUDITS;
 
 struct SI_ACCESS {
-	GUID*       pguid;
+	CPtr!(GUID) pguid;
 	ACCESS_MASK mask;
 	LPCWSTR     pszName;
 	DWORD       dwFlags;
@@ -77,9 +77,9 @@ const DWORD
 
 
 struct SI_INHERIT_TYPE {
-	GUID*   pguid;
-	ULONG   dwFlags;
-	LPCWSTR pszName;
+	CPtr!(GUID) pguid;
+	ULONG       dwFlags;
+	LPCWSTR     pszName;
 }
 alias SI_INHERIT_TYPE* PSI_INHERIT_TYPE;
 
@@ -100,8 +100,8 @@ interface ISecurityInformation : IUnknown {
 	HRESULT GetObjectInformation(PSI_OBJECT_INFO);
 	HRESULT GetSecurity(SECURITY_INFORMATION, PSECURITY_DESCRIPTOR*, BOOL);
 	HRESULT SetSecurity(SECURITY_INFORMATION, PSECURITY_DESCRIPTOR);
-	HRESULT GetAccessRights(GUID*, DWORD, PSI_ACCESS*, ULONG*, ULONG*);
-	HRESULT MapGeneric(GUID*, UCHAR*, ACCESS_MASK*);
+	HRESULT GetAccessRights(CPtr!(GUID), DWORD, PSI_ACCESS*, ULONG*, ULONG*);
+	HRESULT MapGeneric(CPtr!(GUID), UCHAR*, ACCESS_MASK*);
 	HRESULT GetInheritTypes(PSI_INHERIT_TYPE*, ULONG*);
 	HRESULT PropertySheetPageCallback(HWND, UINT, SI_PAGE_TYPE);
 }
