@@ -3,7 +3,7 @@
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
-*                 Translated from MinGW Windows headers                 *
+*             Translated from MinGW API for MS-Windows 3.12             *
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
@@ -44,9 +44,7 @@ alias ulong* PDWORDLONG, PULONGLONG;
 alias void*  PVOID64;
 
 // const versions
-//alias char*  LPCCH, PCSTR, LPCSTR;
-alias CPtr!(char) LPCCH, PCSTR, LPCSTR;
-//alias wchar* LPCWCH, PCWCH, LPCWSTR, PCWSTR;
+alias CPtr!(char)  LPCCH, PCSTR, LPCSTR;
 alias CPtr!(wchar) LPCWCH, PCWCH, LPCWSTR, PCWSTR;
 
 version (Unicode) {
@@ -55,8 +53,9 @@ version (Unicode) {
 	alias CHAR TCHAR, _TCHAR;
 }
 
-alias TCHAR  TBYTE;
-alias TCHAR* PTCH, PTBYTE, LPTCH, PTSTR, LPTSTR, LP, PTCHAR, LPCTSTR;
+alias TCHAR        TBYTE;
+alias TCHAR*       PTCH, PTBYTE, LPTCH, PTSTR, LPTSTR, LP, PTCHAR;
+alias CPtr!(TCHAR) LPCTSTR;
 
 typedef void* HANDLE;
 
@@ -3894,7 +3893,8 @@ static if (WINVER >= 0x501) {
 		PCWSTR        lpAssemblyDirectoryName;
 	}
 	alias ACTIVATION_CONTEXT_ASSEMBLY_DETAILED_INFORMATION*
-	  PACTIVATION_CONTEXT_ASSEMBLY_DETAILED_INFORMATION,
+	  PACTIVATION_CONTEXT_ASSEMBLY_DETAILED_INFORMATION;
+	alias CPtr!(ACTIVATION_CONTEXT_ASSEMBLY_DETAILED_INFORMATION)
 	  PCACTIVATION_CONTEXT_ASSEMBLY_DETAILED_INFORMATION;
 
 	struct ACTIVATION_CONTEXT_DETAILED_INFORMATION {
@@ -3912,15 +3912,16 @@ static if (WINVER >= 0x501) {
 		PCWSTR lpAppDirPath;
 	}
 	alias ACTIVATION_CONTEXT_DETAILED_INFORMATION*
-	  PACTIVATION_CONTEXT_DETAILED_INFORMATION,
+	  PACTIVATION_CONTEXT_DETAILED_INFORMATION;
+	alias CPtr!(ACTIVATION_CONTEXT_DETAILED_INFORMATION)
 	  PCACTIVATION_CONTEXT_DETAILED_INFORMATION;
 
 	struct ACTIVATION_CONTEXT_QUERY_INDEX {
 		ULONG ulAssemblyIndex;
 		ULONG ulFileIndexInAssembly;
 	}
-	alias ACTIVATION_CONTEXT_QUERY_INDEX*
-	  PACTIVATION_CONTEXT_QUERY_INDEX, PCACTIVATION_CONTEXT_QUERY_INDEX;
+	alias ACTIVATION_CONTEXT_QUERY_INDEX*       PACTIVATION_CONTEXT_QUERY_INDEX;
+	alias CPtr!(ACTIVATION_CONTEXT_QUERY_INDEX) PCACTIVATION_CONTEXT_QUERY_INDEX;
 
 	struct ASSEMBLY_FILE_DETAILED_INFORMATION {
 		DWORD  ulFlags;
@@ -3930,7 +3931,8 @@ static if (WINVER >= 0x501) {
 		PCWSTR lpFilePath;
 	}
 	alias ASSEMBLY_FILE_DETAILED_INFORMATION*
-	  PASSEMBLY_FILE_DETAILED_INFORMATION,
+	  PASSEMBLY_FILE_DETAILED_INFORMATION;
+	alias CPtr!(ASSEMBLY_FILE_DETAILED_INFORMATION)
 	  PCASSEMBLY_FILE_DETAILED_INFORMATION;
 }
 

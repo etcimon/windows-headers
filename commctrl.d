@@ -2467,7 +2467,8 @@ struct COMBOBOXEXITEMA {
 	int    iIndent;
 	LPARAM lParam;
 }
-alias COMBOBOXEXITEMA* PCOMBOBOXEXITEMA, PCCOMBOEXITEMA;
+alias COMBOBOXEXITEMA*       PCOMBOBOXEXITEMA;
+alias CPtr!(COMBOBOXEXITEMA) PCCOMBOEXITEMA;
 
 struct COMBOBOXEXITEMW {
 	UINT   mask;
@@ -2480,7 +2481,8 @@ struct COMBOBOXEXITEMW {
 	int    iIndent;
 	LPARAM lParam;
 }
-alias COMBOBOXEXITEMW* PCOMBOBOXEXITEMW, PCCOMBOEXITEMW;
+alias COMBOBOXEXITEMW*       PCOMBOBOXEXITEMW;
+alias CPtr!(COMBOBOXEXITEMW) PCCOMBOEXITEMW;
 
 static if (_WIN32_IE >= 0x400) {
 	struct NMCOMBOBOXEXA {
@@ -2662,11 +2664,12 @@ struct TBBUTTON {
 	DWORD dwData;
 	int   iString;
 }
-alias TBBUTTON* PTBBUTTON, LPTBBUTTON, LPCTBBUTTON;
+alias TBBUTTON*       PTBBUTTON, LPTBBUTTON;
+alias CPtr!(TBBUTTON) LPCTBBUTTON;
 
 static if (_WIN32_IE >= 0x400) {
 	struct TBBUTTONINFOA {
-		UINT  cbSize;
+		UINT  cbSize = TBBUTTONINFOA.sizeof;
 		DWORD dwMask;
 		int   idCommand;
 		int   iImage;
@@ -2680,7 +2683,7 @@ static if (_WIN32_IE >= 0x400) {
 	alias TBBUTTONINFOA* LPTBBUTTONINFOA;
 
 	struct TBBUTTONINFOW {
-		UINT   cbSize;
+		UINT   cbSize = TBBUTTONINFOW.sizeof;
 		DWORD  dwMask;
 		int    idCommand;
 		int    iImage;
@@ -2883,7 +2886,7 @@ version (Unicode) {
 	alias NMHEADERA NMHEADER;
 	alias LPNMHEADERA LPNMHEADER;
 }
-/* End FIXME. */
+// End FIXME
 
 struct NMHDDISPINFOA {
 	NMHDR  hdr;
@@ -3098,7 +3101,7 @@ alias LPNMTOOLBARW LPTBNOTIFYW;
 
 static if (_WIN32_WINNT >= 0x501) {
 	struct TOOLINFOA {
-		UINT      cbSize;
+		UINT      cbSize = TOOLINFOA.sizeof;
 		UINT      uFlags;
 		HWND      hwnd;
 		UINT      uId;
@@ -3110,7 +3113,7 @@ static if (_WIN32_WINNT >= 0x501) {
 	}
 
 	struct TOOLINFOW {
-		UINT      cbSize;
+		UINT      cbSize = TOOLINFOW.sizeof;
 		UINT      uFlags;
 		HWND      hwnd;
 		UINT      uId;
@@ -3130,7 +3133,7 @@ static if (_WIN32_WINNT >= 0x501) {
 		TTTOOLINFOW_V3_SIZE = TOOLINFOW.sizeof;
 } else static if (_WIN32_IE >= 0x300) {
 	struct TOOLINFOA {
-		UINT      cbSize;
+		UINT      cbSize = TOOLINFOA.sizeof;
 		UINT      uFlags;
 		HWND      hwnd;
 		UINT      uId;
@@ -3141,7 +3144,7 @@ static if (_WIN32_WINNT >= 0x501) {
 	}
 
 	struct TOOLINFOW {
-		UINT      cbSize;
+		UINT      cbSize = TOOLINFOW.sizeof;
 		UINT      uFlags;
 		HWND      hwnd;
 		UINT      uId;
@@ -3158,7 +3161,7 @@ static if (_WIN32_WINNT >= 0x501) {
 		TTTOOLINFOW_V2_SIZE = TOOLINFOW.sizeof;
 } else {
 	struct TOOLINFOA {
-		UINT      cbSize;
+		UINT      cbSize = TOOLINFOA.sizeof;
 		UINT      uFlags;
 		HWND      hwnd;
 		UINT      uId;
@@ -3168,7 +3171,7 @@ static if (_WIN32_WINNT >= 0x501) {
 	}
 
 	struct TOOLINFOW {
-		UINT      cbSize;
+		UINT      cbSize = TOOLINFOW.sizeof;
 		UINT      uFlags;
 		HWND      hwnd;
 		UINT      uId;
@@ -3845,7 +3848,7 @@ struct TC_KEYDOWN {
 
 static if (_WIN32_IE >= 0x300) {
 	struct INITCOMMONCONTROLSEX {
-		DWORD dwSize;
+		DWORD dwSize = INITCOMMONCONTROLSEX.sizeof;
 		DWORD dwICC;
 	}
 	alias INITCOMMONCONTROLSEX* LPINITCOMMONCONTROLSEX;
@@ -3858,14 +3861,14 @@ struct PBRANGE {
 alias PBRANGE* PPBRANGE;
 
 struct COLORSCHEME {
-	DWORD    dwSize;
+	DWORD    dwSize = COLORSCHEME.sizeof;
 	COLORREF clrBtnHighlight;
 	COLORREF clrBtnShadow;
 }
 alias COLORSCHEME* LPCOLORSCHEME;
 
 struct MCHITTESTINFO {
-	UINT       cbSize;
+	UINT       cbSize = MCHITTESTINFO.sizeof;
 	POINT      pt;
 	UINT       uHit;
 	SYSTEMTIME st;
@@ -3884,7 +3887,7 @@ struct NMDAYSTATE {
 alias NMDAYSTATE* LPNMDAYSTATE;
 
 struct REBARINFO {
-	UINT       cbSize;
+	UINT       cbSize = REBARINFO.sizeof;
 	UINT       fMask;
 	HIMAGELIST himl;
 }
@@ -3892,7 +3895,7 @@ alias REBARINFO* LPREBARINFO;
 
 static if (_WIN32_IE >= 0x400) {
 	struct REBARBANDINFOA {
-		UINT     cbSize;
+		UINT     cbSize = REBARBANDINFOA.sizeof;
 		UINT     fMask;
 		UINT     fStyle;
 		COLORREF clrFore;
@@ -3915,7 +3918,7 @@ static if (_WIN32_IE >= 0x400) {
 	}
 
 	struct REBARBANDINFOW {
-		UINT     cbSize;
+		UINT     cbSize = REBARBANDINFOW.sizeof;
 		UINT     fMask;
 		UINT     fStyle;
 		COLORREF clrFore;
@@ -3943,7 +3946,7 @@ static if (_WIN32_IE >= 0x400) {
 	}
 } else {
 	struct REBARBANDINFOA {
-		UINT     cbSize;
+		UINT     cbSize = REBARBANDINFOA.sizeof;
 		UINT     fMask;
 		UINT     fStyle;
 		COLORREF clrFore;
@@ -3960,7 +3963,7 @@ static if (_WIN32_IE >= 0x400) {
 	}
 
 	struct REBARBANDINFOW {
-		UINT     cbSize;
+		UINT     cbSize = REBARBANDINFOW.sizeof;
 		UINT     fMask;
 		UINT     fStyle;
 		COLORREF clrFore;
@@ -3981,8 +3984,10 @@ static if (_WIN32_IE >= 0x400) {
 		REBARBANDINFOW_V3_SIZE = REBARBANDINFOW.sizeof
 	}
 }
-alias REBARBANDINFOA* LPREBARBANDINFOA, LPCREBARBANDINFOA;
-alias REBARBANDINFOW* LPREBARBANDINFOW, LPCREBARBANDINFOW;
+alias REBARBANDINFOA*       LPREBARBANDINFOA;
+alias CPtr!(REBARBANDINFOA) LPCREBARBANDINFOA;
+alias REBARBANDINFOW*       LPREBARBANDINFOW;
+alias CPtr!(REBARBANDINFOW) LPCREBARBANDINFOW;
 
 static if (_WIN32_IE >= 0x300) {
 	struct NMLVODSTATECHANGE {
@@ -3996,7 +4001,7 @@ static if (_WIN32_IE >= 0x300) {
 
 	static if (_WIN32_WINNT >= 0x501) {
 		struct IMAGELISTDRAWPARAMS {
-			DWORD      cbSize;
+			DWORD      cbSize = IMAGELISTDRAWPARAMS.sizeof;
 			HIMAGELIST himl;
 			int        i;
 			HDC        hdcDst;
@@ -4016,7 +4021,7 @@ static if (_WIN32_IE >= 0x300) {
 		}
 	} else {
 		struct IMAGELISTDRAWPARAMS {
-			DWORD      cbSize;
+			DWORD      cbSize = IMAGELISTDRAWPARAMS.sizeof;
 			HIMAGELIST himl;
 			int        i;
 			HDC        hdcDst;
@@ -4676,7 +4681,7 @@ int Header_GetItemCount(HWND w) {
 	return SendMessage(w, HDM_GETITEMCOUNT, 0, 0);
 }
 
-int Header_InsertItem(HWND w, int i, LPHDITEM phdi) {
+int Header_InsertItem(HWND w, int i, CPtr!(HDITEM) phdi) {
 	return SendMessage(w, HDM_INSERTITEM, i, cast(LPARAM) phdi);
 }
 
@@ -4688,7 +4693,7 @@ BOOL Header_GetItem(HWND w, int i, LPHDITEM phdi) {
 	return cast(BOOL) SendMessage(w, HDM_GETITEM, i, cast(LPARAM) phdi);
 }
 
-BOOL Header_SetItem(HWND w, int i, LPHDITEM phdi) {
+BOOL Header_SetItem(HWND w, int i, CPtr!(HDITEM) phdi) {
 	return cast(BOOL) SendMessage(w, HDM_SETITEM, i, cast(LPARAM) phdi);
 }
 
@@ -4880,11 +4885,11 @@ HIMAGELIST ListView_SetImageList(HWND w, HIMAGELIST h, int i) {
 	  cast(LPARAM) h);
 }
 
-BOOL ListView_SetItem(HWND w, LPLVITEM i) {
+BOOL ListView_SetItem(HWND w, CPtr!(LV_ITEM) i) {
 	return cast(BOOL) SendMessage(w, LVM_SETITEM, 0, cast(LPARAM) i);
 }
 
-int ListView_InsertItem(HWND w, LPLVITEM i) {
+int ListView_InsertItem(HWND w, CPtr!(LV_ITEM) i) {
 	return SendMessage(w, LVM_INSERTITEM, 0, cast(LPARAM) i);
 }
 
@@ -4908,7 +4913,7 @@ int ListView_GetNextItem(HWND w, int i, UINT f) {
 	return SendMessage(w, LVM_GETNEXTITEM, i, MAKELPARAM(cast(ushort)f, 0));
 }
 
-int ListView_FindItem(HWND w, int i, LVFINDINFO* p) {
+int ListView_FindItem(HWND w, int i, CPtr!(LV_FINDINFO) p) {
 	return SendMessage(w, LVM_FINDITEM, i, cast(LPARAM) p);
 }
 
@@ -4965,11 +4970,11 @@ BOOL ListView_GetColumn(HWND w, int i, LPLVCOLUMN p) {
 	return cast(BOOL) SendMessage(w, LVM_GETCOLUMN, i, cast(LPARAM) p);
 }
 
-BOOL ListView_SetColumn(HWND w, int i, LPLVCOLUMN p) {
+BOOL ListView_SetColumn(HWND w, int i, CPtr!(LV_COLUMN) p) {
 	return cast(BOOL) SendMessage(w, LVM_SETCOLUMN, i, cast(LPARAM) p);
 }
 
-int ListView_InsertColumn(HWND w, int i, LPLVCOLUMN p) {
+int ListView_InsertColumn(HWND w, int i, CPtr!(LV_COLUMN) p) {
 	return SendMessage(w, LVM_INSERTCOLUMN, i, cast(LPARAM) p);
 }
 
@@ -5362,7 +5367,7 @@ BOOL TabCtrl_SetItem(HWND w, int i, LPTCITEM p) {
 	return cast(BOOL) SendMessage(w, TCM_SETITEM, i, cast(LPARAM) p);
 }
 
-int TabCtrl_InsertItem(HWND w, int i, LPTCITEM p) {
+int TabCtrl_InsertItem(HWND w, int i, CPtr!(TC_ITEM) p) {
 	return SendMessage(w, TCM_INSERTITEM, i, cast(LPARAM) p);
 }
 
@@ -5551,7 +5556,7 @@ BOOL TreeView_GetItem(HWND w, LPTVITEM i) {
  return cast(BOOL) SendMessage(w, TVM_GETITEM, 0, cast(LPARAM) i);
 }
 
-BOOL TreeView_SetItem(HWND w, LPTVITEM i) {
+BOOL TreeView_SetItem(HWND w, CPtr!(TV_ITEM) i) {
 	return cast(BOOL) SendMessage(w, TVM_SETITEM, 0, cast(LPARAM) i);
 }
 

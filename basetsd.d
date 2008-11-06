@@ -3,7 +3,7 @@
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
-*             Translated from MinGW API for MS-Windows 3.10             *
+*             Translated from MinGW API for MS-Windows 3.12             *
 *                           by Stewart Gordon                           *
 *                                                                       *
 *                       Placed into public domain                       *
