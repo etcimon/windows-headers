@@ -4946,8 +4946,8 @@ BOOL ListView_EnsureVisible(HWND w, int i, BOOL f) {
 	return cast(BOOL) SendMessage(w, LVM_ENSUREVISIBLE, i, MAKELPARAM(cast(ushort)f, 0));
 }
 
-BOOL ListView_Scroll(HWND w, int d, int d) {
-	return cast(BOOL) SendMessage(w, LVM_SCROLL, d, d);
+BOOL ListView_Scroll(HWND w, int dx, int dy) {
+	return cast(BOOL) SendMessage(w, LVM_SCROLL, dx, dy);
 }
 
 BOOL ListView_RedrawItems(HWND w, int f, int l) {
@@ -5100,7 +5100,7 @@ int ListView_EnableGroupView(HWND w, BOOL i) {
 
 static if (_WIN32_WINDOWS >= 0x410 && (_WIN32_WINNT >= 0x500 || _WIN32_IE >= 0x500)) {
 	BOOL ListView_SortItemsEx(HWND w, PFNLVCOMPARE c, LPARAM p) {
-		return SendMessage(w, LVM_SORTITEMSEX, cast(WPARAM) p, c);
+		return SendMessage(w, LVM_SORTITEMSEX, cast(WPARAM) p, cast(LPARAM)c);
 	}
 }
 
