@@ -39,7 +39,7 @@ struct IRAPIStreamVtbl {
 //typedef HRESULT(STDAPICALLTYPE RAPIEXT)(DWORD, BYTE, DWORD, BYTE, IRAPIStream*);
 
 struct RAPIINIT {
-	DWORD   cbSize;
+	DWORD   cbSize = this.sizeof;
 	HANDLE  heRapiInit;
 	HRESULT hrRapiInit;
 }

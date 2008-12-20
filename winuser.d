@@ -235,33 +235,35 @@ const DESKTOP_SWITCHDESKTOP   = 256;
 
 const CW_USEDEFAULT       = 0x80000000;
 
-const WS_OVERLAPPED       = 0;
-const WS_TILED            = 0;
-const WS_MAXIMIZEBOX      = 0x00010000;
-const WS_MINIMIZEBOX      = 0x00020000;
-const WS_SIZEBOX          = 0x00040000;
-const WS_TABSTOP          = 0x00010000;
-const WS_GROUP            = 0x00020000;
-const WS_THICKFRAME       = 0x00040000;
-const WS_SYSMENU          = 0x00080000;
-const WS_HSCROLL          = 0x00100000;
-const WS_VSCROLL          = 0x00200000;
-const WS_DLGFRAME         = 0x00400000;
-const WS_BORDER           = 0x00800000;
-const WS_CAPTION          = 0x00c00000;
-const WS_TILEDWINDOW      = 0x00cf0000;
-const WS_OVERLAPPEDWINDOW = 0x00cf0000;
-const WS_MAXIMIZE         = 0x01000000;
-const WS_CLIPCHILDREN     = 0x02000000;
-const WS_CLIPSIBLINGS     = 0x04000000;
-const WS_DISABLED         = 0x08000000;
-const WS_VISIBLE          = 0x10000000;
-const WS_MINIMIZE         = 0x20000000;
-const WS_ICONIC           = 0x20000000;
-const WS_CHILD            = 0x40000000;
-const WS_CHILDWINDOW      = 0x40000000;
-const WS_POPUP            = 0x80000000;
-const WS_POPUPWINDOW      = 0x80880000;
+enum {
+	WS_OVERLAPPED       = 0,
+	WS_TILED            = WS_OVERLAPPED,
+	WS_MAXIMIZEBOX      = 0x00010000,
+	WS_MINIMIZEBOX      = 0x00020000,
+	WS_TABSTOP          = 0x00010000,
+	WS_GROUP            = 0x00020000,
+	WS_THICKFRAME       = 0x00040000,
+	WS_SIZEBOX          = WS_THICKFRAME,
+	WS_SYSMENU          = 0x00080000,
+	WS_HSCROLL          = 0x00100000,
+	WS_VSCROLL          = 0x00200000,
+	WS_DLGFRAME         = 0x00400000,
+	WS_BORDER           = 0x00800000,
+	WS_CAPTION          = 0x00c00000,
+	WS_OVERLAPPEDWINDOW = WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_THICKFRAME|WS_MINIMIZEBOX|WS_MAXIMIZEBOX,
+	WS_TILEDWINDOW      = WS_OVERLAPPEDWINDOW,
+	WS_MAXIMIZE         = 0x01000000,
+	WS_CLIPCHILDREN     = 0x02000000,
+	WS_CLIPSIBLINGS     = 0x04000000,
+	WS_DISABLED         = 0x08000000,
+	WS_VISIBLE          = 0x10000000,
+	WS_MINIMIZE         = 0x20000000,
+	WS_ICONIC           = WS_MINIMIZE,
+	WS_CHILD            = 0x40000000,
+	WS_CHILDWINDOW      = 0x40000000,
+	WS_POPUP            = 0x80000000,
+	WS_POPUPWINDOW      = WS_POPUP|WS_BORDER|WS_SYSMENU,
+}
 
 const MDIS_ALLCHILDSTYLES = 1;
 
@@ -1536,6 +1538,7 @@ const WM_POWER=72;
 const WM_POWERBROADCAST=536;
 const WM_PRINT=791;
 const WM_PRINTCLIENT=792;
+const WM_APPCOMMAND = 0x0319;
 const WM_QUERYDRAGICON=55;
 const WM_QUERYENDSESSION=17;
 const WM_QUERYNEWPALETTE=783;
@@ -1882,153 +1885,155 @@ const MDITILE_SKIPDISABLED=2;
 const MDITILE_HORIZONTAL=1;
 const MDITILE_VERTICAL=0;
 
-const VK_LBUTTON=1;
-const VK_RBUTTON=2;
-const VK_CANCEL=3;
-const VK_MBUTTON=4;
-static if (_WIN32_WINNT >= 0x500) {
-const VK_XBUTTON1=5;
-const VK_XBUTTON2=6;
+enum {
+	VK_LBUTTON = 0x01,
+	VK_RBUTTON = 0x02,
+	VK_CANCEL = 0x03,
+	VK_MBUTTON = 0x04,
+	//static if (_WIN32_WINNT > =  0x500) {
+	VK_XBUTTON1 = 0x05,
+	VK_XBUTTON2 = 0x06,
+	//}
+	VK_BACK = 0x08,
+	VK_TAB = 0x09,
+	VK_CLEAR = 0x0C,
+	VK_RETURN = 0x0D,
+	VK_SHIFT = 0x10,
+	VK_CONTROL = 0x11,
+	VK_MENU = 0x12,
+	VK_PAUSE = 0x13,
+	VK_CAPITAL = 0x14,
+	VK_KANA = 0x15,
+	VK_HANGEUL = 0x15,
+	VK_HANGUL = 0x15,
+	VK_JUNJA = 0x17,
+	VK_FINAL = 0x18,
+	VK_HANJA = 0x19,
+	VK_KANJI = 0x19,
+	VK_ESCAPE = 0x1B,
+	VK_CONVERT = 0x1C,
+	VK_NONCONVERT = 0x1D,
+	VK_ACCEPT = 0x1E,
+	VK_MODECHANGE = 0x1F,
+	VK_SPACE = 0x20,
+	VK_PRIOR = 0x21,
+	VK_NEXT = 0x22,
+	VK_END = 0x23,
+	VK_HOME = 0x24,
+	VK_LEFT = 0x25,
+	VK_UP = 0x26,
+	VK_RIGHT = 0x27,
+	VK_DOWN = 0x28,
+	VK_SELECT = 0x29,
+	VK_PRINT = 0x2A,
+	VK_EXECUTE = 0x2B,
+	VK_SNAPSHOT = 0x2C,
+	VK_INSERT = 0x2D,
+	VK_DELETE = 0x2E,
+	VK_HELP = 0x2F,
+	VK_LWIN = 0x5B,
+	VK_RWIN = 0x5C,
+	VK_APPS = 0x5D,
+	VK_SLEEP = 0x5F,
+	VK_NUMPAD0 = 0x60,
+	VK_NUMPAD1 = 0x61,
+	VK_NUMPAD2 = 0x62,
+	VK_NUMPAD3 = 0x63,
+	VK_NUMPAD4 = 0x64,
+	VK_NUMPAD5 = 0x65,
+	VK_NUMPAD6 = 0x66,
+	VK_NUMPAD7 = 0x67,
+	VK_NUMPAD8 = 0x68,
+	VK_NUMPAD9 = 0x69,
+	VK_MULTIPLY = 0x6A,
+	VK_ADD = 0x6B,
+	VK_SEPARATOR = 0x6C,
+	VK_SUBTRACT = 0x6D,
+	VK_DECIMAL = 0x6E,
+	VK_DIVIDE = 0x6F,
+	VK_F1 = 0x70,
+	VK_F2 = 0x71,
+	VK_F3 = 0x72,
+	VK_F4 = 0x73,
+	VK_F5 = 0x74,
+	VK_F6 = 0x75,
+	VK_F7 = 0x76,
+	VK_F8 = 0x77,
+	VK_F9 = 0x78,
+	VK_F10 = 0x79,
+	VK_F11 = 0x7A,
+	VK_F12 = 0x7B,
+	VK_F13 = 0x7C,
+	VK_F14 = 0x7D,
+	VK_F15 = 0x7E,
+	VK_F16 = 0x7F,
+	VK_F17 = 0x80,
+	VK_F18 = 0x81,
+	VK_F19 = 0x82,
+	VK_F20 = 0x83,
+	VK_F21 = 0x84,
+	VK_F22 = 0x85,
+	VK_F23 = 0x86,
+	VK_F24 = 0x87,
+	VK_NUMLOCK = 0x90,
+	VK_SCROLL = 0x91,
+	VK_LSHIFT = 0xA0,
+	VK_RSHIFT = 0xA1,
+	VK_LCONTROL = 0xA2,
+	VK_RCONTROL = 0xA3,
+	VK_LMENU = 0xA4,
+	VK_RMENU = 0xA5,
+	//static if (_WIN32_WINNT > =  0x500) {
+	VK_BROWSER_BACK = 0xA6,
+	VK_BROWSER_FORWARD = 0xA7,
+	VK_BROWSER_REFRESH = 0xA8,
+	VK_BROWSER_STOP = 0xA9,
+	VK_BROWSER_SEARCH = 0xAA,
+	VK_BROWSER_FAVORITES = 0xAB,
+	VK_BROWSER_HOME = 0xAC,
+	VK_VOLUME_MUTE = 0xAD,
+	VK_VOLUME_DOWN = 0xAE,
+	VK_VOLUME_UP = 0xAF,
+	VK_MEDIA_NEXT_TRACK = 0xB0,
+	VK_MEDIA_PREV_TRACK = 0xB1,
+	VK_MEDIA_STOP = 0xB2,
+	VK_MEDIA_PLAY_PAUSE = 0xB3,
+	VK_LAUNCH_MAIL = 0xB4,
+	VK_LAUNCH_MEDIA_SELECT = 0xB5,
+	VK_LAUNCH_APP1 = 0xB6,
+	VK_LAUNCH_APP2 = 0xB7,
+	//}
+	VK_OEM_1 = 0xBA,
+	//static if (_WIN32_WINNT > =  0x500) {
+	VK_OEM_PLUS = 0xBB,
+	VK_OEM_COMMA = 0xBC,
+	VK_OEM_MINUS = 0xBD,
+	VK_OEM_PERIOD = 0xBE,
+	//}
+	VK_OEM_2 = 0xBF,
+	VK_OEM_3 = 0xC0,
+	VK_OEM_4 = 0xDB,
+	VK_OEM_5 = 0xDC,
+	VK_OEM_6 = 0xDD,
+	VK_OEM_7 = 0xDE,
+	VK_OEM_8 = 0xDF,
+	//static if (_WIN32_WINNT > =  0x500) {
+	VK_OEM_102 = 0xE2,
+	//}
+	VK_PROCESSKEY = 0xE5,
+	//static if (_WIN32_WINNT > =  0x500) {
+	VK_PACKET = 0xE7,
+	//}
+	VK_ATTN = 0xF6,
+	VK_CRSEL = 0xF7,
+	VK_EXSEL = 0xF8,
+	VK_EREOF = 0xF9,
+	VK_PLAY = 0xFA,
+	VK_ZOOM = 0xFB,
+	VK_NONAME = 0xFC,
+	VK_PA1 = 0xFD,
+	VK_OEM_CLEAR = 0xFE,
 }
-const VK_BACK=8;
-const VK_TAB=9;
-const VK_CLEAR=12;
-const VK_RETURN=13;
-const VK_SHIFT=16;
-const VK_CONTROL=17;
-const VK_MENU=18;
-const VK_PAUSE=19;
-const VK_CAPITAL=20;
-const VK_KANA=0x15;
-const VK_HANGEUL=0x15;
-const VK_HANGUL=0x15;
-const VK_JUNJA=0x17;
-const VK_FINAL=0x18;
-const VK_HANJA=0x19;
-const VK_KANJI=0x19;
-const VK_ESCAPE=0x1B;
-const VK_CONVERT=0x1C;
-const VK_NONCONVERT=0x1D;
-const VK_ACCEPT=0x1E;
-const VK_MODECHANGE=0x1F;
-const VK_SPACE=32;
-const VK_PRIOR=33;
-const VK_NEXT=34;
-const VK_END=35;
-const VK_HOME=36;
-const VK_LEFT=37;
-const VK_UP=38;
-const VK_RIGHT=39;
-const VK_DOWN=40;
-const VK_SELECT=41;
-const VK_PRINT=42;
-const VK_EXECUTE=43;
-const VK_SNAPSHOT=44;
-const VK_INSERT=45;
-const VK_DELETE=46;
-const VK_HELP=47;
-const VK_LWIN=0x5B;
-const VK_RWIN=0x5C;
-const VK_APPS=0x5D;
-const VK_SLEEP=0x5F;
-const VK_NUMPAD0=0x60;
-const VK_NUMPAD1=0x61;
-const VK_NUMPAD2=0x62;
-const VK_NUMPAD3=0x63;
-const VK_NUMPAD4=0x64;
-const VK_NUMPAD5=0x65;
-const VK_NUMPAD6=0x66;
-const VK_NUMPAD7=0x67;
-const VK_NUMPAD8=0x68;
-const VK_NUMPAD9=0x69;
-const VK_MULTIPLY=0x6A;
-const VK_ADD=0x6B;
-const VK_SEPARATOR=0x6C;
-const VK_SUBTRACT=0x6D;
-const VK_DECIMAL=0x6E;
-const VK_DIVIDE=0x6F;
-const VK_F1=0x70;
-const VK_F2=0x71;
-const VK_F3=0x72;
-const VK_F4=0x73;
-const VK_F5=0x74;
-const VK_F6=0x75;
-const VK_F7=0x76;
-const VK_F8=0x77;
-const VK_F9=0x78;
-const VK_F10=0x79;
-const VK_F11=0x7A;
-const VK_F12=0x7B;
-const VK_F13=0x7C;
-const VK_F14=0x7D;
-const VK_F15=0x7E;
-const VK_F16=0x7F;
-const VK_F17=0x80;
-const VK_F18=0x81;
-const VK_F19=0x82;
-const VK_F20=0x83;
-const VK_F21=0x84;
-const VK_F22=0x85;
-const VK_F23=0x86;
-const VK_F24=0x87;
-const VK_NUMLOCK=0x90;
-const VK_SCROLL=0x91;
-const VK_LSHIFT=0xA0;
-const VK_RSHIFT=0xA1;
-const VK_LCONTROL=0xA2;
-const VK_RCONTROL=0xA3;
-const VK_LMENU=0xA4;
-const VK_RMENU=0xA5;
-static if (_WIN32_WINNT >= 0x500) {
-const VK_BROWSER_BACK=0xA6;
-const VK_BROWSER_FORWARD=0xA7;
-const VK_BROWSER_REFRESH=0xA8;
-const VK_BROWSER_STOP=0xA9;
-const VK_BROWSER_SEARCH=0xAA;
-const VK_BROWSER_FAVORITES=0xAB;
-const VK_BROWSER_HOME=0xAC;
-const VK_VOLUME_MUTE=0xAD;
-const VK_VOLUME_DOWN=0xAE;
-const VK_VOLUME_UP=0xAF;
-const VK_MEDIA_NEXT_TRACK=0xB0;
-const VK_MEDIA_PREV_TRACK=0xB1;
-const VK_MEDIA_STOP=0xB2;
-const VK_MEDIA_PLAY_PAUSE=0xB3;
-const VK_LAUNCH_MAIL=0xB4;
-const VK_LAUNCH_MEDIA_SELECT=0xB5;
-const VK_LAUNCH_APP1=0xB6;
-const VK_LAUNCH_APP2=0xB7;
-}
-const VK_OEM_1=0xBA;
-static if (_WIN32_WINNT >= 0x500) {
-const VK_OEM_PLUS=0xBB;
-const VK_OEM_COMMA=0xBC;
-const VK_OEM_MINUS=0xBD;
-const VK_OEM_PERIOD=0xBE;
-}
-const VK_OEM_2=0xBF;
-const VK_OEM_3=0xC0;
-const VK_OEM_4=0xDB;
-const VK_OEM_5=0xDC;
-const VK_OEM_6=0xDD;
-const VK_OEM_7=0xDE;
-const VK_OEM_8=0xDF;
-static if (_WIN32_WINNT >= 0x500) {
-const VK_OEM_102=0xE2;
-}
-const VK_PROCESSKEY=0xE5;
-static if (_WIN32_WINNT >= 0x500) {
-const VK_PACKET=0xE7;
-}
-const VK_ATTN=0xF6;
-const VK_CRSEL=0xF7;
-const VK_EXSEL=0xF8;
-const VK_EREOF=0xF9;
-const VK_PLAY=0xFA;
-const VK_ZOOM=0xFB;
-const VK_NONAME=0xFC;
-const VK_PA1=0xFD;
-const VK_OEM_CLEAR=0xFE;
 
 const TME_HOVER=1;
 const TME_LEAVE=2;
@@ -2913,7 +2918,7 @@ alias MENUITEMINFOW* LPMENUITEMINFOW;
 alias  MENUITEMINFOW* LPCMENUITEMINFOW;
 
 struct SCROLLINFO {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	UINT fMask;
 	int nMin;
 	int nMax;
@@ -2950,7 +2955,7 @@ alias void MENUTEMPLATE, MENUTEMPLATEA, MENUTEMPLATEW;
 alias MENUTEMPLATE* LPMENUTEMPLATEA, LPMENUTEMPLATEW, LPMENUTEMPLATE;
 
 struct HELPINFO {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	int iContextType;
 	int iCtrlId;
 	HANDLE hItemHandle;
@@ -2960,7 +2965,7 @@ struct HELPINFO {
 alias HELPINFO* LPHELPINFO;
 
 struct MSGBOXPARAMSA {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	HWND hwndOwner;
 	HINSTANCE hInstance;
 	LPCSTR lpszText;
@@ -2974,7 +2979,7 @@ struct MSGBOXPARAMSA {
 alias MSGBOXPARAMSA* PMSGBOXPARAMSA, LPMSGBOXPARAMSA;
 
 struct MSGBOXPARAMSW {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	HWND hwndOwner;
 	HINSTANCE hInstance;
 	LPCWSTR lpszText;
@@ -2994,7 +2999,7 @@ struct USEROBJECTFLAGS {
 }
 
 struct FILTERKEYS {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	DWORD dwFlags;
 	DWORD iWaitMSec;
 	DWORD iDelayMSec;
@@ -3003,21 +3008,21 @@ struct FILTERKEYS {
 }
 
 struct HIGHCONTRASTA {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	DWORD dwFlags;
 	LPSTR lpszDefaultScheme;
 }
 alias HIGHCONTRASTA* LPHIGHCONTRASTA;
 
 struct HIGHCONTRASTW {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	DWORD dwFlags;
 	LPWSTR lpszDefaultScheme;
 }
 alias HIGHCONTRASTW* LPHIGHCONTRASTW;
 
 struct ICONMETRICSA {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	int iHorzSpacing;
 	int iVertSpacing;
 	int iTitleWrap;
@@ -3026,7 +3031,7 @@ struct ICONMETRICSA {
 alias ICONMETRICSA* LPICONMETRICSA;
 
 struct ICONMETRICSW {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	int iHorzSpacing;
 	int iVertSpacing;
 	int iTitleWrap;
@@ -3035,7 +3040,7 @@ struct ICONMETRICSW {
 alias ICONMETRICSW* LPICONMETRICSW;
 
 struct MINIMIZEDMETRICS {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	int iWidth;
 	int iHorzGap;
 	int iVertGap;
@@ -3044,7 +3049,7 @@ struct MINIMIZEDMETRICS {
 alias MINIMIZEDMETRICS* LPMINIMIZEDMETRICS;
 
 struct MOUSEKEYS {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	DWORD dwFlags;
 	DWORD iMaxSpeed;
 	DWORD iTimeToMaxSpeed;
@@ -3055,7 +3060,7 @@ struct MOUSEKEYS {
 alias MOUSEKEYS* LPMOUSEKEYS;
 
 struct NONCLIENTMETRICSA {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	int iBorderWidth;
 	int iScrollWidth;
 	int iScrollHeight;
@@ -3074,7 +3079,7 @@ struct NONCLIENTMETRICSA {
 alias NONCLIENTMETRICSA* LPNONCLIENTMETRICSA;
 
 struct NONCLIENTMETRICSW {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	int iBorderWidth;
 	int iScrollWidth;
 	int iScrollHeight;
@@ -3093,7 +3098,7 @@ struct NONCLIENTMETRICSW {
 alias NONCLIENTMETRICSW* LPNONCLIENTMETRICSW;
 
 struct SERIALKEYSA {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	DWORD dwFlags;
 	LPSTR lpszActivePort;
 	LPSTR lpszPort;
@@ -3104,7 +3109,7 @@ struct SERIALKEYSA {
 alias SERIALKEYSA* LPSERIALKEYSA;
 
 struct SERIALKEYSW {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	DWORD dwFlags;
 	LPWSTR lpszActivePort;
 	LPWSTR lpszPort;
@@ -3115,7 +3120,7 @@ struct SERIALKEYSW {
 alias SERIALKEYSW* LPSERIALKEYSW;
 
 struct SOUNDSENTRYA {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	DWORD dwFlags;
 	DWORD iFSTextEffect;
 	DWORD iFSTextEffectMSec;
@@ -3131,7 +3136,7 @@ struct SOUNDSENTRYA {
 alias SOUNDSENTRYA* LPSOUNDSENTRYA;
 
 struct SOUNDSENTRYW {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	DWORD dwFlags;
 	DWORD iFSTextEffect;
 	DWORD iFSTextEffectMSec;
@@ -3147,13 +3152,13 @@ struct SOUNDSENTRYW {
 alias SOUNDSENTRYW* LPSOUNDSENTRYW;
 
 struct STICKYKEYS {
-	DWORD cbSize;
+	DWORD cbSize = this.sizeof;
 	DWORD dwFlags;
 }
 alias STICKYKEYS* LPSTICKYKEYS;
 
 struct TOGGLEKEYS {
-	DWORD cbSize;
+	DWORD cbSize = this.sizeof;
 	DWORD dwFlags;
 }
 
@@ -3166,7 +3171,7 @@ struct MOUSEHOOKSTRUCT {
 alias MOUSEHOOKSTRUCT* LPMOUSEHOOKSTRUCT, PMOUSEHOOKSTRUCT;
 
 struct TRACKMOUSEEVENT {
-	DWORD cbSize;
+	DWORD cbSize = this.sizeof;
 	DWORD dwFlags;
 	HWND  hwndTrack;
 	DWORD dwHoverTime;
@@ -3174,7 +3179,7 @@ struct TRACKMOUSEEVENT {
 alias TRACKMOUSEEVENT* LPTRACKMOUSEEVENT;
 
 struct TPMPARAMS {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	RECT rcExclude;
 }
 alias TPMPARAMS* LPTPMPARAMS;
@@ -3312,7 +3317,7 @@ struct STYLESTRUCT {
 alias STYLESTRUCT* LPSTYLESTRUCT;
 
 struct ALTTABINFO {
-	DWORD cbSize;
+	DWORD cbSize = this.sizeof;
 	int   cItems;
 	int   cColumns;
 	int   cRows;
@@ -3325,7 +3330,7 @@ struct ALTTABINFO {
 alias ALTTABINFO* PALTTABINFO, LPALTTABINFO;
 
 struct COMBOBOXINFO {
-	DWORD cbSize;
+	DWORD cbSize = this.sizeof;
 	RECT rcItem;
 	RECT rcButton;
 	DWORD stateButton;
@@ -3336,7 +3341,7 @@ struct COMBOBOXINFO {
 alias COMBOBOXINFO* PCOMBOBOXINFO, LPCOMBOBOXINFO;
 
 struct CURSORINFO {
-	DWORD cbSize;
+	DWORD cbSize = this.sizeof;
 	DWORD flags;
 	HCURSOR hCursor;
 	POINT ptScreenPos;
@@ -3344,7 +3349,7 @@ struct CURSORINFO {
 alias CURSORINFO* PCURSORINFO, LPCURSORINFO;
 
 struct MENUBARINFO {
-	DWORD cbSize;
+	DWORD cbSize = this.sizeof;
 	RECT  rcBar;
 	HMENU hMenu;
 	HWND  hwndMenu;
@@ -3359,7 +3364,7 @@ struct MENUBARINFO {
 alias MENUBARINFO* PMENUBARINFO;
 
 struct MENUINFO {
-	DWORD cbSize;
+	DWORD cbSize = this.sizeof;
 	DWORD fMask;
 	DWORD dwStyle;
 	UINT cyMax;
@@ -3373,7 +3378,7 @@ alias MENUINFO* LPMENUINFO, LPCMENUINFO;
 const CCHILDREN_SCROLLBAR=5;
 
 struct SCROLLBARINFO {
-	DWORD cbSize;
+	DWORD cbSize = this.sizeof;
 	RECT  rcScrollBar;
 	int   dxyLineButton;
 	int   xyThumbTop;
@@ -3407,13 +3412,13 @@ struct WINDOWINFO {
 alias WINDOWINFO* PWINDOWINFO, LPWINDOWINFO;
 
 struct LASTINPUTINFO {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	DWORD dwTime;
 }
 alias LASTINPUTINFO* PLASTINPUTINFO;
 
 struct MONITORINFO {
-	DWORD cbSize;
+	DWORD cbSize = this.sizeof;
 	RECT rcMonitor;
 	RECT rcWork;
 	DWORD dwFlags;
@@ -3452,7 +3457,7 @@ alias KBDLLHOOKSTRUCT* LPKBDLLHOOKSTRUCT, PKBDLLHOOKSTRUCT;
 static if ((_WIN32_WINNT >= 0x500) || (_WIN32_WINDOWS >= 0x410)) {
 
 struct FLASHWINFO {
-	UINT  cbSize;
+	UINT  cbSize = this.sizeof;
 	HWND  hwnd;
 	DWORD dwFlags;
 	UINT  uCount;
@@ -3513,7 +3518,7 @@ alias INPUT* PINPUT, LPINPUT;
 
 static if (WINVER >= 0x500) {
 struct GUITHREADINFO {
-	DWORD cbSize;
+	DWORD cbSize = this.sizeof;
 	DWORD flags;
 	HWND hwndActive;
 	HWND hwndFocus;
@@ -3532,7 +3537,7 @@ alias void function (HWINEVENTHOOK, DWORD, HWND, LONG, LONG, DWORD, DWORD) WINEV
 
 static if (_WIN32_WINNT >= 0x501) {
 struct BSMINFO {
-	UINT  cbSize;
+	UINT  cbSize = this.sizeof;
 	HDESK hdesk;
 	HWND  hwnd;
 	LUID  luid;
@@ -3633,7 +3638,7 @@ struct RID_DEVICE_INFO_HID {
 }
 
 struct RID_DEVICE_INFO {
-	DWORD cbSize;
+	DWORD cbSize = this.sizeof;
 	DWORD dwType;
 	union {
 		RID_DEVICE_INFO_MOUSE mouse;

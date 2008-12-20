@@ -299,7 +299,7 @@ const yHeightCharPtsMost=1638;
 const lDefaultTab=720;
 
 struct CHARFORMATA {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	DWORD dwMask;
 	DWORD dwEffects;
 	LONG yHeight;
@@ -310,7 +310,7 @@ struct CHARFORMATA {
 	char szFaceName[LF_FACESIZE];
 }
 struct CHARFORMATW {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	DWORD dwMask;
 	DWORD dwEffects;
 	LONG yHeight;
@@ -322,7 +322,7 @@ struct CHARFORMATW {
 }
 
 struct CHARFORMAT2A {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	DWORD dwMask;
 	DWORD dwEffects;
 	LONG yHeight;
@@ -344,7 +344,7 @@ struct CHARFORMAT2A {
 }
 
 struct CHARFORMAT2W {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	DWORD dwMask;
 	DWORD dwEffects;
 	LONG yHeight;
@@ -467,7 +467,7 @@ struct MSGFILTER {
 }
 
 struct PARAFORMAT {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	DWORD dwMask;
 	WORD wNumbering;
 	WORD wReserved;
@@ -480,7 +480,7 @@ struct PARAFORMAT {
 }
 
 struct PARAFORMAT2 {
-	UINT cbSize;
+	UINT cbSize = this.sizeof;
 	DWORD dwMask;
 	WORD wNumbering;
 	WORD wEffects;

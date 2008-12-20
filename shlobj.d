@@ -415,7 +415,7 @@ struct BROWSEINFOW {
 alias BROWSEINFOW* PBROWSEINFOW, LPBROWSEINFOW;
 
 struct CMINVOKECOMMANDINFO {
-	DWORD cbSize;
+	DWORD cbSize = this.sizeof;
 	DWORD fMask;
 	HWND hwnd;
 	LPCSTR lpVerb;
@@ -566,7 +566,7 @@ struct FOLDERSETTINGS {
 alias FOLDERSETTINGS* LPFOLDERSETTINGS, LPCFOLDERSETTINGS;
 
 struct FVSHOWINFO {
-	DWORD cbSize;
+	DWORD cbSize = this.sizeof;
 	HWND hwndOwner;
 	int iShow;
 	DWORD dwFlags;
@@ -1060,7 +1060,7 @@ alias ICommDlgBrowser *LPCOMMDLGBROWSER;
 alias GUID SHELLVIEWID;
 
 struct SV2CVW2_PARAMS {
-	DWORD cbSize;
+	DWORD cbSize = this.sizeof;
 	IShellView *psvPrev;
 	FOLDERSETTINGS  *pfs;
 	IShellBrowser *psbOwner;

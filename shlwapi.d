@@ -47,7 +47,7 @@ const URL_UNESCAPE_INPLACE        = 0x00100000;
 align(1):
 struct DLLVERSIONINFO
 {
-	DWORD cbSize;
+	DWORD cbSize = this.sizeof;
 	DWORD dwMajorVersion;
 	DWORD dwMinorVersion;
 	DWORD dwBuildNumber;

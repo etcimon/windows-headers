@@ -634,7 +634,7 @@ extern (Windows) {
 }
 
 struct COMPVARS {
-	LONG		cbSize;
+	LONG		cbSize = this.sizeof;
 	DWORD		dwFlags;
 	HIC			hic;
 	DWORD               fccType;
