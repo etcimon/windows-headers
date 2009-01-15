@@ -1686,7 +1686,7 @@ UINT MCIWndGetStyles(HWND hwnd)
 LONG MCIWndChangeStyles(HWND hwnd, UINT mask, LONG value)
 	{ return SendMessage(hwnd, MCIWNDM_CHANGESTYLES, cast(WPARAM)mask, cast(LPARAM)value); }
 LONG MCIWndOpenInterface(HWND hwnd, LPUNKNOWN pUnk)
-	{ return SendMessage(hwnd, MCIWNDM_OPENINTERFACE, 0, cast(LPARAM)pUnk); }
+	{ return SendMessage(hwnd, MCIWNDM_OPENINTERFACE, 0, cast(LPARAM)cast(void*)pUnk); }
 LONG MCIWndSetOwner(HWND hwnd, HWND hwndP)
 	{ return SendMessage(hwnd, MCIWNDM_SETOWNER, cast(WPARAM)hwndP, 0); }
 
