@@ -10,8 +10,6 @@
 \***********************************************************************/
 module win32.basetsd;
 
-private import win32.winnt;
-
 /*	This template is used in these modules to declare constant pointer types,
  *	in order to support both D 1.x and 2.x.
  */
@@ -23,6 +21,14 @@ template CPtr(T) {
 		alias T* CPtr;
 	}
 }
+
+// [SnakE 2009-02-23] Moved HANDLE definition here from winnt.d to avoid
+// 'forwatd template reference' to CPtr from winnt.d caused by a circular
+// import.
+
+typedef void* HANDLE;
+
+alias HANDLE* PHANDLE, LPHANDLE;
 
 version (Win64) {
 	alias long __int3264;

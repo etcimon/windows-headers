@@ -57,10 +57,6 @@ alias TCHAR        TBYTE;
 alias TCHAR*       PTCH, PTBYTE, LPTCH, PTSTR, LPTSTR, LP, PTCHAR;
 alias CPtr!(TCHAR) LPCTSTR;
 
-typedef void* HANDLE;
-
-alias HANDLE* PHANDLE, LPHANDLE;
-
 const char ANSI_NULL = '\0';
 const wchar UNICODE_NULL = '\0';
 
