@@ -11,7 +11,7 @@
 module win32.mswsock;
 
 import win32.winbase, win32.windef;
-private import win32.w32api;
+private import win32.basetyps, win32.w32api;
 
 // FIXME: clean up Windows version support
 
@@ -115,7 +115,11 @@ extern(Windows) {
 
 		/* WinNT3.51+
 		   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/acceptex_2.htm */
-		BOOL AcceptEx(SOCKET, SOCKET, PVOID, DWORD, DWORD, DWORD, LPDWORD, LPOVERLAPPED);
+		alias BOOL function(SOCKET, SOCKET, PVOID, DWORD, DWORD, DWORD, LPDWORD, LPOVERLAPPED) LPFN_ACCEPTEX;
+        const GUID WSAID_ACCEPTEX = {0xb5367df1,0xcbac,0x11cf,[0x95,0xca,0x00,0x80,0x5f,0x48,0xa1,0x92]};
+
+        alias BOOL function(SOCKET, SOCKADDR*, int, PVOID, DWORD, LPDWORD, LPOVERLAPPED) LPFN_CONNECTEX;
+        const GUID WSAID_CONNECTEX = {0x25a207b9,0xddf3,0x4660,[0x8e,0xe9,0x76,0xe5,0x8c,0x74,0x06,0x3e]};
 	}
 }
 
