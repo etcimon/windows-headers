@@ -1951,7 +1951,7 @@ bool IsReparseTagValid(ULONG x) {
 }
 
 // Doesn't seem to make sense, but anyway....
-ULONG WT_SET_MAX_THREADPOOL_THREADS(inout ULONG Flags, ushort Limit) {
+ULONG WT_SET_MAX_THREADPOOL_THREADS(ref ULONG Flags, ushort Limit) {
 	return Flags |= Limit << 16;
 }
 
