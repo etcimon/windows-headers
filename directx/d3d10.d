@@ -12,8 +12,6 @@ private import win32.windows;
 public import win32.directx.dxgitype;
 public import win32.directx.dxgi;
 public import win32.directx.d3d10misc;
-public import win32.directx.d3d10shader;
-public import win32.directx.d3d10effect;
 
 pragma(lib, "d3d10.lib");
 
@@ -1120,7 +1118,7 @@ interface ID3D10Device : IUnknown {
 	void CopySubresourceRegion(ID3D10Resource pDstResource, UINT DstSubresource, UINT DstX, UINT DstY, UINT DstZ, ID3D10Resource pSrcResource, UINT SrcSubresource, D3D10_BOX* pSrcBox);
 	void CopyResource(ID3D10Resource pDstResource, ID3D10Resource pSrcResource);
 	void UpdateSubresource(ID3D10Resource pDstResource, UINT DstSubresource, D3D10_BOX* pDstBox, void* pSrcData, UINT SrcRowPitch, UINT SrcDepthPitch);
-	void ClearRenderTargetView(ID3D10RenderTargetView pRenderTargetView, FLOAT[4] ColorRGBA);
+	void ClearRenderTargetView(ID3D10RenderTargetView pRenderTargetView, FLOAT[4]* ColorRGBA);
 	void ClearDepthStencilView(ID3D10DepthStencilView pDepthStencilView, UINT ClearFlags, FLOAT Depth, UINT8 Stencil);
 	void GenerateMips(ID3D10ShaderResourceView pShaderResourceView);
 	void ResolveSubresource(ID3D10Resource pDstResource, UINT DstSubresource, ID3D10Resource pSrcResource, UINT SrcSubresource, DXGI_FORMAT Format);
@@ -1227,3 +1225,5 @@ extern(C) const GUID IID_ID3D10Counter				= {0x9B7E4C11, 0x342C, 0x4106, [0xA1, 
 extern(C) const GUID IID_ID3D10Device				= {0x9B7E4C0F, 0x342C, 0x4106, [0xA1, 0x9F, 0x4F, 0x27, 0x04, 0xF6, 0x89, 0xF0]};
 extern(C) const GUID IID_ID3D10Multithread			= {0x9B7E4E00, 0x342C, 0x4106, [0xA1, 0x9F, 0x4F, 0x27, 0x04, 0xF6, 0x89, 0xF0]};
 
+public import win32.directx.d3d10shader;
+public import win32.directx.d3d10effect;

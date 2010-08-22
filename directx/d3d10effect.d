@@ -10,9 +10,6 @@ module win32.directx.d3d10effect;
 private import win32.windows;
 private import win32.directx.d3d10;
 
-// some forward references...
-enum D3D10_SHADER_VARIABLE_CLASS;
-enum D3D10_SHADER_VARIABLE_TYPE;
 
 enum D3D10_DEVICE_STATE_TYPES {
 	D3D10_DST_SO_BUFFERS = 1,
