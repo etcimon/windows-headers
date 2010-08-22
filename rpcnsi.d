@@ -51,7 +51,7 @@ extern (Windows) {
 	  uint*, ubyte**);
 	RPC_STATUS RpcNsProfileEltInqDone(RPC_NS_HANDLE*);
 	RPC_STATUS RpcNsEntryObjectInqNext(in RPC_NS_HANDLE, out UUID*);
-	RPC_STATUS RpcNsEntryObjectInqDone(inout RPC_NS_HANDLE*);
+	RPC_STATUS RpcNsEntryObjectInqDone(ref RPC_NS_HANDLE*);
 	RPC_STATUS RpcNsEntryExpandNameA(uint, ubyte*, ubyte**);
 	RPC_STATUS RpcNsMgmtBindingUnexportA(uint, ubyte*, RPC_IF_ID*, uint,
 	  UUID_VECTOR*);

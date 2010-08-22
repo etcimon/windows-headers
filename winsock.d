@@ -99,7 +99,7 @@ bool timerisset(TIMEVAL tvp) {
 	return tvp.tv_sec || tvp.tv_usec;
 }
 
-void timerclear(inout TIMEVAL tvp) {
+void timerclear(ref TIMEVAL tvp) {
 	tvp.tv_sec = tvp.tv_usec = 0;
 }
 

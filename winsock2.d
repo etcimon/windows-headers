@@ -133,7 +133,7 @@ int timercmp(TIMEVAL* tvp, TIMEVAL* uvp, int function(long,long) cmp) {
 	    cmp(tvp.tv_usec, uvp.tv_usec);
 }+/
 
-void timerclear(inout TIMEVAL tvp) {
+void timerclear(ref TIMEVAL tvp) {
 	tvp.tv_sec = tvp.tv_usec = 0;
 }
 
