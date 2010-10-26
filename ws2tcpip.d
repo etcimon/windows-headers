@@ -137,8 +137,8 @@ struct SOCKADDR_IN6 {
 };
 alias SOCKADDR_IN6* PSOCKADDR_IN6, LPSOCKADDR_IN6;
 
-extern CPtr!(IN6_ADDR) in6addr_any;
-extern IN6_ADDR        in6addr_loopback;
+extern IN6_ADDR in6addr_any;
+extern IN6_ADDR in6addr_loopback;
 
 /+ TODO: 
 #define IN6_ARE_ADDR_EQUAL(a, b)	\
