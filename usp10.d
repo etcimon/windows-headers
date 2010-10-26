@@ -286,39 +286,39 @@ extern (C)
 extern (Windows)
 {
 	HRESULT ScriptFreeCache(SCRIPT_CACHE*);
-	HRESULT ScriptItemize(WCHAR*, int, int, SCRIPT_CONTROL*, SCRIPT_STATE*, SCRIPT_ITEM*, int*);
-	HRESULT ScriptLayout(int, BYTE*, int*, int*);
-	HRESULT ScriptShape(HDC, SCRIPT_CACHE*, WCHAR*, int, int, SCRIPT_ANALYSIS*, WORD*, WORD*, SCRIPT_VISATTR*, int*);
-	HRESULT ScriptPlace(HDC, SCRIPT_CACHE*, WORD*, int, SCRIPT_VISATTR*, SCRIPT_ANALYSIS*, int*, GOFFSET*, ABC*);
-	HRESULT ScriptTextOut(HDC, SCRIPT_CACHE*, int, int, UINT, RECT*, SCRIPT_ANALYSIS*, WCHAR*, int, WORD*, int, int*, int*, GOFFSET*);
-	HRESULT ScriptJustify(SCRIPT_VISATTR*, int*, int, int, int, int*);
-	HRESULT ScriptBreak(WCHAR*, int, SCRIPT_ANALYSIS*, SCRIPT_LOGATTR*);
-	HRESULT ScriptCPtoX(int, BOOL, int, int, WORD*, SCRIPT_VISATTR*, int*, SCRIPT_ANALYSIS*, int*);
-	HRESULT ScriptXtoCP(int, int, int, WORD*, SCRIPT_VISATTR*, int*, SCRIPT_ANALYSIS*, int*, int*);
-	HRESULT ScriptGetLogicalWidths(SCRIPT_ANALYSIS*, int, int, int*, WORD*, SCRIPT_VISATTR*, int*);
-	HRESULT ScriptApplyLogicalWidth(int*, int, int, WORD*, SCRIPT_VISATTR*, int*, SCRIPT_ANALYSIS*, ABC*, int*);
-	HRESULT ScriptGetCMap(HDC, SCRIPT_CACHE*, WCHAR*, int, DWORD, WORD*);
+	HRESULT ScriptItemize(CPtr!(WCHAR), int, int, CPtr!(SCRIPT_CONTROL), CPtr!(SCRIPT_STATE), SCRIPT_ITEM*, int*);
+	HRESULT ScriptLayout(int, CPtr!(BYTE), int*, int*);
+	HRESULT ScriptShape(HDC, SCRIPT_CACHE*, CPtr!(WCHAR), int, int, SCRIPT_ANALYSIS*, WORD*, WORD*, SCRIPT_VISATTR*, int*);
+	HRESULT ScriptPlace(HDC, SCRIPT_CACHE*, CPtr!(WORD), int, CPtr!(SCRIPT_VISATTR), SCRIPT_ANALYSIS*, int*, GOFFSET*, ABC*);
+	HRESULT ScriptTextOut(HDC, SCRIPT_CACHE*, int, int, UINT, CPtr!(RECT), CPtr!(SCRIPT_ANALYSIS), CPtr!(WCHAR), int, CPtr!(WORD), int, CPtr!(int), int*, CPtr!(GOFFSET));
+	HRESULT ScriptJustify(CPtr!(SCRIPT_VISATTR), CPtr!(int), int, int, int, int*);
+	HRESULT ScriptBreak(CPtr!(WCHAR), int, CPtr!(SCRIPT_ANALYSIS), CPtr!(SCRIPT_LOGATTR));
+	HRESULT ScriptCPtoX(int, BOOL, int, int, CPtr!(WORD), CPtr!(SCRIPT_VISATTR), CPtr!(int), CPtr!(SCRIPT_ANALYSIS), int*);
+	HRESULT ScriptXtoCP(int, int, int, CPtr!(WORD), CPtr!(SCRIPT_VISATTR), CPtr!(int), CPtr!(SCRIPT_ANALYSIS), int*, int*);
+	HRESULT ScriptGetLogicalWidths(CPtr!(SCRIPT_ANALYSIS), int, int, CPtr!(int), CPtr!(WORD), CPtr!(SCRIPT_VISATTR), int*);
+	HRESULT ScriptApplyLogicalWidth(CPtr!(int), int, int, CPtr!(WORD), CPtr!(SCRIPT_VISATTR), CPtr!(int), CPtr!(SCRIPT_ANALYSIS), ABC*, int*);
+	HRESULT ScriptGetCMap(HDC, SCRIPT_CACHE*, CPtr!(WCHAR), int, DWORD, WORD*);
 	HRESULT ScriptGetGlyphABCWidth(HDC, SCRIPT_CACHE*, WORD, ABC*);
-	HRESULT ScriptGetProperties(SCRIPT_PROPERTIES***, int*);
+	HRESULT ScriptGetProperties(CPtr!(SCRIPT_PROPERTIES**), int*);
 	HRESULT ScriptGetFontProperties(HDC, SCRIPT_CACHE*, SCRIPT_FONTPROPERTIES*);
 	HRESULT ScriptCacheGetHeight(HDC, SCRIPT_CACHE*, int*);
-	HRESULT ScriptIsComplex(WCHAR*, int, DWORD);
+	HRESULT ScriptIsComplex(CPtr!(WCHAR), int, DWORD);
 	HRESULT ScriptRecordDigitSubstitution(LCID, SCRIPT_DIGITSUBSTITUTE*);
-	HRESULT ScriptApplyDigitSubstitution(SCRIPT_DIGITSUBSTITUTE*, SCRIPT_CONTROL*, SCRIPT_STATE*);
+	HRESULT ScriptApplyDigitSubstitution(CPtr!(SCRIPT_DIGITSUBSTITUTE), SCRIPT_CONTROL*, SCRIPT_STATE*);
 
 	/* ScriptString Functions
 	 * http://msdn2.microsoft.com/library/ms776485 */
-	HRESULT ScriptStringAnalyse(HDC, void*, int, int, int, DWORD, int, SCRIPT_CONTROL*, SCRIPT_STATE*, int*, SCRIPT_TABDEF*, BYTE*, SCRIPT_STRING_ANALYSIS*);
+	HRESULT ScriptStringAnalyse(HDC, CPtr!(void), int, int, int, DWORD, int, SCRIPT_CONTROL*, SCRIPT_STATE*, CPtr!(int), SCRIPT_TABDEF*, CPtr!(BYTE), SCRIPT_STRING_ANALYSIS*);
 	HRESULT ScriptStringFree(SCRIPT_STRING_ANALYSIS*);
-	SIZE* ScriptString_pSize(SCRIPT_STRING_ANALYSIS);
-	int* ScriptString_pcOutChars(SCRIPT_STRING_ANALYSIS);
-	SCRIPT_LOGATTR* ScriptString_pLogAttr(SCRIPT_STRING_ANALYSIS);
+	CPtr!(SIZE) ScriptString_pSize(SCRIPT_STRING_ANALYSIS);
+	CPtr!(int) ScriptString_pcOutChars(SCRIPT_STRING_ANALYSIS);
+	CPtr!(SCRIPT_LOGATTR) ScriptString_pLogAttr(SCRIPT_STRING_ANALYSIS);
 	HRESULT ScriptStringGetOrder(SCRIPT_STRING_ANALYSIS, UINT*);
 	HRESULT ScriptStringCPtoX(SCRIPT_STRING_ANALYSIS, int, BOOL, int*);
 	HRESULT ScriptStringXtoCP(SCRIPT_STRING_ANALYSIS, int, int*, int*);
 	HRESULT ScriptStringGetLogicalWidths(SCRIPT_STRING_ANALYSIS, int*);
 	HRESULT ScriptStringValidate(SCRIPT_STRING_ANALYSIS);
-	HRESULT ScriptStringOut(SCRIPT_STRING_ANALYSIS, int, int, UINT, RECT*, int, int, BOOL);
+	HRESULT ScriptStringOut(SCRIPT_STRING_ANALYSIS, int, int, UINT, CPtr!(RECT), int, int, BOOL);
 
 	/* TODO: Windows Vista fearured functions
 	ScriptGetFontAlternateGlyphs()

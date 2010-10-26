@@ -137,8 +137,8 @@ struct SOCKADDR_IN6 {
 };
 alias SOCKADDR_IN6* PSOCKADDR_IN6, LPSOCKADDR_IN6;
 
-extern IN6_ADDR in6addr_any;
-extern IN6_ADDR in6addr_loopback;
+extern CPtr!(IN6_ADDR) in6addr_any;
+extern IN6_ADDR        in6addr_loopback;
 
 /+ TODO: 
 #define IN6_ARE_ADDR_EQUAL(a, b)	\
@@ -225,8 +225,8 @@ struct addrinfo {
 extern(Windows) {
 	static if (_WIN32_WINNT >= 0x0501) {
 		void freeaddrinfo(addrinfo*);
-		int getaddrinfo (char*, char*, addrinfo*, addrinfo**);
-		int getnameinfo(SOCKADDR*, socklen_t, char*, DWORD, char*, DWORD, int);
+		int getaddrinfo (CPtr!(char), CPtr!(char), CPtr!(addrinfo), addrinfo**);
+		int getnameinfo(CPtr!(SOCKADDR), socklen_t, char*, DWORD, char*, DWORD, int);
 	}
 }
 

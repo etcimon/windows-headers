@@ -1569,7 +1569,8 @@ static if (_WIN32_WINNT >= 0x501) {
 		LPCSTR lpApplicationName;
 		HMODULE hModule;
 	}
-	alias ACTCTXA* PACTCTXA, PCACTCTXA;
+	alias ACTCTXA*       PACTCTXA;
+	alias CPtr!(ACTCTXA) PCACTCTXA;
 
 	struct ACTCTXW {
 		ULONG cbSize = this.sizeof;
@@ -1582,7 +1583,8 @@ static if (_WIN32_WINNT >= 0x501) {
 		LPCWSTR lpApplicationName;
 		HMODULE hModule;
 	}
-	alias ACTCTXW* PACTCTXW, PCACTCTXW;
+	alias ACTCTXW*       PACTCTXW;
+	alias CPtr!(ACTCTXW) PCACTCTXW;
 
 	struct ACTCTX_SECTION_KEYED_DATA {
 		ULONG cbSize = this.sizeof;
@@ -1596,7 +1598,8 @@ static if (_WIN32_WINNT >= 0x501) {
 		HANDLE hActCtx;
 		HANDLE ulAssemblyRosterIndex;
 	}
-	alias ACTCTX_SECTION_KEYED_DATA* PACTCTX_SECTION_KEYED_DATA, PCACTCTX_SECTION_KEYED_DATA;
+	alias ACTCTX_SECTION_KEYED_DATA*       PACTCTX_SECTION_KEYED_DATA;
+	alias CPtr!(ACTCTX_SECTION_KEYED_DATA) PCACTCTX_SECTION_KEYED_DATA;
 
 	enum MEMORY_RESOURCE_NOTIFICATION_TYPE {
 		LowMemoryResourceNotification,
@@ -1661,7 +1664,7 @@ extern (Windows) {
 	BOOL CloseHandle(HANDLE);
 	BOOL CommConfigDialogA(LPCSTR, HWND, LPCOMMCONFIG);
 	BOOL CommConfigDialogW(LPCWSTR, HWND, LPCOMMCONFIG);
-	LONG CompareFileTime(FILETIME*, FILETIME*);
+	LONG CompareFileTime(CPtr!(FILETIME), CPtr!(FILETIME));
 	BOOL ContinueDebugEvent(DWORD, DWORD, DWORD);
 	BOOL CopyFileA(LPCSTR, LPCSTR, BOOL);
 	BOOL CopyFileW(LPCWSTR, LPCWSTR, BOOL);
@@ -1730,9 +1733,9 @@ extern (Windows) {
 	void FatalAppExitA(UINT, LPCSTR);
 	void FatalAppExitW(UINT, LPCWSTR);
 	void FatalExit(int);
-	BOOL FileTimeToDosDateTime(FILETIME* , LPWORD, LPWORD);
-	BOOL FileTimeToLocalFileTime(FILETIME* , LPFILETIME);
-	BOOL FileTimeToSystemTime(FILETIME* , LPSYSTEMTIME);
+	BOOL FileTimeToDosDateTime(CPtr!(FILETIME) , LPWORD, LPWORD);
+	BOOL FileTimeToLocalFileTime(CPtr!(FILETIME) , LPFILETIME);
+	BOOL FileTimeToSystemTime(CPtr!(FILETIME) , LPSYSTEMTIME);
 	ATOM FindAtomA(LPCSTR);
 	ATOM FindAtomW(LPCWSTR);
 	BOOL FindClose(HANDLE);
@@ -1904,7 +1907,7 @@ WINBASEAPI DWORD WINAPI GetCurrentThreadId(void);
 	HINSTANCE LoadLibraryExW(LPCWSTR, HANDLE, DWORD);
 	DWORD LoadModule(LPCSTR, PVOID);
 	HGLOBAL LoadResource(HINSTANCE, HRSRC);
-	BOOL LocalFileTimeToFileTime(FILETIME* , LPFILETIME);
+	BOOL LocalFileTimeToFileTime(CPtr!(FILETIME) , LPFILETIME);
 	BOOL LockFile(HANDLE, DWORD, DWORD, DWORD, DWORD);
 	PVOID LockResource(HGLOBAL);
 
@@ -1940,7 +1943,7 @@ WINBASEAPI DWORD WINAPI GetCurrentThreadId(void);
 	BOOL QueryPerformanceCounter(PLARGE_INTEGER);
 	BOOL QueryPerformanceFrequency(PLARGE_INTEGER);
 	DWORD QueueUserAPC(PAPCFUNC, HANDLE, ULONG_PTR);
-	void RaiseException(DWORD, DWORD, DWORD, DWORD*);
+	void RaiseException(DWORD, DWORD, DWORD, CPtr!(DWORD));
 	BOOL ReadFile(HANDLE, PVOID, DWORD, PDWORD, LPOVERLAPPED);
 	BOOL ReadFileEx(HANDLE, PVOID, DWORD, LPOVERLAPPED, LPOVERLAPPED_COMPLETION_ROUTINE);
 	BOOL ReadProcessMemory(HANDLE, PCVOID, PVOID, DWORD, PDWORD);
@@ -1987,20 +1990,20 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 	BOOL SetFileAttributesA(LPCSTR, DWORD);
 	BOOL SetFileAttributesW(LPCWSTR, DWORD);
 	DWORD SetFilePointer(HANDLE, LONG, PLONG, DWORD);
-	BOOL SetFileTime(HANDLE, FILETIME*, FILETIME*, FILETIME*);
+	BOOL SetFileTime(HANDLE, CPtr!(FILETIME), CPtr!(FILETIME), CPtr!(FILETIME));
 	deprecated UINT SetHandleCount(UINT);
 	void SetLastError(DWORD);
 	void SetLastErrorEx(DWORD, DWORD);
-	BOOL SetLocalTime(SYSTEMTIME*);
+	BOOL SetLocalTime(CPtr!(SYSTEMTIME));
 	BOOL SetMailslotInfo(HANDLE, DWORD);
 	BOOL SetNamedPipeHandleState(HANDLE, PDWORD, PDWORD, PDWORD);
 	BOOL SetPriorityClass(HANDLE, DWORD);
 	BOOL SetStdHandle(DWORD, HANDLE);
-	BOOL SetSystemTime(SYSTEMTIME*);
+	BOOL SetSystemTime(CPtr!(SYSTEMTIME));
 	DWORD SetThreadAffinityMask(HANDLE, DWORD);
-	BOOL SetThreadContext(HANDLE, CONTEXT*);
+	BOOL SetThreadContext(HANDLE, CPtr!(CONTEXT));
 	BOOL SetThreadPriority(HANDLE, int);
-	BOOL SetTimeZoneInformation(TIME_ZONE_INFORMATION*);
+	BOOL SetTimeZoneInformation(CPtr!(TIME_ZONE_INFORMATION));
 	LPTOP_LEVEL_EXCEPTION_FILTER SetUnhandledExceptionFilter(LPTOP_LEVEL_EXCEPTION_FILTER);
 	BOOL SetupComm(HANDLE, DWORD, DWORD);
 	BOOL SetVolumeLabelA(LPCSTR, LPCSTR);
@@ -2010,7 +2013,7 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 	void Sleep(DWORD);
 	DWORD SleepEx(DWORD, BOOL);
 	DWORD SuspendThread(HANDLE);
-	BOOL SystemTimeToFileTime(SYSTEMTIME*, LPFILETIME);
+	BOOL SystemTimeToFileTime(CPtr!(SYSTEMTIME), LPFILETIME);
 	BOOL TerminateProcess(HANDLE, UINT);
 	BOOL TerminateThread(HANDLE, DWORD);
 	DWORD TlsAlloc();
@@ -2023,8 +2026,8 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 	BOOL UnlockFile(HANDLE, DWORD, DWORD, DWORD, DWORD);
 	BOOL WaitCommEvent(HANDLE, PDWORD, LPOVERLAPPED);
 	BOOL WaitForDebugEvent(LPDEBUG_EVENT, DWORD);
-	DWORD WaitForMultipleObjects(DWORD, HANDLE*, BOOL, DWORD);
-	DWORD WaitForMultipleObjectsEx(DWORD, HANDLE*, BOOL, DWORD, BOOL);
+	DWORD WaitForMultipleObjects(DWORD, CPtr!(HANDLE), BOOL, DWORD);
+	DWORD WaitForMultipleObjectsEx(DWORD, CPtr!(HANDLE), BOOL, DWORD, BOOL);
 	DWORD WaitForSingleObject(HANDLE, DWORD);
 	DWORD WaitForSingleObjectEx(HANDLE, DWORD, BOOL);
 	BOOL WaitNamedPipeA(LPCSTR, DWORD);
@@ -2110,7 +2113,7 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 		HANDLE OpenWaitableTimerW(DWORD, BOOL, LPCWSTR);
 		DWORD QueryDosDeviceA(LPCSTR, LPSTR, DWORD);
 		DWORD QueryDosDeviceW(LPCWSTR, LPWSTR, DWORD);
-		BOOL SetWaitableTimer(HANDLE, LARGE_INTEGER*, LONG, PTIMERAPCROUTINE, PVOID, BOOL);
+		BOOL SetWaitableTimer(HANDLE, CPtr!(LARGE_INTEGER), LONG, PTIMERAPCROUTINE, PVOID, BOOL);
 		void SwitchToFiber(PVOID);
 	}
 
@@ -2393,11 +2396,11 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 			BOOL DebugActiveProcessStop(DWORD);
 			BOOL DebugBreakProcess(HANDLE);
 			BOOL DebugSetProcessKillOnExit(BOOL);
-			BOOL FindActCtxSectionGuid(DWORD, GUID*, ULONG, GUID*,
+			BOOL FindActCtxSectionGuid(DWORD, CPtr!(GUID), ULONG, CPtr!(GUID),
 			  PACTCTX_SECTION_KEYED_DATA);
-			BOOL FindActCtxSectionStringA(DWORD, GUID*, ULONG, LPCSTR,
+			BOOL FindActCtxSectionStringA(DWORD, CPtr!(GUID), ULONG, LPCSTR,
 			  PACTCTX_SECTION_KEYED_DATA);
-			BOOL FindActCtxSectionStringW(DWORD, GUID*, ULONG, LPCWSTR,
+			BOOL FindActCtxSectionStringW(DWORD, CPtr!(GUID), ULONG, LPCWSTR,
 			  PACTCTX_SECTION_KEYED_DATA);
 			BOOL GetCurrentActCtx(HANDLE*);
 			VOID GetNativeSystemInfo(LPSYSTEM_INFO);

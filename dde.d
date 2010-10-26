@@ -149,7 +149,7 @@ deprecated struct DDEUP {
 }
 
 extern (Windows) {
-	BOOL DdeSetQualityOfService(HWND, SECURITY_QUALITY_OF_SERVICE*,
+	BOOL DdeSetQualityOfService(HWND, CPtr!(SECURITY_QUALITY_OF_SERVICE),
 	  PSECURITY_QUALITY_OF_SERVICE);
 	BOOL ImpersonateDdeClientWindow(HWND, HWND);
 	LPARAM PackDDElParam(UINT, UINT_PTR, UINT_PTR);

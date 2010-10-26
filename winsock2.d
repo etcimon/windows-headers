@@ -610,20 +610,20 @@ enum : int {
 
 extern (Windows) {
 	SOCKET accept(SOCKET, SOCKADDR*, int*);
-	int bind(SOCKET, SOCKADDR*, int);
+	int bind(SOCKET, CPtr!(SOCKADDR), int);
 	int closesocket(SOCKET);
-	int connect(SOCKET, SOCKADDR*, int);
+	int connect(SOCKET, CPtr!(SOCKADDR), int);
 	int ioctlsocket(SOCKET, int, u_long*);
 	int getpeername(SOCKET, SOCKADDR*, int*);
 	int getsockname(SOCKET, SOCKADDR*, int*);
 	int getsockopt(SOCKET, int, int, void*, int*);
-	uint inet_addr(char*);
+	uint inet_addr(CPtr!(char));
 	int listen(SOCKET, int);
 	int recv(SOCKET, ubyte*, int, int);
 	int recvfrom(SOCKET, ubyte*, int, int, SOCKADDR*, int*);
-	int send(SOCKET, ubyte*, int, int);
-	int sendto(SOCKET, ubyte*, int, int, SOCKADDR*, int);
-	int setsockopt(SOCKET, int, int, void*, int);
+	int send(SOCKET, CPtr!(ubyte), int, int);
+	int sendto(SOCKET, CPtr!(ubyte), int, int, CPtr!(SOCKADDR), int);
+	int setsockopt(SOCKET, int, int, CPtr!(void), int);
 	int shutdown(SOCKET, int);
 	SOCKET socket(int, int, int);
 
@@ -648,12 +648,12 @@ extern (Windows) {
 
 extern(Windows) {
 	char* inet_ntoa(IN_ADDR);
-	HOSTENT* gethostbyaddr(char*, int, int);
-	HOSTENT* gethostbyname(char*);
-	SERVENT* getservbyport(int, char*);
-	SERVENT* getservbyname(char*, char*);
+	HOSTENT* gethostbyaddr(CPtr!(char), int, int);
+	HOSTENT* gethostbyname(CPtr!(char));
+	SERVENT* getservbyport(int, CPtr!(char));
+	SERVENT* getservbyname(CPtr!(char), CPtr!(char));
 	PROTOENT* getprotobynumber(int);
-	PROTOENT* getprotobyname(char*);
+	PROTOENT* getprotobyname(CPtr!(char));
 
 	/* NOTE: DK: in the original headers, these were declared with
 	   PASCAL linkage.  Since this is at odds with the definition
@@ -697,12 +697,12 @@ deprecated extern(Windows) {
 }
 
 extern(Windows) {
-	HANDLE WSAAsyncGetServByName(HWND, u_int, char*, char*, char*, int);
-	HANDLE WSAAsyncGetServByPort(HWND, u_int, int, char*, char*, int);
-	HANDLE WSAAsyncGetProtoByName(HWND, u_int, char*, char*, int);
+	HANDLE WSAAsyncGetServByName(HWND, u_int, CPtr!(char), CPtr!(char), char*, int);
+	HANDLE WSAAsyncGetServByPort(HWND, u_int, int, CPtr!(char), char*, int);
+	HANDLE WSAAsyncGetProtoByName(HWND, u_int, CPtr!(char), char*, int);
 	HANDLE WSAAsyncGetProtoByNumber(HWND, u_int, int, char*, int);
-	HANDLE WSAAsyncGetHostByName(HWND, u_int, char*, char*, int);
-	HANDLE WSAAsyncGetHostByAddr(HWND, u_int, char*, int, int, char*, int);
+	HANDLE WSAAsyncGetHostByName(HWND, u_int, CPtr!(char), char*, int);
+	HANDLE WSAAsyncGetHostByAddr(HWND, u_int, CPtr!(char), int, int, char*, int);
 	int WSACancelAsyncRequest(HANDLE);
 	int WSAAsyncSelect(SOCKET, HWND, u_int, long);
 
@@ -721,7 +721,7 @@ extern(Windows) {
 	u_long ntohl(u_long);
 	u_short htons(u_short);
 	u_short ntohs(u_short);
-	int select(int nfds, fd_set*, fd_set*, fd_set*, TIMEVAL*);
+	int select(int nfds, fd_set*, fd_set*, fd_set*, CPtr!(TIMEVAL));
 
 	alias typeof(&htonl) LPFN_HTONL;
 	alias typeof(&ntohl) LPFN_NTOHL;
@@ -1312,7 +1312,7 @@ extern(Windows) {
 	INT WSAAddressToStringA(LPSOCKADDR, DWORD, LPWSAPROTOCOL_INFOA, LPSTR, LPDWORD);
 	INT WSAAddressToStringW(LPSOCKADDR, DWORD, LPWSAPROTOCOL_INFOW, LPWSTR, LPDWORD);
 	BOOL WSACloseEvent(WSAEVENT);
-	int WSAConnect(SOCKET, SOCKADDR*, int, LPWSABUF, LPWSABUF, LPQOS, LPQOS);
+	int WSAConnect(SOCKET, CPtr!(SOCKADDR), int, LPWSABUF, LPWSABUF, LPQOS, LPQOS);
 	WSAEVENT WSACreateEvent();
 	int WSADuplicateSocketA(SOCKET, DWORD, LPWSAPROTOCOL_INFOA);
 	int WSADuplicateSocketW(SOCKET, DWORD, LPWSAPROTOCOL_INFOW);
@@ -1333,7 +1333,7 @@ extern(Windows) {
 	INT WSAInstallServiceClassA(LPWSASERVICECLASSINFOA);
 	INT WSAInstallServiceClassW(LPWSASERVICECLASSINFOW);
 	int WSAIoctl(SOCKET, DWORD, LPVOID, DWORD, LPVOID, DWORD, LPDWORD, LPWSAOVERLAPPED, LPWSAOVERLAPPED_COMPLETION_ROUTINE);
-	SOCKET WSAJoinLeaf(SOCKET, SOCKADDR*, int, LPWSABUF, LPWSABUF, LPQOS, LPQOS, DWORD);
+	SOCKET WSAJoinLeaf(SOCKET, CPtr!(SOCKADDR), int, LPWSABUF, LPWSABUF, LPQOS, LPQOS, DWORD);
 	INT WSALookupServiceBeginA(LPWSAQUERYSETA, DWORD, LPHANDLE);
 	INT WSALookupServiceBeginW(LPWSAQUERYSETW lpqsRestrictions, DWORD, LPHANDLE);
 	INT WSALookupServiceNextA(HANDLE, DWORD, LPDWORD, LPWSAQUERYSETA);
@@ -1349,7 +1349,7 @@ extern(Windows) {
 	BOOL WSAResetEvent(WSAEVENT);
 	int WSASend(SOCKET, LPWSABUF, DWORD, LPDWORD, DWORD, LPWSAOVERLAPPED, LPWSAOVERLAPPED_COMPLETION_ROUTINE);
 	int WSASendDisconnect(SOCKET, LPWSABUF);
-	int WSASendTo(SOCKET, LPWSABUF, DWORD, LPDWORD, DWORD, SOCKADDR*, int, LPWSAOVERLAPPED, LPWSAOVERLAPPED_COMPLETION_ROUTINE);
+	int WSASendTo(SOCKET, LPWSABUF, DWORD, LPDWORD, DWORD, CPtr!(SOCKADDR), int, LPWSAOVERLAPPED, LPWSAOVERLAPPED_COMPLETION_ROUTINE);
 	BOOL WSASetEvent(WSAEVENT);
 	INT WSASetServiceA(LPWSAQUERYSETA, WSAESETSERVICEOP, DWORD); // NB: was declared with "WSAAPI" linkage
 	INT WSASetServiceW(LPWSAQUERYSETW, WSAESETSERVICEOP, DWORD);
@@ -1357,7 +1357,7 @@ extern(Windows) {
 	SOCKET WSASocketW(int, int, int, LPWSAPROTOCOL_INFOW, GROUP, DWORD);
 	INT WSAStringToAddressA(LPSTR, INT, LPWSAPROTOCOL_INFOA, LPSOCKADDR, LPINT);
 	INT WSAStringToAddressW(LPWSTR, INT, LPWSAPROTOCOL_INFOW, LPSOCKADDR, LPINT);
-	DWORD WSAWaitForMultipleEvents(DWORD, WSAEVENT*, BOOL, DWORD, BOOL);
+	DWORD WSAWaitForMultipleEvents(DWORD, CPtr!(WSAEVENT), BOOL, DWORD, BOOL);
 
 	alias typeof(&WSAAccept) LPFN_WSAACCEPT;
 	alias typeof(&WSAAddressToStringA) LPFN_WSAADDRESSTOSTRINGA;

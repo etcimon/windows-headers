@@ -27,6 +27,8 @@ module win32.winber;
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+ import win32.basetsd;
+ 
 /* Opaque structure
  *	http://msdn.microsoft.com/library/en-us/ldap/ldap/berelement.asp
  */
@@ -52,10 +54,10 @@ const ber_tag_t
  *	attribute?
  */
 extern (C) {
-	BerElement* ber_init(BerValue*);
-	int ber_printf(BerElement*, char*, ...);
+	BerElement* ber_init(CPtr!(BerValue));
+	int ber_printf(BerElement*, CPtr!(char), ...);
 	int ber_flatten(BerElement*, BerValue**);
-	ber_tag_t ber_scanf(BerElement*, char*, ...);
+	ber_tag_t ber_scanf(BerElement*, CPtr!(char), ...);
 	ber_tag_t ber_peek_tag(BerElement*, ber_len_t*);
 	ber_tag_t ber_skip_tag(BerElement*, ber_len_t*);
 	ber_tag_t ber_first_element(BerElement*, ber_len_t*, char**);

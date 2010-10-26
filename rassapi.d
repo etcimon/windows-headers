@@ -198,15 +198,15 @@ struct RAS_SERVER_0 {
 alias RAS_SERVER_0* PRAS_SERVER_0;
 
 extern (Windows) {
-	DWORD RasAdminServerGetInfo(WCHAR*, PRAS_SERVER_0);
-	DWORD RasAdminGetUserAccountServer(WCHAR*, WCHAR*, LPWSTR);
-	DWORD RasAdminUserGetInfo(WCHAR*, WCHAR*, PRAS_USER_0);
-	DWORD RasAdminUserSetInfo(WCHAR*, WCHAR*, PRAS_USER_0);
+	DWORD RasAdminServerGetInfo(CPtr!(WCHAR), PRAS_SERVER_0);
+	DWORD RasAdminGetUserAccountServer(CPtr!(WCHAR), CPtr!(WCHAR), LPWSTR);
+	DWORD RasAdminUserGetInfo(CPtr!(WCHAR), CPtr!(WCHAR), PRAS_USER_0);
+	DWORD RasAdminUserSetInfo(CPtr!(WCHAR), CPtr!(WCHAR), PRAS_USER_0);
 	DWORD RasAdminPortEnum(WCHAR*, PRAS_PORT_0*, WORD*);
-	DWORD RasAdminPortGetInfo(WCHAR*, WCHAR*, RAS_PORT_1*,
+	DWORD RasAdminPortGetInfo(CPtr!(WCHAR), CPtr!(WCHAR), RAS_PORT_1*,
 	 RAS_PORT_STATISTICS*, RAS_PARAMETERS**);
-	DWORD RasAdminPortClearStatistics(WCHAR*, WCHAR*);
-	DWORD RasAdminPortDisconnect(WCHAR*, WCHAR*);
+	DWORD RasAdminPortClearStatistics(CPtr!(WCHAR), CPtr!(WCHAR));
+	DWORD RasAdminPortDisconnect(CPtr!(WCHAR), CPtr!(WCHAR));
 	DWORD RasAdminFreeBuffer(PVOID);
 	DWORD RasAdminGetErrorString(UINT, WCHAR*, DWORD);
 	BOOL RasAdminAcceptNewConnection(RAS_PORT_1*, RAS_PORT_STATISTICS*,

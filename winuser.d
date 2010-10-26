@@ -2764,8 +2764,8 @@ struct DLGTEMPLATE {
 	short cx;
 	short cy;
 }
-alias DLGTEMPLATE* LPDLGTEMPLATE, LPDLGTEMPLATEA, LPDLGTEMPLATEW;
-alias DLGTEMPLATE* LPCDLGTEMPLATE;
+alias DLGTEMPLATE*       LPDLGTEMPLATE, LPDLGTEMPLATEA, LPDLGTEMPLATEW;
+alias CPtr!(DLGTEMPLATE) LPCDLGTEMPLATE;
 
 align:
 
@@ -2903,8 +2903,8 @@ struct MENUITEMINFOA {
 		HBITMAP hbmpItem;
 	}
 }
-alias MENUITEMINFOA* LPMENUITEMINFOA;
-alias MENUITEMINFOA* LPCMENUITEMINFOA;
+alias MENUITEMINFOA*       LPMENUITEMINFOA;
+alias CPtr!(MENUITEMINFOA) LPCMENUITEMINFOA;
 
 struct MENUITEMINFOW {
 	UINT    cbSize = MENUITEMINFOW.sizeof;
@@ -2922,8 +2922,8 @@ struct MENUITEMINFOW {
 		HBITMAP hbmpItem;
 	}
 }
-alias MENUITEMINFOW* LPMENUITEMINFOW;
-alias  MENUITEMINFOW* LPCMENUITEMINFOW;
+alias MENUITEMINFOW*       LPMENUITEMINFOW;
+alias CPtr!(MENUITEMINFOW) LPCMENUITEMINFOW;
 
 struct SCROLLINFO {
 	UINT cbSize = this.sizeof;
@@ -2934,8 +2934,8 @@ struct SCROLLINFO {
 	int nPos;
 	int nTrackPos;
 }
-alias SCROLLINFO* LPSCROLLINFO;
-alias SCROLLINFO* LPCSCROLLINFO;
+alias SCROLLINFO*       LPSCROLLINFO;
+alias CPtr!(SCROLLINFO) LPCSCROLLINFO;
 
 struct WINDOWPLACEMENT {
 	UINT length;
@@ -3380,7 +3380,8 @@ struct MENUINFO {
 	DWORD   dwContextHelpID;
 	ULONG_PTR dwMenuData;
 }
-alias MENUINFO* LPMENUINFO, LPCMENUINFO;
+alias MENUINFO*       LPMENUINFO;
+alias CPtr!(MENUINFO) LPCMENUINFO;
 
 
 const CCHILDREN_SCROLLBAR=5;
@@ -3612,8 +3613,8 @@ struct RAWINPUTDEVICE {
 	DWORD dwFlags;
 	HWND hwndTarget;
 }
-alias RAWINPUTDEVICE* PRAWINPUTDEVICE, LPRAWINPUTDEVICE;
-alias RAWINPUTDEVICE* PCRAWINPUTDEVICE;
+alias RAWINPUTDEVICE*       PRAWINPUTDEVICE, LPRAWINPUTDEVICE;
+alias CPtr!(RAWINPUTDEVICE) PCRAWINPUTDEVICE;
 
 struct RAWINPUTDEVICELIST {
 	HANDLE hDevice;
@@ -3701,7 +3702,7 @@ BOOL CallMsgFilterW(LPMSG, INT);
 LRESULT CallNextHookEx(HHOOK, int, WPARAM, LPARAM);
 LRESULT CallWindowProcA(WNDPROC, HWND, UINT, WPARAM, LPARAM);
 LRESULT CallWindowProcW(WNDPROC, HWND, UINT, WPARAM, LPARAM);
-WORD CascadeWindows(HWND, UINT, LPCRECT, UINT, HWND*);
+WORD CascadeWindows(HWND, UINT, LPCRECT, UINT, CPtr!(HWND));
 BOOL ChangeClipboardChain(HWND, HWND);
 
 LONG ChangeDisplaySettingsA(PDEVMODEA, DWORD);
@@ -3763,7 +3764,7 @@ HWND CreateDialogParamW(HINSTANCE, LPCWSTR, HWND, DLGPROC, LPARAM);
 HWND CreateDialogIndirectParamA(HINSTANCE, LPCDLGTEMPLATE, HWND, DLGPROC, LPARAM);
 HWND CreateDialogIndirectParamW(HINSTANCE, LPCDLGTEMPLATE, HWND, DLGPROC, LPARAM);
 
-HICON CreateIcon(HINSTANCE, int, int, BYTE, BYTE, BYTE*, BYTE*);
+HICON CreateIcon(HINSTANCE, int, int, BYTE, BYTE, CPtr!(BYTE), BYTE*);
 HICON CreateIconFromResource(PBYTE, DWORD, BOOL, DWORD);
 HICON CreateIconFromResourceEx(PBYTE, DWORD, BOOL, DWORD, int, int, UINT);
 HICON CreateIconIndirect(PICONINFO);
@@ -3866,8 +3867,8 @@ BOOL ExitWindows(UINT r, DWORD c)
 alias GetWindow GetNextWindow;
 
 extern (Windows):
-LONG DispatchMessageA( MSG*);
-LONG DispatchMessageW( MSG*);
+LONG DispatchMessageA( CPtr!(MSG));
+LONG DispatchMessageW( CPtr!(MSG));
 int DlgDirListA(HWND, LPSTR, int, int, UINT);
 int DlgDirListW(HWND, LPWSTR, int, int, UINT);
 int DlgDirListComboBoxA(HWND, LPSTR, int, int, UINT);
@@ -3899,7 +3900,7 @@ BOOL EnableWindow(HWND, BOOL);
 BOOL EndDeferWindowPos(HDWP);
 BOOL EndDialog(HWND, int);
 BOOL EndMenu();
-BOOL EndPaint(HWND, PAINTSTRUCT*);
+BOOL EndPaint(HWND, CPtr!(PAINTSTRUCT));
 BOOL EnumChildWindows(HWND, ENUMWINDOWSPROC, LPARAM);
 UINT EnumClipboardFormats(UINT);
 BOOL EnumDesktopsA(HWINSTA, DESKTOPENUMPROCA, LPARAM);
@@ -4107,8 +4108,8 @@ HANDLE LoadImageW(HINSTANCE, LPCWSTR, UINT, int, int, UINT);
 HKL LoadKeyboardLayoutA(LPCSTR, UINT);
 HKL LoadKeyboardLayoutW(LPCWSTR, UINT);
 HMENU LoadMenuA(HINSTANCE, LPCSTR);
-HMENU LoadMenuIndirectA( MENUTEMPLATE*);
-HMENU LoadMenuIndirectW( MENUTEMPLATE*);
+HMENU LoadMenuIndirectA( CPtr!(MENUTEMPLATE));
+HMENU LoadMenuIndirectW( CPtr!(MENUTEMPLATE));
 HMENU LoadMenuW(HINSTANCE, LPCWSTR);
 int LoadStringA(HINSTANCE, UINT, LPSTR, int);
 int LoadStringW(HINSTANCE, UINT, LPWSTR, int);
@@ -4127,14 +4128,14 @@ int MessageBoxA(HWND, LPCSTR, LPCSTR, UINT);
 int MessageBoxW(HWND, LPCWSTR, LPCWSTR, UINT);
 int MessageBoxExA(HWND, LPCSTR, LPCSTR, UINT, WORD);
 int MessageBoxExW(HWND, LPCWSTR, LPCWSTR, UINT, WORD);
-int MessageBoxIndirectA(MSGBOXPARAMSA*);
-int MessageBoxIndirectW(MSGBOXPARAMSW*);
+int MessageBoxIndirectA(CPtr!(MSGBOXPARAMSA));
+int MessageBoxIndirectW(CPtr!(MSGBOXPARAMSW));
 BOOL ModifyMenuA(HMENU, UINT, UINT, UINT, LPCSTR);
 BOOL ModifyMenuW(HMENU, UINT, UINT, UINT, LPCWSTR);
 void mouse_event(DWORD, DWORD, DWORD, DWORD, ULONG_PTR);
 BOOL MoveWindow(HWND, int, int, int, int, BOOL);
-DWORD MsgWaitForMultipleObjects(DWORD, HANDLE*, BOOL, DWORD, DWORD);
-DWORD MsgWaitForMultipleObjectsEx(DWORD, HANDLE*, DWORD, DWORD, DWORD);
+DWORD MsgWaitForMultipleObjects(DWORD, CPtr!(HANDLE), BOOL, DWORD, DWORD);
+DWORD MsgWaitForMultipleObjectsEx(DWORD, CPtr!(HANDLE), DWORD, DWORD, DWORD);
 DWORD OemKeyScan(WORD);
 BOOL OemToCharA(LPCSTR, LPSTR);
 BOOL OemToCharBuffA(LPCSTR, LPSTR, DWORD);
@@ -4161,10 +4162,10 @@ HWND RealChildWindowFromPoint(HWND, POINT);
 UINT RealGetWindowClassA(HWND, LPSTR, UINT);
 UINT RealGetWindowClassW(HWND, LPWSTR, UINT);
 BOOL RedrawWindow(HWND, LPCRECT, HRGN, UINT);
-ATOM RegisterClassA(WNDCLASSA*);
-ATOM RegisterClassW(WNDCLASSW*);
-ATOM RegisterClassExA(WNDCLASSEXA*);
-ATOM RegisterClassExW(WNDCLASSEXW*);
+ATOM RegisterClassA(CPtr!(WNDCLASSA));
+ATOM RegisterClassW(CPtr!(WNDCLASSW));
+ATOM RegisterClassExA(CPtr!(WNDCLASSEXA));
+ATOM RegisterClassExW(CPtr!(WNDCLASSEXW));
 UINT RegisterClipboardFormatA(LPCSTR);
 UINT RegisterClipboardFormatW(LPCWSTR);
 BOOL RegisterHotKey(HWND, int, UINT, UINT);
@@ -4227,7 +4228,7 @@ BOOL SetRectEmpty(LPRECT);
 int SetScrollInfo(HWND, int, LPCSCROLLINFO, BOOL);
 int SetScrollPos(HWND, int, int, BOOL);
 BOOL SetScrollRange(HWND, int, int, int, BOOL);
-BOOL SetSysColors(int, INT* , COLORREF* );
+BOOL SetSysColors(int, CPtr!(INT) , CPtr!(COLORREF) );
 BOOL SetSystemCursor(HCURSOR, DWORD);
 BOOL SetThreadDesktop(HDESK);
 UINT SetTimer(HWND, UINT, UINT, TIMERPROC);
@@ -4237,7 +4238,7 @@ BOOL SetUserObjectSecurity(HANDLE, PSECURITY_INFORMATION, PSECURITY_DESCRIPTOR);
 BOOL SetWindowContextHelpId(HWND, DWORD);
 LONG SetWindowLongA(HWND, int, LONG);
 LONG SetWindowLongW(HWND, int, LONG);
-BOOL SetWindowPlacement(HWND hWnd, WINDOWPLACEMENT*);
+BOOL SetWindowPlacement(HWND hWnd, CPtr!(WINDOWPLACEMENT));
 BOOL SetWindowPos(HWND, HWND, int, int, int, int, UINT);
 int SetWindowRgn(HWND, HRGN, BOOL);
 HHOOK SetWindowsHookA(int, HOOKPROC);
@@ -4260,7 +4261,7 @@ BOOL SystemParametersInfoA(UINT, UINT, PVOID, UINT);
 BOOL SystemParametersInfoW(UINT, UINT, PVOID, UINT);
 LONG TabbedTextOutA(HDC, int, int, LPCSTR, int, int, LPINT, int);
 LONG TabbedTextOutW(HDC, int, int, LPCWSTR, int, int, LPINT, int);
-WORD TileWindows(HWND, UINT, LPCRECT, UINT, HWND* );
+WORD TileWindows(HWND, UINT, LPCRECT, UINT, CPtr!(HWND) );
 int ToAscii(UINT, UINT, PBYTE, LPWORD, UINT);
 int ToAsciiEx(UINT, UINT, PBYTE, LPWORD, UINT, HKL);
 int ToUnicode(UINT, UINT, PBYTE, LPWSTR, int, UINT);
@@ -4271,7 +4272,7 @@ BOOL TrackPopupMenuEx(HMENU, UINT, int, int, HWND, LPTPMPARAMS);
 int TranslateAcceleratorA(HWND, HACCEL, LPMSG);
 int TranslateAcceleratorW(HWND, HACCEL, LPMSG);
 BOOL TranslateMDISysAccel(HWND, LPMSG);
-BOOL TranslateMessage( MSG*);
+BOOL TranslateMessage( CPtr!(MSG));
 BOOL UnhookWindowsHook(int, HOOKPROC);
 BOOL UnhookWindowsHookEx(HHOOK);
 BOOL UnionRect(LPRECT, LPCRECT, LPCRECT);

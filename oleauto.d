@@ -227,14 +227,14 @@ deprecated {  // not actually deprecated, but they aren't converted yet.
 }
 
 extern (Windows) {
-	BSTR SysAllocString(OLECHAR*);
-	int SysReAllocString(BSTR*, OLECHAR*);
-	BSTR SysAllocStringLen(OLECHAR*, uint);
-	int SysReAllocStringLen(BSTR*, OLECHAR*, uint);
+	BSTR SysAllocString(CPtr!(OLECHAR));
+	int SysReAllocString(BSTR*, CPtr!(OLECHAR));
+	BSTR SysAllocStringLen(CPtr!(OLECHAR), uint);
+	int SysReAllocStringLen(BSTR*, CPtr!(OLECHAR), uint);
 	void SysFreeString(BSTR);
 	uint SysStringLen(BSTR);
 	uint SysStringByteLen(BSTR);
-	BSTR SysAllocStringByteLen(char*, uint);
+	BSTR SysAllocStringByteLen(CPtr!(char), uint);
 	int DosDateTimeToVariantTime(ushort, ushort, double*);
 	int VariantTimeToDosDateTime(double, ushort*, ushort*);
 	int VariantTimeToSystemTime(double, LPSYSTEMTIME);
@@ -358,16 +358,16 @@ extern (Windows) {
 	HRESULT VarBoolFromStr(OLECHAR*, LCID, uint, VARIANT_BOOL*);
 	HRESULT VarBoolFromDisp(LPDISPATCH, LCID, VARIANT_BOOL*);
 	HRESULT VarDecFromR8(double, DECIMAL*);
-	ULONG LHashValOfNameSysA(SYSKIND, LCID, char*);
-	ULONG LHashValOfNameSys(SYSKIND, LCID, OLECHAR*);
-	HRESULT LoadTypeLib(OLECHAR*, LPTYPELIB*);
+	ULONG LHashValOfNameSysA(SYSKIND, LCID, CPtr!(char));
+	ULONG LHashValOfNameSys(SYSKIND, LCID, CPtr!(OLECHAR));
+	HRESULT LoadTypeLib(CPtr!(OLECHAR), LPTYPELIB*);
 	HRESULT LoadTypeLibEx(LPCOLESTR, REGKIND, LPTYPELIB*);
 	HRESULT LoadRegTypeLib(REFGUID, WORD, WORD, LCID, LPTYPELIB*);
 	HRESULT QueryPathOfRegTypeLib(REFGUID, ushort, ushort, LCID, LPBSTR);
 	HRESULT RegisterTypeLib(LPTYPELIB, OLECHAR*, OLECHAR*);
 	HRESULT UnRegisterTypeLib(REFGUID, WORD, WORD, LCID, SYSKIND);
 	// not actually deprecated, but depends on unconverted ICreateTypeLib
-	deprecated HRESULT CreateTypeLib(SYSKIND, OLECHAR*, LPCREATETYPELIB*);
+	deprecated HRESULT CreateTypeLib(SYSKIND, CPtr!(OLECHAR), LPCREATETYPELIB*);
 	HRESULT DispGetParam(DISPPARAMS*, UINT, VARTYPE, VARIANT*, UINT*);
 	HRESULT DispGetIDsOfNames(LPTYPEINFO, OLECHAR**, UINT, DISPID*);
 	HRESULT DispInvoke(void*, LPTYPEINFO, DISPID, WORD, DISPPARAMS*, VARIANT*, EXCEPINFO*, UINT*);
@@ -633,20 +633,20 @@ extern (Windows) {
 	HRESULT VarDecFromCy(CY, DECIMAL*);
 	HRESULT VarDecFromDisp(IDispatch*, LCID, DECIMAL*);
 
-	HRESULT VarDecNeg(DECIMAL*, DECIMAL*);
+	HRESULT VarDecNeg(CPtr!(DECIMAL), DECIMAL*);
 	HRESULT VarR4CmpR8(float, double);
 	HRESULT VarR8Pow(double, double, double*);
 	HRESULT VarR8Round(double, int, double*);
-	HRESULT VarDecAbs(DECIMAL*, DECIMAL*);
-	HRESULT VarDecAdd(DECIMAL*, DECIMAL*, DECIMAL*);
-	HRESULT VarDecCmp(DECIMAL*, DECIMAL*);
-	HRESULT VarDecCmpR8(DECIMAL*, DOUBLE);
-	HRESULT VarDecDiv(DECIMAL*, DECIMAL*, DECIMAL*);
-	HRESULT VarDecFix(DECIMAL*, DECIMAL*);
-	HRESULT VarDecInt(DECIMAL*, DECIMAL*);
-	HRESULT VarDecMul(DECIMAL*, DECIMAL*, DECIMAL*);
-	HRESULT VarDecRound(DECIMAL*, int, DECIMAL*);
-	HRESULT VarDecSub(DECIMAL*, DECIMAL*, DECIMAL*);
+	HRESULT VarDecAbs(CPtr!(DECIMAL), DECIMAL*);
+	HRESULT VarDecAdd(CPtr!(DECIMAL), CPtr!(DECIMAL), DECIMAL*);
+	HRESULT VarDecCmp(CPtr!(DECIMAL), CPtr!(DECIMAL));
+	HRESULT VarDecCmpR8(CPtr!(DECIMAL), DOUBLE);
+	HRESULT VarDecDiv(CPtr!(DECIMAL), CPtr!(DECIMAL), DECIMAL*);
+	HRESULT VarDecFix(CPtr!(DECIMAL), DECIMAL*);
+	HRESULT VarDecInt(CPtr!(DECIMAL), DECIMAL*);
+	HRESULT VarDecMul(CPtr!(DECIMAL), CPtr!(DECIMAL), DECIMAL*);
+	HRESULT VarDecRound(CPtr!(DECIMAL), int, DECIMAL*);
+	HRESULT VarDecSub(CPtr!(DECIMAL), CPtr!(DECIMAL), DECIMAL*);
 	HRESULT VarCyAbs(CY, CY*);
 	HRESULT VarCyAdd(CY, CY, CY*);
 	HRESULT VarCyCmp(CY, CY);

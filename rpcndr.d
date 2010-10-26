@@ -117,7 +117,7 @@ struct _FULL_PTR_XLAT_TABLES;
 alias ubyte *RPC_BUFPTR;
 alias uint RPC_LENGTH;
 
-alias  ubyte *PFORMAT_STRING;
+alias CPtr!(char) PFORMAT_STRING;
 
 struct ARRAY_INFO {
 	int Dimension;
@@ -189,7 +189,7 @@ struct MIDL_STUB_MESSAGE {
 	ubyte * pPresentedType;
 	ubyte * pTransmitType;
 	handle_t SavedHandle;
-	_MIDL_STUB_DESC *StubDesc;
+	CPtr!(_MIDL_STUB_DESC) StubDesc;
 	_FULL_PTR_XLAT_TABLES *FullPtrXlatTables;
 	uint FullPtrRefId;
 	int fCheckBounds;
@@ -293,24 +293,24 @@ struct MIDL_STUB_DESC {
 		PGENERIC_BINDING_INFO pGenericBindingInfo;
 	}
 	_IMPLICIT_HANDLE_INFO IMPLICIT_HANDLE_INFO;	
-	NDR_RUNDOWN *apfnNdrRundownRoutines;
-	GENERIC_BINDING_ROUTINE_PAIR *aGenericBindingRoutinePairs;
-	EXPR_EVAL *apfnExprEval;
-	XMIT_ROUTINE_QUINTUPLE *aXmitQuintuple;
-	ubyte *pFormatTypes;
+	CPtr!(NDR_RUNDOWN) apfnNdrRundownRoutines;
+	CPtr!(GENERIC_BINDING_ROUTINE_PAIR) aGenericBindingRoutinePairs;
+	CPtr!(EXPR_EVAL) apfnExprEval;
+	CPtr!(XMIT_ROUTINE_QUINTUPLE) aXmitQuintuple;
+	CPtr!(char) *pFormatTypes;
 	int fCheckBounds;
 	uint Version;
 	MALLOC_FREE_STRUCT *pMallocFreeStruct;
 	int MIDLVersion;
-	COMM_FAULT_OFFSETS *CommFaultOffsets;
-	USER_MARSHAL_ROUTINE_QUADRUPLE *aUserMarshalQuadruple;
-	NDR_NOTIFY_ROUTINE *NotifyRoutineTable;
+	CPtr!(COMM_FAULT_OFFSETS) CommFaultOffsets;
+	CPtr!(USER_MARSHAL_ROUTINE_QUADRUPLE) aUserMarshalQuadruple;
+	CPtr!(NDR_NOTIFY_ROUTINE) NotifyRoutineTable;
 	ULONG_PTR mFlags;
-	NDR_CS_ROUTINES *CsRoutineTables;
+	CPtr!(NDR_CS_ROUTINES) CsRoutineTables;
 	void *Reserved4;
 	ULONG_PTR Reserved5;
 }
-alias  MIDL_STUB_DESC * PMIDL_STUB_DESC;
+alias CPtr!(MIDL_STUB_DESC) PMIDL_STUB_DESC;
 
 alias void * PMIDL_XMIT_TYPE;
 
@@ -321,17 +321,17 @@ struct MIDL_FORMAT_STRING {
 
 struct MIDL_SERVER_INFO {
 	PMIDL_STUB_DESC pStubDesc;
-	SERVER_ROUTINE *DispatchTable;
+	CPtr!(SERVER_ROUTINE) DispatchTable;
 	PFORMAT_STRING ProcString;
-	ushort *FmtStringOffset;
-	STUB_THUNK *ThunkTable;
+	CPtr!(ushort) FmtStringOffset;
+	CPtr!(STUB_THUNK) ThunkTable;
 }
 alias MIDL_SERVER_INFO * PMIDL_SERVER_INFO;
 
 struct MIDL_STUBLESS_PROXY_INFO {
 	PMIDL_STUB_DESC pStubDesc;
 	PFORMAT_STRING ProcFormatString;
-	ushort *FormatStringOffset;
+	CPtr!(ushort) FormatStringOffset;
 }
 alias MIDL_STUBLESS_PROXY_INFO *PMIDL_STUBLESS_PROXY_INFO;
 
