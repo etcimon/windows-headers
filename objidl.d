@@ -1099,7 +1099,7 @@ HRESULT IStorage_OpenStorage_Proxy(IStorage*, OLECHAR*, IStorage*, DWORD, SNB, D
 void IStorage_OpenStorage_Stub(IRpcStubBuffer*, IRpcChannelBuffer*, PRPC_MESSAGE, PDWORD);
 HRESULT IStorage_CopyTo_Proxy(IStorage*, DWORD, CPtr!(IID), SNB, IStorage*);
 void IStorage_CopyTo_Stub(IRpcStubBuffer*, IRpcChannelBuffer*, PRPC_MESSAGE, PDWORD);
-HRESULT IStorage_MoveElementTo_Proxy(IStorage*, CPtr!(OLECHAR, IStorage*, CPtr!(OLECHAR), DWORD);
+HRESULT IStorage_MoveElementTo_Proxy(IStorage*, CPtr!(OLECHAR), IStorage*, CPtr!(OLECHAR), DWORD);
 void IStorage_MoveElementTo_Stub(IRpcStubBuffer*, IRpcChannelBuffer*, PRPC_MESSAGE, PDWORD);
 HRESULT IStorage_Commit_Proxy(IStorage*, DWORD);
 void IStorage_Commit_Stub(IRpcStubBuffer*, IRpcChannelBuffer*, PRPC_MESSAGE, PDWORD);
