@@ -974,9 +974,10 @@ enum : int {
 	BLTALIGNMENT    = 119
 }
 static if (WINVER >= 0x0500) {
-	int
+enum : int {
 	SHADEBLENDCAPS  = 120,
-	COLORMGMTCAPS   = 121;
+	COLORMGMTCAPS   = 121,
+}
 }
 
 // Return values for GetDeviceCaps(dc, TECHNOLOGY)
@@ -1672,10 +1673,11 @@ enum : short {
 	DMBIN_CASSETTE   = 14,
 	DMBIN_FORMSOURCE,
 }
-short
+enum : short {
 	DMBIN_FIRST = DMBIN_UPPER,
 	DMBIN_LAST = DMBIN_FORMSOURCE,
-	DMBIN_USER = 256;
+	DMBIN_USER = 256,
+}
 
 // DEVMODE.dmPrintQuality
 enum : short {
