@@ -2432,6 +2432,7 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 			DWORD GetFirmwareEnvironmentVariableW(LPCWSTR, LPCWSTR, PVOID, DWORD);
 			DWORD GetDllDirectoryA(DWORD, LPSTR);
 			DWORD GetDllDirectoryW(DWORD, LPWSTR);
+			DWORD GetThreadId(HANDLE);
 			DWORD GetProcessId(HANDLE);
 			HANDLE ReOpenFile(HANDLE, DWORD, DWORD, DWORD);
 			BOOL SetDllDirectoryA(LPCSTR);
