@@ -384,7 +384,7 @@ enum PROXY_PHASE {
 	PROXY_UNMARSHAL
 }
 
-typedef void * RPC_SS_THREAD_HANDLE;
+alias TypeDef!(void *) RPC_SS_THREAD_HANDLE;
 
 extern (Windows) {
 alias void function (void*) NDR_RUNDOWN;

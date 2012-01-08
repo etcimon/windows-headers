@@ -22,11 +22,22 @@ template CPtr(T) {
 	}
 }
 
+/*	[CyberShadow VP 2011.12.22] typedef is now deprecated in D2.
+ */
+template TypeDef(T) {
+	version (D_Version2) {
+		alias T TypeDef;
+	} else {
+		// must use mixin so that it doesn't cause a deprecation error under D2
+		mixin("typedef T TypeDef;");
+	}
+}
+
 // [SnakE 2009-02-23] Moved HANDLE definition here from winnt.d to avoid
 // 'forwatd template reference' to CPtr from winnt.d caused by a circular
 // import.
 
-typedef void* HANDLE;
+alias TypeDef!(void*) HANDLE;
 
 alias HANDLE* PHANDLE, LPHANDLE;
 

@@ -95,7 +95,7 @@ struct RPC_CLIENT_INTERFACE {
 }
 alias RPC_CLIENT_INTERFACE* PRPC_CLIENT_INTERFACE;
 
-typedef void* I_RPC_MUTEX;
+alias TypeDef!(void*) I_RPC_MUTEX;
 
 struct RPC_TRANSFER_SYNTAX {
 	GUID   Uuid;

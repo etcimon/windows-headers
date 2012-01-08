@@ -67,7 +67,7 @@ extern (C) const GUID IID_IDirect3DIndexBuffer9 = { 0x7c9dd65e, 0xd3f7, 0x4529, 
 
 /* IID_IDirect3DSurface9 */
 /* {0CFBAF3A-9FF6-429a-99B3-A2796AF8B89B} */
-extern (C) const GUID IID_IDirect3DSurface9 = { 0xcfbaf3a,, 0x9ff6, 0x429a, [0x99, 0xb3, 0xa2, 0x79, 0x6a, 0xf8, 0xb8, 0x9b] };
+extern (C) const GUID IID_IDirect3DSurface9 = { 0xcfbaf3a, 0x9ff6, 0x429a, [0x99, 0xb3, 0xa2, 0x79, 0x6a, 0xf8, 0xb8, 0x9b] };
 
 /* IID_IDirect3DVolume9 */
 /* {24F416E6-1F67-4aa7-B88E-D33F6F3128A1} */

@@ -30,7 +30,7 @@ alias UDWORD SQLUINTEGER;
 // #endif
 
 //static if (ODBCVER >= 0x0300) {
-typedef HANDLE SQLHANDLE;
+alias TypeDef!(HANDLE) SQLHANDLE;
 alias SQLHANDLE SQLHENV, SQLHDBC, SQLHSTMT, SQLHDESC;
 /*
 } else {

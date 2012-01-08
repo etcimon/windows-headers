@@ -15,7 +15,7 @@ private import win32.windows;
 align(4):
 
 // D3DCOLOR is equivalent to D3DFMT_A8R8G8B8
-typedef uint D3DCOLOR;
+alias TypeDef!(uint) D3DCOLOR;
 
 // maps unsigned 8 bits/channel to D3DCOLOR
 D3DCOLOR D3DCOLOR_ARGB(ubyte a,ubyte r,ubyte g,ubyte b) { return cast(D3DCOLOR)((a<<24)|(r<<16)|(g<<8)|b); }
@@ -133,7 +133,7 @@ enum : uint {
     D3DLIGHT_SPOT           = 2,
     D3DLIGHT_DIRECTIONAL    = 3
 }
-typedef uint D3DLIGHTTYPE;
+alias TypeDef!(uint) D3DLIGHTTYPE;
 
 struct D3DLIGHT9 {
     D3DLIGHTTYPE    Type;            /* Type of light source */
@@ -167,14 +167,14 @@ enum : D3DSHADEMODE {
     D3DSHADE_GOURAUD            = 2,
     D3DSHADE_PHONG              = 3
 } 
-typedef uint D3DSHADEMODE;
+alias TypeDef!(uint) D3DSHADEMODE;
 
 enum : D3DFILLMODE {
     D3DFILL_POINT               = 1,
     D3DFILL_WIREFRAME           = 2,
     D3DFILL_SOLID               = 3
 }
-typedef uint D3DFILLMODE;
+alias TypeDef!(uint) D3DFILLMODE;
 
 enum : D3DBLEND {
     D3DBLEND_ZERO               = 1,
@@ -195,7 +195,7 @@ enum : D3DBLEND {
     D3DBLEND_SRCCOLOR2          = 16,
     D3DBLEND_INVSRCCOLOR2       = 17
 }
-typedef uint D3DBLEND;
+alias TypeDef!(uint) D3DBLEND;
 
 enum : D3DBLENDOP {
     D3DBLENDOP_ADD              = 1,
@@ -204,7 +204,7 @@ enum : D3DBLENDOP {
     D3DBLENDOP_MIN              = 4,
     D3DBLENDOP_MAX              = 5
 }
-typedef uint D3DBLENDOP;
+alias TypeDef!(uint) D3DBLENDOP;
 
 enum : D3DTEXTUREADDRESS {
     D3DTADDRESS_WRAP            = 1,
@@ -213,14 +213,14 @@ enum : D3DTEXTUREADDRESS {
     D3DTADDRESS_BORDER          = 4,
     D3DTADDRESS_MIRRORONCE      = 5
 }
-typedef uint D3DTEXTUREADDRESS;
+alias TypeDef!(uint) D3DTEXTUREADDRESS;
 
 enum : D3DCULL {
     D3DCULL_NONE                = 1,
     D3DCULL_CW                  = 2,
     D3DCULL_CCW                 = 3
 }
-typedef uint D3DCULL;
+alias TypeDef!(uint) D3DCULL;
 
 enum : D3DCMPFUNC {
     D3DCMP_NEVER                = 1,
@@ -232,7 +232,7 @@ enum : D3DCMPFUNC {
     D3DCMP_GREATEREQUAL         = 7,
     D3DCMP_ALWAYS               = 8
 }
-typedef uint D3DCMPFUNC;
+alias TypeDef!(uint) D3DCMPFUNC;
 
 enum : D3DSTENCILOP {
     D3DSTENCILOP_KEEP           = 1,
@@ -244,7 +244,7 @@ enum : D3DSTENCILOP {
     D3DSTENCILOP_INCR           = 7,
     D3DSTENCILOP_DECR           = 8
 }
-typedef uint D3DSTENCILOP;
+alias TypeDef!(uint) D3DSTENCILOP;
 
 enum : D3DFOGMODE {
     D3DFOG_NONE                 = 0,
@@ -252,14 +252,14 @@ enum : D3DFOGMODE {
     D3DFOG_EXP2                 = 2,
     D3DFOG_LINEAR               = 3
 }
-typedef uint D3DFOGMODE;
+alias TypeDef!(uint) D3DFOGMODE;
 
 enum : D3DZBUFFERTYPE {
     D3DZB_FALSE                 = 0,
     D3DZB_TRUE                  = 1, // Z buffering
     D3DZB_USEW                  = 2 // W buffering
 }
-typedef uint D3DZBUFFERTYPE;
+alias TypeDef!(uint) D3DZBUFFERTYPE;
 
 // Primitives supported by draw-primitive API
 enum : D3DPRIMITIVETYPE {
@@ -270,7 +270,7 @@ enum : D3DPRIMITIVETYPE {
     D3DPT_TRIANGLESTRIP         = 5,
     D3DPT_TRIANGLEFAN           = 6
 }
-typedef uint D3DPRIMITIVETYPE;
+alias TypeDef!(uint) D3DPRIMITIVETYPE;
 
 D3DTRANSFORMSTATETYPE D3DTS_WORLDMATRIX(uint index) { return cast(D3DTRANSFORMSTATETYPE)(index + 256); }
 template T_D3DTS_WORLDMATRIX(uint index) {
@@ -293,7 +293,7 @@ enum : D3DTRANSFORMSTATETYPE {
     D3DTS_WORLD2        = T_D3DTS_WORLDMATRIX!(2),
     D3DTS_WORLD3        = T_D3DTS_WORLDMATRIX!(3)
 }
-typedef uint D3DTRANSFORMSTATETYPE;
+alias TypeDef!(uint) D3DTRANSFORMSTATETYPE;
 
 enum : D3DRENDERSTATETYPE {
     D3DRS_ZENABLE                   = 7,    /* D3DZBUFFERTYPE (or TRUE/FALSE for legacy) */
@@ -400,7 +400,7 @@ enum : D3DRENDERSTATETYPE {
     D3DRS_DESTBLENDALPHA            = 208,  /* DST blend factor for the alpha channel when D3DRS_SEPARATEDESTALPHAENABLE is TRUE */
     D3DRS_BLENDOPALPHA              = 209   /* Blending operation for the alpha channel when D3DRS_SEPARATEDESTALPHAENABLE is TRUE */
 }
-typedef uint D3DRENDERSTATETYPE;
+alias TypeDef!(uint) D3DRENDERSTATETYPE;
 
 // Maximum number of simultaneous render targets D3D supports
 const D3D_MAX_SIMULTANEOUS_RENDERTARGETS = 4;
@@ -411,7 +411,7 @@ enum : D3DMATERIALCOLORSOURCE {
     D3DMCS_COLOR1           = 1,            // Diffuse vertex color is used
     D3DMCS_COLOR2           = 2             // Specular vertex color is used
 }
-typedef uint D3DMATERIALCOLORSOURCE;
+alias TypeDef!(uint) D3DMATERIALCOLORSOURCE;
 
 // Bias to apply to the texture coordinate set to apply a wrap to.
 const D3DRENDERSTATE_WRAPBIAS = 128UL;
@@ -457,7 +457,7 @@ enum : D3DTEXTURESTAGESTATETYPE {
     D3DTSS_RESULTARG      = 28, /* D3DTA_* arg for result (CURRENT or TEMP) */
     D3DTSS_CONSTANT       = 32  /* Per-stage constant D3DTA_CONSTANT */
 }
-typedef uint D3DTEXTURESTAGESTATETYPE;
+alias TypeDef!(uint) D3DTEXTURESTAGESTATETYPE;
 
 /*
  * State enumerants for per-sampler texture processing.
@@ -481,7 +481,7 @@ enum : D3DSAMPLERSTATETYPE {
     D3DSAMP_DMAPOFFSET     = 13  /* Offset in vertices in the pre-sampled displacement map.
                                     Only valid for D3DDMAPSAMPLER sampler  */
 }
-typedef uint D3DSAMPLERSTATETYPE;
+alias TypeDef!(uint) D3DSAMPLERSTATETYPE;
 
 /* Special sampler which is used in the tesselator */
 const D3DDMAPSAMPLER = 256;
@@ -561,7 +561,7 @@ enum : D3DTEXTUREOP {
     D3DTOP_MULTIPLYADD          = 25, // Arg0 + Arg1*Arg2
     D3DTOP_LERP                 = 26  // (Arg0)*Arg1 + (1-Arg0)*Arg2
 }
-typedef uint D3DTEXTUREOP;
+alias TypeDef!(uint) D3DTEXTUREOP;
 
 /*
  * Values for COLORARG0,1,2, ALPHAARG0,1,2, and RESULTARG texture blending
@@ -590,7 +590,7 @@ enum : D3DTEXTUREFILTERTYPE {
     D3DTEXF_GAUSSIANQUAD    = 7,    // 4-sample gaussian
     D3DTEXF_CONVOLUTIONMONO = 8    // Convolution filter for monochrome textures
 }
-typedef uint D3DTEXTUREFILTERTYPE;
+alias TypeDef!(uint) D3DTEXTUREFILTERTYPE;
 
 /* Bits for Flags in ProcessVertices call */
 
@@ -657,7 +657,7 @@ enum : D3DDECLUSAGE {
     D3DDECLUSAGE_DEPTH,         // 12
     D3DDECLUSAGE_SAMPLE         // 13
 }
-typedef uint D3DDECLUSAGE;
+alias TypeDef!(uint) D3DDECLUSAGE;
 
 const MAXD3DDECLUSAGE = D3DDECLUSAGE_SAMPLE;
 const MAXD3DDECLUSAGEINDEX = 15;
@@ -672,7 +672,7 @@ enum : D3DDECLMETHOD {
     D3DDECLMETHOD_LOOKUP,               // Lookup a displacement map
     D3DDECLMETHOD_LOOKUPPRESAMPLED      // Lookup a pre-sampled displacement map
 }
-typedef uint D3DDECLMETHOD;
+alias TypeDef!(uint) D3DDECLMETHOD;
 
 const MAXD3DDECLMETHOD = D3DDECLMETHOD_LOOKUPPRESAMPLED;
 
@@ -703,7 +703,7 @@ enum : D3DDECLTYPE {
     D3DDECLTYPE_FLOAT16_4 = 16,  // Four 16-bit floating point values
     D3DDECLTYPE_UNUSED    = 17   // When the type field in a decl is unused.
 }
-typedef uint D3DDECLTYPE;
+alias TypeDef!(uint) D3DDECLTYPE;
 
 const MAXD3DDECLTYPE = D3DDECLTYPE_UNUSED;
 
@@ -840,7 +840,7 @@ enum : D3DSHADER_INSTRUCTION_OPCODE_TYPE {
     D3DSIO_COMMENT      = 0xFFFE,
     D3DSIO_END          = 0xFFFF
 }
-typedef uint D3DSHADER_INSTRUCTION_OPCODE_TYPE;
+alias TypeDef!(uint) D3DSHADER_INSTRUCTION_OPCODE_TYPE;
 
 //---------------------------------------------------------------------
 // Use these constants with D3DSIO_SINCOS macro as SRC2, SRC3
@@ -877,7 +877,7 @@ enum : D3DSHADER_COMPARISON {
     D3DSPC_LE       = 6, // 1 1 0
     D3DSPC_RESERVED1= 7  // 1 1 1
 }
-typedef uint D3DSHADER_COMPARISON;
+alias TypeDef!(uint) D3DSHADER_COMPARISON;
 
 // Comparison is part of instruction opcode token:
 const D3DSHADER_COMPARISON_SHIFT = D3DSP_OPCODESPECIFICCONTROL_SHIFT;
@@ -907,7 +907,7 @@ enum : D3DSAMPLER_TEXTURE_TYPE {
     D3DSTT_CUBE    = 3<<D3DSP_TEXTURETYPE_SHIFT, // dcl_cube s# (for declaring a cube texture)
     D3DSTT_VOLUME  = 4<<D3DSP_TEXTURETYPE_SHIFT  // dcl_volume s# (for declaring a volume texture)
 }
-typedef uint D3DSAMPLER_TEXTURE_TYPE;
+alias TypeDef!(uint) D3DSAMPLER_TEXTURE_TYPE;
 
 //---------------------------------------------------------------------
 // Parameter Token Bit Definitions
@@ -970,7 +970,7 @@ enum : D3DSHADER_PARAM_REGISTER_TYPE {
     D3DSPR_LABEL          = 18, // Label
     D3DSPR_PREDICATE      = 19  // Predicate register
 }
-typedef uint D3DSHADER_PARAM_REGISTER_TYPE;
+alias TypeDef!(uint) D3DSHADER_PARAM_REGISTER_TYPE;
 
 // The miscellaneous register file (D3DSPR_MISCTYPES)
 // contains register types for which there is only ever one
@@ -982,7 +982,7 @@ enum : D3DSHADER_MISCTYPE_OFFSETS {
     D3DSMO_POSITION   = 0, // Input position x,y,z,rhw (PS)
     D3DSMO_FACE   = 1, // Floating point primitive area (PS)
 }
-typedef uint D3DSHADER_MISCTYPE_OFFSETS;
+alias TypeDef!(uint) D3DSHADER_MISCTYPE_OFFSETS;
 
 // Register offsets in the Rasterizer Register File
 //
@@ -991,7 +991,7 @@ enum : D3DVS_RASTOUT_OFFSETS {
     D3DSRO_FOG,
     D3DSRO_POINT_SIZE
 }
-typedef uint D3DVS_RASTOUT_OFFSETS;
+alias TypeDef!(uint) D3DVS_RASTOUT_OFFSETS;
 
 // Source operand addressing modes
 
@@ -1002,7 +1002,7 @@ enum : D3DVS_ADDRESSMODE_TYPE {
     D3DVS_ADDRMODE_ABSOLUTE  = (0 << D3DVS_ADDRESSMODE_SHIFT),
     D3DVS_ADDRMODE_RELATIVE  = (1 << D3DVS_ADDRESSMODE_SHIFT)
 }
-typedef uint D3DVS_ADDRESSMODE_TYPE;
+alias TypeDef!(uint) D3DVS_ADDRESSMODE_TYPE;
 
 const D3DSHADER_ADDRESSMODE_SHIFT = 13;
 const D3DSHADER_ADDRESSMODE_MASK = (1 << D3DSHADER_ADDRESSMODE_SHIFT);
@@ -1011,7 +1011,7 @@ enum : D3DSHADER_ADDRESSMODE_TYPE {
     D3DSHADER_ADDRMODE_ABSOLUTE  = (0 << D3DSHADER_ADDRESSMODE_SHIFT),
     D3DSHADER_ADDRMODE_RELATIVE  = (1 << D3DSHADER_ADDRESSMODE_SHIFT)
 }
-typedef uint D3DSHADER_ADDRESSMODE_TYPE;
+alias TypeDef!(uint) D3DSHADER_ADDRESSMODE_TYPE;
 
 // Source operand swizzle definitions
 //
@@ -1105,7 +1105,7 @@ enum : D3DSHADER_PARAM_SRCMOD_TYPE {
     D3DSPSM_ABSNEG  = 12<<D3DSP_SRCMOD_SHIFT, // -abs()
     D3DSPSM_NOT     = 13<<D3DSP_SRCMOD_SHIFT  // for predicate register: "!p0"
 }
-typedef uint D3DSHADER_PARAM_SRCMOD_TYPE;
+alias TypeDef!(uint) D3DSHADER_PARAM_SRCMOD_TYPE;
 
 // pixel shader version token
 uint D3DPS_VERSION(ubyte _Major, ubyte _Minor) { return (0xFFFF0000|(_Major<<8)|_Minor); }
@@ -1136,7 +1136,7 @@ enum : D3DBASISTYPE {
    D3DBASIS_BSPLINE     = 1,
    D3DBASIS_CATMULL_ROM = 2  /* In D3D8 this used to be D3DBASIS_INTERPOLATE */
 }
-typedef uint D3DBASISTYPE;
+alias TypeDef!(uint) D3DBASISTYPE;
 
 enum : D3DDEGREETYPE {
    D3DDEGREE_LINEAR      = 1,
@@ -1144,20 +1144,20 @@ enum : D3DDEGREETYPE {
    D3DDEGREE_CUBIC       = 3,
    D3DDEGREE_QUINTIC     = 5
 }
-typedef uint D3DDEGREETYPE;
+alias TypeDef!(uint) D3DDEGREETYPE;
 
 enum : D3DPATCHEDGESTYLE {
    D3DPATCHEDGE_DISCRETE    = 0,
    D3DPATCHEDGE_CONTINUOUS  = 1
 }
-typedef uint D3DPATCHEDGESTYLE;
+alias TypeDef!(uint) D3DPATCHEDGESTYLE;
 
 enum : D3DSTATEBLOCKTYPE {
     D3DSBT_ALL           = 1, // capture all state
     D3DSBT_PIXELSTATE    = 2, // capture pixel state
     D3DSBT_VERTEXSTATE   = 3  // capture vertex state
 }
-typedef uint D3DSTATEBLOCKTYPE;
+alias TypeDef!(uint) D3DSTATEBLOCKTYPE;
 
 // The D3DVERTEXBLENDFLAGS type is used with D3DRS_VERTEXBLEND state.
 //
@@ -1169,7 +1169,7 @@ enum : D3DVERTEXBLENDFLAGS {
     D3DVBF_TWEENING = 255,   // blending using D3DRS_TWEENFACTOR
     D3DVBF_0WEIGHTS = 256    // one matrix is used with weight 1.0
 }
-typedef uint D3DVERTEXBLENDFLAGS;
+alias TypeDef!(uint) D3DVERTEXBLENDFLAGS;
 
 enum : D3DTEXTURETRANSFORMFLAGS {
     D3DTTFF_DISABLE         = 0,    // texture coordinates are passed directly
@@ -1179,7 +1179,7 @@ enum : D3DTEXTURETRANSFORMFLAGS {
     D3DTTFF_COUNT4          = 4,    // rasterizer should expect 4-D texture coords
     D3DTTFF_PROJECTED       = 256   // texcoords to be divided by COUNTth element
 }
-typedef uint D3DTEXTURETRANSFORMFLAGS;
+alias TypeDef!(uint) D3DTEXTURETRANSFORMFLAGS;
 
 // Macros to set texture coordinate format bits in the FVF id
 
@@ -1204,7 +1204,7 @@ enum : D3DDEVTYPE {
 
     D3DDEVTYPE_NULLREF     = 4
 }
-typedef uint D3DDEVTYPE;
+alias TypeDef!(uint) D3DDEVTYPE;
 
 /* Multi-Sample buffer types */
 enum : D3DMULTISAMPLE_TYPE {
@@ -1226,7 +1226,7 @@ enum : D3DMULTISAMPLE_TYPE {
     D3DMULTISAMPLE_15_SAMPLES      = 15,
     D3DMULTISAMPLE_16_SAMPLES      = 16
 }
-typedef uint D3DMULTISAMPLE_TYPE;
+alias TypeDef!(uint) D3DMULTISAMPLE_TYPE;
 
 /* Formats
  * Most of these names have the following convention:
@@ -1359,7 +1359,7 @@ enum : D3DFORMAT {
     // Binary format indicating that the data has no inherent type
     D3DFMT_BINARYBUFFER         = 199
 }
-typedef uint D3DFORMAT;
+alias TypeDef!(uint) D3DFORMAT;
 
 /* Display Modes */
 struct D3DDISPLAYMODE {
@@ -1385,7 +1385,7 @@ enum : D3DSWAPEFFECT {
     D3DSWAPEFFECT_FLIP              = 2,
     D3DSWAPEFFECT_COPY              = 3
 }
-typedef uint D3DSWAPEFFECT;
+alias TypeDef!(uint) D3DSWAPEFFECT;
 
 /* Pool types */
 enum : D3DPOOL {
@@ -1394,7 +1394,7 @@ enum : D3DPOOL {
     D3DPOOL_SYSTEMMEM               = 2,
     D3DPOOL_SCRATCH                 = 3
 }
-typedef uint D3DPOOL;
+alias TypeDef!(uint) D3DPOOL;
 
 
 /* RefreshRate pre-defines */
@@ -1449,7 +1449,7 @@ enum : D3DBACKBUFFER_TYPE {
     D3DBACKBUFFER_TYPE_LEFT         = 1,
     D3DBACKBUFFER_TYPE_RIGHT        = 2
 }
-typedef uint D3DBACKBUFFER_TYPE;
+alias TypeDef!(uint) D3DBACKBUFFER_TYPE;
 
 /* Types */
 enum : D3DRESOURCETYPE {
@@ -1461,7 +1461,7 @@ enum : D3DRESOURCETYPE {
     D3DRTYPE_VERTEXBUFFER           =  6,
     D3DRTYPE_INDEXBUFFER            =  7            //if this changes, change _D3DDEVINFO_RESOURCEMANAGER definition
 }
-typedef uint D3DRESOURCETYPE;
+alias TypeDef!(uint) D3DRESOURCETYPE;
 
 /* Usages */
 const D3DUSAGE_RENDERTARGET = 0x00000001L;
@@ -1503,7 +1503,7 @@ enum : D3DCUBEMAP_FACES {
     D3DCUBEMAP_FACE_POSITIVE_Z     = 4,
     D3DCUBEMAP_FACE_NEGATIVE_Z     = 5
 }
-typedef uint D3DCUBEMAP_FACES;
+alias TypeDef!(uint) D3DCUBEMAP_FACES;
 
 /* Lock flags */
 const D3DLOCK_READONLY = 0x00000010L;
@@ -1654,7 +1654,7 @@ enum : D3DDEBUGMONITORTOKENS {
     D3DDMT_ENABLE            = 0,    // enable debug monitor
     D3DDMT_DISABLE           = 1     // disable debug monitor
 }
-typedef uint D3DDEBUGMONITORTOKENS;
+alias TypeDef!(uint) D3DDEBUGMONITORTOKENS;
 
 // Async feedback
 
@@ -1674,7 +1674,7 @@ enum : D3DQUERYTYPE {
     D3DQUERYTYPE_BANDWIDTHTIMINGS       = 17, /* D3DISSUE_BEGIN, D3DISSUE_END */
     D3DQUERYTYPE_CACHEUTILIZATION       = 18, /* D3DISSUE_BEGIN, D3DISSUE_END */
 }
-typedef uint D3DQUERYTYPE;
+alias TypeDef!(uint) D3DQUERYTYPE;
 
 // Flags field for Issue
 const D3DISSUE_END = (1 << 0); // Tells the runtime to issue the end of a query, changing it's state to "non-signaled".
@@ -1772,7 +1772,7 @@ enum : D3DCOMPOSERECTSOP {
     D3DCOMPOSERECTS_AND      = 3,
     D3DCOMPOSERECTS_NEG      = 4
 }
-typedef uint D3DCOMPOSERECTSOP;
+alias TypeDef!(uint) D3DCOMPOSERECTSOP;
 
 struct D3DCOMPOSERECTDESC
 {
@@ -1808,7 +1808,7 @@ enum : D3DSCANLINEORDERING
     D3DSCANLINEORDERING_PROGRESSIVE                = 1,
     D3DSCANLINEORDERING_INTERLACED                 = 2
 }
-typedef uint D3DSCANLINEORDERING;
+alias TypeDef!(uint) D3DSCANLINEORDERING;
 
 
 struct D3DDISPLAYMODEEX
@@ -1836,7 +1836,7 @@ enum : D3DDISPLAYROTATION
     D3DDISPLAYROTATION_180      = 3, // Rotated 180 degrees.
     D3DDISPLAYROTATION_270      = 4  // Rotated 270 degrees.
 }
-typedef uint D3DDISPLAYROTATION;
+alias TypeDef!(uint) D3DDISPLAYROTATION;
 
 /* For use in ID3DResource9::SetPriority calls */
 const D3D9_RESOURCE_PRIORITY_MINIMUM = 0x28000000;

@@ -35,7 +35,7 @@ DWORD MKFOURCC(char ch0, char ch1, char ch2, char ch3) {
 
 const ICVERSION = 0x0104;
 
-typedef HANDLE HIC;
+alias TypeDef!(HANDLE) HIC;
 
 const BI_1632 = 0x32333631;
 
@@ -1039,7 +1039,7 @@ DECLARE_INTERFACE_(IAVIStream, IUnknown)
 #endif
 };
 
-typedef       IAVIStream FAR* PAVISTREAM;
+alias TypeDef!(IAVIStream FAR*) PAVISTREAM;
 
 #undef  INTERFACE
 #define INTERFACE   IAVIStreaming
@@ -1057,7 +1057,7 @@ DECLARE_INTERFACE_(IAVIStreaming, IUnknown)
     STDMETHOD(End)   (THIS) PURE;
 };
 
-typedef       IAVIStreaming FAR* PAVISTREAMING;
+alias TypeDef!(IAVIStreaming FAR*) PAVISTREAMING;
 
 
 #undef  INTERFACE
@@ -1085,7 +1085,7 @@ DECLARE_INTERFACE_(IAVIEditStream, IUnknown)
 			    LONG cbInfo) PURE;
 };
 
-typedef       IAVIEditStream FAR* PAVIEDITSTREAM;
+alias TypeDef!(IAVIEditStream FAR*) PAVIEDITSTREAM;
 
 #undef  INTERFACE
 #define INTERFACE   IAVIPersistFile
@@ -1095,7 +1095,7 @@ DECLARE_INTERFACE_(IAVIPersistFile, IPersistFile)
     STDMETHOD(Reserved1)(THIS) PURE;
 };
 
-typedef IAVIPersistFile FAR* PAVIPERSISTFILE;
+alias TypeDef!(IAVIPersistFile FAR*) PAVIPERSISTFILE;
 
 #undef  INTERFACE
 #define INTERFACE   IAVIFile
@@ -1132,7 +1132,7 @@ DECLARE_INTERFACE_(IAVIFile, IUnknown)
 };
 
 #undef PAVIFILE
-typedef       IAVIFile FAR* PAVIFILE;
+alias TypeDef!(IAVIFile FAR*) PAVIFILE;
 
 #undef  INTERFACE
 #define INTERFACE   IGetFrame
@@ -1153,7 +1153,7 @@ DECLARE_INTERFACE_(IGetFrame, IUnknown)
 };
 
 #undef PGETFRAME
-typedef IGetFrame FAR* PGETFRAME;
+alias TypeDef!(IGetFrame FAR*) PGETFRAME;
 
 #define DEFINE_AVIGUID(name, l, w1, w2)    DEFINE_GUID(name, l, w1, w2, 0xC0,0,0,0,0,0,0,0x46)
 
@@ -1819,7 +1819,7 @@ enum {
 	MCI_MODE_OPEN,
 }
 
-typedef HANDLE HVIDEO;
+alias TypeDef!(HANDLE) HVIDEO;
 alias HVIDEO* LPHVIDEO;
 
 // Error Return Values
