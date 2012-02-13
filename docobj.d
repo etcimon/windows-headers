@@ -94,7 +94,7 @@ extern (C) extern const IID
 	IID_IOleDocumentSite;
 
 
-interface IOleDocumentView : public IUnknown {
+interface IOleDocumentView : IUnknown {
 	HRESULT SetInPlaceSite(LPOLEINPLACESITE);
 	HRESULT GetInPlaceSite(LPOLEINPLACESITE*);
 	HRESULT GetDocument(IUnknown**);
@@ -110,24 +110,24 @@ interface IOleDocumentView : public IUnknown {
 	HRESULT Clone(LPOLEINPLACESITE, IOleDocumentView**);
 }
 
-interface IEnumOleDocumentViews : public IUnknown {
+interface IEnumOleDocumentViews : IUnknown {
 	  HRESULT Next(ULONG, IOleDocumentView*, ULONG*);
 	  HRESULT Skip(ULONG);
 	  HRESULT Reset();
 	  HRESULT Clone(IEnumOleDocumentViews**);
 }
 
-interface IOleDocument : public IUnknown {
+interface IOleDocument : IUnknown {
 	HRESULT CreateView(LPOLEINPLACESITE, IStream*, DWORD, IOleDocumentView**);
 	HRESULT GetDocMiscStatus(DWORD*);
 	HRESULT EnumViews(LPENUMOLEDOCUMENTVIEWS*, IOleDocumentView**);
 }
 
-interface IOleCommandTarget : public IUnknown {
+interface IOleCommandTarget : IUnknown {
 	HRESULT QueryStatus(CPtr!(GUID), ULONG, OLECMD*, OLECMDTEXT*);
 	HRESULT Exec(CPtr!(GUID), DWORD, DWORD, VARIANTARG*, VARIANTARG*);
 }
 
-interface IOleDocumentSite : public IUnknown {
+interface IOleDocumentSite : IUnknown {
 	HRESULT ActivateMe(IOleDocumentView*);
 }

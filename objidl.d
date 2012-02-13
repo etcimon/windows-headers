@@ -507,56 +507,56 @@ struct SOLE_AUTHENTICATION_LIST {
 	SOLE_AUTHENTICATION_INFO* aAuthInfo;
 }
 
-interface IEnumFORMATETC : public IUnknown {
+interface IEnumFORMATETC : IUnknown {
 	  HRESULT Next(ULONG, FORMATETC*, ULONG*);
 	  HRESULT Skip(ULONG);
 	  HRESULT Reset();
 	  HRESULT Clone(IEnumFORMATETC**);
 }
 
-interface IEnumHLITEM : public IUnknown {
+interface IEnumHLITEM : IUnknown {
 	  HRESULT Next(ULONG, HLITEM*, ULONG*);
 	  HRESULT Skip(ULONG);
 	  HRESULT Reset();
 	  HRESULT Clone(IEnumHLITEM**);
 }
 
-interface IEnumSTATDATA : public IUnknown {
+interface IEnumSTATDATA : IUnknown {
 	  HRESULT Next(ULONG, STATDATA*, ULONG*);
 	  HRESULT Skip(ULONG);
 	  HRESULT Reset();
 	  HRESULT Clone(IEnumSTATDATA**);
 }
 
-interface IEnumSTATPROPSETSTG : public IUnknown {
+interface IEnumSTATPROPSETSTG : IUnknown {
 	  HRESULT Next(ULONG, STATPROPSETSTG*, ULONG*);
 	  HRESULT Skip(ULONG);
 	  HRESULT Reset();
 	  HRESULT Clone(IEnumSTATPROPSETSTG**);
 }
 
-interface IEnumSTATPROPSTG : public IUnknown {
+interface IEnumSTATPROPSTG : IUnknown {
 	  HRESULT Next(ULONG, STATPROPSTG*, ULONG*);
 	  HRESULT Skip(ULONG);
 	  HRESULT Reset();
 	  HRESULT Clone(IEnumSTATPROPSTG**);
 }
 
-interface IEnumSTATSTG : public IUnknown {
+interface IEnumSTATSTG : IUnknown {
 	  HRESULT Next(ULONG, STATSTG*, ULONG*);
 	  HRESULT Skip(ULONG);
 	  HRESULT Reset();
 	  HRESULT Clone(IEnumSTATSTG**);
 }
 
-interface IEnumString : public IUnknown {
+interface IEnumString : IUnknown {
 	  HRESULT Next(ULONG, LPOLESTR*, ULONG*);
 	  HRESULT Skip(ULONG);
 	  HRESULT Reset();
 	  HRESULT Clone(IEnumString**);
 }
 
-interface IEnumMoniker : public IUnknown {
+interface IEnumMoniker : IUnknown {
 	  HRESULT Next(ULONG, IMoniker*, ULONG*);
 	  HRESULT Skip(ULONG);
 	  HRESULT Reset();
@@ -564,19 +564,19 @@ interface IEnumMoniker : public IUnknown {
 }
 
 
-interface IEnumUnknown : public IUnknown {
+interface IEnumUnknown : IUnknown {
 	  HRESULT Next(ULONG, IUnknown*, ULONG*);
 	  HRESULT Skip(ULONG);
 	  HRESULT Reset();
 	  HRESULT Clone(IEnumUnknown**);
 }
 
-interface ISequentialStream : public IUnknown {
+interface ISequentialStream : IUnknown {
 	HRESULT Read(void*, ULONG, ULONG*);
 	HRESULT Write(void* , ULONG, ULONG*);
 }
 
-interface IStream : public ISequentialStream {
+interface IStream : ISequentialStream {
 	HRESULT Seek(LARGE_INTEGER, DWORD, ULARGE_INTEGER*);
 	HRESULT SetSize(ULARGE_INTEGER);
 	HRESULT CopyTo(IStream, ULARGE_INTEGER, ULARGE_INTEGER*, ULARGE_INTEGER*);
@@ -588,7 +588,7 @@ interface IStream : public ISequentialStream {
 	HRESULT Clone(LPSTREAM*);
 }
 
-interface IMarshal : public IUnknown {
+interface IMarshal : IUnknown {
 	HRESULT GetUnmarshalClass(REFIID, PVOID, DWORD, PVOID, DWORD, CLSID*);
 	HRESULT GetMarshalSizeMax(REFIID, PVOID, DWORD, PVOID, PDWORD, ULONG*);
 	HRESULT MarshalInterface(IStream, REFIID, PVOID, DWORD, PVOID, DWORD);
@@ -597,11 +597,11 @@ interface IMarshal : public IUnknown {
 	HRESULT DisconnectObject(DWORD);
 }
 
-interface IStdMarshalInfo : public IUnknown {
+interface IStdMarshalInfo : IUnknown {
 	HRESULT GetClassForHandler(DWORD, PVOID, CLSID*);
 }
 
-interface IMalloc : public IUnknown {
+interface IMalloc : IUnknown {
 	void* Alloc(ULONG);
 	void* Realloc(void*, ULONG);
 	void Free(void*);
@@ -610,7 +610,7 @@ interface IMalloc : public IUnknown {
 	void HeapMinimize();
 }
 
-interface IMallocSpy : public IUnknown {
+interface IMallocSpy : IUnknown {
 	ULONG PreAlloc(ULONG);
 	void* PostAlloc(void*);
 	void* PreFree(void*, BOOL);
@@ -625,25 +625,25 @@ interface IMallocSpy : public IUnknown {
 	void PostHeapMinimize();
 }
 
-interface IMessageFilter : public IUnknown {
+interface IMessageFilter : IUnknown {
 	DWORD HandleInComingCall(DWORD, HTASK, DWORD, LPINTERFACEINFO);
 	DWORD RetryRejectedCall(HTASK, DWORD, DWORD);
 	DWORD MessagePending(HTASK, DWORD, DWORD);
 }
 
 
-interface IPersist : public IUnknown {
+interface IPersist : IUnknown {
 	HRESULT GetClassID(CLSID*);
 }
 
-interface IPersistStream : public IPersist {
+interface IPersistStream : IPersist {
 	HRESULT IsDirty();
 	HRESULT Load(IStream*);
 	HRESULT Save(IStream*, BOOL);
 	HRESULT GetSizeMax(PULARGE_INTEGER);
 }
 
-interface IRunningObjectTable : public IUnknown {
+interface IRunningObjectTable : IUnknown {
 	HRESULT Register(DWORD, LPUNKNOWN, LPMONIKER, PDWORD);
 	HRESULT Revoke(DWORD);
 	HRESULT IsRunning(LPMONIKER);
@@ -653,7 +653,7 @@ interface IRunningObjectTable : public IUnknown {
 	HRESULT EnumRunning(IEnumMoniker**);
 }
 
-interface IBindCtx : public IUnknown {
+interface IBindCtx : IUnknown {
 	HRESULT RegisterObjectBound(LPUNKNOWN);
 	HRESULT RevokeObjectBound(LPUNKNOWN);
 	HRESULT ReleaseBoundObjects();
@@ -666,7 +666,7 @@ interface IBindCtx : public IUnknown {
 	HRESULT RevokeObjectParam(LPOLESTR);
 }
 
-interface IMoniker: public IPersistStream {
+interface IMoniker: IPersistStream {
 	HRESULT BindToObject(IBindCtx*, IMoniker*, REFIID, PVOID*);
 	HRESULT BindToStorage(IBindCtx*, IMoniker*, REFIID, PVOID*);
 	HRESULT Reduce(IBindCtx*, DWORD, IMoniker**, IMoniker**);
@@ -684,7 +684,7 @@ interface IMoniker: public IPersistStream {
 	HRESULT IsSystemMoniker(PDWORD);
 }
 
-interface IPersistStorage : public IPersist
+interface IPersistStorage : IPersist
 {
 	HRESULT IsDirty();
 	HRESULT InitNew(LPSTORAGE);
@@ -694,7 +694,7 @@ interface IPersistStorage : public IPersist
 	HRESULT HandsOffStorage();
 }
 
-interface IPersistFile : public IPersist
+interface IPersistFile : IPersist
 {
 	HRESULT IsDirty();
 	HRESULT Load(LPCOLESTR, DWORD);
@@ -703,7 +703,7 @@ interface IPersistFile : public IPersist
 	HRESULT GetCurFile(LPOLESTR*);
 }
 
-interface IAdviseSink : public IUnknown {
+interface IAdviseSink : IUnknown {
 	HRESULT QueryInterface(REFIID, PVOID*);
 	ULONG AddRef();
 	ULONG Release();
@@ -714,12 +714,12 @@ interface IAdviseSink : public IUnknown {
 	void OnClose();
 }
 
-interface IAdviseSink2 : public IAdviseSink
+interface IAdviseSink2 : IAdviseSink
 {
 	void OnLinkSrcChange(IMoniker*);
 }
 
-interface IDataObject : public IUnknown {
+interface IDataObject : IUnknown {
 	HRESULT GetData(FORMATETC*, STGMEDIUM*);
 	HRESULT GetDataHere(FORMATETC*, STGMEDIUM*);
 	HRESULT QueryGetData(FORMATETC*);
@@ -731,14 +731,14 @@ interface IDataObject : public IUnknown {
 	HRESULT EnumDAdvise(IEnumSTATDATA**);
 }
 
-interface IDataAdviseHolder : public IUnknown {
+interface IDataAdviseHolder : IUnknown {
 	HRESULT Advise(IDataObject*, FORMATETC*, DWORD, IAdviseSink*, PDWORD);
 	HRESULT Unadvise(DWORD);
 	HRESULT EnumAdvise(IEnumSTATDATA**);
 	HRESULT SendOnDataChange(IDataObject*, DWORD, DWORD);
 }
 
-interface IStorage : public IUnknown {
+interface IStorage : IUnknown {
 	HRESULT CreateStream(LPCWSTR, DWORD, DWORD, DWORD, IStream*);
 	HRESULT OpenStream(LPCWSTR, PVOID, DWORD, DWORD, IStream*);
 	HRESULT CreateStorage(LPCWSTR, DWORD, DWORD, DWORD, IStorage*);
@@ -757,14 +757,14 @@ interface IStorage : public IUnknown {
 }
 
 // FIXME: GetClassID from IPersist not there - what to do about it?
-interface IRootStorage : public IPersist {
+interface IRootStorage : IPersist {
 	HRESULT QueryInterface(REFIID, PVOID*);
 	ULONG AddRef();
 	ULONG Release();
 	HRESULT SwitchToFile(LPOLESTR);
 }
 
-interface IRpcChannelBuffer : public IUnknown {
+interface IRpcChannelBuffer : IUnknown {
 	HRESULT GetBuffer(RPCOLEMESSAGE*, REFIID);
 	HRESULT SendReceive(RPCOLEMESSAGE*, PULONG);
 	HRESULT FreeBuffer(RPCOLEMESSAGE*);
@@ -772,12 +772,12 @@ interface IRpcChannelBuffer : public IUnknown {
 	HRESULT IsConnected();
 }
 
-interface IRpcProxyBuffer : public IUnknown {
+interface IRpcProxyBuffer : IUnknown {
 	HRESULT Connect(IRpcChannelBuffer*);
 	void Disconnect();
 }
 
-interface IRpcStubBuffer : public IUnknown {
+interface IRpcStubBuffer : IUnknown {
 	HRESULT Connect(LPUNKNOWN);
 	void Disconnect();
 	HRESULT Invoke(RPCOLEMESSAGE*, LPRPCSTUBBUFFER);
@@ -787,13 +787,13 @@ interface IRpcStubBuffer : public IUnknown {
 	HRESULT DebugServerRelease(PVOID);
 }
 
-interface IPSFactoryBuffer : public IUnknown {
+interface IPSFactoryBuffer : IUnknown {
 	HRESULT CreateProxy(LPUNKNOWN, REFIID, LPRPCPROXYBUFFER*, PVOID*);
 	HRESULT CreateStub(REFIID, LPUNKNOWN, LPRPCSTUBBUFFER*);
 }
 alias IPSFactoryBuffer* LPPSFACTORYBUFFER;
 
-interface ILockBytes : public IUnknown {
+interface ILockBytes : IUnknown {
 	HRESULT ReadAt(ULARGE_INTEGER, PVOID, ULONG, ULONG*);
 	HRESULT WriteAt(ULARGE_INTEGER, PCVOID, ULONG, ULONG*);
 	HRESULT Flush();
@@ -803,12 +803,12 @@ interface ILockBytes : public IUnknown {
 	HRESULT Stat(STATSTG*, DWORD);
 }
 
-interface IExternalConnection : public IUnknown {
+interface IExternalConnection : IUnknown {
 	HRESULT AddConnection(DWORD, DWORD);
 	HRESULT ReleaseConnection(DWORD, DWORD, BOOL);
 }
 
-interface IRunnableObject : public IUnknown {
+interface IRunnableObject : IUnknown {
 	HRESULT GetRunningClass(LPCLSID);
 	HRESULT Run(LPBC);
 	BOOL IsRunning();
@@ -816,11 +816,11 @@ interface IRunnableObject : public IUnknown {
 	HRESULT SetContainedObject(BOOL);
 }
 
-interface IROTData : public IUnknown {
+interface IROTData : IUnknown {
 	HRESULT GetComparisonData(PVOID, ULONG, PULONG);
 }
 
-interface IChannelHook : public IUnknown {
+interface IChannelHook : IUnknown {
 	void ClientGetSize(REFGUID, REFIID, PULONG);
 	void ClientFillBuffer(REFGUID, REFIID, PULONG, PVOID);
 	void ClientNotify(REFGUID, REFIID, ULONG, PVOID, DWORD, HRESULT);
@@ -829,7 +829,7 @@ interface IChannelHook : public IUnknown {
 	void ServerFillBuffer(REFGUID, REFIID, PULONG, PVOID, HRESULT);
 }
 
-interface IPropertyStorage : public IUnknown {
+interface IPropertyStorage : IUnknown {
 	HRESULT ReadMultiple(ULONG, PROPSPEC* , PROPVARIANT*);
 	HRESULT WriteMultiple(ULONG, PROPSPEC* , PROPVARIANT*, PROPID);
 	HRESULT DeleteMultiple(ULONG, PROPSPEC* );
@@ -844,49 +844,49 @@ interface IPropertyStorage : public IUnknown {
 	HRESULT SetTimes(FILETIME* , FILETIME* , FILETIME* );
 }
 
-interface IPropertySetStorage : public IUnknown {
+interface IPropertySetStorage : IUnknown {
 	HRESULT Create(REFFMTID, CLSID*, DWORD, DWORD, LPPROPERTYSTORAGE*);
 	HRESULT Open(REFFMTID, DWORD, LPPROPERTYSTORAGE*);
 	HRESULT Delete(REFFMTID);
 	HRESULT Enum(IEnumSTATPROPSETSTG**);
 }
 
-interface IClientSecurity : public IUnknown {
+interface IClientSecurity : IUnknown {
 	HRESULT QueryBlanket(PVOID, PDWORD, PDWORD, OLECHAR**, PDWORD, PDWORD, RPC_AUTH_IDENTITY_HANDLE**, PDWORD*);
 	HRESULT SetBlanket(PVOID, DWORD, DWORD, LPWSTR, DWORD, DWORD, RPC_AUTH_IDENTITY_HANDLE*, DWORD);
 	HRESULT CopyProxy(LPUNKNOWN, LPUNKNOWN*);
 }
 
-interface IServerSecurity : public IUnknown {
+interface IServerSecurity : IUnknown {
 	HRESULT QueryBlanket(PDWORD, PDWORD, OLECHAR**, PDWORD, PDWORD, RPC_AUTHZ_HANDLE*, PDWORD*);
 	HRESULT ImpersonateClient();
 	HRESULT RevertToSelf();
 	HRESULT IsImpersonating();
 }
 
-interface IClassActivator : public IUnknown {
+interface IClassActivator : IUnknown {
 	HRESULT GetClassObject(REFCLSID, DWORD, LCID, REFIID, PVOID*);
 }
 
-interface IFillLockBytes : public IUnknown {
+interface IFillLockBytes : IUnknown {
 	HRESULT FillAppend(void* , ULONG, PULONG);
 	HRESULT FillAt(ULARGE_INTEGER, void* , ULONG, PULONG);
 	HRESULT SetFillSize(ULARGE_INTEGER);
 	HRESULT Terminate(BOOL);
 }
 
-interface IProgressNotify : public IUnknown {
+interface IProgressNotify : IUnknown {
 	HRESULT OnProgress(DWORD, DWORD, BOOL, BOOL);
 }
 
-interface ILayoutStorage : public IUnknown {
+interface ILayoutStorage : IUnknown {
 	HRESULT LayoutScript(STORAGELAYOUT*, DWORD, DWORD);
 	HRESULT BeginMonitor();
 	HRESULT EndMonitor();
 	HRESULT ReLayoutDocfile(OLECHAR*);
 }
 
-interface IGlobalInterfaceTable : public IUnknown {
+interface IGlobalInterfaceTable : IUnknown {
 	HRESULT RegisterInterfaceInGlobal(IUnknown*, REFIID, DWORD*);
 	HRESULT RevokeInterfaceFromGlobal(DWORD);
 	HRESULT GetInterfaceFromGlobal(DWORD, REFIID, void**);

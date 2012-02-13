@@ -14,13 +14,13 @@ private import win32.unknwn, win32.windef, win32.wtypes;
 // options for IAutoComplete2
 const DWORD ACO_AUTOSUGGEST = 0x01;
 
-interface IAutoComplete : public IUnknown {
+interface IAutoComplete : IUnknown {
 	HRESULT Init(HWND, IUnknown*, LPCOLESTR, LPCOLESTR);
 	HRESULT Enable(BOOL);
 }
 alias IAutoComplete* LPAUTOCOMPLETE;
 
-interface IAutoComplete2 : public IAutoComplete {
+interface IAutoComplete2 : IAutoComplete {
 	HRESULT SetOptions(DWORD);
 	HRESULT GetOptions(DWORD*);
 }

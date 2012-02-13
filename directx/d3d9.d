@@ -140,7 +140,7 @@ extern (Windows) void D3DPERF_SetOptions( DWORD dwOptions );
 extern (Windows) DWORD D3DPERF_GetStatus();
 
 
-interface LPDIRECT3D9 : public IUnknown
+interface LPDIRECT3D9 : IUnknown
 {
     HRESULT RegisterSoftwareDevice(void* pInitializeFunction);
     UINT GetAdapterCount();
@@ -164,7 +164,7 @@ interface LPDIRECT3D9 : public IUnknown
 }
 alias LPDIRECT3D9 IDirect3D9;
 
-interface LPDIRECT3DDEVICE9 : public IUnknown
+interface LPDIRECT3DDEVICE9 : IUnknown
 {
     HRESULT TestCooperativeLevel();
     UINT GetAvailableTextureMem();
@@ -323,7 +323,7 @@ interface LPDIRECT3DDEVICE9 : public IUnknown
 alias LPDIRECT3DDEVICE9 IDirect3DDevice9;
 
 
-interface LPDIRECT3DSTATEBLOCK9 : public IUnknown
+interface LPDIRECT3DSTATEBLOCK9 : IUnknown
 {
     HRESULT GetDevice(LPDIRECT3DDEVICE9* ppDevice);
     HRESULT Capture();
@@ -337,7 +337,7 @@ interface LPDIRECT3DSTATEBLOCK9 : public IUnknown
 
 alias LPDIRECT3DSTATEBLOCK9 IDirect3DStateBlock9;
 
-interface LPDIRECT3DSWAPCHAIN9 : public IUnknown
+interface LPDIRECT3DSWAPCHAIN9 : IUnknown
 {
     HRESULT Present( RECT* pSourceRect, RECT* pDestRect,HWND hDestWindowOverride, RGNDATA* pDirtyRegion,DWORD dwFlags);
     HRESULT GetFrontBufferData( LPDIRECT3DSURFACE9 pDestSurface);
@@ -357,7 +357,7 @@ interface LPDIRECT3DSWAPCHAIN9 : public IUnknown
 
 alias LPDIRECT3DSWAPCHAIN9 IDirect3DSwapChain9;
 
-interface LPDIRECT3DRESOURCE9 : public IUnknown
+interface LPDIRECT3DRESOURCE9 : IUnknown
 {
     HRESULT GetDevice( LPDIRECT3DDEVICE9* ppDevice);
     HRESULT SetPrivateData( REFGUID refguid, void* pData,DWORD SizeOfData,DWORD Flags);
@@ -371,7 +371,7 @@ interface LPDIRECT3DRESOURCE9 : public IUnknown
 
 alias LPDIRECT3DRESOURCE9 IDirect3DResource9;
 
-interface LPDIRECT3DVERTEXDECLARATION9 : public IUnknown
+interface LPDIRECT3DVERTEXDECLARATION9 : IUnknown
 {
     HRESULT GetDevice( LPDIRECT3DDEVICE9* ppDevice);
     HRESULT GetDeclaration( D3DVERTEXELEMENT9* pElement,UINT* pNumElements);
@@ -384,7 +384,7 @@ interface LPDIRECT3DVERTEXDECLARATION9 : public IUnknown
 
 alias LPDIRECT3DVERTEXDECLARATION9 IDirect3DVertexDeclaration9;
 
-interface LPDIRECT3DVERTEXSHADER9 : public IUnknown
+interface LPDIRECT3DVERTEXSHADER9 : IUnknown
 {
     HRESULT GetDevice( LPDIRECT3DDEVICE9 * ppDevice);
     HRESULT GetFunction( void*,UINT* pSizeOfData);
@@ -398,7 +398,7 @@ interface LPDIRECT3DVERTEXSHADER9 : public IUnknown
 
 alias LPDIRECT3DVERTEXSHADER9 IDirect3DVertexShader9;
 
-interface LPDIRECT3DPIXELSHADER9 : public IUnknown
+interface LPDIRECT3DPIXELSHADER9 : IUnknown
 {
     HRESULT GetDevice( LPDIRECT3DDEVICE9 * ppDevice);
     HRESULT GetFunction( void*,UINT* pSizeOfData);
@@ -412,7 +412,7 @@ interface LPDIRECT3DPIXELSHADER9 : public IUnknown
 
 alias LPDIRECT3DPIXELSHADER9 IDirect3DPixelShader9;
 
-interface LPDIRECT3DBASETEXTURE9 : public LPDIRECT3DRESOURCE9
+interface LPDIRECT3DBASETEXTURE9 : LPDIRECT3DRESOURCE9
 {
     DWORD SetLOD(DWORD LODNew);
     DWORD GetLOD();
@@ -424,7 +424,7 @@ interface LPDIRECT3DBASETEXTURE9 : public LPDIRECT3DRESOURCE9
 
 alias LPDIRECT3DBASETEXTURE9 IDirect3DBaseTexture9;
 
-interface LPDIRECT3DTEXTURE9 : public LPDIRECT3DBASETEXTURE9
+interface LPDIRECT3DTEXTURE9 : LPDIRECT3DBASETEXTURE9
 {
     HRESULT GetLevelDesc( UINT Level,D3DSURFACE_DESC *pDesc);
     HRESULT GetSurfaceLevel( UINT Level,LPDIRECT3DSURFACE9* ppSurfaceLevel);
@@ -451,7 +451,7 @@ interface LPDIRECT3DTEXTURE9 : public LPDIRECT3DBASETEXTURE9
 
 alias LPDIRECT3DTEXTURE9 IDirect3DTexture9;
 
-interface LPDIRECT3DVOLUMETEXTURE9 : public LPDIRECT3DBASETEXTURE9
+interface LPDIRECT3DVOLUMETEXTURE9 : LPDIRECT3DBASETEXTURE9
 {
     HRESULT GetLevelDesc( UINT Level,D3DVOLUME_DESC *pDesc);
     HRESULT GetVolumeLevel( UINT Level,LPDIRECT3DVOLUME9* ppVolumeLevel);
@@ -479,7 +479,7 @@ interface LPDIRECT3DVOLUMETEXTURE9 : public LPDIRECT3DBASETEXTURE9
 
 alias LPDIRECT3DVOLUMETEXTURE9 IDirect3DVolumeTexture9;
 
-interface LPDIRECT3DCUBETEXTURE9 : public LPDIRECT3DBASETEXTURE9
+interface LPDIRECT3DCUBETEXTURE9 : LPDIRECT3DBASETEXTURE9
 {
     HRESULT GetLevelDesc( UINT Level,D3DSURFACE_DESC *pDesc);
     HRESULT GetCubeMapSurface( D3DCUBEMAP_FACES FaceType,UINT Level,LPDIRECT3DSURFACE9* ppCubeMapSurface);
@@ -506,7 +506,7 @@ interface LPDIRECT3DCUBETEXTURE9 : public LPDIRECT3DBASETEXTURE9
 
 alias LPDIRECT3DCUBETEXTURE9 IDirect3DCubeTexture9;
 
-interface LPDIRECT3DVERTEXBUFFER9 : public LPDIRECT3DRESOURCE9
+interface LPDIRECT3DVERTEXBUFFER9 : LPDIRECT3DRESOURCE9
 {
     HRESULT Lock( UINT OffsetToLock,UINT SizeToLock,void** ppbData,DWORD Flags);
     HRESULT Unlock();
@@ -527,7 +527,7 @@ interface LPDIRECT3DVERTEXBUFFER9 : public LPDIRECT3DRESOURCE9
 
 alias LPDIRECT3DVERTEXBUFFER9 IDirect3DVertexBuffer9;
 
-interface LPDIRECT3DINDEXBUFFER9 : public LPDIRECT3DRESOURCE9
+interface LPDIRECT3DINDEXBUFFER9 : LPDIRECT3DRESOURCE9
 {
     HRESULT Lock( UINT OffsetToLock,UINT SizeToLock,void** ppbData,DWORD Flags);
     HRESULT Unlock();
@@ -548,7 +548,7 @@ interface LPDIRECT3DINDEXBUFFER9 : public LPDIRECT3DRESOURCE9
 
 alias LPDIRECT3DINDEXBUFFER9 IDirect3DIndexBuffer9;
 
-interface LPDIRECT3DSURFACE9 : public LPDIRECT3DRESOURCE9
+interface LPDIRECT3DSURFACE9 : LPDIRECT3DRESOURCE9
 {
     HRESULT GetContainer( REFIID riid,void** ppContainer);
     HRESULT GetDesc( D3DSURFACE_DESC *pDesc);
@@ -576,7 +576,7 @@ interface LPDIRECT3DSURFACE9 : public LPDIRECT3DRESOURCE9
 
 alias LPDIRECT3DSURFACE9 IDirect3DSurface9;
 
-interface LPDIRECT3DVOLUME9 : public IUnknown
+interface LPDIRECT3DVOLUME9 : IUnknown
 {
     HRESULT GetDevice( LPDIRECT3DDEVICE9 * ppDevice);
     HRESULT SetPrivateData( REFGUID refguid, void* pData,DWORD SizeOfData,DWORD Flags);
@@ -603,7 +603,7 @@ interface LPDIRECT3DVOLUME9 : public IUnknown
 
 alias LPDIRECT3DVOLUME9 IDirect3DVolume9;
 
-interface LPDIRECT3DQUERY9 : public IUnknown
+interface LPDIRECT3DQUERY9 : IUnknown
 {
     HRESULT GetDevice( LPDIRECT3DDEVICE9* ppDevice);
     D3DQUERYTYPE GetType();
@@ -795,7 +795,7 @@ const HRESULT D3DERR_DEVICEHUNG = MAKE_D3DHRESULT(2164);
 
 extern (Windows) HRESULT Direct3DCreate9Ex(UINT SDKVersion, LPDIRECT3D9EX*);
 
-interface LPDIRECT3D9EX : public LPDIRECT3D9
+interface LPDIRECT3D9EX : LPDIRECT3D9
 {
     UINT GetAdapterModeCountEx(UINT Adapter, D3DDISPLAYMODEFILTER* pFilter );
     HRESULT EnumAdapterModesEx( UINT Adapter, D3DDISPLAYMODEFILTER* pFilter,UINT Mode,D3DDISPLAYMODEEX* pMode);
@@ -806,7 +806,7 @@ interface LPDIRECT3D9EX : public LPDIRECT3D9
 
 alias LPDIRECT3D9EX IDirect3D9Ex;
 
-interface LPDIRECT3DDEVICE9EX : public LPDIRECT3DDEVICE9
+interface LPDIRECT3DDEVICE9EX : LPDIRECT3DDEVICE9
 {
     HRESULT SetConvolutionMonoKernel( UINT width,UINT height,float* rows,float* columns);
     HRESULT ComposeRects( LPDIRECT3DSURFACE9 pSrc,LPDIRECT3DSURFACE9 pDst,LPDIRECT3DVERTEXBUFFER9 pSrcRectDescs,UINT NumRects,LPDIRECT3DVERTEXBUFFER9 pDstRectDescs,D3DCOMPOSERECTSOP Operation,int Xoffset,int Yoffset);
@@ -827,7 +827,7 @@ interface LPDIRECT3DDEVICE9EX : public LPDIRECT3DDEVICE9
 
 alias LPDIRECT3DDEVICE9EX IDirect3DDevice9Ex;
 
-interface LPDIRECT3DSWAPCHAIN9EX : public LPDIRECT3DSWAPCHAIN9
+interface LPDIRECT3DSWAPCHAIN9EX : LPDIRECT3DSWAPCHAIN9
 {
     HRESULT GetLastPresentCount( UINT* pLastPresentCount);
     HRESULT GetPresentStats( D3DPRESENTSTATS* pPresentationStatistics);

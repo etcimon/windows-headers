@@ -16,7 +16,7 @@ private import win32.objidl;  // for CLIPFORMAT
 private import win32.wingdi;  // for TEXTMETRICW
 private import win32.winuser; // for LPMSG
 
-interface IBindHost : public IUnknown {}
+interface IBindHost : IUnknown {}
 
 interface IServiceProvider : IUnknown{
 	HRESULT QueryService(REFGUID,REFIID,void**);
@@ -28,7 +28,7 @@ interface IServiceProvider : IUnknown{
 // private import win32.urlmon; // for IBindHost. This is not included in MinGW.
 
 // win32.urlmon should contain:
-interface IBindHost : public IUnknown
+interface IBindHost : IUnknown
 {
 	HRESULT CreateMoniker(LPOLESTR szName, IBindCtx* pBC, IMoniker** ppmk, DWORD);
 	HRESULT MonikerBindToObject(IMoniker* pMk, IBindCtx* pBC, IBindStatusCallback* pBSC, REFIID, void** );
@@ -174,14 +174,14 @@ struct PROPPAGEINFO {
 }
 alias PROPPAGEINFO* LPPROPPAGEINFO;
 
-interface IOleControl : public IUnknown {
+interface IOleControl : IUnknown {
 	HRESULT GetControlInfo(LPCONTROLINFO);
 	HRESULT OnMnemonic(LPMSG);
 	HRESULT OnAmbientPropertyChange(DISPID);
 	HRESULT FreezeEvents(BOOL);
 }
 
-interface IOleControlSite : public IUnknown {
+interface IOleControlSite : IUnknown {
 	HRESULT OnControlInfoChanged();
 	HRESULT LockInPlaceActive(BOOL);
 	HRESULT GetExtendedControl(LPDISPATCH*);
@@ -191,23 +191,23 @@ interface IOleControlSite : public IUnknown {
 	HRESULT ShowPropertyFrame();
 }
 
-interface ISimpleFrameSite : public IUnknown {
+interface ISimpleFrameSite : IUnknown {
 	HRESULT PreMessageFilter(HWND, UINT, WPARAM, LPARAM, LRESULT*, PDWORD);
 	HRESULT PostMessageFilter(HWND, UINT, WPARAM, LPARAM, LRESULT*, DWORD);
 }
 
-interface IErrorLog : public IUnknown {
+interface IErrorLog : IUnknown {
 	HRESULT AddError(LPCOLESTR, LPEXCEPINFO);
 }
 alias IErrorLog LPERRORLOG;
 
-interface IPropertyBag : public IUnknown {
+interface IPropertyBag : IUnknown {
 	HRESULT Read(LPCOLESTR, LPVARIANT, LPERRORLOG);
 	HRESULT Write(LPCOLESTR, LPVARIANT);
 }
 alias IPropertyBag LPPROPERTYBAG;
 
-interface IPropertyBag2 : public IUnknown {
+interface IPropertyBag2 : IUnknown {
 	HRESULT Read(ULONG, PROPBAG2*, LPERRORLOG, VARIANT*, HRESULT*);
 	HRESULT Write(ULONG, PROPBAG2*, VARIANT*);
 	HRESULT CountProperties(ULONG*);
@@ -216,20 +216,20 @@ interface IPropertyBag2 : public IUnknown {
 }
 alias IPropertyBag2 LPPROPERTYBAG2;
 
-interface IPersistPropertyBag : public IPersist {
+interface IPersistPropertyBag : IPersist {
 	HRESULT InitNew();
 	HRESULT Load(LPPROPERTYBAG, LPERRORLOG);
 	HRESULT Save(LPPROPERTYBAG, BOOL, BOOL);
 }
 
-interface IPersistPropertyBag2 : public IPersist {
+interface IPersistPropertyBag2 : IPersist {
 	HRESULT InitNew();
 	HRESULT Load(LPPROPERTYBAG2, LPERRORLOG);
 	HRESULT Save(LPPROPERTYBAG2, BOOL, BOOL);
 	HRESULT IsDirty();
 }
 
-interface IPersistStreamInit : public IPersist {
+interface IPersistStreamInit : IPersist {
 	HRESULT IsDirty();
 	HRESULT Load(LPSTREAM);
 	HRESULT Save(LPSTREAM, BOOL);
@@ -237,7 +237,7 @@ interface IPersistStreamInit : public IPersist {
 	HRESULT InitNew();
 }
 
-interface IPersistMemory : public IPersist {
+interface IPersistMemory : IPersist {
 	HRESULT IsDirty();
 	HRESULT Load(PVOID, ULONG);
 	HRESULT Save(PVOID, BOOL, ULONG);
@@ -245,25 +245,25 @@ interface IPersistMemory : public IPersist {
 	HRESULT InitNew();
 }
 
-interface IPropertyNotifySink : public IUnknown {
+interface IPropertyNotifySink : IUnknown {
 	HRESULT OnChanged(DISPID);
 	HRESULT OnRequestEdit(DISPID);
 }
 
-interface IProvideClassInfo : public IUnknown {
+interface IProvideClassInfo : IUnknown {
 	HRESULT GetClassInfo(LPTYPEINFO*);
 }
 
-interface IProvideClassInfo2 : public IProvideClassInfo {
+interface IProvideClassInfo2 : IProvideClassInfo {
 	HRESULT GetGUID(DWORD, GUID*);
 }
 
-interface IConnectionPointContainer : public IUnknown {
+interface IConnectionPointContainer : IUnknown {
 	HRESULT EnumConnectionPoints(LPENUMCONNECTIONPOINTS*);
 	HRESULT FindConnectionPoint(REFIID, LPCONNECTIONPOINT*);
 }
 
-interface IEnumConnectionPoints : public IUnknown {
+interface IEnumConnectionPoints : IUnknown {
 	HRESULT Next(ULONG, LPCONNECTIONPOINT*, ULONG*);
 	HRESULT Skip(ULONG);
 	HRESULT Reset();
@@ -271,7 +271,7 @@ interface IEnumConnectionPoints : public IUnknown {
 }
 alias IEnumConnectionPoints LPENUMCONNECTIONPOINTS;
 
-interface IConnectionPoint : public IUnknown {
+interface IConnectionPoint : IUnknown {
 	HRESULT GetConnectionInterface(IID*);
 	HRESULT GetConnectionPointContainer(IConnectionPointContainer**);
 	HRESULT Advise(LPUNKNOWN, PDWORD);
@@ -280,7 +280,7 @@ interface IConnectionPoint : public IUnknown {
 }
 alias IConnectionPoint LPCONNECTIONPOINT;
 
-interface IEnumConnections : public IUnknown {
+interface IEnumConnections : IUnknown {
 	HRESULT Next(ULONG, LPCONNECTDATA, PULONG);
 	HRESULT Skip(ULONG);
 	HRESULT Reset();
@@ -288,24 +288,24 @@ interface IEnumConnections : public IUnknown {
 }
 alias IEnumConnections LPENUMCONNECTIONS;
 
-interface IClassFactory2 : public IClassFactory {
+interface IClassFactory2 : IClassFactory {
 	HRESULT GetLicInfo(LPLICINFO);
 	HRESULT RequestLicKey(DWORD, BSTR*);
 	HRESULT CreateInstanceLic(LPUNKNOWN, LPUNKNOWN, REFIID, BSTR, PVOID*);
 }
 
-interface ISpecifyPropertyPages : public IUnknown {
+interface ISpecifyPropertyPages : IUnknown {
 	HRESULT GetPages(CAUUID*);
 }
 
-interface IPerPropertyBrowsing : public IUnknown {
+interface IPerPropertyBrowsing : IUnknown {
 	HRESULT GetDisplayString(DISPID, BSTR*);
 	HRESULT MapPropertyToPage(DISPID, LPCLSID);
 	HRESULT GetPredefinedStrings(DISPID, CALPOLESTR*, CADWORD*);
 	HRESULT GetPredefinedValue(DISPID, DWORD, VARIANT*);
 }
 
-interface IPropertyPageSite : public IUnknown {
+interface IPropertyPageSite : IUnknown {
 	HRESULT OnStatusChange(DWORD);
 	HRESULT GetLocaleID(LCID*);
 	HRESULT GetPageContainer(LPUNKNOWN*);
@@ -313,7 +313,7 @@ interface IPropertyPageSite : public IUnknown {
 }
 alias IPropertyPageSite LPPROPERTYPAGESITE;
 
-interface IPropertyPage : public IUnknown {
+interface IPropertyPage : IUnknown {
 	HRESULT SetPageSite(LPPROPERTYPAGESITE);
 	HRESULT Activate(HWND, LPCRECT, BOOL);
 	HRESULT Deactivate();
@@ -328,11 +328,11 @@ interface IPropertyPage : public IUnknown {
 }
 
 
-interface IPropertyPage2 : public IPropertyPage
+interface IPropertyPage2 : IPropertyPage
 { HRESULT EditProperty(DISPID);
 }
 
-interface IFont : public IUnknown {
+interface IFont : IUnknown {
 	HRESULT get_Name(BSTR*);
 	HRESULT put_Name(BSTR);
 	HRESULT get_Size(CY*);
@@ -360,11 +360,11 @@ interface IFont : public IUnknown {
 }
 alias IFont LPFONT;
 
-interface IFontDisp : public IDispatch {
+interface IFontDisp : IDispatch {
 }
 alias IFontDisp LPFONTDISP;
 
-interface IPicture : public IUnknown {
+interface IPicture : IUnknown {
 	HRESULT get_Handle(OLE_HANDLE*);
 	HRESULT get_hPal(OLE_HANDLE*);
 	HRESULT get_Type(short*);
@@ -382,21 +382,21 @@ interface IPicture : public IUnknown {
 	HRESULT get_Attributes(PDWORD);
 }
 
-interface IPictureDisp : public IDispatch {
+interface IPictureDisp : IDispatch {
 }
 
-interface IOleInPlaceSiteEx : public IOleInPlaceSite {
+interface IOleInPlaceSiteEx : IOleInPlaceSite {
 	HRESULT OnInPlaceActivateEx(BOOL*, DWORD);
 	HRESULT OnInPlaceDeactivateEx(BOOL);
 	HRESULT RequestUIActivate();
 }
 
-interface IObjectWithSite : public IUnknown {
+interface IObjectWithSite : IUnknown {
 	HRESULT SetSite(IUnknown*);
 	HRESULT GetSite(REFIID, void**);
 }
 
-interface IOleInPlaceSiteWindowless : public IOleInPlaceSiteEx {
+interface IOleInPlaceSiteWindowless : IOleInPlaceSiteEx {
 	HRESULT CanWindowlessActivate();
 	HRESULT GetCapture();
 	HRESULT SetCapture(BOOL);
@@ -411,7 +411,7 @@ interface IOleInPlaceSiteWindowless : public IOleInPlaceSiteEx {
 	HRESULT OnDefWindowMessage(UINT, WPARAM, LPARAM, LRESULT*);
 }
 
-interface IAdviseSinkEx : public IUnknown {
+interface IAdviseSinkEx : IUnknown {
 	void OnDataChange(FORMATETC*, STGMEDIUM*);
 	void OnViewChange(DWORD, LONG);
 	void OnRename(IMoniker*);
@@ -420,20 +420,20 @@ interface IAdviseSinkEx : public IUnknown {
 	HRESULT OnViewStatusChange(DWORD);
 }
 
-interface IPointerInactive : public IUnknown {
+interface IPointerInactive : IUnknown {
 	HRESULT GetActivationPolicy(DWORD*);
 	HRESULT OnInactiveMouseMove(LPCRECT, LONG, LONG, DWORD);
 	HRESULT OnInactiveSetCursor(LPCRECT, LONG, LONG, DWORD, BOOL);
 }
 
-interface IOleUndoUnit : public IUnknown {
+interface IOleUndoUnit : IUnknown {
 	HRESULT Do(LPOLEUNDOMANAGER);
 	HRESULT GetDescription(BSTR*);
 	HRESULT GetUnitType(CLSID*, LONG*);
 	HRESULT OnNextAdd();
 }
 
-interface IOleParentUndoUnit : public IOleUndoUnit {
+interface IOleParentUndoUnit : IOleUndoUnit {
 	HRESULT Open(IOleParentUndoUnit*);
 	HRESULT Close(IOleParentUndoUnit*, BOOL);
 	HRESULT Add(IOleUndoUnit*);
@@ -441,14 +441,14 @@ interface IOleParentUndoUnit : public IOleUndoUnit {
 	HRESULT GetParentState(DWORD*);
 }
 
-interface IEnumOleUndoUnits : public IUnknown {
+interface IEnumOleUndoUnits : IUnknown {
 	HRESULT Next(ULONG, IOleUndoUnit**, ULONG*);
 	HRESULT Skip(ULONG);
 	HRESULT Reset();
 	HRESULT Clone(IEnumOleUndoUnits**);
 }
 
-interface IOleUndoManager : public IUnknown {
+interface IOleUndoManager : IUnknown {
 	HRESULT Open(IOleParentUndoUnit*);
 	HRESULT Close(IOleParentUndoUnit*, BOOL);
 	HRESULT Add(IOleUndoUnit*);
@@ -464,7 +464,7 @@ interface IOleUndoManager : public IUnknown {
 }
 alias IOleUndoManager LPOLEUNDOMANAGER;
 
-interface IQuickActivate : public IUnknown {
+interface IQuickActivate : IUnknown {
 	HRESULT QuickActivate(QACONTAINER*, QACONTROL*);
 	HRESULT SetContentExtent(LPSIZEL);
 	HRESULT GetContentExtent(LPSIZEL);

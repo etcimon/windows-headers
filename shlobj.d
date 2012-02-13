@@ -650,7 +650,7 @@ static if (_WIN32_IE >= 0x0500) {
 
 }
 
-interface IEnumIDList: public IUnknown
+interface IEnumIDList: IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -662,7 +662,7 @@ interface IEnumIDList: public IUnknown
 }
 alias IEnumIDList *LPENUMIDLIST;
 
-interface IObjMgr : public IUnknown
+interface IObjMgr : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -671,7 +671,7 @@ interface IObjMgr : public IUnknown
 	HRESULT Remove(IUnknown*);
 }
 
-interface IContextMenu : public IUnknown
+interface IContextMenu : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -682,7 +682,7 @@ interface IContextMenu : public IUnknown
 }
 alias IContextMenu* LPCONTEXTMENU;
 
-interface IContextMenu2 : public IContextMenu
+interface IContextMenu2 : IContextMenu
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -746,7 +746,7 @@ static if (_WIN32_IE >= 0x0500) {
 		SHCOLSTATE_PREFER_VARCMP = 0x00000200
 	}
 
-	interface IColumnProvider : public IUnknown
+	interface IColumnProvider : IUnknown
 	 {
 		HRESULT QueryInterface(REFIID,PVOID*);
 		ULONG AddRef();
@@ -757,7 +757,7 @@ static if (_WIN32_IE >= 0x0500) {
 	}
 }/* _WIN32_IE >= 0x0500 */
 
-interface IQueryInfo : public IUnknown
+interface IQueryInfo : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -766,7 +766,7 @@ interface IQueryInfo : public IUnknown
 	HRESULT GetInfoFlags(DWORD*);
 }
 
-interface IShellExtInit : public IUnknown
+interface IShellExtInit : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -775,7 +775,7 @@ interface IShellExtInit : public IUnknown
 }
 alias IShellExtInit *LPSHELLEXTINIT;
 
-interface IShellPropSheetExt : public IUnknown
+interface IShellPropSheetExt : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -785,7 +785,7 @@ interface IShellPropSheetExt : public IUnknown
 }
 alias IShellPropSheetExt *LPSHELLPROPSHEETEXT;
 
-interface IExtractIconA : public IUnknown
+interface IExtractIconA : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -795,7 +795,7 @@ interface IExtractIconA : public IUnknown
 };
 alias IExtractIconA *LPEXTRACTICONA;
 
-interface IExtractIconW : public IUnknown
+interface IExtractIconW : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -813,7 +813,7 @@ version(Unicode) {
 	alias LPEXTRACTICONA LPEXTRACTICON;
 }
 
-interface IShellLinkA : public IUnknown
+interface IShellLinkA : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -838,7 +838,7 @@ interface IShellLinkA : public IUnknown
 	HRESULT SetPath(LPCSTR);
 }
 
-interface IShellLinkW : public IUnknown
+interface IShellLinkW : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -864,7 +864,7 @@ interface IShellLinkW : public IUnknown
 }
 
 
-interface IShellFolder : public IUnknown
+interface IShellFolder : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -884,7 +884,7 @@ alias IShellFolder *LPSHELLFOLDER;
 
 static if (_WIN32_IE >= 0x0500) {
 
-interface IEnumExtraSearch: public IUnknown
+interface IEnumExtraSearch: IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -896,7 +896,7 @@ interface IEnumExtraSearch: public IUnknown
 }
 alias IEnumExtraSearch *LPENUMEXTRASEARCH;
 
-interface IShellFolder2 : public IShellFolder
+interface IShellFolder2 : IShellFolder
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -923,7 +923,7 @@ alias IShellFolder2 *LPSHELLFOLDER2;
 
 } /* _WIN32_IE >= 0x0500 */
 
-interface ICopyHook : public IUnknown
+interface ICopyHook : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -932,7 +932,7 @@ interface ICopyHook : public IUnknown
 }
 alias ICopyHook *LPCOPYHOOK;
 
-interface IFileViewerSite : public IUnknown
+interface IFileViewerSite : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -942,7 +942,7 @@ interface IFileViewerSite : public IUnknown
 }
 alias IFileViewerSite *LPFILEVIEWERSITE;
 
-interface IFileViewer : public IUnknown
+interface IFileViewer : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -953,7 +953,7 @@ interface IFileViewer : public IUnknown
 }
 alias IFileViewer *LPFILEVIEWER;
 
-interface IFileSystemBindData : public IUnknown
+interface IFileSystemBindData : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -962,7 +962,7 @@ interface IFileSystemBindData : public IUnknown
 	HRESULT GetFindData(WIN32_FIND_DATAW*);
 }
 
-interface IPersistFolder : public IPersist
+interface IPersistFolder : IPersist
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -974,7 +974,7 @@ alias IPersistFolder *LPPERSISTFOLDER;
 
 static if (_WIN32_IE >= 0x0400 || _WIN32_WINNT >= 0x0500) {
 
-interface IPersistFolder2 : public IPersistFolder
+interface IPersistFolder2 : IPersistFolder
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -989,7 +989,7 @@ alias IPersistFolder2 *LPPERSISTFOLDER2;
 
 static if (_WIN32_IE >= 0x0500) {
 
-interface IPersistFolder3 : public IPersistFolder2
+interface IPersistFolder3 : IPersistFolder2
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -1007,7 +1007,7 @@ alias IPersistFolder3 *LPPERSISTFOLDER3;
 alias IShellBrowser* LPSHELLBROWSER;
 alias IShellView* LPSHELLVIEW;
 
-interface IShellBrowser : public IOleWindow
+interface IShellBrowser : IOleWindow
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -1029,7 +1029,7 @@ interface IShellBrowser : public IOleWindow
 	HRESULT SetToolbarItems(LPTBBUTTON,UINT,UINT);
 }
 
-interface IShellView : public IOleWindow
+interface IShellView : IOleWindow
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -1053,7 +1053,7 @@ interface IShellView : public IOleWindow
 	HRESULT GetItemObject(UINT,REFIID,PVOID*);
 }
 
-interface ICommDlgBrowser : public IUnknown
+interface ICommDlgBrowser : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -1077,7 +1077,7 @@ struct SV2CVW2_PARAMS {
 }
 alias SV2CVW2_PARAMS* LPSV2CVW2_PARAMS;
 
-interface IShellView2 : public IShellView
+interface IShellView2 : IShellView
 {
 
 	HRESULT QueryInterface(REFIID,PVOID*);
@@ -1104,7 +1104,7 @@ interface IShellView2 : public IShellView
 	HRESULT CreateViewWindow2(LPSV2CVW2_PARAMS);
 }
 
-interface IShellExecuteHookA : public IUnknown
+interface IShellExecuteHookA : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -1112,7 +1112,7 @@ interface IShellExecuteHookA : public IUnknown
 	HRESULT Execute(LPSHELLEXECUTEINFOA);
 }
 
-interface IShellExecuteHookW : public IUnknown
+interface IShellExecuteHookW : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -1120,7 +1120,7 @@ interface IShellExecuteHookW : public IUnknown
 	HRESULT Execute(LPSHELLEXECUTEINFOW);
 }
 
-interface IShellIcon : public IUnknown
+interface IShellIcon : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -1165,7 +1165,7 @@ const SSF_SHOWINFOTIP = 0x2000;
 const SSF_HIDEICONS = 0x4000;
 const SSF_NOCONFIRMRECYCLE = 0x8000;
 
-interface IShellIconOverlayIdentifier : public IUnknown
+interface IShellIconOverlayIdentifier : IUnknown
 {
 	HRESULT QueryInterface(REFIID,PVOID*);
 	ULONG AddRef();
@@ -1225,7 +1225,7 @@ static if (_WIN32_IE >= 0x0500) {
 	alias SHDRAGIMAGE* LPSHDRAGIMAGE;
 	align:
 
-	interface IDragSourceHelper : public IUnknown
+	interface IDragSourceHelper : IUnknown
 	 {
 		HRESULT QueryInterface(REFIID riid, void **ppv);
 		ULONG AddRef();
@@ -1234,7 +1234,7 @@ static if (_WIN32_IE >= 0x0500) {
 		HRESULT InitializeFromWindow(HWND hwnd, POINT* ppt, IDataObject* pDataObject);
 	}
 
-	interface IDropTargetHelper : public IUnknown
+	interface IDropTargetHelper : IUnknown
 	 {
 		HRESULT QueryInterface(REFIID riid, void** ppv);
 		ULONG AddRef();

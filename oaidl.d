@@ -534,7 +534,7 @@ union BINDPTR {
 }
 alias BINDPTR* LPBINDPTR;
 
-interface IDispatch : public IUnknown {
+interface IDispatch : IUnknown {
 	HRESULT GetTypeInfoCount(UINT*);
 	HRESULT GetTypeInfo(UINT, LCID, LPTYPEINFO*);
 	HRESULT GetIDsOfNames(REFIID, LPOLESTR*, UINT, LCID, DISPID*);
@@ -542,7 +542,7 @@ interface IDispatch : public IUnknown {
 }
 alias IDispatch LPDISPATCH;
 
-interface IEnumVARIANT : public IUnknown {
+interface IEnumVARIANT : IUnknown {
 	HRESULT Next(ULONG, VARIANT*, ULONG*);
 	HRESULT Skip(ULONG);
 	HRESULT Reset();
@@ -550,13 +550,13 @@ interface IEnumVARIANT : public IUnknown {
 }
 alias IEnumVARIANT LPENUMVARIANT;
 
-interface ITypeComp : public IUnknown {
+interface ITypeComp : IUnknown {
 	HRESULT Bind(LPOLESTR, ULONG, WORD, LPTYPEINFO*, DESCKIND*, LPBINDPTR);
 	HRESULT BindType(LPOLESTR, ULONG, LPTYPEINFO*, LPTYPECOMP*);
 }
 alias ITypeComp LPTYPECOMP;
 
-interface ITypeInfo : public IUnknown {
+interface ITypeInfo : IUnknown {
 	HRESULT GetTypeAttr(LPTYPEATTR*);
 	HRESULT GetTypeComp(LPTYPECOMP*);
 	HRESULT GetFuncDesc(UINT, LPFUNCDESC*);
@@ -580,7 +580,7 @@ interface ITypeInfo : public IUnknown {
 }
 alias ITypeInfo LPTYPEINFO;
 
-interface ITypeInfo2 : public ITypeInfo {
+interface ITypeInfo2 : ITypeInfo {
 	HRESULT GetTypeKind(TYPEKIND*);
 	HRESULT GetTypeFlags(ULONG*);
 	HRESULT GetFuncIndexOfMemId(MEMBERID, INVOKEKIND, UINT*);
@@ -599,7 +599,7 @@ interface ITypeInfo2 : public ITypeInfo {
 }
 alias ITypeInfo2 LPTYPEINFO2;
 
-interface ITypeLib : public IUnknown {
+interface ITypeLib : IUnknown {
 	UINT GetTypeInfoCount();
 	HRESULT GetTypeInfo(UINT, ITypeInfo**);
 	HRESULT GetTypeInfoType(UINT, TYPEKIND*);
@@ -613,7 +613,7 @@ interface ITypeLib : public IUnknown {
 }
 alias ITypeLib LPTYPELIB;
 
-interface ITypeLib2 : public ITypeLib {
+interface ITypeLib2 : ITypeLib {
 	HRESULT GetCustData(REFGUID, VARIANT*);
 	HRESULT GetLibStatistics(ULONG*, ULONG*);
 	HRESULT GetDocumentation2(INT, LCID, BSTR*, DWORD*, BSTR*);
@@ -621,7 +621,7 @@ interface ITypeLib2 : public ITypeLib {
 }
 alias ITypeLib2 LPTYPELIB2;
 
-interface IErrorInfo : public IUnknown {
+interface IErrorInfo : IUnknown {
 	HRESULT GetGUID(GUID*);
 	HRESULT GetSource(BSTR*);
 	HRESULT GetDescription(BSTR*);
@@ -630,7 +630,7 @@ interface IErrorInfo : public IUnknown {
 }
 alias IErrorInfo LPERRORINFO;
 
-interface ICreateErrorInfo : public IUnknown {
+interface ICreateErrorInfo : IUnknown {
 	HRESULT SetGUID(REFGUID);
 	HRESULT SetSource(LPOLESTR);
 	HRESULT SetDescription(LPOLESTR);
@@ -639,12 +639,12 @@ interface ICreateErrorInfo : public IUnknown {
 }
 alias ICreateErrorInfo* LPCREATEERRORINFO;
 
-interface ISupportErrorInfo : public IUnknown {
+interface ISupportErrorInfo : IUnknown {
 	HRESULT InterfaceSupportsErrorInfo(REFIID);
 }
 alias ISupportErrorInfo LPSUPPORTERRORINFO;
 
-interface IRecordInfo : public IUnknown {
+interface IRecordInfo : IUnknown {
 	HRESULT RecordInit(PVOID);
 	HRESULT RecordClear(PVOID);
 	HRESULT RecordCopy(PVOID, PVOID);
@@ -664,7 +664,7 @@ interface IRecordInfo : public IUnknown {
 }
 alias IRecordInfo LPRECORDINFO;
 
-interface ITypeMarshal : public IUnknown {
+interface ITypeMarshal : IUnknown {
 	HRESULT Size(PVOID, DWORD, PVOID, ULONG*);
 	HRESULT Marshal(PVOID, DWORD, PVOID, ULONG, BYTE*, ULONG*);
 	HRESULT Unmarshal(PVOID, DWORD, ULONG, BYTE*, ULONG*);

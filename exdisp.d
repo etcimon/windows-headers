@@ -23,7 +23,7 @@ enum BrowserNavConstants {
 	navHyperLink       = 0x40
 }
 
-interface IWebBrowser : public IDispatch {
+interface IWebBrowser : IDispatch {
 	HRESULT GoBack();
 	HRESULT GoForward();
 	HRESULT GoHome();
@@ -51,7 +51,7 @@ interface IWebBrowser : public IDispatch {
 	HRESULT get_Busy(VARIANT_BOOL*);
 }
 
-interface IWebBrowserApp : public IWebBrowser {
+interface IWebBrowserApp : IWebBrowser {
 	HRESULT Quit();
 	HRESULT ClientToWindow(int*, int*);
 	HRESULT PutProperty(BSTR, VARIANT);
@@ -74,7 +74,7 @@ interface IWebBrowserApp : public IWebBrowser {
 	HRESULT put_FullScreen(VARIANT_BOOL);
 }
 
-interface IWebBrowser2 : public IWebBrowserApp {
+interface IWebBrowser2 : IWebBrowserApp {
 	HRESULT Navigate2(VARIANT*, VARIANT*, VARIANT*, VARIANT*, VARIANT*);
 	HRESULT QueryStatusWB(OLECMDID, OLECMDF*);
 	HRESULT ExecWB(OLECMDID, OLECMDEXECOPT, VARIANT*, VARIANT*);
@@ -96,7 +96,7 @@ interface IWebBrowser2 : public IWebBrowserApp {
 	HRESULT put_Resizable(VARIANT_BOOL);
 }
 
-interface DWebBrowserEvents2 : public IDispatch {
+interface DWebBrowserEvents2 : IDispatch {
 	void StatusTextChange(BSTR);
 	void ProgressChange(LONG, LONG);
 	void CommandStateChange(LONG, VARIANT_BOOL);

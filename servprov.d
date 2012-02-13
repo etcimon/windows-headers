@@ -11,6 +11,6 @@ module win32.servprov;
 
 private import win32.basetyps, win32.unknwn, win32.windef, win32.wtypes;
 
-interface IServiceProvider : public IUnknown {
+interface IServiceProvider : IUnknown {
 	HRESULT QueryService(REFGUID, REFIID, void**);
 }
