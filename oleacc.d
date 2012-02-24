@@ -156,7 +156,7 @@ enum SELFLAG
 const SELFLAG_VALID = 0x0000001F;
 
 
-interface IAccessible : IDispatch {
+interface IAccessible : public IDispatch {
 	HRESULT get_accParent(IDispatch**);
 	HRESULT get_accChildCount(int*);
 	HRESULT get_accChild(VARIANT, IDispatch **);

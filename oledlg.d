@@ -470,7 +470,7 @@ struct OLEUIPASTESPECIALA {
 }
 alias OLEUIPASTESPECIALA* POLEUIPASTESPECIALA, LPOLEUIPASTESPECIALA;
 
-interface IOleUILinkContainerW : IUnknown
+interface IOleUILinkContainerW : public IUnknown
 {
 	HRESULT QueryInterface(REFIID, PVOID*);
 	ULONG AddRef();
@@ -486,7 +486,7 @@ interface IOleUILinkContainerW : IUnknown
 }
 alias IOleUILinkContainerW* LPOLEUILINKCONTAINERW;
 
-interface IOleUILinkContainerA : IUnknown
+interface IOleUILinkContainerA : public IUnknown
 {
 	HRESULT QueryInterface(REFIID, PVOID*);
 	ULONG AddRef();
@@ -688,7 +688,7 @@ struct OLEUICHANGESOURCEA {
 }
 alias OLEUICHANGESOURCEA* POLEUICHANGESOURCEA, LPOLEUICHANGESOURCEA;
 
-interface IOleUIObjInfoW : IUnknown
+interface IOleUIObjInfoW : public IUnknown
 {
 	HRESULT QueryInterface(REFIID, PVOID*);
 	ULONG AddRef();
@@ -701,7 +701,7 @@ interface IOleUIObjInfoW : IUnknown
 }
 alias IOleUIObjInfoW *LPOLEUIOBJINFOW;
 
-interface IOleUIObjInfoA : IUnknown
+interface IOleUIObjInfoA : public IUnknown
 {
 	HRESULT QueryInterface(REFIID, PVOID*);
 	ULONG AddRef();
@@ -714,7 +714,7 @@ interface IOleUIObjInfoA : IUnknown
 }
 alias IOleUIObjInfoA *LPOLEUIOBJINFOA;
 
-interface IOleUILinkInfoW : IOleUILinkContainerW
+interface IOleUILinkInfoW : public IOleUILinkContainerW
 {
 	HRESULT QueryInterface(REFIID, PVOID*);
 	ULONG AddRef();
@@ -731,7 +731,7 @@ interface IOleUILinkInfoW : IOleUILinkContainerW
 }
 alias IOleUILinkInfoW *LPOLEUILINKINFOW;
 
-interface IOleUILinkInfoA : IOleUILinkContainerA
+interface IOleUILinkInfoA : public IOleUILinkContainerA
 {
 	HRESULT QueryInterface(REFIID, PVOID*);
 	ULONG AddRef();

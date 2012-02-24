@@ -66,7 +66,7 @@ struct REOBJECT {
 	DWORD           dwUser;
 }
 
-interface IRichEditOle : IUnknown {
+interface IRichEditOle : public IUnknown {
 	HRESULT GetClientSite(LPOLECLIENTSITE*);
 	LONG GetObjectCount();
 	LONG GetLinkCount();
@@ -86,7 +86,7 @@ interface IRichEditOle : IUnknown {
 };
 alias IRichEditOle* LPRICHEDITOLE;
 
-interface IRichEditOleCallback : IUnknown {
+interface IRichEditOleCallback : public IUnknown {
 	HRESULT GetNewStorage(LPSTORAGE*);
 	HRESULT GetInPlaceContext(LPOLEINPLACEFRAME*, LPOLEINPLACEUIWINDOW*, LPOLEINPLACEFRAMEINFO);
 	HRESULT ShowContainerUI(BOOL);
