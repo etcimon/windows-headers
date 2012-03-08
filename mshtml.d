@@ -43,7 +43,7 @@ alias IHTMLScreen LPHTMLSCREEN;
 interface IHTMLOptionElementFactory {};
 alias IHTMLOptionElementFactory LPHTMLOPTIONELEMENTFACTORY;
 
-interface IHTMLLinkElement : public IDispatch {
+interface IHTMLLinkElement : IDispatch {
 	HRESULT put_href(BSTR);
 	HRESULT get_href(BSTR*);
 	HRESULT put_rel(BSTR);
@@ -67,7 +67,7 @@ interface IHTMLLinkElement : public IDispatch {
 }
 alias IHTMLLinkElement LPHTMLLINKELEMENT;
 
-interface IHTMLImgElement : public IDispatch {
+interface IHTMLImgElement : IDispatch {
 	HRESULT put_isMap(VARIANT_BOOL);
 	HRESULT get_isMap(VARIANT_BOOL*);
 	HRESULT put_useMap(BSTR);
@@ -119,7 +119,7 @@ interface IHTMLImgElement : public IDispatch {
 }
 alias IHTMLImgElement LPHTMLIMGELEMENT;
 
-interface IHTMLElementCollection : public IDispatch {
+interface IHTMLElementCollection : IDispatch {
 	HRESULT toString(BSTR*);
 	HRESULT put_length(LONG);
 	HRESULT get_length(LONG*);
@@ -129,11 +129,11 @@ interface IHTMLElementCollection : public IDispatch {
 }
 alias IHTMLElementCollection LPHTMLELEMENTCOLLECTION;
 
-interface IHTMLDocument : public IDispatch {
+interface IHTMLDocument : IDispatch {
 	HRESULT get_Script(IDispatch*);
 }
 
-interface IHTMLDocument2 : public IHTMLDocument {
+interface IHTMLDocument2 : IHTMLDocument {
 	HRESULT get_all(LPHTMLELEMENTCOLLECTION*);
 	HRESULT get_body(LPHTMLELEMENT*);
 	HRESULT get_activeElement(LPHTMLELEMENT*);
@@ -244,7 +244,7 @@ interface IHTMLDocument2 : public IHTMLDocument {
 	HRESULT createStyleSheet(BSTR,LONG,LPHTMLSTYLESHEET*);
 }
 
-interface IHTMLSelectionObject : public IDispatch {
+interface IHTMLSelectionObject : IDispatch {
 	HRESULT createRange(IDispatch*);
 	HRESULT empty();
 	HRESULT clear();
@@ -252,7 +252,7 @@ interface IHTMLSelectionObject : public IDispatch {
 }
 alias IHTMLSelectionObject LPHTMLSELECTIONOBJECT;
 
-interface IHTMLTxtRange : public IDispatch {
+interface IHTMLTxtRange : IDispatch {
 	HRESULT get_htmlText(BSTR*);
 	HRESULT put_text(BSTR);
 	HRESULT get_text(BSTR*);
@@ -285,7 +285,7 @@ interface IHTMLTxtRange : public IDispatch {
 	HRESULT execCommandShowHelp(BSTR,VARIANT_BOOL*);
 }
 
-interface IHTMLElement : public IDispatch {
+interface IHTMLElement : IDispatch {
 	HRESULT setAttribute(BSTR,VARIANT,LONG);
 	HRESULT getAttribute(BSTR,LONG,VARIANT*);
 	HRESULT removeAttribute(BSTR,LONG,VARIANT_BOOL*);
@@ -376,12 +376,12 @@ interface IHTMLElement : public IDispatch {
 }
 alias IHTMLElement LPHTMLELEMENT;
 
-interface IHTMLFramesCollection2 : public IDispatch {
+interface IHTMLFramesCollection2 : IDispatch {
 	HRESULT item(VARIANT*,VARIANT*);
 	HRESULT get_length(LONG*);
 }
 
-interface IHTMLWindow2 : public IHTMLFramesCollection2 {
+interface IHTMLWindow2 : IHTMLFramesCollection2 {
 	HRESULT get_frames(IHTMLFramesCollection2*);
 	HRESULT put_defaultStatus(BSTR);
 	HRESULT get_defaultStatus(BSTR*);
@@ -453,7 +453,7 @@ interface IHTMLWindow2 : public IHTMLFramesCollection2 {
 }
 alias IHTMLWindow2 LPHTMLWINDOW2;
 
-interface IHTMLFrameBase : public IDispatch {
+interface IHTMLFrameBase : IDispatch {
 	HRESULT put_src(BSTR);
 	HRESULT get_src(BSTR*);
 	HRESULT put_name(BSTR);
@@ -474,7 +474,7 @@ interface IHTMLFrameBase : public IDispatch {
 	HRESULT get_scrolling(BSTR*);
 }
 
-interface IHTMLFrameBase2 : public IDispatch {
+interface IHTMLFrameBase2 : IDispatch {
 	HRESULT get_contentWindow(IHTMLWindow2 *);
 	HRESULT put_onload(VARIANT);
 	HRESULT get_onload(VARIANT*);
@@ -485,12 +485,12 @@ interface IHTMLFrameBase2 : public IDispatch {
 	HRESULT get_allowTransparency(VARIANT_BOOL*);
 }
 
-interface IHTMLFrameBase3 : public IDispatch {
+interface IHTMLFrameBase3 : IDispatch {
 	HRESULT put_longDesc(BSTR);
 	HRESULT get_longDesc(BSTR*);
 }
 
-interface IHTMLBodyElement : public IDispatch {
+interface IHTMLBodyElement : IDispatch {
 	HRESULT put_background(BSTR);
 	HRESULT get_background(BSTR*);
 	HRESULT put_bgProperties(BSTR);
@@ -528,7 +528,7 @@ interface IHTMLBodyElement : public IDispatch {
 	HRESULT createTextRange(IHTMLTxtRange*);
 }
 
-interface IHTMLBodyElement2 : public IDispatch {
+interface IHTMLBodyElement2 : IDispatch {
 	HRESULT put_onbeforeprint(VARIANT);
 	HRESULT get_onbeforeprint(VARIANT*);
 	HRESULT put_onafterprint(VARIANT);
