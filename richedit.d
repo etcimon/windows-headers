@@ -285,6 +285,7 @@ const SCF_WORD       = 2;
 const SCF_ALL        = 4;
 const SCF_USEUIRULES = 8;
 
+alias DWORD TEXTMODE;
 const TM_PLAINTEXT=1;
 const TM_RICHTEXT=2;
 const TM_SINGLELEVELUNDO=4;
@@ -297,6 +298,14 @@ const GT_USECRLF=1;
 
 const yHeightCharPtsMost=1638;
 const lDefaultTab=720;
+
+alias DWORD UNDONAMEID;
+const UID_UNKNOWN    = 0;
+const UID_TYPING     = 1;
+const UID_DELETE     = 2;
+const UID_DRAGDROP   = 3;
+const UID_CUT        = 4;
+const UID_PASTE      = 5;
 
 struct CHARFORMATA {
 	UINT cbSize = this.sizeof;
@@ -542,7 +551,7 @@ struct GETTEXTEX {
 	DWORD flags;
 	UINT codepage;
 	LPCSTR lpDefaultChar;
-	LPBOOL lpUsedDefaultChar;
+	LPBOOL lpUsedDefChar;
 }
 
 extern (Windows) {

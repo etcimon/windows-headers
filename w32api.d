@@ -30,7 +30,11 @@ const __W32API_MINOR_VERSION = 12;
  *	API features new to Windows Vista are not yet included in this
  *	translation or in MinGW, but this is here ready to start adding them.
  */
-version (WindowsVista) {
+version (Windows7) {
+	const uint
+		_WIN32_WINNT   = 0x601,
+        _WIN32_WINDOWS = uint.max;
+} else version (WindowsVista) {
 	const uint
 		_WIN32_WINNT   = 0x600,
 		_WIN32_WINDOWS = uint.max;
@@ -71,7 +75,9 @@ const uint WINVER = _WIN32_WINDOWS < _WIN32_WINNT ?
                     _WIN32_WINDOWS : _WIN32_WINNT;
 const bool _WIN32_WINNT_ONLY = _WIN32_WINDOWS == uint.max;
 
-version (IE7) {
+version (IE8) {
+	const uint _WIN32_IE = 0x800;
+} version (IE7) {
 	const uint _WIN32_IE = 0x700;
 } else version (IE602) {
 	const uint _WIN32_IE = 0x603;

@@ -57,7 +57,8 @@ enum {
 	ACM_OPENA = WM_USER + 100,
 	ACM_PLAY  = WM_USER + 101,
 	ACM_STOP  = WM_USER + 102,
-	ACM_OPENW = WM_USER + 103
+	ACM_OPENW = WM_USER + 103,
+    ACM_ISPLAYING = WM_USER + 104
 }
 
 enum {
@@ -282,6 +283,29 @@ static if (_WIN32_IE >= 0x400) {
 	}
 }
 
+static if (_WIN32_IE >= 0x500) {
+	enum {
+		WMN_FIRST = -1000U,
+		WMN_LAST = -1200U,
+    }
+}
+
+static if (_WIN32_WINNT >= 0x0501)
+{
+    enum {
+        BCN_FIRST = -1250U,
+        BCN_LAST = -1350U,
+    }
+}
+
+static if (_WIN32_WINNT >= 0x600)
+{
+    enum {
+        TRBN_FIRST = -1501U,
+        TRBN_LAST = -1519U,
+    }
+}
+
 enum {
 	HDI_WIDTH  = 1,
 	HDI_HEIGHT = 1,
@@ -377,6 +401,23 @@ static if (_WIN32_IE >= 0x400) {
 	enum {
 		HDM_GETUNICODEFORMAT = CCM_GETUNICODEFORMAT,
 		HDM_SETUNICODEFORMAT = CCM_SETUNICODEFORMAT
+	}
+}
+static if (_WIN32_IE >= 0x0500) {
+	enum {
+		HDM_SETBITMAPMARGIN = HDM_FIRST + 20,
+		HDM_GETBITMAPMARGIN = HDM_FIRST + 21,
+        HDM_SETFILTERCHANGETIMEOUT = HDM_FIRST + 22,
+        HDM_EDITFILTER = HDM_FIRST + 23,
+        HDM_CLEARFILTER = HDM_FIRST + 24,
+    }
+}
+static if (_WIN32_IE >= 0x0600) {
+	enum {
+        HDM_GETITEMDROPDOWNRECT = HDM_FIRST + 25,
+        HDM_GETOVERFLOWRECT = HDM_FIRST + 26,
+        HDM_GETFOCUSEDITEM = HDM_FIRST + 27,
+        HDM_SETFOCUSEDITEM = HDM_FIRST + 28,
 	}
 }
 
@@ -713,11 +754,31 @@ static if (_WIN32_IE >= 0x400) {
 		TB_MAPACCELERATORW,
 		TB_GETSTRINGW,
 		TB_GETSTRINGA, //       = WM_USER + 92
+        TB_SETHOTITEM2          = WM_USER + 94,
+        TB_SETLISTGAP           = WM_USER + 96,
+        TB_GETIMAGELISTCOUNT    = WM_USER + 98,
+        TB_GETIDEALSIZE         = WM_USER + 99,
+        //TB_TRANSLATEACCELERATOR = CCM_TRANSLATEACCELERATOR,
 		TB_SETCOLORSCHEME       = CCM_SETCOLORSCHEME,
 		TB_GETCOLORSCHEME       = CCM_GETCOLORSCHEME,
 		TB_SETUNICODEFORMAT     = CCM_SETUNICODEFORMAT,
 		TB_GETUNICODEFORMAT     = CCM_GETUNICODEFORMAT
 	}
+}
+
+static if (_WIN32_WINNT >= 0x501) {
+	enum {
+        TB_GETMETRICS = WM_USER + 101,
+        TB_SETMETRICS = WM_USER + 102,
+    }
+}
+
+static if (_WIN32_WINNT >= 0x600) {
+	enum {
+        TB_GETITEMDROPDOWNRECT = WM_USER + 103,
+        TB_SETPRESSEDIMAGELIST = WM_USER + 104,
+        TB_GETPRESSEDIMAGELIST = WM_USER + 105,
+    }
 }
 
 const TBBF_LARGE = 1;
@@ -883,6 +944,21 @@ static if (_WIN32_IE >= 0x400) {  // IE4.0 ???
 		TTM_SETTITLEA,
 		TTM_SETTITLEW // = WM_USER + 33
 	}
+    static if (_WIN32_IE >= 0x0500)
+    {
+        alias TTM_SETTITLEW TTM_SETTITLE;
+    }
+    else
+    {
+        alias TTM_SETTITLEA TTM_SETTITLE;
+    }
+}
+
+static if (_WIN32_WINNT >= 0x0501) {
+    enum {
+        TTM_POPUP = (WM_USER + 34),
+        TTM_GETTITLE = (WM_USER + 35),
+    }
 }
 
 enum {
@@ -1110,9 +1186,37 @@ enum {
 	PBM_SETBKCOLOR   = CCM_SETBKCOLOR
 }
 
+static if (_WIN32_WINNT >= 0x501) {
+    enum {
+        PBM_SETMARQUEE = WM_USER + 10,
+    }
+}
+
+static if (_WIN32_WINNT >= 0x600) {
+    enum {
+        PBM_GETSTEP = WM_USER + 13,
+        PBM_GETBKCOLOR,
+        PBM_GETBARCOLOR,
+        PBM_SETSTATE,
+        PBM_GETSTATE,
+    }
+}
+
 enum {
 	PBS_SMOOTH   = 1,
 	PBS_VERTICAL = 4
+}
+
+static if (_WIN32_WINNT >= 0x501) {
+    enum {
+        PBS_MARQUEE = 8,
+    }
+}
+
+static if (_WIN32_WINNT >= 0x600) {
+    enum {
+        PBS_SMOOTHREVERSE = 16,
+    }
 }
 
 enum {
@@ -1258,6 +1362,9 @@ enum {
 	LVM_SETIMAGELIST,
 	LVM_GETITEMCOUNT,       // = LVM_FIRST +   4
 	LVM_SORTITEMSEX            = LVM_FIRST +  81,
+    LVM_GETGROUPSTATE          = LVM_FIRST + 92,
+    LVM_GETFOCUSEDGROUP,
+    LVM_GETGROUPRECT           = LVM_FIRST + 98,
 	LVM_SETVIEW                = LVM_FIRST + 142,
 	LVM_GETVIEW,            // = LVM_FIRST + 143
 	LVM_INSERTGROUP            = LVM_FIRST + 145,
@@ -1265,6 +1372,9 @@ enum {
 	LVM_GETGROUPINFO           = LVM_FIRST + 149,
 	LVM_REMOVEGROUP,
 	LVM_MOVEGROUP,          // = LVM_FIRST + 151
+    LVM_GETGROUPCOUNT,
+    LVM_GETGROUPINFOBYINDEX,
+    LVM_MOVEITEMTOGROUP,
 	LVM_SETGROUPMETRICS        = LVM_FIRST + 155,
 	LVM_GETGROUPMETRICS,
 	LVM_ENABLEGROUPVIEW,
@@ -1288,13 +1398,28 @@ enum {
 	LVM_GETOUTLINECOLOR,
 	LVM_SETOUTLINECOLOR,    // = LVM_FIRST + 177
 	LVM_CANCELEDITLABEL        = LVM_FIRST + 179,
-	LVM_MAPIDTOINDEX           = LVM_FIRST + 181
+    LVM_MAPINDEXTOID           = LVM_FIRST + 180,
+	LVM_MAPIDTOINDEX           = LVM_FIRST + 181,
+    LVM_ISITEMVISIBLE          = LVM_FIRST + 182,
 }
 
 static if (_WIN32_WINNT >= 0x501) {
 	enum {
 		LVM_SETSELECTEDCOLUMN  = LVM_FIRST + 140
 	}
+}
+
+static if (_WIN32_WINNT >= 0x600) {
+    enum {
+        LVM_GETEMPTYTEXT = LVM_FIRST + 204,
+        LVM_GETFOOTERRECT = LVM_FIRST + 205,
+        LVM_GETFOOTERINFO = LVM_FIRST + 206,
+        LVM_GETFOOTERITEMRECT = LVM_FIRST + 207,
+        LVM_GETFOOTERITEM = (LVM_FIRST + 208),
+        LVM_GETITEMINDEXRECT = (LVM_FIRST + 209),
+        LVM_SETITEMINDEXSTATE = (LVM_FIRST + 210),
+        LVM_GETNEXTITEMINDEX = (LVM_FIRST + 211),
+    }
 }
 
 enum {
@@ -1693,6 +1818,24 @@ static if (_WIN32_IE >= 0x500) {
 	}
 }
 
+static if (_WIN32_IE >= 0x501) {
+	enum {
+        TVM_MAPACCIDTOHTREEITEM = TV_FIRST + 42,
+        TVM_MAPHTREEITEMTOACCID = TV_FIRST + 43,
+        TVM_SETEXTENDEDSTYLE = TV_FIRST + 44,
+        TVM_GETEXTENDEDSTYLE = TV_FIRST + 45,
+        TVM_SETAUTOSCROLLINFO = TV_FIRST + 59
+    }
+}
+
+static if (_WIN32_IE >= 0x600) {
+	enum {
+        TVM_GETSELECTEDCOUNT = TV_FIRST + 70,
+        TVM_SHOWINFOTIP = TV_FIRST + 71,
+        TVM_GETITEMPARTRECT = TV_FIRST + 72,
+    }
+}
+
 enum {
 	TVE_COLLAPSE      = 1,
 	TVE_EXPAND        = 2,
@@ -1728,6 +1871,12 @@ enum {
 static if (_WIN32_IE >= 0x400) {
 	enum {
 		TVGN_LASTVISIBLE = 10
+	}
+}
+
+static if (_WIN32_IE >= 0x600) {
+	enum {
+		TVGN_NEXTSELECTED = 11
 	}
 }
 
@@ -1937,7 +2086,12 @@ enum {
 static if (_WIN32_WINNT >= 0x501) {
 	enum {
 		CCM_SETWINDOWTHEME = 0x200b,
-		CCM_DPISCALE       = 0x200c
+		CCM_DPISCALE       = 0x200c,
+
+        RB_GETBANDMARGINS = WM_USER + 40,
+        RB_SETWINDOWTHEME = CCM_SETWINDOWTHEME,
+        TB_SETWINDOWTHEME  = CCM_SETWINDOWTHEME,
+        TTM_SETWINDOWTHEME = CCM_SETWINDOWTHEME,
 	}
 }
 
@@ -2022,6 +2176,7 @@ static if (_WIN32_IE >= 0x400) {
 }
 
 enum {
+    DTM_FIRST         = 0x10000,
 	DTM_GETSYSTEMTIME = 0x1001,
 	DTM_SETSYSTEMTIME = 0x1002,
 	DTM_GETRANGE      = 0x1003,
@@ -2033,6 +2188,16 @@ enum {
 	DTM_SETMCFONT     = 0x1009,
 	DTM_GETMCFONT     = 0x100a,
 	DTM_SETFORMATW    = 0x1050
+}
+
+static if (_WIN32_WINNT >= 0x600) {
+    enum {
+        DTM_SETMCSTYLE = DTM_FIRST + 11,
+        DTM_GETMCSTYLE,
+        DTM_CLOSEMONTHCAL,
+        DTM_GETDATETIMEPICKERINFO,
+        DTM_GETIDEALSIZE,
+    }
 }
 
 enum {
@@ -2050,6 +2215,7 @@ enum {
 }
 
 enum {
+    MCM_FIRST             = 0x1000,
 	MCM_GETCURSEL         = 0x1001,
 	MCM_SETCURSEL         = 0x1002,
 	MCM_GETMAXSELCOUNT    = 0x1003,
@@ -2073,6 +2239,20 @@ enum {
 	MCM_GETMAXTODAYWIDTH  = 0x1015,
 	MCM_GETUNICODEFORMAT  = CCM_GETUNICODEFORMAT,
 	MCM_SETUNICODEFORMAT  = CCM_SETUNICODEFORMAT
+}
+
+static if (_WIN32_WINNT >= 0x600) {
+    enum {
+        MCM_GETCURRENTVIEW = MCM_FIRST + 22,
+        MCM_GETCALENDARCOUNT,
+        MCM_GETCALENDARGRIDINFO,
+        MCM_GETCALID = MCM_FIRST + 27,
+        MCM_SETCALID,
+        MCM_SIZERECTTOMIN,
+        MCM_SETCALENDARBORDER,
+        MCM_GETCALENDARBORDER,
+        MCM_SETCURRENTVIEW,
+    }
 }
 
 enum {
@@ -2360,6 +2540,88 @@ static if (_WIN32_IE >= 0x400) {
 	}
 }
 
+static if (_WIN32_IE >= 0x500) {
+	enum {
+        RB_PUSHCHEVRON = WM_USER + 43,
+    }
+}
+
+static if (_WIN32_IE >= 0x600) {
+	enum {
+        RB_SETEXTENDEDSTYLE = WM_USER + 41,
+        RB_GETEXTENDEDSTYLE = WM_USER + 42,
+    }
+}
+
+static if (_WIN32_WINNT >= 0x500) {
+	enum {
+        RB_SETBANDWIDTH = WM_USER + 44,
+    }
+}
+
+static if (_WIN32_WINNT >= 0x501) {
+	enum {
+        ECM_FIRST = 0x1500,
+        BCM_FIRST = 0x1600,
+
+        BCM_GETIDEALSIZE = BCM_FIRST + 0x0001,
+        BCM_SETIMAGELIST = BCM_FIRST + 0x0002,
+        BCM_GETIMAGELIST = BCM_FIRST + 0x0003,
+        BCM_SETTEXTMARGIN = BCM_FIRST + 0x0004,
+        BCM_GETTEXTMARGIN = BCM_FIRST + 0x0005,
+
+        BCN_HOTITEMCHANGE = BCN_FIRST + 0x0001,
+    }
+
+    struct NMBCHOTITEM {
+        NMHDR hdr;
+        DWORD dwFlags;
+    }
+    alias NMBCHOTITEM* LPNMBCHOTITEM;
+}
+
+static if(_WIN32_WINNT >= 0x0600) {
+    enum {
+        BST_DROPDOWNPUSHED      = 0x0400,
+
+        BS_SPLITBUTTON          = 0x0000_000C,
+        BS_DEFSPLITBUTTON       = 0x0000_000D,
+        BS_COMMANDLINK          = 0x0000_000E,
+        BS_DEFCOMMANDLINK       = 0x0000_000F,
+
+        BCSIF_GLYPH             = 0x0001,
+        BCSIF_IMAGE             = 0x0002,
+        BCSIF_STYLE             = 0x0004,
+        BCSIF_SIZE              = 0x0008,
+
+        BCSS_NOSPLIT            = 0x0001,
+        BCSS_STRETCH            = 0x0002,
+        BCSS_ALIGNLEFT          = 0x0004,
+        BCSS_IMAGE              = 0x0008,
+
+        BCM_SETDROPDOWNSTATE = BCM_FIRST + 0x0006,
+        BCM_SETSPLITINFO = BCM_FIRST + 0x0007,
+        BCM_GETSPLITINFO = BCM_FIRST + 0x0008,
+        BCM_SETNOTE = BCM_FIRST + 0x0009,
+        BCM_GETNOTE = BCM_FIRST + 0x000A,
+        BCM_GETNOTELENGTH = BCM_FIRST + 0x000B,
+        BCM_SETSHIELD = BCM_FIRST + 0x000C,
+
+        BCN_DROPDOWN = BCN_FIRST + 0x0002,
+    }
+
+    const HIMAGELIST BCCL_NOGLYPH = cast(HIMAGELIST)-1;
+
+    struct BUTTON_SPLITINFO
+    {
+        UINT mask;
+        HIMAGELIST himlGlyph;
+        UINT uSplitStyle;
+        SIZE size;
+    }
+    alias BUTTON_SPLITINFO* PBUTTON_SPLITINFO;
+}
+
 enum {
 	CBEM_INSERTITEMA = WM_USER + 1,
 	CBEM_SETIMAGELIST,
@@ -2387,6 +2649,13 @@ enum {
 	CBEM_INSERTITEMW    = WM_USER + 11,
 	CBEM_SETITEMW       = WM_USER + 12,
 	CBEM_GETITEMW       = WM_USER + 13
+}
+
+static if (_WIN32_WINNT >= 0x0501)
+{
+    enum {
+        CBEM_SETWINDOWTHEME = CCM_SETWINDOWTHEME
+    }
 }
 
 enum {
@@ -2448,13 +2717,67 @@ static if (_WIN32_WINNT >= 0x0501) {
 		LM_HITTEST        = WM_USER + 768,
 		LM_GETIDEALHEIGHT,
 		LM_SETITEM,
-		LM_GETITEM     // = WM_USER + 771
+		LM_GETITEM,     // = WM_USER + 771
+        LM_GETIDEALSIZE = LM_GETIDEALHEIGHT,
 	}
 
 	const size_t MAX_LINKID_TEXT  =   48;
 	const size_t L_MAX_URL_LENGTH = 2084;
 }
 
+
+struct TBMETRICS {
+    UINT  cbSize = TBMETRICS.sizeof;
+    DWORD dwMask;
+    int   cxPad;
+    int   cyPad;
+    int   cxBarPad;
+    int   cyBarPad;
+    int   cxButtonSpacing;
+    int   cyButtonSpacing;
+}
+alias TBMETRICS* LPTBMETRICS;
+
+static if (_WIN32_WINNT >= 0x0501) {
+    struct TTGETTITLE {
+        DWORD dwSize = TTGETTITLE.sizeof;
+        UINT  uTitleBitmap;
+        UINT  cch;
+        WCHAR* pszTitle;
+    }
+    alias TTGETTITLE* PTTGETTITLE;
+}
+
+static if (_WIN32_WINNT >= 0x0600) {
+    struct MCGRIDINFO {
+        UINT cbSize;
+        DWORD dwPart;
+        DWORD dwFlags;
+        int iCalendar;
+        int iRow;
+        int iCol;
+        BOOL bSelected;
+        SYSTEMTIME stStart;
+        SYSTEMTIME stEnd;
+        RECT rc;
+        PWSTR pszName;
+        size_t cchName;
+    }
+    alias MCGRIDINFO* PMCGRIDINFO;
+
+    struct DATETIMEPICKERINFO
+    {
+        DWORD cbSize;
+        RECT rcCheck;
+        DWORD stateCheck;
+        RECT rcButton;
+        DWORD stateButton;
+        HWND hwndEdit;
+        HWND hwndUD;
+        HWND hwndDropDown;
+    }
+    alias DATETIMEPICKERINFO* LPDATETIMEPICKERINFO;
+}
 
 struct COMBOBOXEXITEMA {
 	UINT   mask;
@@ -3505,6 +3828,7 @@ static if (_WIN32_WINNT >= 0x501) {
 		DWORD dwReserved;
 	}
 	alias LVINSERTMARK* PLVINSERTMARK;
+	alias LVINSERTMARK* LPLVINSERTMARK;
 
 	struct LVTILEINFO {
 		UINT     cbSize = LVTILEINFO.sizeof;
@@ -3545,6 +3869,47 @@ static if (_WIN32_WINNT >= 0x501) {
 		HBITMAP hbmp;
 	}
 	alias LVSETINFOTIP* PLVSETINFOTIP;
+
+    struct BUTTON_IMAGELIST {
+        HIMAGELIST himl;
+        RECT margin;
+        UINT uAlign;
+    }
+    alias BUTTON_IMAGELIST* PBUTTON_IMAGELIST;
+}
+
+static if (_WIN32_WINNT >= 0x600) {
+    struct LVITEMINDEX
+    {
+        int iItem;
+        int iGroup;
+    };
+    alias LVITEMINDEX* PLVITEMINDEX;
+
+    struct LVFOOTERINFO
+    {
+        UINT mask;
+        LPWSTR pszText;
+        int cchTextMax;
+        UINT cItems;
+    }
+    alias LVFOOTERINFO* LPLVFOOTERINFO;
+
+    struct LVFOOTERITEM
+    {
+        UINT mask;
+        int iItem;
+        LPWSTR pszText;
+        int cchTextMax;
+        UINT state;
+        UINT stateMask;
+    }
+    alias LVFOOTERITEM *LPLVFOOTERITEM;
+
+    alias UINT TVITEMPART;
+    enum {
+        TVGIPR_BUTTON  = 0x0001,
+    }
 }
 
 alias int function(LPARAM, LPARAM, LPARAM) PFNLVCOMPARE;
@@ -3699,6 +4064,14 @@ struct TVHITTESTINFO {
 }
 alias TVHITTESTINFO* LPTVHITTESTINFO, LPTV_HITTESTINFO;
 alias TVHITTESTINFO TV_HITTESTINFO;
+
+static if (_WIN32_WINNT >= 0x0600) {
+    struct TVGETITEMPARTRECTINFO {
+        HTREEITEM hti;
+        RECT*     prc;
+        TVITEMPART partID;
+    }
+}
 
 alias int function(LPARAM, LPARAM, LPARAM) PFNTVCOMPARE;
 struct TVSORTCB {
@@ -4805,7 +5178,7 @@ extern (Windows) {
 	BOOL ImageList_Draw(HIMAGELIST, int, HDC, int, int, UINT);
 	BOOL ImageList_DrawEx(HIMAGELIST, int, HDC, int, int, int, int, COLORREF,
 	  COLORREF, UINT);
-	void ImageList_EndDrag(PVOID);
+	void ImageList_EndDrag();
 	COLORREF ImageList_GetBkColor(HIMAGELIST);
 	HIMAGELIST ImageList_GetDragImage(LPPOINT, LPPOINT);
 	HICON ImageList_GetIcon(HIMAGELIST, int, UINT);
@@ -5233,7 +5606,9 @@ static if (_WIN32_WINNT >= 0x501) {
 	enum {
 		CBM_FIRST        = 0x1700,
 		CB_SETMINVISIBLE = CBM_FIRST + 1,
-		CB_GETMINVISIBLE = CBM_FIRST + 2
+		CB_GETMINVISIBLE = CBM_FIRST + 2,
+        CB_SETCUEBANNER = CBM_FIRST + 3,
+        CB_GETCUEBANNER = CBM_FIRST + 4,
 	}
 
 	BOOL ComboBox_SetMinVisible(HWND w, INT i) {
@@ -5872,3 +6247,25 @@ void CommandBar_InsertButton(HWND hwnd, int i, LPTBBUTTON lptbbutton) {
 alias DestroyWindow CommandBar_Destroy;
 +/
 //#endif // _WIN32_WCE
+
+
+static if (_WIN32_WINNT >= 0x0501) {
+    struct EDITBALLOONTIP
+    {
+        DWORD cbStruct;
+        LPCWSTR pszTitle;
+        LPCWSTR pszText;
+        INT ttiIcon;
+    }
+    alias EDITBALLOONTIP* PEDITBALLOONTIP;
+
+const EM_SETCUEBANNER = ECM_FIRST + 1;
+const EM_GETCUEBANNER = ECM_FIRST + 2;
+const EM_SHOWBALLOONTIP = ECM_FIRST + 3;
+const EM_HIDEBALLOONTIP = ECM_FIRST + 4;
+}
+
+static if (_WIN32_WINNT >= 0x0600) {
+const EM_SETHILITE = ECM_FIRST + 5;
+const EM_GETHILITE = ECM_FIRST + 6;
+}

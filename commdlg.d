@@ -32,7 +32,14 @@ enum : UINT {
 	CDN_SHAREVIOLATION = CDN_FIRST - 3,
 	CDN_HELP           = CDN_FIRST - 4,
 	CDN_FILEOK         = CDN_FIRST - 5,
-	CDN_TYPECHANGE     = CDN_FIRST - 6
+	CDN_TYPECHANGE     = CDN_FIRST - 6,
+}
+
+static if(_WIN32_WINNT >= 0x0500)
+{
+    enum : UINT {
+        CDN_INCLUDEITEM    = CDN_FIRST - 7,
+    }
 }
 
 enum : UINT {

@@ -19,8 +19,20 @@ ushort MAKEWORD(ubyte a, ubyte b) {
 	return cast(ushort) ((b << 8) | a);
 }
 
+ushort MAKEWORD(ushort a, ushort b) {
+    assert((a & 0xFF00) == 0);
+    assert((b & 0xFF00) == 0);
+    return MAKEWORD(cast(ubyte)a, cast(ubyte)b);
+}
+
 uint MAKELONG(ushort a, ushort b) {
 	return cast(uint) ((b << 16) | a);
+}
+
+uint MAKELONG(uint a, uint b) {
+    assert((a & 0xFFFF0000) == 0);
+    assert((b & 0xFFFF0000) == 0);
+    return MAKELONG(cast(ushort)a, cast(ushort)b);
 }
 
 ushort LOWORD(uint l) {

@@ -3306,8 +3306,8 @@ alias METAHEADER* LPMETAHEADER;
 align:
 
 struct ENHMETAHEADER {
-	DWORD iType;
-	DWORD nSize;
+	DWORD iType = EMR_HEADER;
+	DWORD nSize = ENHMETAHEADER.sizeof;
 	RECTL rclBounds;
 	RECTL rclFrame;
 	DWORD dSignature = ENHMETA_SIGNATURE;
@@ -3896,8 +3896,8 @@ static if (_WIN32_WINNT >= 0x0500) {
 	}
 	alias ENUMLOGFONTEXDVW* PENUMLOGFONTEXDVW, LPENUMLOGFONTEXDVW;
 
-	HFONT CreateFontIndirectExA(ENUMLOGFONTEXDVA*);
-	HFONT CreateFontIndirectExW(ENUMLOGFONTEXDVW*);
+	HFONT CreateFontIndirectExA(CPtr!(ENUMLOGFONTEXDVA));
+	HFONT CreateFontIndirectExW(CPtr!(ENUMLOGFONTEXDVW));
 	version (Unicode)
 		alias CreateFontIndirectExW CreateFontIndirectEx;
 	else
@@ -4180,6 +4180,11 @@ extern(Windows) {
 	BOOL GetCurrentPositionEx(HDC, LPPOINT);
 	HCURSOR GetCursor();
 	BOOL GetDCOrgEx(HDC, LPPOINT);
+    static if (_WIN32_WINNT >= 0x0500)
+    {
+        DWORD GetDCPenColor(HGDIOBJ);
+        COLORREF GetDCBrushColor(HGDIOBJ);
+    }
 	int GetDeviceCaps(HDC, int);
 	BOOL GetDeviceGammaRamp(HDC, PVOID);
 	UINT GetDIBColorTable(HDC, UINT, UINT, RGBQUAD*);
