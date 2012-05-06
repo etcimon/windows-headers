@@ -16,7 +16,7 @@ import win32.winbase;
 
 extern(Windows):
 
-enum {
+enum :ULONG{
     ISC_REQ_DELEGATE = 1,
     ISC_REQ_MUTUAL_AUTH = 2,
     ISC_REQ_REPLAY_DETECT = 4,
@@ -38,7 +38,7 @@ enum {
 
 enum ISC_RET_EXTENDED_ERROR = 16384;
 
-enum {
+enum :ULONG{
     ASC_REQ_DELEGATE = 1,
     ASC_REQ_MUTUAL_AUTH = 2,
     ASC_REQ_REPLAY_DETECT = 4,
@@ -57,7 +57,7 @@ enum {
 enum SECURITY_NATIVE_DREP  = 16;
 enum SECURITY_NETWORK_DREP = 0;
 
-enum {
+enum :ULONG{
     SECPKG_STATE_ENCRYPTION_PERMITTED               = 0x01,
     SECPKG_STATE_STRONG_ENCRYPTION_PERMITTED        = 0x02,
     SECPKG_STATE_DOMAIN_CONTROLLER                  = 0x04,
