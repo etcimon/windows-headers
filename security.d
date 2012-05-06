@@ -10,7 +10,7 @@
 \***********************************************************************/
 module win32.security;
 
-enum {
+enum :SECURITY_STATUS{
     SEC_E_OK = 0,
     SEC_E_CERT_EXPIRED = (-2146893016),
     SEC_E_INCOMPLETE_MESSAGE = (-2146893032),
@@ -30,7 +30,7 @@ enum {
     SEC_E_UNKNOWN_CREDENTIALS = (-2146893043),
     SEC_E_NOT_OWNER = (-2146893050),
 }
-enum {
+enum :SECURITY_STATUS {
     SEC_I_RENEGOTIATE = 590625,
     SEC_I_COMPLETE_AND_CONTINUE = 590612,
     SEC_I_COMPLETE_NEEDED = 590611,
@@ -41,5 +41,6 @@ enum {
 /* always a char */
 alias char SEC_CHAR;
 alias wchar SEC_WCHAR;
+
 alias int SECURITY_STATUS;
 
