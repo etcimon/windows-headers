@@ -17,14 +17,14 @@ import win32.security;
 import win32.ntsecapi;
 import win32.subauth;
 
-enum {
+enum :ULONG{
     SECPKG_CRED_INBOUND = 1,
     SECPKG_CRED_OUTBOUND = 2,
     SECPKG_CRED_BOTH = (SECPKG_CRED_OUTBOUND|SECPKG_CRED_INBOUND),
     SECPKG_CRED_ATTR_NAMES = 1,
 }
 
-enum {
+enum :ULONG{
     SECPKG_FLAG_INTEGRITY = 1,
     SECPKG_FLAG_PRIVACY = 2,
     SECPKG_FLAG_TOKEN_ONLY = 4,
@@ -38,7 +38,7 @@ enum {
     SECPKG_FLAG_STREAM = 1024,
 }
 
-enum {
+enum :ULONG{
     SECPKG_ATTR_AUTHORITY = 6,
     SECPKG_ATTR_CONNECTION_INFO = 90,
     SECPKG_ATTR_ISSUER_LIST = 80,
@@ -55,7 +55,7 @@ enum {
     SECPKG_ATTR_STREAM_SIZES = 4,
 }
 
-enum {
+enum :ULONG{
     SECBUFFER_EMPTY = 0,
     SECBUFFER_DATA = 1,
     SECBUFFER_TOKEN = 2,
