@@ -164,16 +164,16 @@ enum : DWORD {
 }
 
 // NOTE: This isn't even used anywhere...
-private template _IO(char x, ubyte y) {
+template _IO(char x, ubyte y) {
 	const DWORD _IO = IOC_VOID | (cast(ubyte)x<<8) | y;
 }
 
-private template _IOR(char x, ubyte y, t) {
+template _IOR(char x, ubyte y, t) {
 	const DWORD _IOR = IOC_OUT | ((t.sizeof & IOCPARAM_MASK)<<16)
 		| (cast(ubyte)x<<8) | y;
 }
 
-private template _IOW(char x, ubyte y, t) {
+template _IOW(char x, ubyte y, t) {
 	const DWORD _IOW = IOC_IN | ((t.sizeof & IOCPARAM_MASK)<<16)
 		| (cast(ubyte)x<<8) | y;
 }
