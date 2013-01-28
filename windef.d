@@ -89,7 +89,7 @@ static if (WINVER >= 0x500) {
 	alias HANDLE HTERMINAL, HWINEVENTHOOK;
 }
 
-alias extern (Windows) int function() FARPROC, NEARPROC, PROC;
+alias extern (Windows) INT_PTR function() FARPROC, NEARPROC, PROC;
 
 struct RECT {
 	LONG left;
