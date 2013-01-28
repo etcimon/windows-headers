@@ -35,11 +35,11 @@ uint MAKELONG(uint a, uint b) {
     return MAKELONG(cast(ushort)a, cast(ushort)b);
 }
 
-ushort LOWORD(uint l) {
+ushort LOWORD(ulong l) {
 	return cast(ushort) l;
 }
 
-ushort HIWORD(uint l) {
+ushort HIWORD(ulong l) {
 	return cast(ushort) (l >>> 16);
 }
 

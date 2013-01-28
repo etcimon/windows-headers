@@ -54,10 +54,21 @@ version (Win64) {
 	alias uint UHALF_PTR;
 	alias uint* PUHALF_PTR;
 
-	/*	*To* functions are conditioned out in MinGW.
-	 *	Presumably they're not working/tested yet.  Comment:
-			TODO when WIN64 is here
-	 */
+	uint HandleToULong(void* h) { return(cast(uint) cast(ULONG_PTR) h); }
+	int HandleToLong(void* h)   { return(cast(int) cast(LONG_PTR) h); }
+	void* ULongToHandle(uint h) { return(cast(void*) cast(UINT_PTR) h); }
+	void* LongToHandle(int h)   { return(cast(void*) cast(INT_PTR) h); }
+	uint PtrToUlong(void* p)    { return(cast(uint) cast(ULONG_PTR) p); }
+	uint PtrToUint(void* p)     { return(cast(uint) cast(UINT_PTR) p); }
+	ushort PtrToUshort(void* p) { return(cast(ushort) cast(uint) cast(ULONG_PTR) p); }
+	int PtrToLong(void* p)      { return(cast(int) cast(LONG_PTR) p); }
+	int PtrToInt(void* p)       { return(cast(int) cast(INT_PTR) p); }
+	short PtrToShort(void* p)   { return(cast(short) cast(int) cast(LONG_PTR) p); }
+	void* IntToPtr(int i)       { return(cast(void*) cast(INT_PTR) i); }
+	void* UIntToPtr(uint ui)    { return(cast(void*) cast(UINT_PTR) ui); }
+	void* LongToPtr(int l)      { return(cast(void*) cast(LONG_PTR) l); }
+	void* ULongToPtr(uint ul)   { return(cast(void*) cast(ULONG_PTR) ul); }
+
 } else {
 	alias int __int3264;
 	const uint ADDRESS_TAG_BIT = 0x80000000;

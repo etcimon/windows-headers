@@ -296,7 +296,7 @@ alias CommDlg_OpenSave_GetFolderPath
 
 // Callbacks.
 extern(Windows) {
-alias UINT function (HWND, UINT, WPARAM, LPARAM)
+alias UINT_PTR function (HWND, UINT, WPARAM, LPARAM)
 	LPCCHOOKPROC, LPCFHOOKPROC, LPFRHOOKPROC, LPOFNHOOKPROC,
 	LPPAGEPAINTHOOK, LPPAGESETUPHOOK, LPSETUPHOOKPROC, LPPRINTHOOKPROC;
 }
@@ -428,6 +428,12 @@ struct OPENFILENAMEA {
 	DWORD         lCustData;
 	LPOFNHOOKPROC lpfnHook;
 	LPCSTR        lpTemplateName;
+    
+    static if (_WIN32_WINNT_ONLY && _WIN32_WINNT >= 0x0500) {
+        void          *pvReserved;
+        DWORD         dwReserved;
+        DWORD         FlagsEx;
+    }    
 }
 alias OPENFILENAMEA* LPOPENFILENAMEA;
 
@@ -452,6 +458,12 @@ struct OPENFILENAMEW {
 	DWORD         lCustData;
 	LPOFNHOOKPROC lpfnHook;
 	LPCWSTR       lpTemplateName;
+    
+    static if (_WIN32_WINNT_ONLY && _WIN32_WINNT >= 0x0500) {
+        void          *pvReserved;
+        DWORD         dwReserved;
+        DWORD         FlagsEx;
+    }       
 }
 alias OPENFILENAMEW* LPOPENFILENAMEW;
 

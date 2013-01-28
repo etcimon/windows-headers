@@ -1894,12 +1894,12 @@ WINBASEAPI DWORD WINAPI GetCurrentThreadId(void);
 	 *	replacements IsBadReadPtr and IsBadWritePtr are apparently Win2000+
 	 *	only.  Where's the mistake?
 	 */
-	BOOL IsBadHugeReadPtr(PCVOID, UINT);
-	BOOL IsBadHugeWritePtr(PVOID, UINT);
-	BOOL IsBadReadPtr(PCVOID, UINT);
-	BOOL IsBadStringPtrA(LPCSTR, UINT);
-	BOOL IsBadStringPtrW(LPCWSTR, UINT);
-	BOOL IsBadWritePtr(PVOID, UINT);
+	BOOL IsBadHugeReadPtr(PCVOID, UINT_PTR);
+	BOOL IsBadHugeWritePtr(PVOID, UINT_PTR);
+	BOOL IsBadReadPtr(PCVOID, UINT_PTR);
+	BOOL IsBadStringPtrA(LPCSTR, UINT_PTR);
+	BOOL IsBadStringPtrW(LPCWSTR, UINT_PTR);
+	BOOL IsBadWritePtr(PVOID, UINT_PTR);
 	void LeaveCriticalSection(LPCRITICAL_SECTION);
 	HINSTANCE LoadLibraryA(LPCSTR);
 	HINSTANCE LoadLibraryW(LPCWSTR);

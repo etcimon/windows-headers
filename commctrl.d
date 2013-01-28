@@ -1743,11 +1743,20 @@ enum {
 
 alias HANDLE HTREEITEM;
 
+version(Win64)
+{
+const HTREEITEM
+	TVI_ROOT  = cast(HTREEITEM) cast(ULONG_PTR)-0x10000,
+	TVI_FIRST = cast(HTREEITEM) cast(ULONG_PTR)-0xffff,
+	TVI_LAST  = cast(HTREEITEM) cast(ULONG_PTR)-0xfffe,
+	TVI_SORT  = cast(HTREEITEM) cast(ULONG_PTR)-0xfffd;
+} else {
 const HTREEITEM
 	TVI_ROOT  = cast(HTREEITEM) 0xFFFF0000,
 	TVI_FIRST = cast(HTREEITEM) 0xFFFF0001,
 	TVI_LAST  = cast(HTREEITEM) 0xFFFF0002,
 	TVI_SORT  = cast(HTREEITEM) 0xFFFF0003;
+}
 
 enum {
 	TVSIL_NORMAL = 0,
@@ -2781,7 +2790,7 @@ static if (_WIN32_WINNT >= 0x0600) {
 
 struct COMBOBOXEXITEMA {
 	UINT   mask;
-	int    iItem;
+	INT_PTR iItem;
 	LPSTR  pszText;
 	int    cchTextMax;
 	int    iImage;
@@ -2795,7 +2804,7 @@ alias CPtr!(COMBOBOXEXITEMA) PCCOMBOEXITEMA;
 
 struct COMBOBOXEXITEMW {
 	UINT   mask;
-	int    iItem;
+	INT_PTR iItem;
 	LPWSTR pszText;
 	int    cchTextMax;
 	int    iImage;
@@ -2983,9 +2992,13 @@ struct TBBUTTON {
 	int   idCommand;
 	BYTE  fsState;
 	BYTE  fsStyle;
-	BYTE  bReserved[2];
+	version(Win64){
+		BYTE  bReserved[6];
+	} else {
+		BYTE  bReserved[2];
+	}
 	DWORD dwData;
-	int   iString;
+	INT_PTR iString;
 }
 alias TBBUTTON*       PTBBUTTON, LPTBBUTTON;
 alias CPtr!(TBBUTTON) LPCTBBUTTON;
@@ -3353,7 +3366,7 @@ static if (_WIN32_IE >= 0x400) {
 
 struct TBADDBITMAP {
 	HINSTANCE hInst;
-	UINT      nID;
+	UINT_PTR  nID;
 }
 alias TBADDBITMAP* LPTBADDBITMAP;
 
@@ -3371,9 +3384,9 @@ struct TBSAVEPARAMSW {
 
 struct TBREPLACEBITMAP {
 	HINSTANCE hInstOld;
-	UINT      nIDOld;
+	UINT_PTR  nIDOld;
 	HINSTANCE hInstNew;
-	UINT      nIDNew;
+	UINT_PTR  nIDNew;
 	int       nButtons;
 }
 alias TBREPLACEBITMAP* LPTBREPLACEBITMAP;
@@ -3427,7 +3440,7 @@ static if (_WIN32_WINNT >= 0x501) {
 		UINT      cbSize = TOOLINFOA.sizeof;
 		UINT      uFlags;
 		HWND      hwnd;
-		UINT      uId;
+		UINT_PTR  uId;
 		RECT      rect;
 		HINSTANCE hinst;
 		LPSTR     lpszText;
@@ -3439,7 +3452,7 @@ static if (_WIN32_WINNT >= 0x501) {
 		UINT      cbSize = TOOLINFOW.sizeof;
 		UINT      uFlags;
 		HWND      hwnd;
-		UINT      uId;
+		UINT_PTR  uId;
 		RECT      rect;
 		HINSTANCE hinst;
 		LPWSTR    lpszText;
@@ -4964,21 +4977,21 @@ HWND Animate_Create(HWND hwndP, UINT id, DWORD dwStyle,
 }
 
 BOOL Animate_Open(HWND hwnd, LPTSTR szName) {
-	return SendMessage(hwnd, ACM_OPEN, 0, cast(LPARAM) szName);
+	return cast(BOOL) SendMessage(hwnd, ACM_OPEN, 0, cast(LPARAM) szName);
 }
 
 BOOL Animate_OpenEx(HWND hwnd, HINSTANCE hInst, LPTSTR szName) {
-	return SendMessage(hwnd, ACM_OPEN, cast(WPARAM) hInst,
+	return cast(BOOL) SendMessage(hwnd, ACM_OPEN, cast(WPARAM) hInst,
 	  cast(LPARAM) szName);
 }
 
 BOOL Animate_Play(HWND hwnd, int from, int to, int rep) {
-	return SendMessage(hwnd, ACM_PLAY, rep,
+	return cast(BOOL) SendMessage(hwnd, ACM_PLAY, rep,
 	  MAKELONG(cast(ushort) from, cast(ushort) to));
 }
 
 BOOL Animate_Stop(HWND hwnd) {
-	return SendMessage(hwnd, ACM_STOP, 0, 0);
+	return cast(BOOL) SendMessage(hwnd, ACM_STOP, 0, 0);
 }
 
 BOOL Animate_Close(HWND hwnd) {
@@ -4990,10 +5003,10 @@ BOOL Animate_Seek(HWND hwnd, int frame) {
 }
 
 extern (Windows) {
-	HBITMAP CreateMappedBitmap(HINSTANCE, int, UINT, LPCOLORMAP, int);
+	HBITMAP CreateMappedBitmap(HINSTANCE, INT_PTR, UINT, LPCOLORMAP, int);
 	HWND CreateStatusWindowA(LONG, LPCSTR, HWND, UINT);
 	HWND CreateStatusWindowW(LONG, LPCWSTR, HWND, UINT);
-	HWND CreateToolbarEx(HWND, DWORD, UINT, int, HINSTANCE, UINT,
+	HWND CreateToolbarEx(HWND, DWORD, UINT, int, HINSTANCE, UINT_PTR,
 	  LPCTBBUTTON, int, int, int, int, int, UINT);
 	HWND CreateUpDownControl(DWORD, int, int, int, int, HWND, int, HINSTANCE,
 	  HWND, int, int, int);
@@ -5012,11 +5025,11 @@ HFONT DateTime_GetMonthCalFont(HWND hwnd) {
 }
 
 DWORD DateTime_GetRange(HWND hwnd, LPSYSTEMTIME lpSysTimeArray) {
-	return SendMessage(hwnd, DTM_GETRANGE, 0, cast(LPARAM) lpSysTimeArray);
+	return cast(DWORD) SendMessage(hwnd, DTM_GETRANGE, 0, cast(LPARAM) lpSysTimeArray);
 }
 
 DWORD DateTime_GetSystemtime(HWND hwnd, LPSYSTEMTIME lpSysTime) {
-	return SendMessage(hwnd, DTM_GETSYSTEMTIME, 0, cast(LPARAM) lpSysTime);
+	return cast(DWORD) SendMessage(hwnd, DTM_GETSYSTEMTIME, 0, cast(LPARAM) lpSysTime);
 }
 
 BOOL DateTime_SetFormat(HWND hwnd, LPCTSTR lpszFormat) {
@@ -5051,11 +5064,11 @@ extern (Windows) {
 }
 
 int Header_GetItemCount(HWND w) {
-	return SendMessage(w, HDM_GETITEMCOUNT, 0, 0);
+	return cast(int) SendMessage(w, HDM_GETITEMCOUNT, 0, 0);
 }
 
 int Header_InsertItem(HWND w, int i, CPtr!(HDITEM) phdi) {
-	return SendMessage(w, HDM_INSERTITEM, i, cast(LPARAM) phdi);
+	return cast(int) SendMessage(w, HDM_INSERTITEM, i, cast(LPARAM) phdi);
 }
 
 BOOL Header_DeleteItem(HWND w, int i) {
@@ -5071,12 +5084,12 @@ BOOL Header_SetItem(HWND w, int i, CPtr!(HDITEM) phdi) {
 }
 
 BOOL Header_Layout(HWND w, LPHDLAYOUT playout) {
-	return SendMessage(w, HDM_LAYOUT, 0, cast(LPARAM) playout);
+	return cast(BOOL) SendMessage(w, HDM_LAYOUT, 0, cast(LPARAM) playout);
 }
 
 static if (_WIN32_IE >= 0x300) {
 	int Header_OrderToIndex(HWND w, int i) {
-		return SendMessage(w, HDM_ORDERTOINDEX, i, 0);
+		return cast(int) SendMessage(w, HDM_ORDERTOINDEX, i, 0);
 	}
 
 	BOOL Header_GetItemRect(HWND w, int i, RECT* r) {
@@ -5242,7 +5255,7 @@ HIMAGELIST ListView_GetImageList(HWND w, int i) {
 }
 
 int ListView_GetItemCount(HWND w) {
-	return SendMessage(w, LVM_GETITEMCOUNT, 0, 0);
+	return cast(int) SendMessage(w, LVM_GETITEMCOUNT, 0, 0);
 }
 
 BOOL ListView_GetItem(HWND w, LPLVITEM pitem) {
@@ -5263,7 +5276,7 @@ BOOL ListView_SetItem(HWND w, CPtr!(LV_ITEM) i) {
 }
 
 int ListView_InsertItem(HWND w, CPtr!(LV_ITEM) i) {
-	return SendMessage(w, LVM_INSERTITEM, 0, cast(LPARAM) i);
+	return cast(int) SendMessage(w, LVM_INSERTITEM, 0, cast(LPARAM) i);
 }
 
 BOOL ListView_DeleteItem(HWND w, int i) {
@@ -5283,11 +5296,11 @@ BOOL ListView_SetCallbackMask(HWND w, UINT m) {
 }
 
 int ListView_GetNextItem(HWND w, int i, UINT f) {
-	return SendMessage(w, LVM_GETNEXTITEM, i, MAKELPARAM(cast(ushort)f, 0));
+	return cast(int) SendMessage(w, LVM_GETNEXTITEM, i, MAKELPARAM(cast(ushort)f, 0));
 }
 
 int ListView_FindItem(HWND w, int i, CPtr!(LV_FINDINFO) p) {
-	return SendMessage(w, LVM_FINDITEM, i, cast(LPARAM) p);
+	return cast(int) SendMessage(w, LVM_FINDITEM, i, cast(LPARAM) p);
 }
 
 BOOL ListView_GetItemRect(HWND w, int i, LPRECT p, int c) {
@@ -5308,11 +5321,11 @@ DWORD ListView_GetItemSpacing(HWND w, BOOL f) {
 }
 
 int ListView_GetStringWidth(HWND w, LPCSTR s) {
-	return SendMessage(w, LVM_GETSTRINGWIDTH, 0, cast(LPARAM) s);
+	return cast(int) SendMessage(w, LVM_GETSTRINGWIDTH, 0, cast(LPARAM) s);
 }
 
 int ListView_HitTest(HWND w, LPLVHITTESTINFO p) {
-	return SendMessage(w, LVM_HITTEST, 0, cast(LPARAM) p);
+	return cast(int) SendMessage(w, LVM_HITTEST, 0, cast(LPARAM) p);
 }
 
 BOOL ListView_EnsureVisible(HWND w, int i, BOOL f) {
@@ -5348,7 +5361,7 @@ BOOL ListView_SetColumn(HWND w, int i, CPtr!(LV_COLUMN) p) {
 }
 
 int ListView_InsertColumn(HWND w, int i, CPtr!(LV_COLUMN) p) {
-	return SendMessage(w, LVM_INSERTCOLUMN, i, cast(LPARAM) p);
+	return cast(int) SendMessage(w, LVM_INSERTCOLUMN, i, cast(LPARAM) p);
 }
 
 BOOL ListView_DeleteColumn(HWND w, int i) {
@@ -5356,7 +5369,7 @@ BOOL ListView_DeleteColumn(HWND w, int i) {
 }
 
 int ListView_GetColumnWidth(HWND w, int i) {
-	return SendMessage(w, LVM_GETCOLUMNWIDTH, i, 0);
+	return cast(int) SendMessage(w, LVM_GETCOLUMNWIDTH, i, 0);
 }
 
 BOOL ListView_SetColumnWidth(HWND w, int i, int x) {
@@ -5389,11 +5402,11 @@ BOOL ListView_SetTextBkColor(HWND w, COLORREF c) {
 }
 
 int ListView_GetTopIndex(HWND w) {
-	return SendMessage(w, LVM_GETTOPINDEX, 0, 0);
+	return cast(int) SendMessage(w, LVM_GETTOPINDEX, 0, 0);
 }
 
 int ListView_GetCountPerPage(HWND w) {
-	return SendMessage(w, LVM_GETCOUNTPERPAGE, 0, 0);
+	return cast(int) SendMessage(w, LVM_GETCOUNTPERPAGE, 0, 0);
 }
 
 BOOL ListView_GetOrigin(HWND w, LPPOINT p) {
@@ -5473,13 +5486,13 @@ int ListView_EnableGroupView(HWND w, BOOL i) {
 
 static if (_WIN32_WINDOWS >= 0x410 && (_WIN32_WINNT >= 0x500 || _WIN32_IE >= 0x500)) {
 	BOOL ListView_SortItemsEx(HWND w, PFNLVCOMPARE c, LPARAM p) {
-		return SendMessage(w, LVM_SORTITEMSEX, cast(WPARAM) p, cast(LPARAM)c);
+		return cast(BOOL) SendMessage(w, LVM_SORTITEMSEX, cast(WPARAM) p, cast(LPARAM)c);
 	}
 }
 
 static if (_WIN32_WINNT >= 0x501) {
 	int ListView_GetGroupInfo(HWND w, int i, PLVGROUP p) {
-		return SendMessage(w, LVM_GETGROUPINFO, i, cast(LPARAM) p);
+		return cast(int) SendMessage(w, LVM_GETGROUPINFO, i, cast(LPARAM) p);
 	}
 
 	void ListView_GetGroupMetrics(HWND w, PLVGROUPMETRICS p) {
@@ -5487,23 +5500,23 @@ static if (_WIN32_WINNT >= 0x501) {
 	}
 
 	BOOL ListView_GetInsertMark(HWND w, PLVINSERTMARK p) {
-		return SendMessage(w, LVM_GETINSERTMARK, 0, cast(LPARAM) p);
+		return cast(BOOL) SendMessage(w, LVM_GETINSERTMARK, 0, cast(LPARAM) p);
 	}
 
 	COLORREF ListView_GetInsertMarkColor(HWND w) {
-		return SendMessage(w, LVM_GETINSERTMARKCOLOR, 0, 0);
+		return cast(COLORREF) SendMessage(w, LVM_GETINSERTMARKCOLOR, 0, 0);
 	}
 
 	int ListView_GetInsertMarkRect(HWND w, LPRECT p) {
-		return SendMessage(w, LVM_GETINSERTMARKRECT, 0, cast(LPARAM) p);
+		return cast(int) SendMessage(w, LVM_GETINSERTMARKRECT, 0, cast(LPARAM) p);
 	}
 
 	COLORREF ListView_GetOutlineColor(HWND w) {
-		return SendMessage(w, LVM_GETOUTLINECOLOR, 0, 0);
+		return cast(COLORREF) SendMessage(w, LVM_GETOUTLINECOLOR, 0, 0);
 	}
 
 	UINT ListView_GetSelectedColumn(HWND w) {
-		return SendMessage(w, LVM_GETSELECTEDCOLUMN, 0, 0);
+		return cast(UINT) SendMessage(w, LVM_GETSELECTEDCOLUMN, 0, 0);
 	}
 
 	void ListView_GetTileInfo(HWND w, PLVTILEINFO p) {
@@ -5515,15 +5528,15 @@ static if (_WIN32_WINNT >= 0x501) {
 	}
 
 	DWORD ListView_GetView(HWND w) {
-		return SendMessage(w, LVM_GETVIEW, 0, 0);
+		return cast(DWORD) SendMessage(w, LVM_GETVIEW, 0, 0);
 	}
 
 	BOOL ListView_HasGroup(HWND w, int i) {
-		return SendMessage(w, LVM_HASGROUP, i, 0);
+		return cast(BOOL) SendMessage(w, LVM_HASGROUP, i, 0);
 	}
 
 	int ListView_InsertGroup(HWND w, int i, PLVGROUP p) {
-		return SendMessage(w, LVM_INSERTGROUP, i, cast(LPARAM) p);
+		return cast(int) SendMessage(w, LVM_INSERTGROUP, i, cast(LPARAM) p);
 	}
 
 	void ListView_InsertGroupSorted(HWND w, PLVINSERTGROUPSORTED p) {
@@ -5531,15 +5544,15 @@ static if (_WIN32_WINNT >= 0x501) {
 	}
 
 	BOOL ListView_InsertMarkHitTest(HWND w, LPPOINT p, PLVINSERTMARK t) {
-		return SendMessage(w, LVM_INSERTMARKHITTEST, cast(WPARAM) p, cast(LPARAM) t);
+		return cast(BOOL) SendMessage(w, LVM_INSERTMARKHITTEST, cast(WPARAM) p, cast(LPARAM) t);
 	}
 
 	BOOL ListView_IsGroupViewEnabled(HWND w) {
-		return SendMessage(w, LVM_ISGROUPVIEWENABLED, 0, 0);
+		return cast(BOOL) SendMessage(w, LVM_ISGROUPVIEWENABLED, 0, 0);
 	}
 
 	UINT ListView_MapIDToIndex(HWND w, UINT i) {
-		return SendMessage(w, LVM_MAPIDTOINDEX, i, 0);
+		return cast(UINT) SendMessage(w, LVM_MAPIDTOINDEX, i, 0);
 	}
 
 	/*	??? MSDN documents this as "Not implemented", except in relation to
@@ -5554,11 +5567,11 @@ static if (_WIN32_WINNT >= 0x501) {
 	}
 
 	int ListView_RemoveGroup(HWND w, int i) {
-		return SendMessage(w, LVM_REMOVEGROUP, i, 0);
+		return cast(int) SendMessage(w, LVM_REMOVEGROUP, i, 0);
 	}
 
 	int ListView_SetGroupInfo(HWND w, int i, PLVGROUP p) {
-		return SendMessage(w, LVM_SETGROUPINFO, i, cast(LPARAM) p);
+		return cast(int) SendMessage(w, LVM_SETGROUPINFO, i, cast(LPARAM) p);
 	}
 
 	void ListView_SetGroupMetrics(HWND w, PLVGROUPMETRICS p) {
@@ -5566,19 +5579,19 @@ static if (_WIN32_WINNT >= 0x501) {
 	}
 
 	BOOL ListView_SetInfoTip(HWND w, PLVSETINFOTIP p) {
-		return SendMessage(w, LVM_SETINFOTIP, 0, cast(LPARAM) p);
+		return cast(BOOL) SendMessage(w, LVM_SETINFOTIP, 0, cast(LPARAM) p);
 	}
 
 	BOOL ListView_SetInsertMark(HWND w, PLVINSERTMARK p) {
-		return SendMessage(w, LVM_SETINSERTMARK, 0, cast(LPARAM) p);
+		return cast(BOOL) SendMessage(w, LVM_SETINSERTMARK, 0, cast(LPARAM) p);
 	}
 
 	COLORREF ListView_SetInsertMarkColor(HWND w, COLORREF c) {
-		return SendMessage(w, LVM_SETINSERTMARKCOLOR, 0, c);
+		return cast(COLORREF) SendMessage(w, LVM_SETINSERTMARKCOLOR, 0, c);
 	}
 
 	COLORREF ListView_SetOutlineColor(HWND w, COLORREF c) {
-		return SendMessage(w, LVM_SETOUTLINECOLOR, 0, c);
+		return cast(COLORREF) SendMessage(w, LVM_SETOUTLINECOLOR, 0, c);
 	}
 
 	void ListView_SetSelectedColumn(HWND w, int i) {
@@ -5586,19 +5599,19 @@ static if (_WIN32_WINNT >= 0x501) {
 	}
 
 	BOOL ListView_SetTileInfo(HWND w, PLVTILEINFO p) {
-		return SendMessage(w, LVM_SETTILEINFO, 0, cast(LPARAM) p);
+		return cast(BOOL) SendMessage(w, LVM_SETTILEINFO, 0, cast(LPARAM) p);
 	}
 
 	BOOL ListView_SetTileViewInfo(HWND w, PLVTILEVIEWINFO p) {
-		return SendMessage(w, LVM_SETTILEVIEWINFO, 0, cast(LPARAM) p);
+		return cast(BOOL) SendMessage(w, LVM_SETTILEVIEWINFO, 0, cast(LPARAM) p);
 	}
 
 	int ListView_SetView(HWND w, DWORD i) {
-		return SendMessage(w, LVM_SETVIEW, i, 0);
+		return cast(int) SendMessage(w, LVM_SETVIEW, i, 0);
 	}
 
 	int ListView_SortGroups(HWND w, PFNLVGROUPCOMPARE c, LPVOID p) {
-		return SendMessage(w, LVM_SORTGROUPS, cast(WPARAM) c, cast(LPARAM) p);
+		return cast(int) SendMessage(w, LVM_SORTGROUPS, cast(WPARAM) c, cast(LPARAM) p);
 	}
 }
 
@@ -5616,7 +5629,7 @@ static if (_WIN32_WINNT >= 0x501) {
 	}
 
 	int ComboBox_GetMinVisible(HWND w) {
-		return SendMessage(w, CB_GETMINVISIBLE, 0, 0);
+		return cast(int) SendMessage(w, CB_GETMINVISIBLE, 0, 0);
 	}
 }
 
@@ -5652,11 +5665,11 @@ BOOL MonthCal_GetMinReqRect(HWND hwnd, LPRECT lpRectInfo) {
 }
 
 INT MonthCal_GetMonthDelta(HWND hwnd) {
-	return SendMessage(hwnd, MCM_GETMONTHDELTA, 0, 0);
+	return cast(INT) SendMessage(hwnd, MCM_GETMONTHDELTA, 0, 0);
 }
 
 INT MonthCal_GetMonthRange(HWND hwnd, DWORD flag, LPSYSTEMTIME systimearray) {
-	return SendMessage(hwnd, MCM_GETMONTHRANGE, cast(WPARAM) flag,
+	return cast(INT) SendMessage(hwnd, MCM_GETMONTHRANGE, cast(WPARAM) flag,
 	  cast(LPARAM) systimearray);
 }
 
@@ -5710,7 +5723,7 @@ BOOL MonthCal_SetMaxSelCount(HWND hwnd, UINT imax) {
 }
 
 INT MonthCal_SetMonthDelta(HWND hwnd, INT idelta) {
-	return SendMessage(hwnd, MCM_SETMONTHDELTA, cast(WPARAM) idelta, 0);
+	return cast(INT) SendMessage(hwnd, MCM_SETMONTHDELTA, cast(WPARAM) idelta, 0);
 }
 
 BOOL MonthCal_SetSelRange(HWND hwnd, LPSYSTEMTIME systimearray) {
@@ -5732,7 +5745,7 @@ BOOL MonthCal_SetRange(HWND w, DWORD f, LPSYSTEMTIME st) {
 	  cast(LPARAM) st);
 }
 
-extern (Windows) BOOL ShowHideMenuCtl(HWND, UINT, PINT);
+extern (Windows) BOOL ShowHideMenuCtl(HWND, UINT_PTR, PINT);
 
 BOOL TabCtrl_GetItem(HWND w, int i, LPTCITEM p) {
 	return cast(BOOL) SendMessage(w, TCM_GETITEM, i, cast(LPARAM) p);
@@ -5743,7 +5756,7 @@ BOOL TabCtrl_SetItem(HWND w, int i, LPTCITEM p) {
 }
 
 int TabCtrl_InsertItem(HWND w, int i, CPtr!(TC_ITEM) p) {
-	return SendMessage(w, TCM_INSERTITEM, i, cast(LPARAM) p);
+	return cast(int) SendMessage(w, TCM_INSERTITEM, i, cast(LPARAM) p);
 }
 
 BOOL TabCtrl_DeleteItem(HWND w, int i) {
@@ -5759,15 +5772,15 @@ BOOL TabCtrl_GetItemRect(HWND w, int i, LPRECT p) {
 }
 
 int TabCtrl_GetCurSel(HWND w) {
-	return SendMessage(w, TCM_GETCURSEL, 0, 0);
+	return cast(int) SendMessage(w, TCM_GETCURSEL, 0, 0);
 }
 
 int TabCtrl_SetCurSel(HWND w, int i) {
-	return SendMessage(w, TCM_SETCURSEL, i, 0);
+	return cast(int) SendMessage(w, TCM_SETCURSEL, i, 0);
 }
 
 int TabCtrl_HitTest(HWND w, LPTCHITTESTINFO p) {
-	return SendMessage(w, TCM_HITTEST, 0, cast(LPARAM) p);
+	return cast(int) SendMessage(w, TCM_HITTEST, 0, cast(LPARAM) p);
 }
 
 BOOL TabCtrl_SetItemExtra(HWND w, int c) {
@@ -5775,7 +5788,7 @@ BOOL TabCtrl_SetItemExtra(HWND w, int c) {
 }
 
 int TabCtrl_AdjustRect(HWND w, BOOL b, LPRECT p) {
-	return SendMessage(w, TCM_ADJUSTRECT, b, cast(LPARAM) p);
+	return cast(int) SendMessage(w, TCM_ADJUSTRECT, b, cast(LPARAM) p);
 }
 
 DWORD TabCtrl_SetItemSize(HWND w, int x, int y) {
@@ -5791,7 +5804,7 @@ void TabCtrl_SetPadding(HWND w, int x, int y) {
 }
 
 int TabCtrl_GetRowCount(HWND w) {
-	return SendMessage(w, TCM_GETROWCOUNT, 0, 0);
+	return cast(int) SendMessage(w, TCM_GETROWCOUNT, 0, 0);
 }
 
 HWND TabCtrl_GetToolTips(HWND w) {
@@ -5803,7 +5816,7 @@ void TabCtrl_SetToolTips(HWND w, HWND t) {
 }
 
 int TabCtrl_GetCurFocus(HWND w) {
-	return SendMessage(w, TCM_GETCURFOCUS, 0, 0);
+	return cast(int) SendMessage(w, TCM_GETCURFOCUS, 0, 0);
 }
 
 void TabCtrl_SetCurFocus(HWND w, int i) {
@@ -5820,7 +5833,7 @@ HIMAGELIST TabCtrl_SetImageList(HWND w, HIMAGELIST h) {
 }
 
 int TabCtrl_GetItemCount(HWND w) {
-	return SendMessage(w, TCM_GETITEMCOUNT, 0, 0);
+	return cast(int) SendMessage(w, TCM_GETITEMCOUNT, 0, 0);
 }
 
 extern (Windows) BOOL _TrackMouseEvent(LPTRACKMOUSEEVENT);
@@ -6009,7 +6022,7 @@ static if (_WIN32_IE >= 0x300) {
 	}
 
 	INT ListView_GetHotItem(HWND w) {
-		return SendMessage(w, LVM_GETHOTITEM, 0, 0);
+		return cast(INT) SendMessage(w, LVM_GETHOTITEM, 0, 0);
 	}
 
 	BOOL ListView_GetSubItemRect(HWND w, int i, int isi, int c, LPRECT p) {
@@ -6023,7 +6036,7 @@ static if (_WIN32_IE >= 0x300) {
 	}
 
 	INT ListView_SetHotItem(HWND w, INT i) {
-		return SendMessage(w, LVM_SETHOTITEM, cast(WPARAM) i, 0);
+		return cast(INT) SendMessage(w, LVM_SETHOTITEM, cast(WPARAM) i, 0);
 	}
 
 	DWORD ListView_SetIconSpacing(HWND w, int x, int y) {
@@ -6032,7 +6045,7 @@ static if (_WIN32_IE >= 0x300) {
 	}
 
 	INT ListView_SubItemHitTest(HWND w, LPLVHITTESTINFO p) {
-		return SendMessage(w, LVM_SUBITEMHITTEST, 0, cast(LPARAM) p);
+		return cast(INT) SendMessage(w, LVM_SUBITEMHITTEST, 0, cast(LPARAM) p);
 	}
 
 	BOOL ListView_SetItemCountEx(HWND w, int i, DWORD f) {
@@ -6046,7 +6059,7 @@ static if (_WIN32_IE >= 0x300) {
 	}
 
 	int TabCtrl_SetMinTabWidth(HWND hwnd, int x) {
-		return SendMessage(hwnd, TCM_SETMINTABWIDTH, 0, x);
+		return cast(int) SendMessage(hwnd, TCM_SETMINTABWIDTH, 0, x);
 	}
 
 	VOID TabCtrl_DeselectAll(HWND hwnd, UINT fExcludeFocus) {
@@ -6100,11 +6113,11 @@ static if (_WIN32_IE >= 0x400) {
 	}
 
 	INT ListView_GetSelectionMark(HWND w) {
-		return SendMessage(w, LVM_GETSELECTIONMARK, 0, 0);
+		return cast(INT) SendMessage(w, LVM_GETSELECTIONMARK, 0, 0);
 	}
 
 	INT ListView_SetSelectionMark(HWND w, INT i) {
-		return SendMessage(w, LVM_SETSELECTIONMARK, 0, cast(LPARAM) i);
+		return cast(INT) SendMessage(w, LVM_SETSELECTIONMARK, 0, cast(LPARAM) i);
 	}
 
 	HWND ListView_SetToolTips(HWND w, HWND n) {
@@ -6155,7 +6168,7 @@ static if (_WIN32_IE >= 0x400) {
 	}
 
 	int TreeView_GetItemHeight(HWND w) {
-		return SendMessage(w, TVM_GETITEMHEIGHT, 0, 0);
+		return cast(int) SendMessage(w, TVM_GETITEMHEIGHT, 0, 0);
 	}
 
 	UINT TreeView_GetScrollTime(HWND w) {
@@ -6177,7 +6190,7 @@ static if (_WIN32_IE >= 0x400) {
 	}
 
 	int TreeView_SetItemHeight(HWND w, SHORT h) {
-		return SendMessage(w, TVM_SETITEMHEIGHT, cast(WPARAM) h, 0);
+		return cast(int) SendMessage(w, TVM_SETITEMHEIGHT, cast(WPARAM) h, 0);
 	}
 
 	UINT TreeView_SetScrollTime(HWND w, UINT t) {

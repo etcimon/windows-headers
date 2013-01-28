@@ -2645,14 +2645,14 @@ const RIDEV_APPKEYS      = 0x00000400;
 // Callbacks
 // ---------
 extern (Windows) {
-	alias BOOL function (HWND, UINT, WPARAM, LPARAM)    DLGPROC;
-	alias void function (HWND, UINT, UINT, DWORD)       TIMERPROC;
+	alias INT_PTR function (HWND, UINT, WPARAM, LPARAM) DLGPROC;
+	alias void function (HWND, UINT, UINT_PTR, DWORD)   TIMERPROC;
 	alias BOOL function (HDC, LPARAM, int)              GRAYSTRINGPROC;
 	alias LRESULT function (int, WPARAM, LPARAM)        HOOKPROC;
 	alias BOOL function (HWND, LPCSTR, HANDLE)          PROPENUMPROCA;
 	alias BOOL function (HWND, LPCWSTR, HANDLE)         PROPENUMPROCW;
-	alias BOOL function (HWND, LPSTR, HANDLE, DWORD)    PROPENUMPROCEXA;
-	alias BOOL function (HWND, LPWSTR, HANDLE, DWORD)   PROPENUMPROCEXW;
+	alias BOOL function (HWND, LPSTR, HANDLE, ULONG_PTR)    PROPENUMPROCEXA;
+	alias BOOL function (HWND, LPWSTR, HANDLE, ULONG_PTR)   PROPENUMPROCEXW;
 	alias int function (LPSTR, int, int, int)           EDITWORDBREAKPROCA;
 	alias int function (LPWSTR, int, int, int)          EDITWORDBREAKPROCW;
 	alias LRESULT function (HWND, UINT, WPARAM, LPARAM) WNDPROC;
@@ -2666,7 +2666,7 @@ extern (Windows) {
 	}
 	alias BOOL function (LPSTR, LPARAM)                 NAMEENUMPROCA;
 	alias BOOL function (LPWSTR, LPARAM)                NAMEENUMPROCW;
-	alias void function (HWND, UINT, DWORD, LRESULT)    SENDASYNCPROC;
+	alias void function (HWND, UINT, ULONG_PTR, LRESULT)    SENDASYNCPROC;
 
 	alias NAMEENUMPROCA DESKTOPENUMPROCA;
 	alias NAMEENUMPROCW DESKTOPENUMPROCW;
@@ -2908,7 +2908,7 @@ alias ICONINFO* PICONINFO;
 
 struct NMHDR {
 	HWND hwndFrom;
-	UINT idFrom;
+	UINT_PTR idFrom;
 	UINT code;
 }
 alias NMHDR* LPNMHDR;
@@ -3897,10 +3897,10 @@ BOOL DestroyIcon(HICON);
 BOOL DestroyMenu(HMENU);
 BOOL DestroyWindow(HWND);
 
-int DialogBoxParamA(HINSTANCE, LPCSTR, HWND, DLGPROC, LPARAM);
-int DialogBoxParamW(HINSTANCE, LPCWSTR, HWND, DLGPROC, LPARAM);
-int DialogBoxIndirectParamA(HINSTANCE, LPCDLGTEMPLATE, HWND, DLGPROC, LPARAM);
-int DialogBoxIndirectParamW(HINSTANCE, LPCDLGTEMPLATE, HWND, DLGPROC, LPARAM);
+INT_PTR DialogBoxParamA(HINSTANCE, LPCSTR, HWND, DLGPROC, LPARAM);
+INT_PTR DialogBoxParamW(HINSTANCE, LPCWSTR, HWND, DLGPROC, LPARAM);
+INT_PTR DialogBoxIndirectParamA(HINSTANCE, LPCDLGTEMPLATE, HWND, DLGPROC, LPARAM);
+INT_PTR DialogBoxIndirectParamW(HINSTANCE, LPCDLGTEMPLATE, HWND, DLGPROC, LPARAM);
 
 } // extern (Windows)
 
@@ -3940,22 +3940,22 @@ HWND CreateWindowW(LPCWSTR a, LPCWSTR b, DWORD c, int d, int e, int f, int g, HW
 	return CreateWindowExW(0, a, b, c, d, e, f, g, h, i, j, k);
 }
 
-int DialogBoxA(HINSTANCE i, LPCSTR t, HWND p, DLGPROC f)
+INT_PTR DialogBoxA(HINSTANCE i, LPCSTR t, HWND p, DLGPROC f)
 {
 	return DialogBoxParamA(i, t, p, f, 0);
 }
 
-int DialogBoxW(HINSTANCE i, LPCWSTR t, HWND p, DLGPROC f)
+INT_PTR DialogBoxW(HINSTANCE i, LPCWSTR t, HWND p, DLGPROC f)
 {
 	return DialogBoxParamW(i, t, p, f, 0);
 }
 
-int DialogBoxIndirectA(HINSTANCE i, LPCDLGTEMPLATE t, HWND p, DLGPROC f)
+INT_PTR DialogBoxIndirectA(HINSTANCE i, LPCDLGTEMPLATE t, HWND p, DLGPROC f)
 {
 	return DialogBoxIndirectParamA(i, t, p, f, 0);
 }
 
-int DialogBoxIndirectW(HINSTANCE i, LPCDLGTEMPLATE t, HWND p, DLGPROC f)
+INT_PTR DialogBoxIndirectW(HINSTANCE i, LPCDLGTEMPLATE t, HWND p, DLGPROC f)
 {
 	return DialogBoxIndirectParamW(i, t, p, f, 0);
 }
@@ -3998,7 +3998,7 @@ BOOL EnableMenuItem(HMENU, UINT, UINT);
 BOOL EnableScrollBar(HWND, UINT, UINT);
 BOOL EnableWindow(HWND, BOOL);
 BOOL EndDeferWindowPos(HDWP);
-BOOL EndDialog(HWND, int);
+BOOL EndDialog(HWND, INT_PTR);
 BOOL EndMenu();
 BOOL EndPaint(HWND, CPtr!(PAINTSTRUCT));
 BOOL EnumChildWindows(HWND, ENUMWINDOWSPROC, LPARAM);
@@ -4161,8 +4161,8 @@ BOOL HideCaret(HWND);
 BOOL HiliteMenuItem(HWND, HMENU, UINT, UINT);
 BOOL InflateRect(LPRECT, int, int);
 BOOL InSendMessage();
-BOOL InsertMenuA(HMENU, UINT, UINT, UINT, LPCSTR);
-BOOL InsertMenuW(HMENU, UINT, UINT, UINT, LPCWSTR);
+BOOL InsertMenuA(HMENU, UINT, UINT, UINT_PTR, LPCSTR);
+BOOL InsertMenuW(HMENU, UINT, UINT, UINT_PTR, LPCWSTR);
 BOOL InsertMenuItemA(HMENU, UINT, BOOL, LPCMENUITEMINFOA);
 BOOL InsertMenuItemW(HMENU, UINT, BOOL, LPCMENUITEMINFOW);
 INT InternalGetWindowText(HWND, LPWSTR, INT);
@@ -4192,7 +4192,7 @@ BOOL IsWindowUnicode(HWND);
 BOOL IsWindowVisible(HWND);
 BOOL IsZoomed(HWND);
 void keybd_event(BYTE, BYTE, DWORD, DWORD);
-BOOL KillTimer(HWND, UINT);
+BOOL KillTimer(HWND, UINT_PTR);
 HACCEL LoadAcceleratorsA(HINSTANCE, LPCSTR);
 HACCEL LoadAcceleratorsW(HINSTANCE, LPCWSTR);
 HBITMAP LoadBitmapA(HINSTANCE, LPCSTR);
@@ -4230,8 +4230,8 @@ int MessageBoxExA(HWND, LPCSTR, LPCSTR, UINT, WORD);
 int MessageBoxExW(HWND, LPCWSTR, LPCWSTR, UINT, WORD);
 int MessageBoxIndirectA(CPtr!(MSGBOXPARAMSA));
 int MessageBoxIndirectW(CPtr!(MSGBOXPARAMSW));
-BOOL ModifyMenuA(HMENU, UINT, UINT, UINT, LPCSTR);
-BOOL ModifyMenuW(HMENU, UINT, UINT, UINT, LPCWSTR);
+BOOL ModifyMenuA(HMENU, UINT, UINT, UINT_PTR, LPCSTR);
+BOOL ModifyMenuW(HMENU, UINT, UINT, UINT_PTR, LPCWSTR);
 void mouse_event(DWORD, DWORD, DWORD, DWORD, ULONG_PTR);
 BOOL MoveWindow(HWND, int, int, int, int, BOOL);
 DWORD MsgWaitForMultipleObjects(DWORD, CPtr!(HANDLE), BOOL, DWORD, DWORD);
@@ -4331,7 +4331,7 @@ BOOL SetScrollRange(HWND, int, int, int, BOOL);
 BOOL SetSysColors(int, CPtr!(INT) , CPtr!(COLORREF) );
 BOOL SetSystemCursor(HCURSOR, DWORD);
 BOOL SetThreadDesktop(HDESK);
-UINT SetTimer(HWND, UINT, UINT, TIMERPROC);
+UINT_PTR SetTimer(HWND, UINT_PTR, UINT, TIMERPROC);
 BOOL SetUserObjectInformationA(HANDLE, int, PVOID, DWORD);
 BOOL SetUserObjectInformationW(HANDLE, int, PVOID, DWORD);
 BOOL SetUserObjectSecurity(HANDLE, PSECURITY_INFORMATION, PSECURITY_DESCRIPTOR);

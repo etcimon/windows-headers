@@ -232,8 +232,8 @@ struct CONVINFO {
 alias CONVINFO* PCONVINFO;
 
 struct DDEML_MSG_HOOK_DATA {
-	UINT     uiLo;
-	UINT     uiHi;
+	UINT_PTR uiLo;
+	UINT_PTR uiHi;
 	DWORD    cbData;
 	DWORD[8] Data;
 }
