@@ -34,24 +34,24 @@ enum : uint {
 }
 
 struct HEAPLIST32 {
-	DWORD dwSize;
+	SIZE_T dwSize;
 	DWORD th32ProcessID;
-	DWORD th32HeapID;
+	ULONG_PTR th32HeapID;
 	DWORD dwFlags;
 } 
 alias HEAPLIST32* PHEAPLIST32;
 alias HEAPLIST32* LPHEAPLIST32;
 
 struct HEAPENTRY32 {
-	DWORD dwSize;
+	SIZE_T dwSize;
 	HANDLE hHandle;
-	DWORD dwAddress;
-	DWORD dwBlockSize;
+	ULONG_PTR dwAddress;
+	SIZE_T dwBlockSize;
 	DWORD dwFlags;
 	DWORD dwLockCount;
 	DWORD dwResvd;
 	DWORD th32ProcessID;
-	DWORD th32HeapID;
+	ULONG_PTR th32HeapID;
 }
 alias HEAPENTRY32* PHEAPENTRY32;
 alias HEAPENTRY32* LPHEAPENTRY32;
@@ -60,7 +60,7 @@ struct PROCESSENTRY32W {
 	DWORD dwSize;
 	DWORD cntUsage;
 	DWORD th32ProcessID;
-	DWORD th32DefaultHeapID;
+	ULONG_PTR th32DefaultHeapID;
 	DWORD th32ModuleID;
 	DWORD cntThreads;
 	DWORD th32ParentProcessID;
@@ -111,7 +111,7 @@ version(Unicode) {
 		DWORD dwSize;
 		DWORD cntUsage;
 		DWORD th32ProcessID;
-		DWORD th32DefaultHeapID;
+		ULONG_PTR th32DefaultHeapID;
 		DWORD th32ModuleID;
 		DWORD cntThreads;
 		DWORD th32ParentProcessID;
