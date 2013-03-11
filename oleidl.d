@@ -11,7 +11,7 @@ module win32.oleidl;
 
 // DAC: This is defined in ocidl !!
 // what is it doing in here?
-//alias IEnumOleUndoUnits* LPENUMOLEUNDOUNITS;
+//alias IEnumOleUndoUnits LPENUMOLEUNDOUNITS;
 
 private import win32.basetyps, win32.objidl, win32.unknwn, win32.windef,
   win32.winuser, win32.wtypes;
@@ -92,26 +92,26 @@ interface IEnumOLEVERB : IUnknown
 	  HRESULT Next(ULONG,OLEVERB*,ULONG*);
 	  HRESULT Skip(ULONG);
 	  HRESULT Reset();
-	  HRESULT Clone(IEnumOLEVERB**);
+	  HRESULT Clone(IEnumOLEVERB*);
 }
 //alias IEnumOLEVERB IEnumOleVerb;
 alias IEnumOLEVERB LPENUMOLEVERB;
 
 
 interface IParseDisplayName : IUnknown {
-	HRESULT ParseDisplayName(IBindCtx*,LPOLESTR,ULONG*,IMoniker**);
+	HRESULT ParseDisplayName(IBindCtx,LPOLESTR,ULONG*,IMoniker*);
 }
 alias IParseDisplayName LPPARSEDISPLAYNAME;
 
 interface IOleContainer : IParseDisplayName {
-	HRESULT EnumObjects(DWORD,IEnumUnknown**);
+	HRESULT EnumObjects(DWORD,IEnumUnknown*);
 	HRESULT LockContainer(BOOL);
 }
 alias IOleContainer LPOLECONTAINER;
 
 interface IOleItemContainer : IOleContainer {
-	HRESULT GetObject(LPOLESTR,DWORD,IBindCtx*,REFIID,void**);
-	HRESULT GetObjectStorage(LPOLESTR,IBindCtx*,REFIID,void**);
+	HRESULT GetObject(LPOLESTR,DWORD,IBindCtx,REFIID,void**);
+	HRESULT GetObjectStorage(LPOLESTR,IBindCtx,REFIID,void**);
 	HRESULT IsRunning(LPOLESTR);
 }
 
@@ -196,7 +196,7 @@ interface IOleInPlaceSite  : IOleWindow {
 	HRESULT CanInPlaceActivate();
 	HRESULT OnInPlaceActivate();
 	HRESULT OnUIActivate();
-	HRESULT GetWindowContext(IOleInPlaceFrame*,IOleInPlaceUIWindow*,LPRECT,LPRECT,LPOLEINPLACEFRAMEINFO);
+	HRESULT GetWindowContext(IOleInPlaceFrame,IOleInPlaceUIWindow,LPRECT,LPRECT,LPOLEINPLACEFRAMEINFO);
 	HRESULT Scroll(SIZE);
 	HRESULT OnUIDeactivate(BOOL);
 	HRESULT OnInPlaceDeactivate();
@@ -238,8 +238,8 @@ interface IViewObject : IUnknown {
 	HRESULT GetColorSet(DWORD,LONG,PVOID,DVTARGETDEVICE*,HDC,LPLOGPALETTE*);
 	HRESULT Freeze(DWORD,LONG,PVOID,PDWORD);
 	HRESULT Unfreeze(DWORD);
-	HRESULT SetAdvise(DWORD,DWORD,IAdviseSink*);
-	HRESULT GetAdvise(PDWORD,PDWORD,IAdviseSink**);
+	HRESULT SetAdvise(DWORD,DWORD,IAdviseSink);
+	HRESULT GetAdvise(PDWORD,PDWORD,IAdviseSink*);
 }
 alias IViewObject LPVIEWOBJECT;
 
@@ -251,7 +251,7 @@ alias IViewObject2 LPVIEWOBJECT2;
 interface IOleCache : IUnknown {
 	HRESULT Cache(FORMATETC*,DWORD,DWORD*);
 	HRESULT Uncache(DWORD);
-	HRESULT EnumCache(IEnumSTATDATA**);
+	HRESULT EnumCache(IEnumSTATDATA*);
 	HRESULT InitCache(LPDATAOBJECT);
 	HRESULT SetData(FORMATETC*,STGMEDIUM*,BOOL);
 }

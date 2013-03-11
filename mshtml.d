@@ -475,7 +475,7 @@ interface IHTMLFrameBase : IDispatch {
 }
 
 interface IHTMLFrameBase2 : IDispatch {
-	HRESULT get_contentWindow(IHTMLWindow2 *);
+	HRESULT get_contentWindow(IHTMLWindow2*);
 	HRESULT put_onload(VARIANT);
 	HRESULT get_onload(VARIANT*);
 	HRESULT put_onreadystatechange(VARIANT);

@@ -81,8 +81,8 @@ struct OLECMD {
 	DWORD cmdf;
 }
 
-alias IOleInPlaceSite* LPOLEINPLACESITE;
-alias IEnumOleDocumentViews* LPENUMOLEDOCUMENTVIEWS;
+alias IOleInPlaceSite LPOLEINPLACESITE;
+alias IEnumOleDocumentViews LPENUMOLEDOCUMENTVIEWS;
 
 extern (C) extern const IID
 	IID_IContinueCallback,
@@ -97,7 +97,7 @@ extern (C) extern const IID
 interface IOleDocumentView : IUnknown {
 	HRESULT SetInPlaceSite(LPOLEINPLACESITE);
 	HRESULT GetInPlaceSite(LPOLEINPLACESITE*);
-	HRESULT GetDocument(IUnknown**);
+	HRESULT GetDocument(IUnknown*);
 	HRESULT SetRect(LPRECT);
 	HRESULT GetRect(LPRECT);
 	HRESULT SetRectComplex(LPRECT, LPRECT, LPRECT, LPRECT);
@@ -105,22 +105,22 @@ interface IOleDocumentView : IUnknown {
 	HRESULT UIActivate(BOOL);
 	HRESULT Open();
 	HRESULT Close(DWORD);
-	HRESULT SaveViewState(IStream*);
-	HRESULT ApplyViewState(IStream*);
-	HRESULT Clone(LPOLEINPLACESITE, IOleDocumentView**);
+	HRESULT SaveViewState(IStream);
+	HRESULT ApplyViewState(IStream);
+	HRESULT Clone(LPOLEINPLACESITE, IOleDocumentView*);
 }
 
 interface IEnumOleDocumentViews : IUnknown {
-	  HRESULT Next(ULONG, IOleDocumentView*, ULONG*);
+	  HRESULT Next(ULONG, IOleDocumentView, ULONG*);
 	  HRESULT Skip(ULONG);
 	  HRESULT Reset();
-	  HRESULT Clone(IEnumOleDocumentViews**);
+	  HRESULT Clone(IEnumOleDocumentViews*);
 }
 
 interface IOleDocument : IUnknown {
-	HRESULT CreateView(LPOLEINPLACESITE, IStream*, DWORD, IOleDocumentView**);
+	HRESULT CreateView(LPOLEINPLACESITE, IStream, DWORD, IOleDocumentView*);
 	HRESULT GetDocMiscStatus(DWORD*);
-	HRESULT EnumViews(LPENUMOLEDOCUMENTVIEWS*, IOleDocumentView**);
+	HRESULT EnumViews(LPENUMOLEDOCUMENTVIEWS*, IOleDocumentView*);
 }
 
 interface IOleCommandTarget : IUnknown {
@@ -129,5 +129,5 @@ interface IOleCommandTarget : IUnknown {
 }
 
 interface IOleDocumentSite : IUnknown {
-	HRESULT ActivateMe(IOleDocumentView*);
+	HRESULT ActivateMe(IOleDocumentView);
 }

@@ -291,24 +291,24 @@ enum {
 	DISPID_PICT_RENDER // = 6
 }
 
-alias IOleControl *LPOLECONTROL;
-alias IOleControlSite *LPOLECONTROLSITE;
-alias ISimpleFrameSite *LPSIMPLEFRAMESITE;
-alias IPersistPropertyBag *LPPERSISTPROPERTYBAG;
-alias IPersistStreamInit *LPPERSISTSTREAMINIT;
-alias IPersistMemory *LPPERSISTMEMORY;
-alias IPropertyNotifySink* LPPROPERTYNOTIFYSINK;
-alias IProvideClassInfo *LPPROVIDECLASSINFO;
-alias IProvideClassInfo2 *LPPROVIDECLASSINFO2;
-alias IConnectionPointContainer *LPCONNECTIONPOINTCONTAINER;
-alias IClassFactory2 *LPCLASSFACTORY2;
-alias ISpecifyPropertyPages *LPSPECIFYPROPERTYPAGES;
-alias IPerPropertyBrowsing *LPPERPROPERTYBROWSING;
-alias IPropertyPage *LPPROPERTYPAGE;
-alias IPropertyPage2 *LPPROPERTYPAGE2;
+alias IOleControl LPOLECONTROL;
+alias IOleControlSite LPOLECONTROLSITE;
+alias ISimpleFrameSite LPSIMPLEFRAMESITE;
+alias IPersistPropertyBag LPPERSISTPROPERTYBAG;
+alias IPersistStreamInit LPPERSISTSTREAMINIT;
+alias IPersistMemory LPPERSISTMEMORY;
+alias IPropertyNotifySink LPPROPERTYNOTIFYSINK;
+alias IProvideClassInfo LPPROVIDECLASSINFO;
+alias IProvideClassInfo2 LPPROVIDECLASSINFO2;
+alias IConnectionPointContainer LPCONNECTIONPOINTCONTAINER;
+alias IClassFactory2 LPCLASSFACTORY2;
+alias ISpecifyPropertyPages LPSPECIFYPROPERTYPAGES;
+alias IPerPropertyBrowsing LPPERPROPERTYBROWSING;
+alias IPropertyPage LPPROPERTYPAGE;
+alias IPropertyPage2 LPPROPERTYPAGE2;
 
-alias IPicture *LPPICTURE;
-alias IPictureDisp *LPPICTUREDISP;
+alias IPicture LPPICTURE;
+alias IPictureDisp LPPICTUREDISP;
 alias int OLE_XPOS_PIXELS;
 alias int OLE_YPOS_PIXELS;
 alias int OLE_XSIZE_PIXELS;

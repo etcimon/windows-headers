@@ -105,7 +105,7 @@ interface ISecurityInformation : IUnknown {
 	HRESULT GetInheritTypes(PSI_INHERIT_TYPE*, ULONG*);
 	HRESULT PropertySheetPageCallback(HWND, UINT, SI_PAGE_TYPE);
 }
-alias ISecurityInformation* LPSECURITYINFO;
+alias ISecurityInformation LPSECURITYINFO;
 
 /* Comment from MinGW
  * TODO: ISecurityInformation2, IEffectivePermission, ISecurityObjectTypeInfo

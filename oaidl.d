@@ -93,7 +93,7 @@ struct SAFEARR_BSTR {
 
 struct SAFEARR_UNKNOWN {
 	ULONG Size;
-	IUnknown** apUnknown;
+	IUnknown* apUnknown;
 }
 
 struct SAFEARR_DISPATCH {
@@ -133,7 +133,7 @@ struct SAFEARR_BRECORD {
 
 struct SAFEARR_HAVEIID {
 	ULONG Size;
-	IUnknown** apUnknown;
+	IUnknown* apUnknown;
 	IID iid;
 }
 
@@ -259,7 +259,7 @@ struct _wireVARIANT {
 		CY cyVal;
 		DATE date;
 		wireBSTR bstrVal;
-		IUnknown* punkVal;
+		IUnknown punkVal;
 		LPDISPATCH pdispVal;
 		wirePSAFEARRAY parray;
 		wireBRECORD brecVal;
@@ -273,7 +273,7 @@ struct _wireVARIANT {
 		CY* pcyVal;
 		DATE* pdate;
 		wireBSTR* pbstrVal;
-		IUnknown** ppunkVal;
+		IUnknown* ppunkVal;
 		LPDISPATCH* ppdispVal;
 		wirePSAFEARRAY* pparray;
 		wireVARIANT* pvarVal;
@@ -501,7 +501,7 @@ enum VARFLAGS {
 }
 
 struct CLEANLOCALSTORAGE {
-	IUnknown* pInterface;
+	IUnknown pInterface;
 	PVOID pStorage;
 	DWORD flags;
 }
@@ -546,7 +546,7 @@ interface IEnumVARIANT : IUnknown {
 	HRESULT Next(ULONG, VARIANT*, ULONG*);
 	HRESULT Skip(ULONG);
 	HRESULT Reset();
-	HRESULT Clone(IEnumVARIANT**);
+	HRESULT Clone(IEnumVARIANT*);
 }
 alias IEnumVARIANT LPENUMVARIANT;
 
@@ -601,14 +601,14 @@ alias ITypeInfo2 LPTYPEINFO2;
 
 interface ITypeLib : IUnknown {
 	UINT GetTypeInfoCount();
-	HRESULT GetTypeInfo(UINT, ITypeInfo**);
+	HRESULT GetTypeInfo(UINT, ITypeInfo*);
 	HRESULT GetTypeInfoType(UINT, TYPEKIND*);
-	HRESULT GetTypeInfoOfGuid(REFGUID, ITypeInfo**);
+	HRESULT GetTypeInfoOfGuid(REFGUID, ITypeInfo*);
 	HRESULT GetLibAttr(TLIBATTR**);
-	HRESULT GetTypeComp(ITypeComp*);
+	HRESULT GetTypeComp(ITypeComp);
 	HRESULT GetDocumentation(INT, BSTR*, BSTR*, DWORD*, BSTR*);
 	HRESULT IsName(LPOLESTR, ULONG, BOOL*);
-	HRESULT FindName(LPOLESTR, ULONG, ITypeInfo**, MEMBERID*, USHORT*);
+	HRESULT FindName(LPOLESTR, ULONG, ITypeInfo*, MEMBERID*, USHORT*);
 	void ReleaseTLibAttr(TLIBATTR*);
 }
 alias ITypeLib LPTYPELIB;
@@ -637,7 +637,7 @@ interface ICreateErrorInfo : IUnknown {
 	HRESULT SetHelpFile(LPOLESTR);
 	HRESULT SetHelpContext(DWORD);
 }
-alias ICreateErrorInfo* LPCREATEERRORINFO;
+alias ICreateErrorInfo LPCREATEERRORINFO;
 
 interface ISupportErrorInfo : IUnknown {
 	HRESULT InterfaceSupportsErrorInfo(REFIID);
@@ -651,7 +651,7 @@ interface IRecordInfo : IUnknown {
 	HRESULT GetGuid(GUID*);
 	HRESULT GetName(BSTR*);
 	HRESULT GetSize(ULONG*);
-	HRESULT GetTypeInfo(ITypeInfo**);
+	HRESULT GetTypeInfo(ITypeInfo*);
 	HRESULT GetField(PVOID, LPCOLESTR, VARIANT*);
 	HRESULT GetFieldNoCopy(PVOID, LPCOLESTR, VARIANT*, PVOID*);
 	HRESULT PutField (ULONG, PVOID, LPCOLESTR, VARIANT*);

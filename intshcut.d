@@ -64,8 +64,8 @@ interface IUniformResourceLocator : IUnknown {
 	HRESULT GetURL(PSTR*);
 	HRESULT InvokeCommand(PURLINVOKECOMMANDINFO);
 }
-alias IUniformResourceLocator CIUniformResourceLocator;
-alias IUniformResourceLocator* PIUniformResourceLocator,
+//alias typeof(*(IUniformResourceLocator.init)) CIUniformResourceLocator; // value-type of interface not representable in D
+alias IUniformResourceLocator PIUniformResourceLocator,
   PCIUniformResourceLocator;
 
 extern (Windows) {

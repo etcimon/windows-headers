@@ -14,7 +14,7 @@ import win32.windows, win32.ole2;
 private import win32.basetyps, win32.cguid, win32.objbase, win32.unknwn,
   win32.windef, win32.wtypes;
 
-alias IEnumGUID* LPENUMGUID;
+alias IEnumGUID LPENUMGUID;
 
 interface IEnumGUID : IUnknown {
 	HRESULT Next(ULONG, GUID*, ULONG*);
@@ -52,7 +52,7 @@ interface ICatInformation : IUnknown {
 	HRESULT EnumImplCategoriesOfClass(REFCLSID, LPENUMCATID*);
 	HRESULT EnumReqCategoriesOfClass(REFCLSID, LPENUMCATID*);
 }
-alias ICatInformation* LPCATINFORMATION;
+alias ICatInformation LPCATINFORMATION;
 
 interface ICatRegister : IUnknown {
 	HRESULT RegisterCategories(ULONG, CATEGORYINFO*);
@@ -62,7 +62,7 @@ interface ICatRegister : IUnknown {
 	HRESULT RegisterClassReqCategories(REFCLSID, ULONG, CATID*);
 	HRESULT UnRegisterClassReqCategories(REFCLSID, ULONG, CATID*);
 }
-alias ICatRegister* LPCATREGISTER;
+alias ICatRegister LPCATREGISTER;
 
 interface IEnumCATEGORYINFO : IUnknown {
 	HRESULT Next(ULONG, CATEGORYINFO*, ULONG*);
@@ -70,4 +70,4 @@ interface IEnumCATEGORYINFO : IUnknown {
 	HRESULT Reset();
 	HRESULT Clone(LPENUMCATEGORYINFO*);
 }
-alias IEnumCATEGORYINFO* LPENUMCATEGORYINFO;
+alias IEnumCATEGORYINFO LPENUMCATEGORYINFO;

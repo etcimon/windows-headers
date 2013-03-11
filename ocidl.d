@@ -30,9 +30,9 @@ interface IServiceProvider : IUnknown{
 // win32.urlmon should contain:
 interface IBindHost : IUnknown
 {
-	HRESULT CreateMoniker(LPOLESTR szName, IBindCtx* pBC, IMoniker** ppmk, DWORD);
-	HRESULT MonikerBindToObject(IMoniker* pMk, IBindCtx* pBC, IBindStatusCallback* pBSC, REFIID, void** );
-	HRESULT MonikerBindToStorage(IMoniker* pMk, IBindCtx* pBC, IBindStatusCallback* pBSC, REFIID, void** );
+	HRESULT CreateMoniker(LPOLESTR szName, IBindCtx pBC, IMoniker* ppmk, DWORD);
+	HRESULT MonikerBindToObject(IMoniker pMk, IBindCtx pBC, IBindStatusCallback pBSC, REFIID, void** );
+	HRESULT MonikerBindToStorage(IMoniker pMk, IBindCtx pBC, IBindStatusCallback pBSC, REFIID, void** );
 }
 */
 
@@ -93,21 +93,21 @@ enum QACONTAINERFLAGS {
 
 struct QACONTAINER {
 	ULONG cbSize = this.sizeof;
-	IOleClientSite* pClientSite;
-	IAdviseSinkEx* pAdviseSink;
-	IPropertyNotifySink* pPropertyNotifySink;
-	IUnknown* pUnkEventSink;
+	IOleClientSite pClientSite;
+	IAdviseSinkEx pAdviseSink;
+	IPropertyNotifySink pPropertyNotifySink;
+	IUnknown pUnkEventSink;
 	DWORD dwAmbientFlags;
 	OLE_COLOR colorFore;
 	OLE_COLOR colorBack;
-	IFont* pFont;
-	IOleUndoManager* pUndoMgr;
+	IFont pFont;
+	IOleUndoManager pUndoMgr;
 	DWORD dwAppearance;
 	LONG lcid;
 	HPALETTE hpal;
-	IBindHost* pBindHost;
-	IOleControlSite* pOleControlSite;
-	IServiceProvider* pServiceProvider;
+	IBindHost pBindHost;
+	IOleControlSite pOleControlSite;
+	IServiceProvider pServiceProvider;
 }
 
 struct QACONTROL {
@@ -212,7 +212,7 @@ interface IPropertyBag2 : IUnknown {
 	HRESULT Write(ULONG, PROPBAG2*, VARIANT*);
 	HRESULT CountProperties(ULONG*);
 	HRESULT GetPropertyInfo(ULONG, ULONG, PROPBAG2*, ULONG*);
-	HRESULT LoadObject(LPCOLESTR, DWORD, IUnknown*, LPERRORLOG);
+	HRESULT LoadObject(LPCOLESTR, DWORD, IUnknown, LPERRORLOG);
 }
 alias IPropertyBag2 LPPROPERTYBAG2;
 
@@ -273,7 +273,7 @@ alias IEnumConnectionPoints LPENUMCONNECTIONPOINTS;
 
 interface IConnectionPoint : IUnknown {
 	HRESULT GetConnectionInterface(IID*);
-	HRESULT GetConnectionPointContainer(IConnectionPointContainer**);
+	HRESULT GetConnectionPointContainer(IConnectionPointContainer*);
 	HRESULT Advise(LPUNKNOWN, PDWORD);
 	HRESULT Unadvise(DWORD);
 	HRESULT EnumConnections(LPENUMCONNECTIONS*);
@@ -350,8 +350,8 @@ interface IFont : IUnknown {
 	HRESULT get_Charset(short*);
 	HRESULT put_Charset(short);
 	HRESULT get_hFont(HFONT*);
-	HRESULT Clone(IFont**);
-	HRESULT IsEqual(IFont*);
+	HRESULT Clone(IFont*);
+	HRESULT IsEqual(IFont);
 	HRESULT SetRatio(int, int);
 	HRESULT QueryTextMetrics(LPTEXTMETRICOLE);
 	HRESULT AddRefHfont(HFONT);
@@ -392,7 +392,7 @@ interface IOleInPlaceSiteEx : IOleInPlaceSite {
 }
 
 interface IObjectWithSite : IUnknown {
-	HRESULT SetSite(IUnknown*);
+	HRESULT SetSite(IUnknown);
 	HRESULT GetSite(REFIID, void**);
 }
 
@@ -414,7 +414,7 @@ interface IOleInPlaceSiteWindowless : IOleInPlaceSiteEx {
 interface IAdviseSinkEx : IUnknown {
 	void OnDataChange(FORMATETC*, STGMEDIUM*);
 	void OnViewChange(DWORD, LONG);
-	void OnRename(IMoniker*);
+	void OnRename(IMoniker);
 	void OnSave();
 	void OnClose();
 	HRESULT OnViewStatusChange(DWORD);
@@ -434,30 +434,30 @@ interface IOleUndoUnit : IUnknown {
 }
 
 interface IOleParentUndoUnit : IOleUndoUnit {
-	HRESULT Open(IOleParentUndoUnit*);
-	HRESULT Close(IOleParentUndoUnit*, BOOL);
-	HRESULT Add(IOleUndoUnit*);
-	HRESULT FindUnit(IOleUndoUnit*);
+	HRESULT Open(IOleParentUndoUnit);
+	HRESULT Close(IOleParentUndoUnit, BOOL);
+	HRESULT Add(IOleUndoUnit);
+	HRESULT FindUnit(IOleUndoUnit);
 	HRESULT GetParentState(DWORD*);
 }
 
 interface IEnumOleUndoUnits : IUnknown {
-	HRESULT Next(ULONG, IOleUndoUnit**, ULONG*);
+	HRESULT Next(ULONG, IOleUndoUnit*, ULONG*);
 	HRESULT Skip(ULONG);
 	HRESULT Reset();
-	HRESULT Clone(IEnumOleUndoUnits**);
+	HRESULT Clone(IEnumOleUndoUnits*);
 }
 
 interface IOleUndoManager : IUnknown {
-	HRESULT Open(IOleParentUndoUnit*);
-	HRESULT Close(IOleParentUndoUnit*, BOOL);
-	HRESULT Add(IOleUndoUnit*);
+	HRESULT Open(IOleParentUndoUnit);
+	HRESULT Close(IOleParentUndoUnit, BOOL);
+	HRESULT Add(IOleUndoUnit);
 	HRESULT GetOpenParentState(DWORD*);
-	HRESULT DiscardFrom(IOleUndoUnit*);
-	HRESULT UndoTo(IOleUndoUnit*);
-	HRESULT RedoTo(IOleUndoUnit*);
-	HRESULT EnumUndoable(IEnumOleUndoUnits**);
-	HRESULT EnumRedoable(IEnumOleUndoUnits**);
+	HRESULT DiscardFrom(IOleUndoUnit);
+	HRESULT UndoTo(IOleUndoUnit);
+	HRESULT RedoTo(IOleUndoUnit);
+	HRESULT EnumUndoable(IEnumOleUndoUnits*);
+	HRESULT EnumRedoable(IEnumOleUndoUnits*);
 	HRESULT GetLastUndoDescription(BSTR*);
 	HRESULT GetLastRedoDescription(BSTR*);
 	HRESULT Enable(BOOL);

@@ -220,10 +220,10 @@ deprecated {  // not actually deprecated, but they aren't converted yet.
 	interface ICreateTypeLib {};
 	interface ICreateTypeLib2 {};
 
-	alias ICreateTypeInfo* LPCREATETYPEINFO;
-	alias ICreateTypeInfo2* LPCREATETYPEINFO2;
-	alias ICreateTypeLib* LPCREATETYPELIB;
-	alias ICreateTypeLib2* LPCREATETYPELIB2;
+	alias ICreateTypeInfo LPCREATETYPEINFO;
+	alias ICreateTypeInfo2 LPCREATETYPEINFO2;
+	alias ICreateTypeLib LPCREATETYPELIB;
+	alias ICreateTypeLib2 LPCREATETYPELIB2;
 }
 
 extern (Windows) {
@@ -265,8 +265,8 @@ extern (Windows) {
 	SAFEARRAY* SafeArrayCreateVectorEx(VARTYPE, LONG, ULONG, LPVOID);
 	HRESULT SafeArrayAllocDescriptorEx(VARTYPE, UINT, SAFEARRAY**);
 	HRESULT SafeArrayGetVartype(SAFEARRAY*, VARTYPE*);
-	HRESULT SafeArraySetRecordInfo(SAFEARRAY*, IRecordInfo*);
-	HRESULT SafeArrayGetRecordInfo(SAFEARRAY*, IRecordInfo**);
+	HRESULT SafeArraySetRecordInfo(SAFEARRAY*, IRecordInfo);
+	HRESULT SafeArrayGetRecordInfo(SAFEARRAY*, IRecordInfo*);
 	HRESULT SafeArraySetIID(SAFEARRAY*, REFGUID);
 	HRESULT SafeArrayGetIID(SAFEARRAY*, GUID*);
 	void VariantInit(VARIANTARG*);
@@ -372,10 +372,10 @@ extern (Windows) {
 	HRESULT DispGetIDsOfNames(LPTYPEINFO, OLECHAR**, UINT, DISPID*);
 	HRESULT DispInvoke(void*, LPTYPEINFO, DISPID, WORD, DISPPARAMS*, VARIANT*, EXCEPINFO*, UINT*);
 	HRESULT CreateDispTypeInfo(INTERFACEDATA*, LCID, LPTYPEINFO*);
-	HRESULT CreateStdDispatch(IUnknown*, void*, LPTYPEINFO, IUnknown**);
-	HRESULT RegisterActiveObject(IUnknown*, REFCLSID, DWORD, DWORD*);
+	HRESULT CreateStdDispatch(IUnknown, void*, LPTYPEINFO, IUnknown*);
+	HRESULT RegisterActiveObject(IUnknown, REFCLSID, DWORD, DWORD*);
 	HRESULT RevokeActiveObject(DWORD, void*);
-	HRESULT GetActiveObject(REFCLSID, void*, IUnknown**);
+	HRESULT GetActiveObject(REFCLSID, void*, IUnknown*);
 	HRESULT SetErrorInfo(uint, LPERRORINFO);
 	HRESULT GetErrorInfo(uint, LPERRORINFO*);
 	HRESULT CreateErrorInfo(LPCREATEERRORINFO*);
@@ -404,7 +404,7 @@ extern (Windows) {
 	HRESULT VarUI1FromStr(OLECHAR*, LCID, ULONG, BYTE*);
 	HRESULT VarUI1FromCy(CY, BYTE*);
 	HRESULT VarUI1FromDec(DECIMAL*, BYTE*);
-	HRESULT VarUI1FromDisp(IDispatch*, LCID, BYTE*);
+	HRESULT VarUI1FromDisp(IDispatch, LCID, BYTE*);
 
 	HRESULT VarI2FromUI1(BYTE, SHORT*);
 	HRESULT VarI2FromI4(LONG, SHORT*);
@@ -420,7 +420,7 @@ extern (Windows) {
 	HRESULT VarI2FromStr(OLECHAR*, LCID, ULONG, SHORT*);
 	HRESULT VarI2FromCy(CY, SHORT*);
 	HRESULT VarI2FromDec(DECIMAL*, SHORT*);
-	HRESULT VarI2FromDisp(IDispatch*, LCID, SHORT*);
+	HRESULT VarI2FromDisp(IDispatch, LCID, SHORT*);
 
 	HRESULT VarI4FromUI1(BYTE, LONG*);
 	HRESULT VarI4FromI2(SHORT, LONG*);
@@ -436,7 +436,7 @@ extern (Windows) {
 	HRESULT VarI4FromStr(OLECHAR*, LCID, ULONG, LONG*);
 	HRESULT VarI4FromCy(CY, LONG*);
 	HRESULT VarI4FromDec(DECIMAL*, LONG*);
-	HRESULT VarI4FromDisp(IDispatch*, LCID, LONG*);
+	HRESULT VarI4FromDisp(IDispatch, LCID, LONG*);
 
 	HRESULT VarI8FromUI1(BYTE, LONG64*);
 	HRESULT VarI8FromI2(SHORT, LONG64*);
@@ -453,7 +453,7 @@ extern (Windows) {
 	HRESULT VarI8FromDec(DECIMAL* pdecIn, LONG64*);
 	HRESULT VarI8FromInt(INT intIn, LONG64*);
 	HRESULT VarI8FromCy(CY, LONG64*);
-	HRESULT VarI8FromDisp(IDispatch*, LCID, LONG64*);
+	HRESULT VarI8FromDisp(IDispatch, LCID, LONG64*);
 
 	HRESULT VarR4FromUI1(BYTE, FLOAT*);
 	HRESULT VarR4FromI2(SHORT, FLOAT*);
@@ -469,7 +469,7 @@ extern (Windows) {
 	HRESULT VarR4FromStr(OLECHAR*, LCID, ULONG, FLOAT*);
 	HRESULT VarR4FromCy(CY, FLOAT*);
 	HRESULT VarR4FromDec(DECIMAL*, FLOAT*);
-	HRESULT VarR4FromDisp(IDispatch*, LCID, FLOAT*);
+	HRESULT VarR4FromDisp(IDispatch, LCID, FLOAT*);
 
 	HRESULT VarR8FromUI1(BYTE, double*);
 	HRESULT VarR8FromI2(SHORT, double*);
@@ -485,7 +485,7 @@ extern (Windows) {
 	HRESULT VarR8FromStr(OLECHAR*, LCID, ULONG, double*);
 	HRESULT VarR8FromCy(CY, double*);
 	HRESULT VarR8FromDec(DECIMAL*, double*);
-	HRESULT VarR8FromDisp(IDispatch*, LCID, double*);
+	HRESULT VarR8FromDisp(IDispatch, LCID, double*);
 
 	HRESULT VarDateFromUI1(BYTE, DATE*);
 	HRESULT VarDateFromI2(SHORT, DATE*);
@@ -501,7 +501,7 @@ extern (Windows) {
 	HRESULT VarDateFromBool(VARIANT_BOOL, DATE*);
 	HRESULT VarDateFromCy(CY, DATE*);
 	HRESULT VarDateFromDec(DECIMAL*, DATE*);
-	HRESULT VarDateFromDisp(IDispatch*, LCID, DATE*);
+	HRESULT VarDateFromDisp(IDispatch, LCID, DATE*);
 
 	HRESULT VarCyFromUI1(BYTE, CY*);
 	HRESULT VarCyFromI2(SHORT sIn, CY*);
@@ -518,7 +518,7 @@ extern (Windows) {
 	HRESULT VarCyFromUI8(ULONG64, CY*);
 	HRESULT VarCyFromDec(DECIMAL*, CY*);
 	HRESULT VarCyFromStr(OLECHAR*, LCID, ULONG, CY*);
-	HRESULT VarCyFromDisp(IDispatch*, LCID, CY*);
+	HRESULT VarCyFromDisp(IDispatch, LCID, CY*);
 
 	HRESULT VarBstrFromUI1(BYTE, LCID, ULONG, BSTR*);
 	HRESULT VarBstrFromI2(SHORT, LCID, ULONG, BSTR*);
@@ -534,7 +534,7 @@ extern (Windows) {
 	HRESULT VarBstrFromUI4(ULONG, LCID, ULONG, BSTR*);
 	HRESULT VarBstrFromCy(CY, LCID, ULONG, BSTR*);
 	HRESULT VarBstrFromDec(DECIMAL*, LCID, ULONG, BSTR*);
-	HRESULT VarBstrFromDisp(IDispatch*, LCID, ULONG, BSTR*);
+	HRESULT VarBstrFromDisp(IDispatch, LCID, ULONG, BSTR*);
 
 	HRESULT VarBoolFromUI1(BYTE, VARIANT_BOOL*);
 	HRESULT VarBoolFromI2(SHORT, VARIANT_BOOL*);
@@ -550,7 +550,7 @@ extern (Windows) {
 	HRESULT VarBoolFromUI8(ULONG64, VARIANT_BOOL*);
 	HRESULT VarBoolFromCy(CY, VARIANT_BOOL*);
 	HRESULT VarBoolFromDec(DECIMAL*, VARIANT_BOOL*);
-	HRESULT VarBoolFromDisp(IDispatch*, LCID, VARIANT_BOOL*);
+	HRESULT VarBoolFromDisp(IDispatch, LCID, VARIANT_BOOL*);
 
 	HRESULT VarI1FromUI1(BYTE, byte*);
 	HRESULT VarI1FromI2(SHORT, byte*);
@@ -566,7 +566,7 @@ extern (Windows) {
 	HRESULT VarI1FromUI8(ULONG64, byte*);
 	HRESULT VarI1FromCy(CY, byte*);
 	HRESULT VarI1FromDec(DECIMAL*, byte*);
-	HRESULT VarI1FromDisp(IDispatch*, LCID, byte*);
+	HRESULT VarI1FromDisp(IDispatch, LCID, byte*);
 
 	HRESULT VarUI2FromUI1(BYTE, USHORT*);
 	HRESULT VarUI2FromI2(SHORT, USHORT*);
@@ -582,7 +582,7 @@ extern (Windows) {
 	HRESULT VarUI2FromUI8(ULONG64, USHORT*);
 	HRESULT VarUI2FromCy(CY, USHORT*);
 	HRESULT VarUI2FromDec(DECIMAL*, USHORT*);
-	HRESULT VarUI2FromDisp(IDispatch*, LCID, USHORT*);
+	HRESULT VarUI2FromDisp(IDispatch, LCID, USHORT*);
 
 	HRESULT VarUI4FromStr(OLECHAR*, LCID, ULONG, ULONG*);
 	HRESULT VarUI4FromUI1(BYTE, ULONG*);
@@ -598,7 +598,7 @@ extern (Windows) {
 	HRESULT VarUI4FromUI8(ULONG64, ULONG*);
 	HRESULT VarUI4FromCy(CY, ULONG*);
 	HRESULT VarUI4FromDec(DECIMAL*, ULONG*);
-	HRESULT VarUI4FromDisp(IDispatch*, LCID, ULONG*);
+	HRESULT VarUI4FromDisp(IDispatch, LCID, ULONG*);
 
 	HRESULT VarUI8FromUI1(BYTE, ULONG64*);
 	HRESULT VarUI8FromI2(SHORT, ULONG64*);
@@ -615,7 +615,7 @@ extern (Windows) {
 	HRESULT VarUI8FromDec(DECIMAL*, ULONG64*);
 	HRESULT VarUI8FromInt(INT, ULONG64*);
 	HRESULT VarUI8FromCy(CY, ULONG64*);
-	HRESULT VarUI8FromDisp(IDispatch*, LCID, ULONG64*);
+	HRESULT VarUI8FromDisp(IDispatch, LCID, ULONG64*);
 
 	HRESULT VarDecFromUI1(BYTE, DECIMAL*);
 	HRESULT VarDecFromI2(SHORT, DECIMAL*);
@@ -631,7 +631,7 @@ extern (Windows) {
 	HRESULT VarDecFromUI4(ULONG, DECIMAL*);
 	HRESULT VarDecFromUI8(ULONG64, DECIMAL*);
 	HRESULT VarDecFromCy(CY, DECIMAL*);
-	HRESULT VarDecFromDisp(IDispatch*, LCID, DECIMAL*);
+	HRESULT VarDecFromDisp(IDispatch, LCID, DECIMAL*);
 
 	HRESULT VarDecNeg(CPtr!(DECIMAL), DECIMAL*);
 	HRESULT VarR4CmpR8(float, double);

@@ -484,7 +484,7 @@ interface IOleUILinkContainerW : IUnknown
 	HRESULT UpdateLink(DWORD, BOOL, BOOL);
 	HRESULT CancelLink(DWORD);
 }
-alias IOleUILinkContainerW* LPOLEUILINKCONTAINERW;
+alias IOleUILinkContainerW LPOLEUILINKCONTAINERW;
 
 interface IOleUILinkContainerA : IUnknown
 {
@@ -500,7 +500,7 @@ interface IOleUILinkContainerA : IUnknown
 	HRESULT UpdateLink(DWORD, BOOL, BOOL);
 	HRESULT CancelLink(DWORD);
 }
-alias IOleUILinkContainerA* LPOLEUILINKCONTAINERA;
+alias IOleUILinkContainerA LPOLEUILINKCONTAINERA;
 
 struct OLEUIEDITLINKSW {
 	DWORD cbStruct;
@@ -699,7 +699,7 @@ interface IOleUIObjInfoW : IUnknown
 	HRESULT GetViewInfo(DWORD, HGLOBAL*, PDWORD, int*);
 	HRESULT SetViewInfo(DWORD, HGLOBAL, DWORD, int, BOOL);
 }
-alias IOleUIObjInfoW *LPOLEUIOBJINFOW;
+alias IOleUIObjInfoW LPOLEUIOBJINFOW;
 
 interface IOleUIObjInfoA : IUnknown
 {
@@ -712,7 +712,7 @@ interface IOleUIObjInfoA : IUnknown
 	HRESULT GetViewInfo(DWORD, HGLOBAL*, PDWORD, int*);
 	HRESULT SetViewInfo(DWORD, HGLOBAL, DWORD, int, BOOL);
 }
-alias IOleUIObjInfoA *LPOLEUIOBJINFOA;
+alias IOleUIObjInfoA LPOLEUIOBJINFOA;
 
 interface IOleUILinkInfoW : IOleUILinkContainerW
 {
@@ -729,7 +729,7 @@ interface IOleUILinkInfoW : IOleUILinkContainerW
 	HRESULT CancelLink(DWORD);
 	HRESULT GetLastUpdate(DWORD, FILETIME*);
 }
-alias IOleUILinkInfoW *LPOLEUILINKINFOW;
+alias IOleUILinkInfoW LPOLEUILINKINFOW;
 
 interface IOleUILinkInfoA : IOleUILinkContainerA
 {
@@ -746,7 +746,7 @@ interface IOleUILinkInfoA : IOleUILinkContainerA
 	HRESULT CancelLink(DWORD);
 	HRESULT GetLastUpdate(DWORD, FILETIME*);
 }
-alias IOleUILinkInfoA* LPOLEUILINKINFOA;
+alias IOleUILinkInfoA LPOLEUILINKINFOA;
 
 struct OLEUIGNRLPROPSW {
 	DWORD cbStruct;

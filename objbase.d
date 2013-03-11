@@ -113,7 +113,7 @@ extern(Windows) {
 	DWORD CoGetCurrentProcess();
 	HRESULT CoRegisterMallocSpy(LPMALLOCSPY);
 	HRESULT CoRevokeMallocSpy();
-	HRESULT CoCreateStandardMalloc(DWORD, IMalloc**);
+	HRESULT CoCreateStandardMalloc(DWORD, IMalloc*);
 	//#ifdef DBG
 	ULONG DebugCoGetRpcFault();
 	void DebugCoSetRpcFault(ULONG);
@@ -141,7 +141,7 @@ extern(Windows) {
 	void CoFreeAllLibraries();
 	void CoFreeUnusedLibraries();
 	HRESULT CoCreateInstance(REFCLSID, LPUNKNOWN, DWORD, REFIID, PVOID*);
-	HRESULT CoCreateInstanceEx(REFCLSID, IUnknown*, DWORD, COSERVERINFO*, DWORD, MULTI_QI*);
+	HRESULT CoCreateInstanceEx(REFCLSID, IUnknown, DWORD, COSERVERINFO*, DWORD, MULTI_QI*);
 	HRESULT StringFromCLSID(REFCLSID, LPOLESTR*);
 	HRESULT CLSIDFromString(LPOLESTR, LPCLSID);
 	HRESULT StringFromIID(REFIID, LPOLESTR*);
@@ -164,12 +164,12 @@ extern(Windows) {
 	void CoTaskMemFree(PVOID);
 	HRESULT CreateDataAdviseHolder(LPDATAADVISEHOLDER*);
 	HRESULT CreateDataCache(LPUNKNOWN, REFCLSID, REFIID, PVOID*);
-	HRESULT StgCreateDocfile(CPtr!(OLECHAR), DWORD, DWORD, IStorage**);
-	HRESULT StgCreateDocfileOnILockBytes(ILockBytes*, DWORD, DWORD, IStorage**);
+	HRESULT StgCreateDocfile(CPtr!(OLECHAR), DWORD, DWORD, IStorage*);
+	HRESULT StgCreateDocfileOnILockBytes(ILockBytes, DWORD, DWORD, IStorage*);
 	HRESULT StgOpenStorage(CPtr!(OLECHAR), IStorage, DWORD, SNB, DWORD, IStorage*);
-	HRESULT StgOpenStorageOnILockBytes(ILockBytes*, IStorage*, DWORD, SNB, DWORD, IStorage**);
+	HRESULT StgOpenStorageOnILockBytes(ILockBytes, IStorage, DWORD, SNB, DWORD, IStorage*);
 	HRESULT StgIsStorageFile(CPtr!(OLECHAR));
-	HRESULT StgIsStorageILockBytes(ILockBytes*);
+	HRESULT StgIsStorageILockBytes(ILockBytes);
 	HRESULT StgSetTimes(OLECHAR *, FILETIME *, FILETIME *, FILETIME *);
 	HRESULT StgCreateStorageEx(CPtr!(WCHAR), DWORD, DWORD, DWORD, STGOPTIONS*, void*, REFIID, void**);
 	HRESULT StgOpenStorageEx(CPtr!(WCHAR), DWORD, DWORD, DWORD, STGOPTIONS*, void*, REFIID, void**);

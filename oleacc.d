@@ -157,9 +157,9 @@ const SELFLAG_VALID = 0x0000001F;
 
 
 interface IAccessible : IDispatch {
-	HRESULT get_accParent(IDispatch**);
+	HRESULT get_accParent(IDispatch*);
 	HRESULT get_accChildCount(int*);
-	HRESULT get_accChild(VARIANT, IDispatch **);
+	HRESULT get_accChild(VARIANT, IDispatch*);
 	HRESULT get_accName(VARIANT, BSTR*);
 	HRESULT get_accValue(VARIANT, BSTR*);
 	HRESULT get_accDescription(VARIANT, BSTR*);
@@ -182,12 +182,12 @@ interface IAccessible : IDispatch {
 	HRESULT put_accValue(VARIANT, BSTR);
 }
 
-alias IAccessible* LPACCESSIBLE;
+alias IAccessible LPACCESSIBLE;
 
 extern (Windows) {
-	HRESULT AccessibleChildren(IAccessible*, LONG, LONG, VARIANT*, LONG*);
-	HRESULT AccessibleObjectFromEvent(HWND, DWORD, DWORD, IAccessible*, VARIANT*);
-	HRESULT AccessibleObjectFromPoint(POINT, IAccessible**, VARIANT*);
+	HRESULT AccessibleChildren(IAccessible, LONG, LONG, VARIANT*, LONG*);
+	HRESULT AccessibleObjectFromEvent(HWND, DWORD, DWORD, IAccessible, VARIANT*);
+	HRESULT AccessibleObjectFromPoint(POINT, IAccessible*, VARIANT*);
 	HRESULT AccessibleObjectFromWindow(HWND, DWORD, REFIID, void**);
 	HRESULT CreateStdAccessibleObject(HWND, LONG, REFIID, void**);
 	HRESULT CreateStdAccessibleProxyA(HWND, LPCSTR, LONG, REFIID, void**);
@@ -200,7 +200,7 @@ extern (Windows) {
 	UINT GetStateTextW(DWORD, LPWSTR, UINT);
 	LRESULT LresultFromObject(REFIID, WPARAM, LPUNKNOWN);
 	HRESULT ObjectFromLresult(LRESULT, REFIID, WPARAM, void**);
-	HRESULT WindowFromAccessibleObject(IAccessible*, HWND*);
+	HRESULT WindowFromAccessibleObject(IAccessible, HWND*);
 }
 
 version(Unicode) {
