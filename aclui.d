@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.aclui;
-pragma(lib, "aclui.lib");
+pragma(lib, "aclui");
 
 private import win32.w32api;
 

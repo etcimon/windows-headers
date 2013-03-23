@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.ole2;
-pragma(lib, "ole32.lib");
+pragma(lib, "ole32");
 
 public import win32.basetyps, win32.objbase, win32.oleauto, win32.olectlid,
   win32.oleidl, win32.unknwn, win32.winerror, win32.uuid;

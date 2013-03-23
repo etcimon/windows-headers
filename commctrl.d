@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.commctrl;
-pragma(lib, "comctl32.lib");
+pragma(lib, "comctl32");
 
 private import win32.w32api, win32.windef, win32.winuser;
 private import win32.winbase; // for SYSTEMTIME

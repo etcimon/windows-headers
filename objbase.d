@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.objbase;
-pragma(lib, "ole32.lib");
+pragma(lib, "ole32");
 
 import win32.cguid, win32.objidl, win32.unknwn, win32.wtypes;
 private import win32.basetyps, win32.objfwd, win32.rpcdce, win32.winbase,

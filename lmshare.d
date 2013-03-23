@@ -13,11 +13,11 @@ import win32.lmcons;
 private import win32.w32api, win32.windef;
 
 static if (_WIN32_WINNT_ONLY) {
-	pragma(lib, "netapi.lib");
+	pragma(lib, "netapi");
 }
 /* else {
 // only for WinME, 98, 95.
-	pragma(lib, "svrapi.lib")
+	pragma(lib, "svrapi")
 }
 */
 

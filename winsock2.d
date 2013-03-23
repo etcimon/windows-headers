@@ -7,7 +7,7 @@
 *                             by Daniel Keep                            *
 \***********************************************************************/
 module win32.winsock2;
-pragma(lib, "Ws2_32.lib");
+pragma(lib, "Ws2_32");
 
 /*
   Definitions for winsock 2

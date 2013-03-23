@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.ddeml;
-pragma(lib, "user32.lib");
+pragma(lib, "user32");
 
 private import win32.basetsd, win32.windef, win32.winnt;
 

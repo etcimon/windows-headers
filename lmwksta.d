@@ -8,12 +8,12 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.lmwksta;
-pragma(lib, "netapi32.lib");
+pragma(lib, "netapi32");
 
 import win32.lmuseflg;
 private import win32.lmcons, win32.windef;
 
-pragma(lib, "Netapi32.lib");
+pragma(lib, "Netapi32");
 
 enum {
 	WKSTA_COMPUTERNAME_PARMNUM     = 1,

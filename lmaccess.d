@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.lmaccess;
-pragma(lib, "netapi32.lib");
+pragma(lib, "netapi32");
 
 /**
  Changes relative to MinGW:

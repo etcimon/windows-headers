@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.shlwapi;
-pragma(lib, "shlwapi.lib");
+pragma(lib, "shlwapi");
 
 /* Changes compared to MinGW:
 wnsprintf functions are not included.

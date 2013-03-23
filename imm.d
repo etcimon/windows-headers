@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.imm;
-pragma(lib, "imm32.lib");
+pragma(lib, "imm32");
 
 import win32.windef, win32.wingdi;
 import win32.winuser; // for the MFS_xxx enums.

@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.shlobj;
-pragma(lib, "shell32.lib");
+pragma(lib, "shell32");
 
 // TODO: fix bitfields
 // TODO: CMIC_VALID_SEE_FLAGS

@@ -8,7 +8,7 @@
 \***********************************************************************/
 
 module win32.vfw;
-pragma(lib, "vfw32.lib");
+pragma(lib, "vfw32");
 
 private import
 	win32.commdlg,

@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.lmmsg;
-pragma(lib, "netapi32.lib");
+pragma(lib, "netapi32");
 
 private import win32.lmcons, win32.windef, win32.w32api;
 

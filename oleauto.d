@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.oleauto;
-pragma(lib, "oleaut32.lib");
+pragma(lib, "oleaut32");
 
 import win32.oaidl;
 private import win32.basetyps, win32.unknwn, win32.windef, win32.wtypes;

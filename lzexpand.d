@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.lzexpand;
-pragma(lib, "lz32.lib");
+pragma(lib, "lz32");
 
 private import win32.winbase, win32.windef;
 

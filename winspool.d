@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.winspool;
-pragma(lib, "winspool.lib");
+pragma(lib, "winspool");
 
 private import win32.w32api, win32.windef, win32.wingdi;
 private import win32.winbase; // for SYSTEMTIME

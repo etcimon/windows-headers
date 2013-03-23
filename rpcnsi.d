@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.rpcnsi;
-pragma(lib, "rpcns4.lib");
+pragma(lib, "rpcns4");
 
 private import win32.basetyps, win32.rpcdcep, win32.rpcnsi, win32.rpcdce,
   win32.w32api;

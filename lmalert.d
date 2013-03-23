@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.lmalert;
-pragma(lib, "netapi32.lib");
+pragma(lib, "netapi32");
 
 private import win32.lmcons, win32.windef;
 

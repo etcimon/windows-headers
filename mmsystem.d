@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.mmsystem;
-pragma(lib, "winmm.lib");
+pragma(lib, "winmm");
 
 /*	The #defines MAKEFOURCC, mmioFOURCC, sndAlias are used to define
  *	compile-time constants, so they are implemented as templates.

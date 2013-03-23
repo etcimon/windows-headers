@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.powrprof;
-pragma(lib, "powrprof.lib");
+pragma(lib, "powrprof");
 
 private import win32.windef;
 private import win32.ntdef;
