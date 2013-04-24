@@ -1383,7 +1383,7 @@ struct SYSTEM_INFO {
 	DWORD dwPageSize;
 	PVOID lpMinimumApplicationAddress;
 	PVOID lpMaximumApplicationAddress;
-	DWORD dwActiveProcessorMask;
+	DWORD_PTR dwActiveProcessorMask;
 	DWORD dwNumberOfProcessors;
 	DWORD dwProcessorType;
 	DWORD dwAllocationGranularity;
