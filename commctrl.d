@@ -2997,7 +2997,7 @@ struct TBBUTTON {
 	} else {
 		BYTE  bReserved[2];
 	}
-	DWORD dwData;
+	DWORD_PTR dwData;
 	INT_PTR iString;
 }
 alias TBBUTTON*       PTBBUTTON, LPTBBUTTON;
@@ -3012,7 +3012,7 @@ static if (_WIN32_IE >= 0x400) {
 		BYTE  fsState;
 		BYTE  fsStyle;
 		WORD  cx;
-		DWORD lParam;
+		DWORD_PTR lParam;
 		LPSTR pszText;
 		int   cchText;
 	}
@@ -3026,7 +3026,7 @@ static if (_WIN32_IE >= 0x400) {
 		BYTE   fsState;
 		BYTE   fsStyle;
 		WORD   cx;
-		DWORD  lParam;
+		DWORD_PTR lParam;
 		LPWSTR pszText;
 		int    cchText;
 	}
