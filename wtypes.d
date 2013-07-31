@@ -93,7 +93,8 @@ alias OLECHAR* BSTR;
 alias FLAGGED_WORD_BLOB* wireBSTR;
 alias BSTR* LPBSTR;
 //alias LONG SCODE; // also in winerror
-alias HANDLE HCONTEXT, HMETAFILEPICT;
+mixin DECLARE_HANDLE!("HCONTEXT");
+mixin DECLARE_HANDLE!("HMETAFILEPICT");
 
 union CY {
 	struct {
@@ -214,7 +215,7 @@ struct DECIMAL {
 		struct {
 			ubyte scale; // valid values are 0 to 28
 			ubyte sign; // 0 for positive, DECIMAL_NEG for negatives.
-			const ubyte DECIMAL_NEG = 0x80;
+			enum ubyte DECIMAL_NEG = 0x80;
 		}
 		USHORT signscale;
 	}

@@ -45,7 +45,7 @@ enum {
     HSE_IO_SEND_HEADERS             = 0x00000008
 }
 
-alias HANDLE HCONN;
+mixin DECLARE_HANDLE!("HCONN");
 
 struct HSE_VERSION_INFO {
 	DWORD dwExtensionVersion;

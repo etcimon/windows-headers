@@ -12,8 +12,9 @@ module win32.msacm;
 
 private import win32.basetsd, win32.mmsystem, win32.windef;
 
-alias HANDLE HACMDRIVERID, HACMDRIVER;
-alias HANDLE* LPHACMDRIVER;
+mixin DECLARE_HANDLE!("HACMDRIVERID");
+mixin DECLARE_HANDLE!("HACMDRIVER");
+alias HACMDRIVER* LPHACMDRIVER;
 
 /* Comment from MinGW
 	found through experimentation

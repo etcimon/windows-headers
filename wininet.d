@@ -619,8 +619,12 @@ enum {
 	INTERNET_CACHE_GROUP_REMOVE = 1
 }
 
-alias HANDLE HINTERNET;
-alias HANDLE* LPHINTERNET;
+//mixin DECLARE_HANDLE!("HINTERNET"); // doesn't work - bug
+struct HINTERNET {
+	HANDLE h;
+	alias h this;
+}
+alias HINTERNET* LPHINTERNET;
 
 alias LONGLONG GROUPID;
 alias WORD INTERNET_PORT;

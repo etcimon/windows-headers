@@ -1640,8 +1640,8 @@ extern (Windows) {
 	}
 }
 
-LPTSTR MAKEINTATOM(short i) {
-	return cast(LPTSTR) i;
+LPTSTR MAKEINTATOM()(ushort i) {
+	return cast(LPTSTR) cast(size_t) i;
 }
 
 extern (Windows) {

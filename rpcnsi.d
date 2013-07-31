@@ -15,7 +15,7 @@ private import win32.basetyps, win32.rpcdcep, win32.rpcnsi, win32.rpcdce,
   win32.w32api;
 private import win32.windef;  // for HANDLE
 
-alias HANDLE RPC_NS_HANDLE;
+mixin DECLARE_HANDLE!("RPC_NS_HANDLE");
 
 const RPC_C_NS_SYNTAX_DEFAULT=0;
 const RPC_C_NS_SYNTAX_DCE=3;

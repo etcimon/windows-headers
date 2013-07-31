@@ -37,8 +37,18 @@ template TypeDef(T) {
 // 'forwatd template reference' to CPtr from winnt.d caused by a circular
 // import.
 
-alias TypeDef!(void*) HANDLE;
+//alias TypeDef!(void*) HANDLE;
+struct HANDLE {
+    void* h;
+    alias h this;
+}
 
+template DECLARE_HANDLE(string name, base = HANDLE) {
+    mixin ("struct " ~ name ~ " {
+        " ~ base.stringof ~ " h;
+        alias h this;
+    }");
+}
 alias HANDLE* PHANDLE, LPHANDLE;
 
 version (Win64) {

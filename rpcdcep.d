@@ -13,7 +13,7 @@ private import win32.basetyps;
 private import win32.w32api;
 private import win32.windef;
 
-alias HANDLE I_RPC_HANDLE;
+mixin DECLARE_HANDLE!("I_RPC_HANDLE");
 alias long RPC_STATUS;
 
 const RPC_NCA_FLAGS_DEFAULT=0;

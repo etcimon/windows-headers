@@ -1741,7 +1741,8 @@ enum {
 	I_CHILDRENCALLBACK = -1
 }
 
-alias HANDLE HTREEITEM;
+mixin DECLARE_HANDLE!("HTREEITEM");
+mixin DECLARE_HANDLE!("HIMAGELIST");
 
 version(Win64)
 {
@@ -3083,8 +3084,6 @@ struct IMAGEINFO {
 	RECT    rcImage;
 }
 alias IMAGEINFO* LPIMAGEINFO;
-
-alias HANDLE HIMAGELIST;
 
 static if (_WIN32_IE >= 0x500) {
 	struct HDITEMA {
@@ -4474,8 +4473,8 @@ static if (_WIN32_IE >= 0x400) {
 	alias RBHITTESTINFO* LPRBHITTESTINFO;
 }
 
-alias HANDLE HDSA;
-alias HANDLE HDPA;
+mixin DECLARE_HANDLE!("HDSA");
+mixin DECLARE_HANDLE!("HDPA");
 
 version (Unicode) {
 	alias HDITEMW HDITEM;
