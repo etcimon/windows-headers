@@ -3696,7 +3696,7 @@ struct JOBOBJECT_JOBSET_INFORMATION {
 alias JOBOBJECT_JOBSET_INFORMATION* PJOBOBJECT_JOBSET_INFORMATION;
 
 // MinGW: Making these defines conditional on _WIN32_WINNT will break ddk includes
-//static if (_WIN32_WINNT >= 0x0500) {
+//static if (_WIN32_WINNT >= 0x500) {
 
 const DWORD
 	ES_SYSTEM_REQUIRED  = 0x00000001,
@@ -3968,7 +3968,7 @@ struct ADMINISTRATOR_POWER_POLICY {
 }
 alias ADMINISTRATOR_POWER_POLICY* PADMINISTRATOR_POWER_POLICY;
 
-//}//#endif /* _WIN32_WINNT >= 0x0500 */
+//}//#endif /* _WIN32_WINNT >= 0x500 */
 
 extern (Windows) {
 	alias void function(PVOID, DWORD, PVOID) PIMAGE_TLS_CALLBACK;

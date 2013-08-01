@@ -332,7 +332,7 @@ struct SHFILEINFOW {
 	WCHAR[80]       szTypeName;
 }
 
-struct SHQUERYRBINFO {
+align(1) struct SHQUERYRBINFO {
 	DWORD cbSize = SHQUERYRBINFO.sizeof;
 	long  i64Size;
 	long  i64NumItems;

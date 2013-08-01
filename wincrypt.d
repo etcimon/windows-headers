@@ -736,7 +736,7 @@ extern (Windows) {
 	BOOL CryptGenKey(HCRYPTPROV, ALG_ID, DWORD, HCRYPTKEY*);
 	BOOL CryptDeriveKey(HCRYPTPROV, ALG_ID, HCRYPTHASH, DWORD, HCRYPTKEY*);
 	BOOL CryptDestroyKey(HCRYPTKEY);
-	static if (_WIN32_WINNT >= 0x0500) {
+	static if (_WIN32_WINNT >= 0x500) {
 		BOOL CryptDuplicateHash(HCRYPTHASH, DWORD*, DWORD, HCRYPTHASH*);
 		BOOL CryptDuplicateKey(HCRYPTKEY, DWORD*, DWORD, HCRYPTKEY*);
 	}

@@ -198,7 +198,7 @@ enum : DWORD {
 
 const EMR_MIN = EMR_HEADER;
 
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 	const EMR_MAX = EMR_CREATECOLORSPACEW;
 } else {
 	const EMR_MAX = EMR_PIXELFORMAT;
@@ -211,7 +211,7 @@ enum : DWORD {
 	EPS_SIGNATURE     = 0x46535045
 }
 
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 	// AddFontResourceEx()
 	enum : DWORD {
 		FR_PRIVATE  = 0x10,
@@ -352,7 +352,7 @@ const DWORD
 	PATCOPY     = 0xF00021,
 	PATPAINT    = 0xFB0A09,
 	WHITENESS   = 0xFF0062;
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 	const DWORD
 		NOMIRRORBITMAP = 0x80000000,
 		CAPTUREBLT     = 0x40000000;
@@ -801,7 +801,7 @@ enum : WORD {
 	DC_MODEL,
 }
 
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 	enum {
 		DC_PERSONALITY = 25,
 		DC_PRINTRATE = 26,
@@ -856,7 +856,7 @@ const UINT
 	ETO_NUMERICSLOCAL  = 0x0400,
 	ETO_NUMERICSLATIN  = 0x0800,
 	ETO_IGNORELANGUAGE = 0x1000;
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 	const UINT
 		ETO_PDY = 0x2000;
 }
@@ -970,7 +970,7 @@ enum : int {
 	DESKTOPHORZRES  = 118,
 	BLTALIGNMENT    = 119
 }
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 enum : int {
 	SHADEBLENDCAPS  = 120,
 	COLORMGMTCAPS   = 121,
@@ -1008,7 +1008,7 @@ const int
 	RC_OP_DX_OUTPUT = 0x4000,
 	RC_DEVBITS      = 0x8000;
 
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 	/* Shading and blending caps */
 	const SB_NONE = 0x00000000;
 	const SB_CONST_ALPHA = 0x00000001;
@@ -1193,14 +1193,14 @@ enum : int {
 	SYSTEM_FIXED_FONT,
 	DEFAULT_GUI_FONT = SYSTEM_FIXED_FONT + 1,
 }
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 	enum : int {
 		DC_BRUSH = DEFAULT_GUI_FONT + 1,
 		DC_PEN,
 	}
 }
 
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 	const STOCK_LAST = DC_PEN;
 } else {
 	const STOCK_LAST = DEFAULT_GUI_FONT;
@@ -1572,7 +1572,7 @@ enum : short {
 	DMPAPER_A3_TRANSVERSE,
 	DMPAPER_A3_EXTRA_TRANSVERSE // = 68
 }
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 	enum : short {
 		DMPAPER_DBL_JAPANESE_POSTCARD = 69,
 		DMPAPER_A6,
@@ -1696,7 +1696,7 @@ enum : short {
 	DMCOLLATE_TRUE
 }
 
-static if (_WIN32_WINNT >= 0x0501) {
+static if (_WIN32_WINNT >= 0x501) {
 	/* DEVMODE dmDisplayOrientation specifiations */
 	enum : short {
 		DMDO_DEFAULT = 0,
@@ -1735,12 +1735,12 @@ const DWORD
 	DM_PAPERLENGTH        = 0x00000004,
 	DM_PAPERWIDTH         = 0x00000008,
 	DM_SCALE              = 0x00000010;
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 	const DWORD
 		DM_POSITION       = 0x00000020,
 		DM_NUP            = 0x00000040;
 }
-static if (_WIN32_WINNT >= 0x0501) {
+static if (_WIN32_WINNT >= 0x501) {
 	const DWORD
 		DM_DISPLAYORIENTATION = 0x00000080;
 }
@@ -1766,7 +1766,7 @@ const DWORD
 	DM_DITHERTYPE         = 0x04000000,
 	DM_PANNINGWIDTH       = 0x08000000,
 	DM_PANNINGHEIGHT      = 0x10000000;
-static if (_WIN32_WINNT >= 0x0501) {
+static if (_WIN32_WINNT >= 0x501) {
 	const DWORD
 		DM_DISPLAYFIXEDOUTPUT = 0x20000000;
 }
@@ -1936,7 +1936,7 @@ const CS_ENABLE = 0x00000001;
 const CS_DISABLE = 0x00000002;
 const CS_DELETE_TRANSFORM = 0x00000003;
 
-static if (_WIN32_WINNT > 0x0500) {
+static if (_WIN32_WINNT > 0x500) {
 	const GRADIENT_FILL_RECT_H=0x00;
 	const GRADIENT_FILL_RECT_V=0x01;
 	const GRADIENT_FILL_TRIANGLE=0x02;
@@ -1963,7 +1963,7 @@ const DWORD
 	DISPLAY_DEVICE_ACTIVE = 0x00000001,
 	DISPLAY_DEVICE_ATTACHED = 0x00000002;
 
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 	const GGI_MARK_NONEXISTING_GLYPHS = 1;
 }
 
@@ -2555,7 +2555,7 @@ alias EMRSELECTCOLORSPACE* PEMRSELECTCOLORSPACE;
 alias TypeDef!(EMRSETCOLORSPACE) EMRDELETECOLORSPACE;
 alias EMRDELETECOLORSPACE* PEMRDELETECOLORSPACE;
 
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 
 	struct EMREXTESCAPE {
 		EMR emr;
@@ -3252,7 +3252,7 @@ alias TypeDef!(EMRSELECTCLIPPATH) EMRSETTEXTALIGN;
 alias EMRSETTEXTALIGN* PEMRSETTEXTALIGN;
 alias TypeDef!(EMRSELECTCLIPPATH) EMRENABLEICM;
 alias EMRENABLEICM* PEMRENABLEICM;
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 	alias TypeDef!(EMRSELECTCLIPPATH) EMRSETLAYOUT;
 	alias EMRSETLAYOUT* PEMRSETLAYOUT;
 }
@@ -3291,7 +3291,7 @@ struct ENHMETAHEADER {
 	DWORD cbPixelFormat;
 	DWORD offPixelFormat;
 	DWORD bOpenGL;
-	static if (_WIN32_WINNT >= 0x0500) {
+	static if (_WIN32_WINNT >= 0x500) {
 		SIZEL szlMicrometers;
 	}
 }
@@ -3419,7 +3419,7 @@ struct GLYPHMETRICS {
 }
 alias GLYPHMETRICS* LPGLYPHMETRICS;
 
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 	struct WCRANGE {
 		WCHAR  wcLow;
 		USHORT cGlyphs;
@@ -3795,7 +3795,7 @@ alias DESIGNVECTOR* PDESIGNVECTOR, LPDESIGNVECTOR;
 const STAMP_DESIGNVECTOR = 0x8000000 + 'd' + ('v' << 8);
 const STAMP_AXESLIST     = 0x8000000 + 'a' + ('l' << 8);
 
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 
 	const MM_MAX_AXES_NAMELEN = 16;
 
@@ -3890,7 +3890,7 @@ static if (_WIN32_WINNT >= 0x0500) {
 		alias PENUMTEXTMETRICA PENUMTEXTMETRIC;
 		alias LPENUMTEXTMETRICA LPENUMTEXTMETRIC;
 	}
-} /* _WIN32_WINNT >= 0x0500 */
+} /* _WIN32_WINNT >= 0x500 */
 
 struct GRADIENT_TRIANGLE {
 	ULONG Vertex1;
@@ -4143,7 +4143,7 @@ extern(Windows) {
 	BOOL GetCurrentPositionEx(HDC, LPPOINT);
 	HCURSOR GetCursor();
 	BOOL GetDCOrgEx(HDC, LPPOINT);
-    static if (_WIN32_WINNT >= 0x0500)
+    static if (_WIN32_WINNT >= 0x500)
     {
         DWORD GetDCPenColor(HGDIOBJ);
         COLORREF GetDCBrushColor(HGDIOBJ);
@@ -4293,7 +4293,7 @@ extern(Windows) {
 	BOOL SetICMProfileW(HDC, LPWSTR);
 	int SetMapMode(HDC, int);
 
-	static if (_WIN32_WINNT >= 0x0500) {
+	static if (_WIN32_WINNT >= 0x500) {
 		DWORD SetLayout(HDC hdc, DWORD l);
 		DWORD GetLayout(HDC hdc);
 	}
@@ -4356,7 +4356,7 @@ extern(Windows) {
 	BOOL wglUseFontOutlinesA(HDC, DWORD, DWORD, DWORD, FLOAT, FLOAT, int, LPGLYPHMETRICSFLOAT);
 	BOOL wglUseFontOutlinesW(HDC, DWORD, DWORD, DWORD, FLOAT, FLOAT, int, LPGLYPHMETRICSFLOAT);
 
-	static if (_WIN32_WINNT >= 0x0500) {
+	static if (_WIN32_WINNT >= 0x500) {
 	alias WGLSWAP* PWGLSWAP;
 	struct WGLSWAP {
 		HDC hdc;
@@ -4366,13 +4366,13 @@ extern(Windows) {
 	DWORD  wglSwapMultipleBuffers(UINT, WGLSWAP*);
 }
 
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 		BOOL AlphaBlend(HDC, int, int, int, int, HDC, int, int, int, int, BLENDFUNCTION);
 		BOOL GradientFill(HDC, PTRIVERTEX, ULONG, PVOID, ULONG, ULONG);
 		BOOL TransparentBlt(HDC, int, int, int, int, HDC, int, int, int, int, UINT);
 	}
 
-	static if (_WIN32_WINNT >= 0x0500) {
+	static if (_WIN32_WINNT >= 0x500) {
 		COLORREF SetDCBrushColor(HDC, COLORREF);
 		COLORREF SetDCPenColor(HDC, COLORREF);
 		HANDLE AddFontMemResourceEx(PVOID, DWORD, PVOID, DWORD*);
@@ -4460,7 +4460,7 @@ version(Unicode) {
 	alias UpdateICMRegKeyW UpdateICMRegKey;
 	alias wglUseFontBitmapsW wglUseFontBitmaps;
 	alias wglUseFontOutlinesW wglUseFontOutlines;
-	static if (_WIN32_WINNT >= 0x0500) {
+	static if (_WIN32_WINNT >= 0x500) {
 		alias ENUMLOGFONTEXDVW ENUMLOGFONTEXDV;
 		alias PENUMLOGFONTEXDVW PENUMLOGFONTEXDV;
 		alias LPENUMLOGFONTEXDVW LPENUMLOGFONTEXDV;
@@ -4534,7 +4534,7 @@ version(Unicode) {
 	alias UpdateICMRegKeyA UpdateICMRegKey;
 	alias wglUseFontBitmapsA wglUseFontBitmaps;
 	alias wglUseFontOutlinesA wglUseFontOutlines;
-	static if (_WIN32_WINNT >= 0x0500) {
+	static if (_WIN32_WINNT >= 0x500) {
 		alias ENUMLOGFONTEXDVA ENUMLOGFONTEXDV;
 		alias PENUMLOGFONTEXDVA PENUMLOGFONTEXDV;
 		alias LPENUMLOGFONTEXDVA LPENUMLOGFONTEXDV;

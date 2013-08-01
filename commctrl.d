@@ -290,7 +290,7 @@ static if (_WIN32_IE >= 0x500) {
     }
 }
 
-static if (_WIN32_WINNT >= 0x0501)
+static if (_WIN32_WINNT >= 0x501)
 {
     enum {
         BCN_FIRST = -1250U,
@@ -403,7 +403,7 @@ static if (_WIN32_IE >= 0x400) {
 		HDM_SETUNICODEFORMAT = CCM_SETUNICODEFORMAT
 	}
 }
-static if (_WIN32_IE >= 0x0500) {
+static if (_WIN32_IE >= 0x500) {
 	enum {
 		HDM_SETBITMAPMARGIN = HDM_FIRST + 20,
 		HDM_GETBITMAPMARGIN = HDM_FIRST + 21,
@@ -412,7 +412,7 @@ static if (_WIN32_IE >= 0x0500) {
         HDM_CLEARFILTER = HDM_FIRST + 24,
     }
 }
-static if (_WIN32_IE >= 0x0600) {
+static if (_WIN32_IE >= 0x600) {
 	enum {
         HDM_GETITEMDROPDOWNRECT = HDM_FIRST + 25,
         HDM_GETOVERFLOWRECT = HDM_FIRST + 26,
@@ -944,7 +944,7 @@ static if (_WIN32_IE >= 0x400) {  // IE4.0 ???
 		TTM_SETTITLEA,
 		TTM_SETTITLEW // = WM_USER + 33
 	}
-    static if (_WIN32_IE >= 0x0500)
+    static if (_WIN32_IE >= 0x500)
     {
         alias TTM_SETTITLEW TTM_SETTITLE;
     }
@@ -954,7 +954,7 @@ static if (_WIN32_IE >= 0x400) {  // IE4.0 ???
     }
 }
 
-static if (_WIN32_WINNT >= 0x0501) {
+static if (_WIN32_WINNT >= 0x501) {
     enum {
         TTM_POPUP = (WM_USER + 34),
         TTM_GETTITLE = (WM_USER + 35),
@@ -2590,7 +2590,7 @@ static if (_WIN32_WINNT >= 0x501) {
     alias NMBCHOTITEM* LPNMBCHOTITEM;
 }
 
-static if(_WIN32_WINNT >= 0x0600) {
+static if(_WIN32_WINNT >= 0x600) {
     enum {
         BST_DROPDOWNPUSHED      = 0x0400,
 
@@ -2661,7 +2661,7 @@ enum {
 	CBEM_GETITEMW       = WM_USER + 13
 }
 
-static if (_WIN32_WINNT >= 0x0501)
+static if (_WIN32_WINNT >= 0x501)
 {
     enum {
         CBEM_SETWINDOWTHEME = CCM_SETWINDOWTHEME
@@ -2709,7 +2709,7 @@ static if (_WIN32_IE >= 0x400) {
 	}
 }
 
-static if (_WIN32_WINNT >= 0x0501) {
+static if (_WIN32_WINNT >= 0x501) {
 	enum {
 		LIF_ITEMINDEX = 1,
 		LIF_STATE     = 2,
@@ -2748,7 +2748,7 @@ struct TBMETRICS {
 }
 alias TBMETRICS* LPTBMETRICS;
 
-static if (_WIN32_WINNT >= 0x0501) {
+static if (_WIN32_WINNT >= 0x501) {
     struct TTGETTITLE {
         DWORD dwSize = TTGETTITLE.sizeof;
         UINT  uTitleBitmap;
@@ -2758,7 +2758,7 @@ static if (_WIN32_WINNT >= 0x0501) {
     alias TTGETTITLE* PTTGETTITLE;
 }
 
-static if (_WIN32_WINNT >= 0x0600) {
+static if (_WIN32_WINNT >= 0x600) {
     struct MCGRIDINFO {
         UINT cbSize;
         DWORD dwPart;
@@ -4077,7 +4077,7 @@ struct TVHITTESTINFO {
 alias TVHITTESTINFO* LPTVHITTESTINFO, LPTV_HITTESTINFO;
 alias TVHITTESTINFO TV_HITTESTINFO;
 
-static if (_WIN32_WINNT >= 0x0600) {
+static if (_WIN32_WINNT >= 0x600) {
     struct TVGETITEMPARTRECTINFO {
         HTREEITEM hti;
         RECT*     prc;
@@ -6261,7 +6261,7 @@ alias DestroyWindow CommandBar_Destroy;
 //#endif // _WIN32_WCE
 
 
-static if (_WIN32_WINNT >= 0x0501) {
+static if (_WIN32_WINNT >= 0x501) {
     struct EDITBALLOONTIP
     {
         DWORD cbStruct;
@@ -6277,7 +6277,7 @@ const EM_SHOWBALLOONTIP = ECM_FIRST + 3;
 const EM_HIDEBALLOONTIP = ECM_FIRST + 4;
 }
 
-static if (_WIN32_WINNT >= 0x0600) {
+static if (_WIN32_WINNT >= 0x600) {
 const EM_SETHILITE = ECM_FIRST + 5;
 const EM_GETHILITE = ECM_FIRST + 6;
 }

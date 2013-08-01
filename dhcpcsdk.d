@@ -16,7 +16,7 @@ static assert (_WIN32_WINNT >= 0x500,
 "win32.dhcpcsdk is available only if version Windows2000, WindowsXP, Windows2003
 or WindowsVista is set");
 
-//#if (_WIN32_WINNT >= 0x0500)
+//#if (_WIN32_WINNT >= 0x500)
 
 // FIXME: check type
 const DHCPCAPI_REGISTER_HANDLE_EVENT = 1;
@@ -55,4 +55,4 @@ extern (Windows) {
 	DWORD DhcpUndoRequestParams(DWORD, LPVOID, LPWSTR, LPWSTR);
 }
 
-//#endif // (_WIN32_WINNT >= 0x0500)
+//#endif // (_WIN32_WINNT >= 0x500)

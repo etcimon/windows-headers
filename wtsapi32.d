@@ -269,7 +269,7 @@ enum {
 	DOMAIN_LENGTH         = 17
 }
 
-static if (_WIN32_WINNT >= 0x0600) {
+static if (_WIN32_WINNT >= 0x600) {
 	struct WTSCLIENTW {
 		WCHAR   ClientName[CLIENTNAME_LENGTH + 1];
 		WCHAR   Domain[DOMAIN_LENGTH + 1];
@@ -426,4 +426,4 @@ static if (_WIN32_WINNT >= 0x0600) {
 			DWORD flags
 		);
 	} /* extern(Windows) */
-} /* static if (_WIN32_WINNT >= 0x0600) */
+} /* static if (_WIN32_WINNT >= 0x600) */

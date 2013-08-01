@@ -67,7 +67,7 @@ alias void va_list;
 version(UseNtoSKernel) {}else {
 	/* CAREFUL: These are exported from ntoskrnl.exe and declared in winddk.h
 	   as __fastcall functions, but are  exported from kernel32.dll as __stdcall */
-	static if (_WIN32_WINNT >= 0x0501) {
+	static if (_WIN32_WINNT >= 0x501) {
 	 VOID InitializeSListHead(PSLIST_HEADER);
 	}
 	LONG InterlockedCompareExchange(LPLONG, LONG, LONG);
@@ -79,11 +79,11 @@ version(UseNtoSKernel) {}else {
 	(PVOID)InterlockedExchange((LPLONG)((PVOID)InterlockedExchange((LPLONG)(t), (LONG)(v))
 	LONG InterlockedExchangeAdd(LPLONG, LONG);
 
-	static if (_WIN32_WINNT >= 0x0501) {
+	static if (_WIN32_WINNT >= 0x501) {
 	PSLIST_ENTRY InterlockedFlushSList(PSLIST_HEADER);
 	}
 	LONG InterlockedIncrement(LPLONG);
-	static if (_WIN32_WINNT >= 0x0501) {
+	static if (_WIN32_WINNT >= 0x501) {
 	PSLIST_ENTRY InterlockedPopEntrySList(PSLIST_HEADER);
 	PSLIST_ENTRY InterlockedPushEntrySList(PSLIST_HEADER, PSLIST_ENTRY);
 	}
@@ -1600,7 +1600,7 @@ static if (_WIN32_WINNT >= 0x501) {
 		HighMemoryResourceNotification
 	}
 
-} // (_WIN32_WINNT >= 0x0501)
+} // (_WIN32_WINNT >= 0x501)
 
 static if (_WIN32_WINNT >= 0x410) {
 	/*	apparently used only by SetThreadExecutionState (Win2000+)

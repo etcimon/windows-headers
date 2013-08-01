@@ -25,7 +25,7 @@ enum {
 	BACKGROUND_INTENSITY = 128
 }
 
-static if (_WIN32_WINNT >= 0x0501) {
+static if (_WIN32_WINNT >= 0x501) {
 	enum {
 		CONSOLE_FULLSCREEN_MODE = 1,
 		CONSOLE_WINDOWED_MODE   = 0
@@ -218,12 +218,12 @@ BOOL SetConsoleCursorInfo(HANDLE, CPtr!(CONSOLE_CURSOR_INFO));
 BOOL SetConsoleCursorPosition(HANDLE, COORD);
 
 
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 BOOL GetConsoleDisplayMode(LPDWORD);
 HWND GetConsoleWindow();
 }
 
-static if (_WIN32_WINNT >= 0x0501) {
+static if (_WIN32_WINNT >= 0x501) {
 BOOL AttachConsole(DWORD);
 BOOL SetConsoleDisplayMode(HANDLE, DWORD, PCOORD);
 const DWORD ATTACH_PARENT_PROCESS = cast(DWORD)-1;

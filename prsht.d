@@ -28,7 +28,7 @@ enum {
 	PSP_PREMATURE    = 0x00000400
 }
 
-static if (_WIN32_IE >= 0x0400) {
+static if (_WIN32_IE >= 0x400) {
 	enum {
 		PSP_HIDEHEADER        = 0x00000800,
 		PSP_USEHEADERTITLE    = 0x00001000,
@@ -58,7 +58,7 @@ enum {
 	PSH_WIZARDCONTEXTHELP = 0x00001000
 }
 
-static if (_WIN32_IE >= 0x0400) {
+static if (_WIN32_IE >= 0x400) {
 	enum {
 		PSH_WATERMARK        = 0x00008000,
 		PSH_USEHBMWATERMARK  = 0x00010000,
@@ -79,7 +79,7 @@ static if (_WIN32_IE >= 0x0400) {
 	}
 }
 
-static if (_WIN32_IE >= 0x0500) {
+static if (_WIN32_IE >= 0x500) {
 	enum {
 		PSH_WIZARD_LITE   = 0x00400000,
 		PSH_NOCONTEXTHELP = 0x02000000
@@ -104,12 +104,12 @@ enum {
 	PSN_WIZFINISH   = (-208),
 	PSN_QUERYCANCEL = (-209)
 }
-static if (_WIN32_IE >= 0x0400) {
+static if (_WIN32_IE >= 0x400) {
 	enum {
 		PSN_GETOBJECT = (-210)
 	}
 }
-static if (_WIN32_IE >= 0x0500) {
+static if (_WIN32_IE >= 0x500) {
 	enum {
 		PSN_TRANSLATEACCELERATOR = (-212),
 		PSN_QUERYINITIALFOCUS    = (-213)
@@ -210,7 +210,7 @@ struct PROPSHEETPAGEA {
 	LPARAM  lParam;
 	LPFNPSPCALLBACKA pfnCallback;
 	UINT*     pcRefParent;
-	static if (_WIN32_IE >= 0x0400) {
+	static if (_WIN32_IE >= 0x400) {
 		LPCSTR pszHeaderTitle;
 		LPCSTR pszHeaderSubTitle;
 	}
@@ -235,7 +235,7 @@ struct PROPSHEETPAGEW {
 	LPARAM    lParam;
 	LPFNPSPCALLBACKW pfnCallback;
 	UINT*     pcRefParent;
-	static if (_WIN32_IE >= 0x0400) {
+	static if (_WIN32_IE >= 0x400) {
 		LPCWSTR pszHeaderTitle;
 		LPCWSTR pszHeaderSubTitle;
 	}
@@ -265,7 +265,7 @@ struct PROPSHEETHEADERA {
 		HPROPSHEETPAGE*   phpage;
 	}
 	PFNPROPSHEETCALLBACK pfnCallback;
-	static if (_WIN32_IE >= 0x0400) {
+	static if (_WIN32_IE >= 0x400) {
 		union {
 			HBITMAP hbmWatermark;
 			LPCSTR  pszbmWatermark;
@@ -300,7 +300,7 @@ struct PROPSHEETHEADERW {
 		HPROPSHEETPAGE*   phpage;
 	}
 	PFNPROPSHEETCALLBACK pfnCallback;
-	static if (_WIN32_IE >= 0x0400) {
+	static if (_WIN32_IE >= 0x400) {
 		union {
 			HBITMAP hbmWatermark;
 			LPCWSTR pszbmWatermark;

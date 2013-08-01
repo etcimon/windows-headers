@@ -3,7 +3,7 @@
 *                                                                       *
 *                       Windows API header module                       *
 *                                                                       *
-*                 Translated from MinGW Windows headers                 *
+*             Translated from MinGW API for MS-Windows 4.0              *
 *                                                                       *
 *                       Placed into public domain                       *
 \***********************************************************************/
@@ -62,8 +62,17 @@ version(Unicode) {
 
 const DVASPECT_SHORTNAME = 2;
 
-const SHARD_PIDL = 1;
-const SHARD_PATH = 2;
+enum SHARD {
+    SHARD_PIDL            = 1,
+    SHARD_PATHA,
+    SHARD_PATHW,
+    SHARD_APPIDINFO,
+    SHARD_APPIDINFOIDLIST,
+    SHARD_LINK,
+    SHARD_APPIDINFOLINK,
+    SHARD_SHELLITEM,   // = 8
+	SHARD_PATH = (_WIN32_UNICODE ? SHARD_PATHW : SHARD_PATHA)
+}
 
 const SHCNE_RENAMEITEM = 1;
 const SHCNE_CREATE = 2;
@@ -108,28 +117,32 @@ version(Unicode) {
 	alias SHCNF_PRINTERA SHCNF_PRINTER;
 }
 
-const SFGAO_CANCOPY = DROPEFFECT.DROPEFFECT_COPY;
-const SFGAO_CANMOVE = DROPEFFECT.DROPEFFECT_MOVE;
-const SFGAO_CANLINK = DROPEFFECT.DROPEFFECT_LINK;
-const SFGAO_CANRENAME = 0x00000010L;
-const SFGAO_CANDELETE = 0x00000020L;
-const SFGAO_HASPROPSHEET = 0x00000040L;
-const SFGAO_DROPTARGET = 0x00000100L;
-const SFGAO_CAPABILITYMASK = 0x00000177L;
-const SFGAO_GHOSTED = 0x00008000L;
-const SFGAO_LINK = 0x00010000L;
-const SFGAO_SHARE = 0x00020000L;
-const SFGAO_READONLY = 0x00040000L;
-const SFGAO_HIDDEN = 0x00080000L;
-const SFGAO_DISPLAYATTRMASK = 0x000F0000L;
-const SFGAO_FILESYSANCESTOR = 0x10000000L;
-const SFGAO_FOLDER = 0x20000000L;
-const SFGAO_FILESYSTEM = 0x40000000L;
-const SFGAO_HASSUBFOLDER = 0x80000000L;
-const SFGAO_CONTENTSMASK = 0x80000000L;
-const SFGAO_VALIDATE = 0x01000000L;
-const SFGAO_REMOVABLE = 0x02000000L;
-const SFGAO_COMPRESSED = 0x04000000L;
+enum SFGAOF : DWORD {
+	SFGAO_CANCOPY         = DROPEFFECT.DROPEFFECT_COPY,
+	SFGAO_CANMOVE         = DROPEFFECT.DROPEFFECT_MOVE,
+	SFGAO_CANLINK         = DROPEFFECT.DROPEFFECT_LINK,
+	SFGAO_CANRENAME       = 0x00000010L,
+	SFGAO_CANDELETE       = 0x00000020L,
+	SFGAO_HASPROPSHEET    = 0x00000040L,
+	SFGAO_DROPTARGET      = 0x00000100L,
+	SFGAO_CAPABILITYMASK  = 0x00000177L,
+	SFGAO_ISSLOW          = 0x00004000L,
+	SFGAO_GHOSTED         = 0x00008000L,
+	SFGAO_LINK            = 0x00010000L,
+	SFGAO_SHARE           = 0x00020000L,
+	SFGAO_READONLY        = 0x00040000L,
+	SFGAO_HIDDEN          = 0x00080000L,
+	SFGAO_DISPLAYATTRMASK = (SFGAO_ISSLOW | SFGAO_GHOSTED | SFGAO_LINK
+	                        | SFGAO_SHARE | SFGAO_READONLY | SFGAO_HIDDEN),
+	SFGAO_FILESYSANCESTOR = 0x10000000L,
+	SFGAO_FOLDER          = 0x20000000L,
+	SFGAO_FILESYSTEM      = 0x40000000L,
+	SFGAO_HASSUBFOLDER    = 0x80000000L,
+	SFGAO_CONTENTSMASK    = 0x80000000L,
+	SFGAO_VALIDATE        = 0x01000000L,
+	SFGAO_REMOVABLE       = 0x02000000L,
+	SFGAO_COMPRESSED      = 0x04000000L
+}
 const STRRET_WSTR = 0;
 const STRRET_OFFSET = 1;
 const STRRET_CSTR = 2;
@@ -164,7 +177,7 @@ const TCHAR[] REGSTR_PATH_EXPLORER = "Software\\Microsoft\\Windows\\CurrentVersi
 const TCHAR[] REGSTR_PATH_SPECIAL_FOLDERS=REGSTR_PATH_EXPLORER ~ "\\Shell Folders";
 
 enum {
-	CSIDL_DESKTOP = 0,
+	CSIDL_DESKTOP            =  0,
 	CSIDL_INTERNET,
 	CSIDL_PROGRAMS,
 	CSIDL_CONTROLS,
@@ -175,8 +188,10 @@ enum {
 	CSIDL_RECENT,
 	CSIDL_SENDTO,
 	CSIDL_BITBUCKET,
-	CSIDL_STARTMENU, // = 11
-	CSIDL_DESKTOPDIRECTORY = 16,
+	CSIDL_STARTMENU,      // = 11
+	CSIDL_MYMUSIC            = 13,
+	CSIDL_MYVIDEO,        // = 14
+	CSIDL_DESKTOPDIRECTORY   = 16,
 	CSIDL_DRIVES,
 	CSIDL_NETWORK,
 	CSIDL_NETHOOD,
@@ -209,18 +224,18 @@ enum {
 	CSIDL_COMMON_DOCUMENTS,
 	CSIDL_COMMON_ADMINTOOLS,
 	CSIDL_ADMINTOOLS,
-	CSIDL_CONNECTIONS, // =49
-	CSIDL_COMMON_MUSIC = 53,
+	CSIDL_CONNECTIONS,  // = 49
+	CSIDL_COMMON_MUSIC     = 53,
 	CSIDL_COMMON_PICTURES,
 	CSIDL_COMMON_VIDEO,
 	CSIDL_RESOURCES,
 	CSIDL_RESOURCES_LOCALIZED,
 	CSIDL_COMMON_OEM_LINKS,
-	CSIDL_CDBURN_AREA, // = 59
-	CSIDL_COMPUTERSNEARME = 61,
+	CSIDL_CDBURN_AREA,  // = 59
+	CSIDL_COMPUTERSNEARME  = 61,
 	CSIDL_FLAG_DONT_VERIFY = 0x4000,
-	CSIDL_FLAG_CREATE = 0x8000,
-	CSIDL_FLAG_MASK = 0xFF00
+	CSIDL_FLAG_CREATE      = 0x8000,
+	CSIDL_FLAG_MASK        = 0xFF00
 }
 
 const TCHAR[]
@@ -369,7 +384,6 @@ const SVGIO_ALLVIEW=2;
 const UINT SV2GV_CURRENTVIEW=-1;
 const UINT SV2GV_DEFAULTVIEW=-2;
 
-alias ULONG SFGAOF;
 alias DWORD SHGDNF;
 
 struct CIDA {
@@ -391,7 +405,7 @@ struct ITEMIDLIST {
 alias ITEMIDLIST*       LPITEMIDLIST;
 alias CPtr!(ITEMIDLIST) LPCITEMIDLIST;
 
-alias int function(HWND,UINT,LPARAM,LPARAM) BFFCALLBACK;
+alias int function(HWND, UINT, LPARAM, LPARAM) BFFCALLBACK;
 
 struct BROWSEINFOA {
 	HWND          hwndOwner;
@@ -609,7 +623,7 @@ enum SVUIA_STATUS {
 	SVUIA_INPLACEACTIVATE
 }
 
-static if (_WIN32_IE >= 0x0500) {
+static if (_WIN32_IE >= 0x500) {
 
 	struct EXTRASEARCH
 	 {
@@ -651,77 +665,56 @@ static if (_WIN32_IE >= 0x0500) {
 
 }
 
-interface IEnumIDList: IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT Next(ULONG,LPITEMIDLIST*,ULONG*);
+interface IEnumIDList : IUnknown {
+	HRESULT Next(ULONG, LPITEMIDLIST*, ULONG*);
 	HRESULT Skip(ULONG);
 	HRESULT Reset();
 	HRESULT Clone(IEnumIDList*);
 }
 alias IEnumIDList LPENUMIDLIST;
 
-interface IObjMgr : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
+interface IObjMgr : IUnknown {
 	HRESULT Append(IUnknown);
 	HRESULT Remove(IUnknown);
 }
 
-interface IContextMenu : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT QueryContextMenu(HMENU,UINT,UINT,UINT,UINT);
+interface IContextMenu : IUnknown {
+	HRESULT QueryContextMenu(HMENU, UINT, UINT, UINT, UINT);
 	HRESULT InvokeCommand(LPCMINVOKECOMMANDINFO);
-	HRESULT GetCommandString(UINT,UINT,PUINT,LPSTR,UINT);
+	HRESULT GetCommandString(UINT, UINT, PUINT, LPSTR, UINT);
 }
 alias IContextMenu LPCONTEXTMENU;
 
-interface IContextMenu2 : IContextMenu
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT QueryContextMenu(HMENU,UINT,UINT,UINT,UINT);
-	HRESULT InvokeCommand(LPCMINVOKECOMMANDINFO);
-	HRESULT GetCommandString(UINT,UINT,PUINT,LPSTR,UINT);
-	HRESULT HandleMenuMsg(UINT,WPARAM,LPARAM);
+interface IContextMenu2 : IContextMenu {
+	HRESULT HandleMenuMsg(UINT, WPARAM, LPARAM);
 };
 alias IContextMenu2 LPCONTEXTMENU2;
 
-static if (_WIN32_IE >= 0x0500) {
+static if (_WIN32_IE >= 0x500) {
+	align(8) {
+		struct SHCOLUMNINIT {
+			ULONG dwFlags;
+			ULONG dwReserved;
+			WCHAR wszFolder[MAX_PATH];
+		}
+		alias SHCOLUMNINIT*       LPSHCOLUMNINIT;
+		alias CPtr!(SHCOLUMNINIT) LPCSHCOLUMNINIT;
 
-	align(8):
-	struct SHCOLUMNINIT {
-		ULONG dwFlags;
-		ULONG dwReserved;
-		WCHAR wszFolder[MAX_PATH];
+		struct SHCOLUMNDATA {
+			ULONG dwFlags;
+			DWORD dwFileAttributes;
+			ULONG dwReserved;
+			WCHAR *pwszExt;
+			WCHAR wszFile[MAX_PATH];
+		}
+		alias SHCOLUMNDATA*       LPSHCOLUMNDATA;
+		alias CPtr!(SHCOLUMNDATA) LPCSHCOLUMNDATA;
 	}
-	alias SHCOLUMNINIT*       LPSHCOLUMNINIT;
-	alias CPtr!(SHCOLUMNINIT) LPCSHCOLUMNINIT;
-
-	struct SHCOLUMNDATA {
-		ULONG dwFlags;
-		DWORD dwFileAttributes;
-		ULONG dwReserved;
-		WCHAR *pwszExt;
-		WCHAR wszFile[MAX_PATH];
-	}
-	alias SHCOLUMNDATA*       LPSHCOLUMNDATA;
-	alias CPtr!(SHCOLUMNDATA) LPCSHCOLUMNDATA;
-	align:
 
 	const MAX_COLUMN_NAME_LEN = 80;
 	const MAX_COLUMN_DESC_LEN = 128;
 
-	align(1):
-	struct SHCOLUMNINFO {
+	align(1) struct SHCOLUMNINFO {
 		SHCOLUMNID scid;
 		VARTYPE vt;
 		DWORD fmt;
@@ -732,7 +725,6 @@ static if (_WIN32_IE >= 0x0500) {
 	}
 	alias SHCOLUMNINFO*       LPSHCOLUMNINFO;
 	alias CPtr!(SHCOLUMNINFO) LPCSHCOLUMNINFO;
-	align:
 
 	enum SHCOLSTATE {
 		SHCOLSTATE_TYPE_STR      = 0x00000001,
@@ -747,62 +739,38 @@ static if (_WIN32_IE >= 0x0500) {
 		SHCOLSTATE_PREFER_VARCMP = 0x00000200
 	}
 
-	interface IColumnProvider : IUnknown
-	 {
-		HRESULT QueryInterface(REFIID,PVOID*);
-		ULONG AddRef();
-		ULONG Release();
+	interface IColumnProvider : IUnknown {
 		HRESULT Initialize(LPCSHCOLUMNINIT);
-		HRESULT GetColumnInfo(DWORD,SHCOLUMNINFO*);
-		HRESULT GetItemData(LPCSHCOLUMNID,LPCSHCOLUMNDATA,VARIANT*);
+		HRESULT GetColumnInfo(DWORD, SHCOLUMNINFO*);
+		HRESULT GetItemData(LPCSHCOLUMNID, LPCSHCOLUMNDATA, VARIANT*);
 	}
-}/* _WIN32_IE >= 0x0500 */
+}/* _WIN32_IE >= 0x500 */
 
-interface IQueryInfo : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT GetInfoTip(DWORD,WCHAR**);
+interface IQueryInfo : IUnknown {
+	HRESULT GetInfoTip(DWORD, WCHAR**);
 	HRESULT GetInfoFlags(DWORD*);
 }
 
-interface IShellExtInit : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT Initialize(LPCITEMIDLIST,LPDATAOBJECT,HKEY);
+interface IShellExtInit : IUnknown {
+	HRESULT Initialize(LPCITEMIDLIST, LPDATAOBJECT, HKEY);
 }
 alias IShellExtInit LPSHELLEXTINIT;
 
-interface IShellPropSheetExt : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT AddPages(LPFNADDPROPSHEETPAGE,LPARAM);
-	HRESULT ReplacePage(UINT,LPFNADDPROPSHEETPAGE,LPARAM);
+interface IShellPropSheetExt : IUnknown {
+	HRESULT AddPages(LPFNADDPROPSHEETPAGE, LPARAM);
+	HRESULT ReplacePage(UINT, LPFNADDPROPSHEETPAGE, LPARAM);
 }
 alias IShellPropSheetExt LPSHELLPROPSHEETEXT;
 
-interface IExtractIconA : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT GetIconLocation(UINT,LPSTR,UINT,int*,PUINT);
-	HRESULT Extract(LPCSTR,UINT,HICON*,HICON*,UINT);
+interface IExtractIconA : IUnknown {
+	HRESULT GetIconLocation(UINT, LPSTR, UINT, int*, PUINT);
+	HRESULT Extract(LPCSTR, UINT, HICON*, HICON*, UINT);
 };
 alias IExtractIconA LPEXTRACTICONA;
 
-interface IExtractIconW : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT GetIconLocation(UINT,LPWSTR,UINT,int*,PUINT);
-	HRESULT Extract(LPCWSTR,UINT,HICON*,HICON*,UINT);
+interface IExtractIconW : IUnknown {
+	HRESULT GetIconLocation(UINT, LPWSTR, UINT, int*, PUINT);
+	HRESULT Extract(LPCWSTR, UINT, HICON*, HICON*, UINT);
 }
 alias IExtractIconW LPEXTRACTICONW;
 
@@ -814,227 +782,171 @@ version(Unicode) {
 	alias LPEXTRACTICONA LPEXTRACTICON;
 }
 
-interface IShellLinkA : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT GetPath(LPSTR,int,WIN32_FIND_DATAA*,DWORD);
+interface IShellLinkA : IUnknown {
+	HRESULT GetPath(LPSTR, int, WIN32_FIND_DATAA*, DWORD);
 	HRESULT GetIDList(LPITEMIDLIST*);
 	HRESULT SetIDList(LPCITEMIDLIST);
-	HRESULT GetDescription(LPSTR,int);
+	HRESULT GetDescription(LPSTR, int);
 	HRESULT SetDescription(LPCSTR);
-	HRESULT GetWorkingDirectory(LPSTR,int);
+	HRESULT GetWorkingDirectory(LPSTR, int);
 	HRESULT SetWorkingDirectory(LPCSTR);
-	HRESULT GetArguments(LPSTR,int);
+	HRESULT GetArguments(LPSTR, int);
 	HRESULT SetArguments(LPCSTR);
 	HRESULT GetHotkey(PWORD);
 	HRESULT SetHotkey(WORD);
 	HRESULT GetShowCmd(int*);
 	HRESULT SetShowCmd(int);
-	HRESULT GetIconLocation(LPSTR,int,int*);
-	HRESULT SetIconLocation(LPCSTR,int);
-	HRESULT SetRelativePath(LPCSTR ,DWORD);
-	HRESULT Resolve(HWND,DWORD);
+	HRESULT GetIconLocation(LPSTR, int, int*);
+	HRESULT SetIconLocation(LPCSTR, int);
+	HRESULT SetRelativePath(LPCSTR , DWORD);
+	HRESULT Resolve(HWND, DWORD);
 	HRESULT SetPath(LPCSTR);
 }
 
-interface IShellLinkW : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT GetPath(LPWSTR,int,WIN32_FIND_DATAW*,DWORD);
+interface IShellLinkW : IUnknown {
+	HRESULT GetPath(LPWSTR, int, WIN32_FIND_DATAW*, DWORD);
 	HRESULT GetIDList(LPITEMIDLIST*);
 	HRESULT SetIDList(LPCITEMIDLIST);
-	HRESULT GetDescription(LPWSTR,int);
+	HRESULT GetDescription(LPWSTR, int);
 	HRESULT SetDescription(LPCWSTR);
-	HRESULT GetWorkingDirectory(LPWSTR,int);
+	HRESULT GetWorkingDirectory(LPWSTR, int);
 	HRESULT SetWorkingDirectory(LPCWSTR);
-	HRESULT GetArguments(LPWSTR,int);
+	HRESULT GetArguments(LPWSTR, int);
 	HRESULT SetArguments(LPCWSTR);
 	HRESULT GetHotkey(PWORD);
 	HRESULT SetHotkey(WORD);
 	HRESULT GetShowCmd(int*);
 	HRESULT SetShowCmd(int);
-	HRESULT GetIconLocation(LPWSTR,int,int*);
-	HRESULT SetIconLocation(LPCWSTR,int);
-	HRESULT SetRelativePath(LPCWSTR ,DWORD);
-	HRESULT Resolve(HWND,DWORD);
+	HRESULT GetIconLocation(LPWSTR, int, int*);
+	HRESULT SetIconLocation(LPCWSTR, int);
+	HRESULT SetRelativePath(LPCWSTR , DWORD);
+	HRESULT Resolve(HWND, DWORD);
 	HRESULT SetPath(LPCWSTR);
 }
 
 
-interface IShellFolder : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT ParseDisplayName(HWND,LPBC,LPOLESTR,PULONG,LPITEMIDLIST*,PULONG);
-	HRESULT EnumObjects(HWND,DWORD,LPENUMIDLIST*);
-	HRESULT BindToObject(LPCITEMIDLIST,LPBC,REFIID,PVOID*);
-	HRESULT BindToStorage(LPCITEMIDLIST,LPBC,REFIID,PVOID*);
-	HRESULT CompareIDs(LPARAM,LPCITEMIDLIST,LPCITEMIDLIST);
-	HRESULT CreateViewObject(HWND,REFIID,PVOID*);
-	HRESULT GetAttributesOf(UINT,LPCITEMIDLIST*,PULONG);
-	HRESULT GetUIObjectOf(HWND,UINT,LPCITEMIDLIST*,REFIID,PUINT,PVOID*);
-	HRESULT GetDisplayNameOf(LPCITEMIDLIST,DWORD,LPSTRRET);
-	HRESULT SetNameOf(HWND,LPCITEMIDLIST,LPCOLESTR,DWORD,LPITEMIDLIST*);
+interface IShellFolder : IUnknown {
+	HRESULT ParseDisplayName(HWND, LPBC, LPOLESTR, PULONG, LPITEMIDLIST*, PULONG);
+	HRESULT EnumObjects(HWND, DWORD, LPENUMIDLIST*);
+	HRESULT BindToObject(LPCITEMIDLIST, LPBC, REFIID, PVOID*);
+	HRESULT BindToStorage(LPCITEMIDLIST, LPBC, REFIID, PVOID*);
+	HRESULT CompareIDs(LPARAM, LPCITEMIDLIST, LPCITEMIDLIST);
+	HRESULT CreateViewObject(HWND, REFIID, PVOID*);
+	HRESULT GetAttributesOf(UINT, LPCITEMIDLIST*, PULONG);
+	HRESULT GetUIObjectOf(HWND, UINT, LPCITEMIDLIST*, REFIID, PUINT, PVOID*);
+	HRESULT GetDisplayNameOf(LPCITEMIDLIST, DWORD, LPSTRRET);
+	HRESULT SetNameOf(HWND, LPCITEMIDLIST, LPCOLESTR, DWORD, LPITEMIDLIST*);
 }
 alias IShellFolder LPSHELLFOLDER;
 
-static if (_WIN32_IE >= 0x0500) {
+static if (_WIN32_IE >= 0x500) {
 
-interface IEnumExtraSearch: IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT Next(ULONG,LPEXTRASEARCH*,ULONG*);
+interface IEnumExtraSearch: IUnknown {
+	HRESULT Next(ULONG, LPEXTRASEARCH*, ULONG*);
 	HRESULT Skip(ULONG);
 	HRESULT Reset();
 	HRESULT Clone(IEnumExtraSearch*);
 }
 alias IEnumExtraSearch LPENUMEXTRASEARCH;
 
-interface IShellFolder2 : IShellFolder
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT ParseDisplayName(HWND,LPBC,LPOLESTR,PULONG,LPITEMIDLIST*,PULONG);
-	HRESULT EnumObjects(HWND,DWORD,LPENUMIDLIST*);
-	HRESULT BindToObject(LPCITEMIDLIST,LPBC,REFIID,PVOID*);
-	HRESULT BindToStorage(LPCITEMIDLIST,LPBC,REFIID,PVOID*);
-	HRESULT CompareIDs(LPARAM,LPCITEMIDLIST,LPCITEMIDLIST);
-	HRESULT CreateViewObject(HWND,REFIID,PVOID*);
-	HRESULT GetAttributesOf(UINT,LPCITEMIDLIST*,PULONG);
-	HRESULT GetUIObjectOf(HWND,UINT,LPCITEMIDLIST*,REFIID,PUINT,PVOID*);
-	HRESULT GetDisplayNameOf(LPCITEMIDLIST,DWORD,LPSTRRET);
-	HRESULT SetNameOf(HWND,LPCITEMIDLIST,LPCOLESTR,DWORD,LPITEMIDLIST*);
+interface IShellFolder2 : IShellFolder {
+	HRESULT ParseDisplayName(HWND, LPBC, LPOLESTR, PULONG, LPITEMIDLIST*, PULONG);
+	HRESULT EnumObjects(HWND, DWORD, LPENUMIDLIST*);
+	HRESULT BindToObject(LPCITEMIDLIST, LPBC, REFIID, PVOID*);
+	HRESULT BindToStorage(LPCITEMIDLIST, LPBC, REFIID, PVOID*);
+	HRESULT CompareIDs(LPARAM, LPCITEMIDLIST, LPCITEMIDLIST);
+	HRESULT CreateViewObject(HWND, REFIID, PVOID*);
+	HRESULT GetAttributesOf(UINT, LPCITEMIDLIST*, PULONG);
+	HRESULT GetUIObjectOf(HWND, UINT, LPCITEMIDLIST*, REFIID, PUINT, PVOID*);
+	HRESULT GetDisplayNameOf(LPCITEMIDLIST, DWORD, LPSTRRET);
+	HRESULT SetNameOf(HWND, LPCITEMIDLIST, LPCOLESTR, DWORD, LPITEMIDLIST*);
 	HRESULT GetDefaultSearchGUID(GUID*);
 	HRESULT EnumSearches(IEnumExtraSearch*);
-	HRESULT GetDefaultColumn(DWORD,ULONG*,ULONG*);
-	HRESULT GetDefaultColumnState(UINT,SHCOLSTATEF*);
-	HRESULT GetDetailsEx(LPCITEMIDLIST, CPtr!(SHCOLUMNID),VARIANT*);
-	HRESULT GetDetailsOf(LPCITEMIDLIST,UINT,SHELLDETAILS*);
-	HRESULT MapColumnToSCID(UINT,SHCOLUMNID*);
+	HRESULT GetDefaultColumn(DWORD, ULONG*, ULONG*);
+	HRESULT GetDefaultColumnState(UINT, SHCOLSTATEF*);
+	HRESULT GetDetailsEx(LPCITEMIDLIST, CPtr!(SHCOLUMNID), VARIANT*);
+	HRESULT GetDetailsOf(LPCITEMIDLIST, UINT, SHELLDETAILS*);
+	HRESULT MapColumnToSCID(UINT, SHCOLUMNID*);
 }
 alias IShellFolder2 LPSHELLFOLDER2;
 
-} /* _WIN32_IE >= 0x0500 */
+} /* _WIN32_IE >= 0x500 */
 
-interface ICopyHook : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	UINT CopyCallback(HWND,UINT,UINT,LPCSTR,DWORD,LPCSTR,DWORD);
+interface ICopyHook : IUnknown {
+	UINT CopyCallback(HWND, UINT, UINT, LPCSTR, DWORD, LPCSTR, DWORD);
 }
 alias ICopyHook LPCOPYHOOK;
 
-interface IFileViewerSite : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
+interface IFileViewerSite : IUnknown {
 	HRESULT SetPinnedWindow(HWND);
 	HRESULT GetPinnedWindow(HWND*);
 }
 alias IFileViewerSite LPFILEVIEWERSITE;
 
-interface IFileViewer : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
+interface IFileViewer : IUnknown {
 	HRESULT ShowInitialize(LPFILEVIEWERSITE);
 	HRESULT Show(LPFVSHOWINFO);
-	HRESULT PrintTo(LPSTR,BOOL);
+	HRESULT PrintTo(LPSTR, BOOL);
 }
 alias IFileViewer LPFILEVIEWER;
 
-interface IFileSystemBindData : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
+interface IFileSystemBindData : IUnknown {
 	HRESULT SetFindData(CPtr!(WIN32_FIND_DATAW));
 	HRESULT GetFindData(WIN32_FIND_DATAW*);
 }
 
-interface IPersistFolder : IPersist
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
+interface IPersistFolder : IPersist {
 	HRESULT GetClassID(CLSID*);
 	HRESULT Initialize(LPCITEMIDLIST);
 }
 alias IPersistFolder LPPERSISTFOLDER;
 
-static if (_WIN32_IE >= 0x0400 || _WIN32_WINNT >= 0x0500) {
+static if (_WIN32_IE >= 0x400 || _WIN32_WINNT >= 0x500) {
 
-interface IPersistFolder2 : IPersistFolder
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
+interface IPersistFolder2 : IPersistFolder {
 	HRESULT GetClassID(CLSID*);
 	HRESULT Initialize(LPCITEMIDLIST);
 	HRESULT GetCurFolder(LPITEMIDLIST*);
 }
 alias IPersistFolder2 LPPERSISTFOLDER2;
 
-}/* _WIN32_IE >= 0x0400 || _WIN32_WINNT >= 0x0500 */
+}/* _WIN32_IE >= 0x400 || _WIN32_WINNT >= 0x500 */
 
-static if (_WIN32_IE >= 0x0500) {
+static if (_WIN32_IE >= 0x500) {
 
-interface IPersistFolder3 : IPersistFolder2
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
+interface IPersistFolder3 : IPersistFolder2 {
 	HRESULT GetClassID(CLSID*);
 	HRESULT Initialize(LPCITEMIDLIST);
 	HRESULT GetCurFolder(LPITEMIDLIST*);
-	HRESULT InitializeEx(IBindCtx,LPCITEMIDLIST, CPtr!(PERSIST_FOLDER_TARGET_INFO));
+	HRESULT InitializeEx(IBindCtx, LPCITEMIDLIST, CPtr!(PERSIST_FOLDER_TARGET_INFO));
 	HRESULT GetFolderTargetInfo(PERSIST_FOLDER_TARGET_INFO*);
 }
 alias IPersistFolder3 LPPERSISTFOLDER3;
 
-} /* _WIN32_IE >= 0x0500 */
+} /* _WIN32_IE >= 0x500 */
 
 alias IShellBrowser LPSHELLBROWSER;
 alias IShellView LPSHELLVIEW;
 
-interface IShellBrowser : IOleWindow
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
+interface IShellBrowser : IOleWindow {
 	HRESULT GetWindow(HWND*);
 	HRESULT ContextSensitiveHelp(BOOL);
-	HRESULT InsertMenusSB(HMENU,LPOLEMENUGROUPWIDTHS);
-	HRESULT SetMenuSB(HMENU,HOLEMENU,HWND);
+	HRESULT InsertMenusSB(HMENU, LPOLEMENUGROUPWIDTHS);
+	HRESULT SetMenuSB(HMENU, HOLEMENU, HWND);
 	HRESULT RemoveMenusSB(HMENU);
 	HRESULT SetStatusTextSB(LPCOLESTR);
 	HRESULT EnableModelessSB(BOOL);
-	HRESULT TranslateAcceleratorSB(LPMSG,WORD);
-	HRESULT BrowseObject(LPCITEMIDLIST,UINT);
-	HRESULT GetViewStateStream(DWORD,LPSTREAM*);
-	HRESULT GetControlWindow(UINT,HWND*);
-	HRESULT SendControlMsg(UINT,UINT,WPARAM,LPARAM,LRESULT*);
+	HRESULT TranslateAcceleratorSB(LPMSG, WORD);
+	HRESULT BrowseObject(LPCITEMIDLIST, UINT);
+	HRESULT GetViewStateStream(DWORD, LPSTREAM*);
+	HRESULT GetControlWindow(UINT, HWND*);
+	HRESULT SendControlMsg(UINT, UINT, WPARAM, LPARAM, LRESULT*);
 	HRESULT QueryActiveShellView(LPSHELLVIEW*);
 	HRESULT OnViewWindowActive(LPSHELLVIEW);
-	HRESULT SetToolbarItems(LPTBBUTTON,UINT,UINT);
+	HRESULT SetToolbarItems(LPTBBUTTON, UINT, UINT);
 }
 
-interface IShellView : IOleWindow
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
+interface IShellView : IOleWindow {
 	HRESULT GetWindow(HWND*);
 	HRESULT ContextSensitiveHelp(BOOL);
 	HRESULT TranslateAccelerator(LPMSG);
@@ -1045,23 +957,19 @@ interface IShellView : IOleWindow
 //[Yes] #endif
 	HRESULT UIActivate(UINT);
 	HRESULT Refresh();
-	HRESULT CreateViewWindow(IShellView,LPCFOLDERSETTINGS,LPSHELLBROWSER,RECT*,HWND*);
+	HRESULT CreateViewWindow(IShellView, LPCFOLDERSETTINGS, LPSHELLBROWSER, RECT*, HWND*);
 	HRESULT DestroyViewWindow();
 	HRESULT GetCurrentInfo(LPFOLDERSETTINGS);
-	HRESULT AddPropertySheetPages(DWORD,LPFNADDPROPSHEETPAGE,LPARAM);
+	HRESULT AddPropertySheetPages(DWORD, LPFNADDPROPSHEETPAGE, LPARAM);
 	HRESULT SaveViewState();
-	HRESULT SelectItem(LPCITEMIDLIST,UINT);
-	HRESULT GetItemObject(UINT,REFIID,PVOID*);
+	HRESULT SelectItem(LPCITEMIDLIST, UINT);
+	HRESULT GetItemObject(UINT, REFIID, PVOID*);
 }
 
-interface ICommDlgBrowser : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
+interface ICommDlgBrowser : IUnknown {
 	HRESULT OnDefaultCommand(IShellView);
-	HRESULT OnStateChange(IShellView,ULONG);
-	HRESULT IncludeObject(IShellView,LPCITEMIDLIST);
+	HRESULT OnStateChange(IShellView, ULONG);
+	HRESULT IncludeObject(IShellView, LPCITEMIDLIST);
 }
 alias ICommDlgBrowser LPCOMMDLGBROWSER;
 
@@ -1078,12 +986,7 @@ struct SV2CVW2_PARAMS {
 }
 alias SV2CVW2_PARAMS* LPSV2CVW2_PARAMS;
 
-interface IShellView2 : IShellView
-{
-
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
+interface IShellView2 : IShellView {
 	HRESULT GetWindow(HWND*);
 	HRESULT ContextSensitiveHelp(BOOL);
 	HRESULT TranslateAccelerator(LPMSG);
@@ -1094,39 +997,27 @@ interface IShellView2 : IShellView
 //[Yes] #endif
 	HRESULT UIActivate(UINT);
 	HRESULT Refresh();
-	HRESULT CreateViewWindow(IShellView,LPCFOLDERSETTINGS,LPSHELLBROWSER,RECT*,HWND*);
+	HRESULT CreateViewWindow(IShellView, LPCFOLDERSETTINGS, LPSHELLBROWSER, RECT*, HWND*);
 	HRESULT DestroyViewWindow();
 	HRESULT GetCurrentInfo(LPFOLDERSETTINGS);
-	HRESULT AddPropertySheetPages(DWORD,LPFNADDPROPSHEETPAGE,LPARAM);
+	HRESULT AddPropertySheetPages(DWORD, LPFNADDPROPSHEETPAGE, LPARAM);
 	HRESULT SaveViewState();
-	HRESULT SelectItem(LPCITEMIDLIST,UINT);
-	HRESULT GetItemObject(UINT,REFIID,PVOID*);
-	HRESULT GetView(SHELLVIEWID*,ULONG);
+	HRESULT SelectItem(LPCITEMIDLIST, UINT);
+	HRESULT GetItemObject(UINT, REFIID, PVOID*);
+	HRESULT GetView(SHELLVIEWID*, ULONG);
 	HRESULT CreateViewWindow2(LPSV2CVW2_PARAMS);
 }
 
-interface IShellExecuteHookA : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
+interface IShellExecuteHookA : IUnknown {
 	HRESULT Execute(LPSHELLEXECUTEINFOA);
 }
 
-interface IShellExecuteHookW : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
+interface IShellExecuteHookW : IUnknown {
 	HRESULT Execute(LPSHELLEXECUTEINFOW);
 }
 
-interface IShellIcon : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT GetIconOf(LPCITEMIDLIST,UINT,PINT);
+interface IShellIcon : IUnknown {
+	HRESULT GetIconOf(LPCITEMIDLIST, UINT, PINT);
 }
 alias IShellIcon LPSHELLICON;
 
@@ -1166,20 +1057,16 @@ const SSF_SHOWINFOTIP = 0x2000;
 const SSF_HIDEICONS = 0x4000;
 const SSF_NOCONFIRMRECYCLE = 0x8000;
 
-interface IShellIconOverlayIdentifier : IUnknown
-{
-	HRESULT QueryInterface(REFIID,PVOID*);
-	ULONG AddRef();
-	ULONG Release();
-	HRESULT IsMemberOf(LPCWSTR,DWORD);
-	HRESULT GetOverlayInfo(LPWSTR,int,int*,DWORD*);
+interface IShellIconOverlayIdentifier : IUnknown {
+	HRESULT IsMemberOf(LPCWSTR, DWORD);
+	HRESULT GetOverlayInfo(LPWSTR, int, int*, DWORD*);
 	HRESULT GetPriority(int*);
 }
 
 const ISIOI_ICONFILE  = 0x00000001;
 const ISIOI_ICONINDEX = 0x00000002;
 
-static if (_WIN32_WINNT >= 0x0500) {/* W2K */
+static if (_WIN32_WINNT >= 0x500) {/* W2K */
 	struct SHELLSTATE {
 	//TODO:
 	/*
@@ -1215,31 +1102,23 @@ static if (_WIN32_WINNT >= 0x0500) {/* W2K */
 	alias SHELLSTATE* LPSHELLSTATE;
 }
 
-static if (_WIN32_IE >= 0x0500) {
-	align(8):
-	struct SHDRAGIMAGE {
-		SIZE sizeDragImage;
-		POINT ptOffset;
-		HBITMAP hbmpDragImage;
-		COLORREF crColorKey;
+static if (_WIN32_IE >= 0x500) {
+	align(8) {
+		struct SHDRAGIMAGE {
+			SIZE sizeDragImage;
+			POINT ptOffset;
+			HBITMAP hbmpDragImage;
+			COLORREF crColorKey;
+		}
+		alias SHDRAGIMAGE* LPSHDRAGIMAGE;
 	}
-	alias SHDRAGIMAGE* LPSHDRAGIMAGE;
-	align:
 
-	interface IDragSourceHelper : IUnknown
-	 {
-		HRESULT QueryInterface(REFIID riid, void **ppv);
-		ULONG AddRef();
-		ULONG Release();
+	interface IDragSourceHelper : IUnknown {
 		HRESULT InitializeFromBitmap(LPSHDRAGIMAGE pshdi, IDataObject pDataObject);
 		HRESULT InitializeFromWindow(HWND hwnd, POINT* ppt, IDataObject pDataObject);
 	}
 
-	interface IDropTargetHelper : IUnknown
-	 {
-		HRESULT QueryInterface(REFIID riid, void** ppv);
-		ULONG AddRef();
-		ULONG Release();
+	interface IDropTargetHelper : IUnknown {
 		HRESULT DragEnter(HWND hwndTarget, IDataObject pDataObject, POINT* ppt, DWORD dwEffect);
 		HRESULT DragLeave();
 		HRESULT DragOver(POINT* ppt, DWORD dwEffect);
@@ -1249,45 +1128,66 @@ static if (_WIN32_IE >= 0x0500) {
 }
 
 extern (Windows):
-void SHAddToRecentDocs(UINT,PCVOID);
+void SHAddToRecentDocs(UINT, PCVOID);
 LPITEMIDLIST SHBrowseForFolderA(PBROWSEINFOA);
 LPITEMIDLIST SHBrowseForFolderW(PBROWSEINFOW);
-void SHChangeNotify(LONG,UINT,PCVOID,PCVOID);
-HRESULT SHGetDataFromIDListA(LPSHELLFOLDER,LPCITEMIDLIST,int,PVOID,int);
-HRESULT SHGetDataFromIDListW(LPSHELLFOLDER,LPCITEMIDLIST,int,PVOID,int);
+void SHChangeNotify(LONG, UINT, PCVOID, PCVOID);
+HRESULT SHGetDataFromIDListA(LPSHELLFOLDER, LPCITEMIDLIST, int, PVOID, int);
+HRESULT SHGetDataFromIDListW(LPSHELLFOLDER, LPCITEMIDLIST, int, PVOID, int);
 HRESULT SHGetDesktopFolder(LPSHELLFOLDER*);
-HRESULT SHGetInstanceExplorer(IUnknown *);
+HRESULT SHGetInstanceExplorer(IUnknown*);
 HRESULT SHGetMalloc(LPMALLOC*);
-BOOL SHGetPathFromIDListA(LPCITEMIDLIST,LPSTR);
-BOOL SHGetPathFromIDListW(LPCITEMIDLIST,LPWSTR);
-HRESULT SHGetSpecialFolderLocation(HWND,int,LPITEMIDLIST*);
+BOOL SHGetPathFromIDListA(LPCITEMIDLIST, LPSTR);
+BOOL SHGetPathFromIDListW(LPCITEMIDLIST, LPWSTR);
+HRESULT SHGetSpecialFolderLocation(HWND, int, LPITEMIDLIST*);
 HRESULT SHLoadInProc(REFCLSID);
 
-static if (_WIN32_IE >= 0x0400) {
-	BOOL SHGetSpecialFolderPathA(HWND,LPSTR,int,BOOL);
-	BOOL SHGetSpecialFolderPathW(HWND,LPWSTR,int,BOOL);
+static if (_WIN32_IE >= 0x400) {
+	BOOL SHGetSpecialFolderPathA(HWND, LPSTR, int, BOOL);
+	BOOL SHGetSpecialFolderPathW(HWND, LPWSTR, int, BOOL);
 }
 
 /* SHGetFolderPath in shfolder.dll on W9x, NT4, also in shell32.dll on W2K */
-HRESULT SHGetFolderPathA(HWND,int,HANDLE,DWORD,LPSTR);
-HRESULT SHGetFolderPathW(HWND,int,HANDLE,DWORD,LPWSTR);
+HRESULT SHGetFolderPathA(HWND, int, HANDLE, DWORD, LPSTR);
+HRESULT SHGetFolderPathW(HWND, int, HANDLE, DWORD, LPWSTR);
 
 static if (_WIN32_WINNT >= 0x500) {
-	HRESULT SHGetFolderLocation(HWND,int,HANDLE,DWORD,LPITEMIDLIST*);
-	INT SHCreateDirectoryExA(HWND,LPCSTR,LPSECURITY_ATTRIBUTES);
-	INT SHCreateDirectoryExW(HWND,LPCWSTR,LPSECURITY_ATTRIBUTES);
-	HRESULT SHBindToParent(LPCITEMIDLIST,REFIID,VOID**,LPCITEMIDLIST*);
+	INT SHGetIconOverlayIndexW(LPCWSTR pszIconPath, int iIconIndex);
+	INT SHGetIconOverlayIndexA(LPCSTR pszIconPath, int iIconIndex);
+	HRESULT SHGetFolderLocation(HWND, int, HANDLE, DWORD, LPITEMIDLIST*);
+	INT SHCreateDirectoryExA(HWND, LPCSTR, LPSECURITY_ATTRIBUTES);
+	INT SHCreateDirectoryExW(HWND, LPCWSTR, LPSECURITY_ATTRIBUTES);
+	HRESULT SHBindToParent(LPCITEMIDLIST, REFIID, VOID**, LPCITEMIDLIST*);
 }
 
-static if (_WIN32_WINNT >= 0x0501) {
-	HRESULT SHGetFolderPathAndSubDirA(HWND,int,HANDLE,DWORD,LPCSTR,LPSTR);
-	HRESULT SHGetFolderPathAndSubDirW(HWND,int,HANDLE,DWORD,LPCWSTR,LPWSTR);
+static if (_WIN32_WINNT >= 0x501) {
+	enum {
+		PRF_VERIFYEXISTS         = 0x0001,
+		PRF_TRYPROGRAMEXTENSIONS = (0x0002 | PRF_VERIFYEXISTS),
+		PRF_FIRSTDIRDEF          = 0x0004,
+		PRF_DONTFINDLNK          = 0x0008,
+		IDO_SHGIOI_SHARE         = 0x0FFFFFFF,
+		IDO_SHGIOI_LINK          = 0x0FFFFFFE,
+		IDO_SHGIOI_SLOWFILE      = 0x0FFFFFFD,
+		IDO_SHGIOI_DEFAULT       = 0x0FFFFFFC
+	}
+
+	struct SHDESCRIPTIONID {
+		DWORD dwDescriptionId;
+		CLSID clsid;
+	}
+	alias SHDESCRIPTIONID* LPSHDESCRIPTIONID;
+
+	BOOL PathResolve(LPWSTR, LPCWSTR*, UINT);
+	HRESULT SHGetFolderPathAndSubDirA(HWND, int, HANDLE, DWORD, LPCSTR, LPSTR);
+	HRESULT SHGetFolderPathAndSubDirW(HWND, int, HANDLE, DWORD, LPCWSTR, LPWSTR);
+	HRESULT SHParseDisplayName(LPCWSTR, IBindCtx, LPITEMIDLIST, SFGAOF, SFGAOF*);
 }
 
-void SHGetSettings(LPSHELLFLAGSTATE,DWORD);
+void SHGetSettings(LPSHELLFLAGSTATE, DWORD);
 
-static if (_WIN32_WINNT >= 0x0500) {
-	void SHGetSetSettings(LPSHELLSTATE,DWORD,BOOL);
+static if (_WIN32_WINNT >= 0x500) {
+	void SHGetSetSettings(LPSHELLSTATE, DWORD, BOOL);
 	BOOL ILIsEqual(LPCITEMIDLIST, LPCITEMIDLIST);
 	BOOL ILIsParent(LPCITEMIDLIST, LPCITEMIDLIST, BOOL);
 	BOOL ILRemoveLastID(LPITEMIDLIST);
@@ -1303,7 +1203,7 @@ static if (_WIN32_WINNT >= 0x0500) {
 	UINT ILGetSize(LPCITEMIDLIST);
 	void ILFree(LPITEMIDLIST);
 
-	HRESULT SHCoCreateInstance(LPCWSTR,REFCLSID,IUnknown,REFIID,void**);
+	HRESULT SHCoCreateInstance(LPCWSTR, REFCLSID, IUnknown, REFIID, void**);
 }
 
 version(Unicode) {
@@ -1313,14 +1213,15 @@ version(Unicode) {
 	alias SHBrowseForFolderW SHBrowseForFolder;
 	alias SHGetDataFromIDListW SHGetDataFromIDList;
 	alias SHGetPathFromIDListW SHGetPathFromIDList;
-	static if (_WIN32_IE >= 0x0400) {
+	static if (_WIN32_IE >= 0x400) {
 		alias SHGetSpecialFolderPathW SHGetSpecialFolderPath;
 	}
 	alias SHGetFolderPathW SHGetFolderPath;
-	static if (_WIN32_WINNT >= 0x0500) {
+	static if (_WIN32_WINNT >= 0x500) {
+		alias SHGetIconOverlayIndexW SHGetIconOverlayIndex;
 		alias SHCreateDirectoryExW SHCreateDirectoryEx;
 	}
-	static if (_WIN32_WINNT >= 0x0501) {
+	static if (_WIN32_WINNT >= 0x501) {
 		alias SHGetFolderPathAndSubDirW SHGetFolderPathAndSubDir;
 	}
 	alias FILEDESCRIPTORW FILEDESCRIPTOR;
@@ -1335,14 +1236,15 @@ version(Unicode) {
 	alias SHBrowseForFolderA SHBrowseForFolder;
 	alias SHGetDataFromIDListA SHGetDataFromIDList;
 	alias SHGetPathFromIDListA SHGetPathFromIDList;
-	static if (_WIN32_IE >= 0x0400) {
+	static if (_WIN32_IE >= 0x400) {
 		alias SHGetSpecialFolderPathA SHGetSpecialFolderPath;
 	}
 	alias SHGetFolderPathA SHGetFolderPath;
-	static if (_WIN32_WINNT >= 0x0500) {
+	static if (_WIN32_WINNT >= 0x500) {
+		alias SHGetIconOverlayIndexA SHGetIconOverlayIndex;
 		alias SHCreateDirectoryExA SHCreateDirectoryEx;
 	}
-	static if (_WIN32_WINNT >= 0x0501) {
+	static if (_WIN32_WINNT >= 0x501) {
 		alias SHGetFolderPathAndSubDirA SHGetFolderPathAndSubDir;
 	}
 	alias FILEDESCRIPTORA FILEDESCRIPTOR;
@@ -1351,3 +1253,23 @@ version(Unicode) {
 	alias LPFILEGROUPDESCRIPTORA LPFILEGROUPDESCRIPTOR;
 }
 alias BROWSEINFO* PBROWSEINFO, LPBROWSEINFO;
+
+static if (_WIN32_WINNT >= 0x501) {
+	interface IFolderView : IUnknown {
+	   HRESULT GetAutoArrange();
+	   HRESULT GetCurrentViewMode(UINT);
+	   HRESULT GetDefaultSpacing(POINT*);
+	   HRESULT GetFocusedItem(int*);
+	   HRESULT GetFolder(REFIID, PVOID*);
+	   HRESULT GetItemPosition(LPCITEMIDLIST, POINT*);
+	   HRESULT GetSelectionMarkedItem(int*);
+	   HRESULT GetSpacing(POINT*);
+	   HRESULT Item(int, LPITEMIDLIST*);
+	   HRESULT ItemCount(UINT, int*);
+	   HRESULT Items(UINT, REFIID, PVOID*);
+	   HRESULT SelectAndPositionItems(UINT, LPCITEMIDLIST*, POINT*, DWORD);
+	   HRESULT SelectItem(int, DWORD);
+	   HRESULT SetCurrentViewMode(UINT);
+	}
+	alias IFolderView LPFOLDERVIEW;
+}

@@ -35,7 +35,7 @@ enum : UINT {
 	CDN_TYPECHANGE     = CDN_FIRST - 6,
 }
 
-static if(_WIN32_WINNT >= 0x0500)
+static if(_WIN32_WINNT >= 0x500)
 {
     enum : UINT {
         CDN_INCLUDEITEM    = CDN_FIRST - 7,
@@ -429,7 +429,7 @@ struct OPENFILENAMEA {
 	LPOFNHOOKPROC lpfnHook;
 	LPCSTR        lpTemplateName;
     
-    static if (_WIN32_WINNT >= 0x0500) {
+    static if (_WIN32_WINNT >= 0x500) {
         void          *pvReserved;
         DWORD         dwReserved;
         DWORD         FlagsEx;
@@ -459,7 +459,7 @@ struct OPENFILENAMEW {
 	LPOFNHOOKPROC lpfnHook;
 	LPCWSTR       lpTemplateName;
     
-    static if (_WIN32_WINNT >= 0x0500) {
+    static if (_WIN32_WINNT >= 0x500) {
         void          *pvReserved;
         DWORD         dwReserved;
         DWORD         FlagsEx;

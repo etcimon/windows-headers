@@ -64,7 +64,7 @@ version (Win32_Winsock1) {
 }
 
 /+
-#if (_WIN32_WINNT >= 0x0400)
+#if (_WIN32_WINNT >= 0x400)
 #include <winsock2.h>
 /*
  * MS likes to include mswsock.h here as well,
@@ -73,5 +73,5 @@ version (Win32_Winsock1) {
  */
 #else
 #include <winsock.h>
-#endif /*  (_WIN32_WINNT >= 0x0400) */
+#endif /*  (_WIN32_WINNT >= 0x400) */
 +/

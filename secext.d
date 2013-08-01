@@ -13,7 +13,7 @@ pragma(lib, "secur32");
 
 private import win32.w32api, win32.windef;
 
-static assert (_WIN32_WINNT >= 0x0501,
+static assert (_WIN32_WINNT >= 0x501,
   "SecExt is only available on WindowsXP and later");
 
 enum EXTENDED_NAME_FORMAT {

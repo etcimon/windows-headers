@@ -76,14 +76,14 @@ enum : DWORD {
 	BSF_MSGSRV32ISOK       = 0x80000000
 }
 
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 	enum : DWORD {
 		BSF_ALLOWSFW          = 0x00000080,
 		BSF_SENDNOTIFYMESSAGE = 0x00000100
 	}
 }
 
-static if (_WIN32_WINNT >= 0x0501) {
+static if (_WIN32_WINNT >= 0x501) {
 	enum : DWORD {
 		BSF_LUID        = 0x00000400,
 		BSF_RETURNHDESK = 0x00000200
@@ -146,7 +146,7 @@ version (Unicode) {
 }
 alias DEV_BROADCAST_PORT* PDEV_BROADCAST_PORT;
 
-static if (_WIN32_WINNT >= 0x0500) {
+static if (_WIN32_WINNT >= 0x500) {
 	struct DEV_BROADCAST_DEVICEINTERFACE_A {
 		DWORD dbcc_size = DEV_BROADCAST_DEVICEINTERFACE_A.sizeof;
 		DWORD dbcc_devicetype;
