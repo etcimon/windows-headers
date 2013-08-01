@@ -12,7 +12,7 @@ pragma(lib, "netapi32");
 
 private import win32.lmcons, win32.windef, win32.w32api;
 
-static assert (_WIN32_WINNT_ONLY && _WIN32_WINNT >= 0x501,
+static assert (_WIN32_WINNT >= 0x501,
 	"win32.lmmsg is available only if version WindowsXP, Windows2003 "
 	"or WindowsVista is set");
 

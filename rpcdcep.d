@@ -122,33 +122,26 @@ extern (Windows) {
 	HANDLE I_RpcGetCurrentCallHandle();
 	int    I_RpcGetAssociationContext(void**);
 	int    I_RpcSetAssociationContext(void*);
-
-	static if (_WIN32_WINNT_ONLY) {
-		int I_RpcNsBindingSetEntryName(HANDLE, uint, wchar*);
-		int I_RpcBindingInqDynamicEndpoint(HANDLE, wchar**);
-	} else {
-		int I_RpcNsBindingSetEntryName(HANDLE, uint, char*);
-		int I_RpcBindingInqDynamicEndpoint(HANDLE, char**);
-	}
-
-	int   I_RpcBindingInqTransportType(HANDLE, uint*);
-	int   I_RpcIfInqTransferSyntaxes(HANDLE, RPC_TRANSFER_SYNTAX*, uint,
-	        uint*);
-	int   I_UuidCreate(GUID*);
-	int   I_RpcBindingCopy(HANDLE, HANDLE*);
-	int   I_RpcBindingIsClientLocal(HANDLE, uint*);
-	void  I_RpcSsDontSerializeContext();
-	int   I_RpcServerRegisterForwardFunction(int function (GUID*,
-	        RPC_VERSION*, GUID*, ubyte*, void**));
-	int   I_RpcConnectionInqSockBuffSize(uint*, uint*);
-	int   I_RpcConnectionSetSockBuffSize(uint, uint);
-	int   I_RpcBindingSetAsync(HANDLE, RPC_BLOCKING_FN);
-	int   I_RpcAsyncSendReceive(RPC_MESSAGE*, void*);
-	int   I_RpcGetThreadWindowHandle(void**);
-	int   I_RpcServerThreadPauseListening();
-	int   I_RpcServerThreadContinueListening();
-	int   I_RpcServerUnregisterEndpointA(ubyte*, ubyte*);
-	int   I_RpcServerUnregisterEndpointW(ushort*, ushort*);
+	int    I_RpcNsBindingSetEntryName(HANDLE, uint, wchar*);
+	int    I_RpcBindingInqDynamicEndpoint(HANDLE, wchar**);
+	int    I_RpcBindingInqTransportType(HANDLE, uint*);
+	int    I_RpcIfInqTransferSyntaxes(HANDLE, RPC_TRANSFER_SYNTAX*, uint,
+	         uint*);
+	int    I_UuidCreate(GUID*);
+	int    I_RpcBindingCopy(HANDLE, HANDLE*);
+	int    I_RpcBindingIsClientLocal(HANDLE, uint*);
+	void   I_RpcSsDontSerializeContext();
+	int    I_RpcServerRegisterForwardFunction(int function (GUID*,
+	         RPC_VERSION*, GUID*, ubyte*, void**));
+	int    I_RpcConnectionInqSockBuffSize(uint*, uint*);
+	int    I_RpcConnectionSetSockBuffSize(uint, uint);
+	int    I_RpcBindingSetAsync(HANDLE, RPC_BLOCKING_FN);
+	int    I_RpcAsyncSendReceive(RPC_MESSAGE*, void*);
+	int    I_RpcGetThreadWindowHandle(void**);
+	int    I_RpcServerThreadPauseListening();
+	int    I_RpcServerThreadContinueListening();
+	int    I_RpcServerUnregisterEndpointA(ubyte*, ubyte*);
+	int    I_RpcServerUnregisterEndpointW(ushort*, ushort*);
 }
 
 version(Unicode) {

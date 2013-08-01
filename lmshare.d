@@ -8,18 +8,11 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.lmshare;
+pragma(lib, "netapi");
 
 import win32.lmcons;
 private import win32.w32api, win32.windef;
 
-static if (_WIN32_WINNT_ONLY) {
-	pragma(lib, "netapi");
-}
-/* else {
-// only for WinME, 98, 95.
-	pragma(lib, "svrapi")
-}
-*/
 
 const SHARE_NETNAME_PARMNUM      = 1;
 const SHARE_TYPE_PARMNUM         = 3;

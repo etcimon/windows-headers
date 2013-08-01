@@ -112,7 +112,7 @@ mixin DECLARE_HANDLE!("HKL");
 mixin DECLARE_HANDLE!("HCURSOR");
 alias HKEY* PHKEY;
 
-static if (WINVER >= 0x500) {
+static if (_WIN32_WINNT >= 0x500) {
 	mixin DECLARE_HANDLE!("HTERMINAL");
 	mixin DECLARE_HANDLE!("HWINEVENTHOOK");
 }

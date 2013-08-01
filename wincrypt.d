@@ -33,10 +33,10 @@ const TCHAR[]
 	MS_DEF_DH_SCHANNEL_PROV = "Microsoft DH SChannel Cryptographic Provider",
 	MS_SCARD_PROV = "Microsoft Base Smart Card Crypto Provider";
 
-static if (WINVER > 0x501) {
+static if (_WIN32_WINNT > 0x501) {
 	const TCHAR[] MS_ENH_RSA_AES_PROV
 	  = "Microsoft Enhanced RSA and AES Cryptographic Provider";
-} else static if (WINVER == 0x501) {
+} else static if (_WIN32_WINNT == 0x501) {
 	const TCHAR[] MS_ENH_RSA_AES_PROV
 	  = "Microsoft Enhanced RSA and AES Cryptographic Provider (Prototype)";
 }
@@ -736,7 +736,7 @@ extern (Windows) {
 	BOOL CryptGenKey(HCRYPTPROV, ALG_ID, DWORD, HCRYPTKEY*);
 	BOOL CryptDeriveKey(HCRYPTPROV, ALG_ID, HCRYPTHASH, DWORD, HCRYPTKEY*);
 	BOOL CryptDestroyKey(HCRYPTKEY);
-	static if (WINVER >= 0x0500) {
+	static if (_WIN32_WINNT >= 0x0500) {
 		BOOL CryptDuplicateHash(HCRYPTHASH, DWORD*, DWORD, HCRYPTHASH*);
 		BOOL CryptDuplicateKey(HCRYPTKEY, DWORD*, DWORD, HCRYPTKEY*);
 	}

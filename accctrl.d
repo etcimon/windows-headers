@@ -15,10 +15,6 @@ private import win32.basetyps, win32.w32api, win32.winbase, win32.windef;
 // FIXME: check types and grouping of constants
 // FIXME: check Windows version support
 
-static assert (_WIN32_WINNT_ONLY,
-	"win32.accctrl is available only if version WindowsNTonly, WindowsXP, "
-	"Windows2003 or WindowsVista is set");
-
 alias LocalFree AccFree;
 
 const uint
@@ -363,7 +359,7 @@ struct OBJECTS_AND_NAME_W {
 }
 alias OBJECTS_AND_NAME_W* POBJECTS_AND_NAME_W;
 
-static if (WINVER >= 0x501) {
+static if (_WIN32_WINNT >= 0x501) {
 	struct INHERITED_FROMA {
 		LONG  GenerationGap;
 		LPSTR AncestorName;
@@ -388,7 +384,7 @@ version (Unicode) {
 	alias EXPLICIT_ACCESSW EXPLICIT_ACCESS;
 	alias TRUSTEE_ACCESSW TRUSTEE_ACCESS;
 	alias OBJECTS_AND_NAME_W OBJECTS_AND_NAME_;
-	static if (WINVER >= 0x501) {
+	static if (_WIN32_WINNT >= 0x501) {
 		alias INHERITED_FROMW INHERITED_FROM;
 	}
 } else {
@@ -402,7 +398,7 @@ version (Unicode) {
 	alias EXPLICIT_ACCESSA EXPLICIT_ACCESS;
 	alias TRUSTEE_ACCESSA TRUSTEE_ACCESS;
 	alias OBJECTS_AND_NAME_A OBJECTS_AND_NAME_;
-	static if (WINVER >= 0x501) {
+	static if (_WIN32_WINNT >= 0x501) {
 		alias INHERITED_FROMA INHERITED_FROM;
 	}
 }
@@ -419,6 +415,6 @@ alias EXPLICIT_ACCESS EXPLICIT_ACCESS_;
 alias EXPLICIT_ACCESS* PEXPLICIT_ACCESS, PEXPLICIT_ACCESS_;
 alias TRUSTEE_ACCESS* PTRUSTEE_ACCESS;
 alias OBJECTS_AND_NAME_* POBJECTS_AND_NAME_;
-static if (WINVER >= 0x501) {
+static if (_WIN32_WINNT >= 0x501) {
 	alias INHERITED_FROM* PINHERITED_FROM;
 }

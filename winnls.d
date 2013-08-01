@@ -465,7 +465,7 @@ enum : LGRPID {
 	LGRPID_ARMENIAN // = 17
 }
 
-static if (WINVER >= 0x500) {
+static if (_WIN32_WINNT >= 0x500) {
 	enum : LCTYPE {
 		LOCALE_SYEARMONTH             = 0x1006,
 		LOCALE_SENGCURRNAME           = 0x1007,
@@ -491,7 +491,7 @@ static if (WINVER >= 0x500) {
 		CAL_RETURN_NUMBER    = LOCALE_RETURN_NUMBER,
 		CAL_USE_CP_ACP       = LOCALE_USE_CP_ACP
 	}
-} // (WINVER >= 0x500)
+} // (_WIN32_WINNT >= 0x500)
 
 extern (Windows) {
 	alias BOOL function(LPSTR) CALINFO_ENUMPROCA;
@@ -688,7 +688,7 @@ extern (Windows) {
 	int WideCharToMultiByte(UINT, DWORD, LPCWSTR, int, LPSTR, int, LPCSTR,
 	  LPBOOL);
 
-	static if (WINVER >= 0x410) {
+	static if (_WIN32_WINNT >= 0x410) {
 		BOOL EnumCalendarInfoExA(CALINFO_ENUMPROCEXA, LCID, CALID, CALTYPE);
 		BOOL EnumCalendarInfoExW(CALINFO_ENUMPROCEXW, LCID, CALID, CALTYPE);
 		BOOL EnumDateFormatsExA(DATEFMT_ENUMPROCEXA, LCID, DWORD);
@@ -696,22 +696,20 @@ extern (Windows) {
 		BOOL IsValidLanguageGroup(LGRPID, DWORD);
 	}
 
-	static if (WINVER >= 0x500) {
+	static if (_WIN32_WINNT >= 0x500) {
 		LANGID GetSystemDefaultUILanguage();
 		LANGID GetUserDefaultUILanguage();
 
-		static if (_WIN32_WINNT_ONLY) {
-			BOOL EnumSystemLanguageGroupsA(LANGUAGEGROUP_ENUMPROCA, DWORD,
-			  LONG_PTR);
-			BOOL EnumSystemLanguageGroupsW(LANGUAGEGROUP_ENUMPROCW, DWORD,
-			  LONG_PTR);
-			BOOL EnumLanguageGroupLocalesA(LANGGROUPLOCALE_ENUMPROCA, LGRPID,
-			  DWORD, LONG_PTR);
-			BOOL EnumLanguageGroupLocalesW(LANGGROUPLOCALE_ENUMPROCW, LGRPID,
-			  DWORD, LONG_PTR);
-			BOOL EnumUILanguagesA(UILANGUAGE_ENUMPROCA, DWORD, LONG_PTR);
-			BOOL EnumUILanguagesW(UILANGUAGE_ENUMPROCW, DWORD, LONG_PTR);
-		}
+		BOOL EnumSystemLanguageGroupsA(LANGUAGEGROUP_ENUMPROCA, DWORD,
+		  LONG_PTR);
+		BOOL EnumSystemLanguageGroupsW(LANGUAGEGROUP_ENUMPROCW, DWORD,
+		  LONG_PTR);
+		BOOL EnumLanguageGroupLocalesA(LANGGROUPLOCALE_ENUMPROCA, LGRPID,
+		  DWORD, LONG_PTR);
+		BOOL EnumLanguageGroupLocalesW(LANGGROUPLOCALE_ENUMPROCW, LGRPID,
+		  DWORD, LONG_PTR);
+		BOOL EnumUILanguagesA(UILANGUAGE_ENUMPROCA, DWORD, LONG_PTR);
+		BOOL EnumUILanguagesW(UILANGUAGE_ENUMPROCW, DWORD, LONG_PTR);
 	}
 }
 
@@ -751,12 +749,12 @@ version (Unicode) {
 	alias SetCalendarInfoW SetCalendarInfo;
 	alias SetLocaleInfoW SetLocaleInfo;
 
-	static if (WINVER >= 0x410) {
+	static if (_WIN32_WINNT >= 0x410) {
 		alias EnumCalendarInfoExW EnumCalendarInfoEx;
 		alias EnumDateFormatsExW EnumDateFormatsEx;
 	}
 
-	static if (_WIN32_WINNT_ONLY && WINVER >= 0x500) {
+	static if (_WIN32_WINNT >= 0x500) {
 		alias EnumSystemLanguageGroupsW EnumSystemLanguageGroups;
 		alias EnumLanguageGroupLocalesW EnumLanguageGroupLocales;
 		alias EnumUILanguagesW EnumUILanguages;
@@ -798,12 +796,12 @@ version (Unicode) {
 	alias SetCalendarInfoA SetCalendarInfo;
 	alias SetLocaleInfoA SetLocaleInfo;
 
-	static if (WINVER >= 0x410) {
+	static if (_WIN32_WINNT >= 0x410) {
 		alias EnumCalendarInfoExA EnumCalendarInfoEx;
 		alias EnumDateFormatsExA EnumDateFormatsEx;
 	}
 
-	static if (_WIN32_WINNT_ONLY && WINVER >= 0x500) {
+	static if (_WIN32_WINNT >= 0x500) {
 		alias EnumSystemLanguageGroupsA EnumSystemLanguageGroups;
 		alias EnumLanguageGroupLocalesA EnumLanguageGroupLocales;
 		alias EnumUILanguagesA EnumUILanguages;

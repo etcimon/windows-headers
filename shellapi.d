@@ -55,7 +55,7 @@ enum : DWORD {
 	ABM_WINDOWPOSCHANGED // = 9
 }
 
-static if (WINVER >= 0x501) {
+static if (_WIN32_WINNT >= 0x501) {
 	const DWORD ABM_SETSTATE = 10;
 }
 

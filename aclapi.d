@@ -13,10 +13,6 @@ pragma(lib, "advapi32");
 
 import win32.windows, win32.accctrl;
 
-static assert (_WIN32_WINNT_ONLY,
-	"win32.aclapi is available only if version WindowsNTonly, WindowsXP, "
-	"Windows2003 or WindowsVista is set");
-
 extern (Windows) {
 	VOID BuildExplicitAccessWithNameA(PEXPLICIT_ACCESS_A, LPSTR, DWORD,
 	  ACCESS_MODE, DWORD);
@@ -48,7 +44,7 @@ extern (Windows) {
 	DWORD GetEffectiveRightsFromAclW(PACL, PTRUSTEE_W, PACCESS_MASK);
 	DWORD GetExplicitEntriesFromAclA(PACL, PULONG, PEXPLICIT_ACCESS_A*);
 	DWORD GetExplicitEntriesFromAclW(PACL, PULONG, PEXPLICIT_ACCESS_W*);
-	static if (WINVER >= 0x501) {
+	static if (_WIN32_WINNT >= 0x501) {
 		DWORD GetInheritanceSourceA(LPSTR, SE_OBJECT_TYPE,
 		  SECURITY_INFORMATION, BOOL, GUID**, DWORD, PACL, void*,
 		  PGENERIC_MAPPING, PINHERITED_FROMA);

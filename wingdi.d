@@ -198,12 +198,11 @@ enum : DWORD {
 
 const EMR_MIN = EMR_HEADER;
 
-static if (WINVER >= 0x0500)
+static if (_WIN32_WINNT >= 0x0500) {
 	const EMR_MAX = EMR_CREATECOLORSPACEW;
-else static if (WINVER >= 0x0400)
+} else {
 	const EMR_MAX = EMR_PIXELFORMAT;
-else
-	const EMR_MAX = EMR_POLYTEXTOUTW;
+}
 
 // ENHMETAHEADER.dSignature, ENHMETAHEADER3.dSignature,
 // EMRFORMAT.dSignature
@@ -353,7 +352,7 @@ const DWORD
 	PATCOPY     = 0xF00021,
 	PATPAINT    = 0xFB0A09,
 	WHITENESS   = 0xFF0062;
-static if (WINVER >= 0x0500) {
+static if (_WIN32_WINNT >= 0x0500) {
 	const DWORD
 		NOMIRRORBITMAP = 0x80000000,
 		CAPTUREBLT     = 0x40000000;
@@ -802,7 +801,7 @@ enum : WORD {
 	DC_MODEL,
 }
 
-static if (WINVER >= 0x0500) {
+static if (_WIN32_WINNT >= 0x0500) {
 	enum {
 		DC_PERSONALITY = 25,
 		DC_PRINTRATE = 26,
@@ -832,18 +831,16 @@ const DWORD
 	DCTT_SUBDEV           = 4,
 	DCTT_DOWNLOAD_OUTLINE = 8;
 
-static if (WINVER >= 0x0400) {
-	// return from DC_BINADJUST
-	enum : DWORD {
-		DCBA_FACEUPNONE     = 0x0000,
-		DCBA_FACEUPCENTER   = 0x0001,
-		DCBA_FACEUPLEFT     = 0x0002,
-		DCBA_FACEUPRIGHT    = 0x0003,
-		DCBA_FACEDOWNNONE   = 0x0100,
-		DCBA_FACEDOWNCENTER = 0x0101,
-		DCBA_FACEDOWNLEFT   = 0x0102,
-		DCBA_FACEDOWNRIGHT  = 0x0103,
-	}
+// return from DC_BINADJUST
+enum : DWORD {
+	DCBA_FACEUPNONE     = 0x0000,
+	DCBA_FACEUPCENTER   = 0x0001,
+	DCBA_FACEUPLEFT     = 0x0002,
+	DCBA_FACEUPRIGHT    = 0x0003,
+	DCBA_FACEDOWNNONE   = 0x0100,
+	DCBA_FACEDOWNCENTER = 0x0101,
+	DCBA_FACEDOWNLEFT   = 0x0102,
+	DCBA_FACEDOWNRIGHT  = 0x0103,
 }
 //---
 
@@ -973,7 +970,7 @@ enum : int {
 	DESKTOPHORZRES  = 118,
 	BLTALIGNMENT    = 119
 }
-static if (WINVER >= 0x0500) {
+static if (_WIN32_WINNT >= 0x0500) {
 enum : int {
 	SHADEBLENDCAPS  = 120,
 	COLORMGMTCAPS   = 121,
@@ -1011,7 +1008,7 @@ const int
 	RC_OP_DX_OUTPUT = 0x4000,
 	RC_DEVBITS      = 0x8000;
 
-static if (WINVER >= 0x0500) {
+static if (_WIN32_WINNT >= 0x0500) {
 	/* Shading and blending caps */
 	const SB_NONE = 0x00000000;
 	const SB_CONST_ALPHA = 0x00000001;
@@ -1194,11 +1191,7 @@ enum : int {
 	DEVICE_DEFAULT_FONT,
 	DEFAULT_PALETTE,
 	SYSTEM_FIXED_FONT,
-}
-static if (WINVER >= 0x0400) {
-	enum : int {
-		DEFAULT_GUI_FONT = SYSTEM_FIXED_FONT + 1,
-	}
+	DEFAULT_GUI_FONT = SYSTEM_FIXED_FONT + 1,
 }
 static if (_WIN32_WINNT >= 0x0500) {
 	enum : int {
@@ -1209,12 +1202,8 @@ static if (_WIN32_WINNT >= 0x0500) {
 
 static if (_WIN32_WINNT >= 0x0500) {
 	const STOCK_LAST = DC_PEN;
-}
-else static if (WINVER >= 0x0400) {
+} else {
 	const STOCK_LAST = DEFAULT_GUI_FONT;
-}
-else {
-	const STOCK_LAST = SYSTEM_FIXED_FONT;
 }
 
 // Get/SetSystemPaletteUse()
@@ -1504,15 +1493,7 @@ const CCHFORMNAME   = 32;
 
 // DEVMODE.dmSpecVersion
 // current version of specification
-static if (WINVER >= 0x0500 || _WIN32_WINNT >= 0x0400) {
-	const WORD DM_SPECVERSION = 0x0401;
-}
-else static if (WINVER >= 0x0400) {
-	const WORD DM_SPECVERSION = 0x0400;
-}
-else {
-	const WORD DM_SPECVERSION = 0x0320;
-}
+const WORD DM_SPECVERSION = 0x0401;
 
 // DEVMODE.dmOrientation
 enum : short {
@@ -1591,7 +1572,7 @@ enum : short {
 	DMPAPER_A3_TRANSVERSE,
 	DMPAPER_A3_EXTRA_TRANSVERSE // = 68
 }
-static if (WINVER >= 0x0500) {
+static if (_WIN32_WINNT >= 0x0500) {
 	enum : short {
 		DMPAPER_DBL_JAPANESE_POSTCARD = 69,
 		DMPAPER_A6,
@@ -1648,10 +1629,11 @@ static if (WINVER >= 0x0500) {
 
 const short DMPAPER_FIRST = DMPAPER_LETTER;
 
-static if (WINVER >= 0x0500)
+static if (_WIN32_WINNT >= 0x500) {
 	const short DMPAPER_LAST = DMPAPER_PENV_10_ROTATED;
-else
+} else {
 	const short DMPAPER_LAST = DMPAPER_A3_EXTRA_TRANSVERSE;
+}
 
 const short DMPAPER_USER = 256;
 
@@ -1714,7 +1696,7 @@ enum : short {
 	DMCOLLATE_TRUE
 }
 
-static if (WINVER >= 0x0501) {
+static if (_WIN32_WINNT >= 0x0501) {
 	/* DEVMODE dmDisplayOrientation specifiations */
 	enum : short {
 		DMDO_DEFAULT = 0,
@@ -1753,12 +1735,12 @@ const DWORD
 	DM_PAPERLENGTH        = 0x00000004,
 	DM_PAPERWIDTH         = 0x00000008,
 	DM_SCALE              = 0x00000010;
-static if (WINVER >= 0x0500) {
+static if (_WIN32_WINNT >= 0x0500) {
 	const DWORD
 		DM_POSITION       = 0x00000020,
 		DM_NUP            = 0x00000040;
 }
-static if (WINVER >= 0x0501) {
+static if (_WIN32_WINNT >= 0x0501) {
 	const DWORD
 		DM_DISPLAYORIENTATION = 0x00000080;
 }
@@ -1777,17 +1759,14 @@ const DWORD
 	DM_PELSWIDTH          = 0x00080000,
 	DM_PELSHEIGHT         = 0x00100000,
 	DM_DISPLAYFLAGS       = 0x00200000,
-	DM_DISPLAYFREQUENCY   = 0x00400000;
-static if (WINVER >= 0x0400) {
-	const DWORD
-		DM_ICMMETHOD      = 0x00800000,
-		DM_ICMINTENT      = 0x01000000,
-		DM_MEDIATYPE      = 0x02000000,
-		DM_DITHERTYPE     = 0x04000000,
-		DM_PANNINGWIDTH   = 0x08000000,
-		DM_PANNINGHEIGHT  = 0x10000000;
-}
-static if (WINVER >= 0x0501) {
+	DM_DISPLAYFREQUENCY   = 0x00400000,
+	DM_ICMMETHOD          = 0x00800000,
+	DM_ICMINTENT          = 0x01000000,
+	DM_MEDIATYPE          = 0x02000000,
+	DM_DITHERTYPE         = 0x04000000,
+	DM_PANNINGWIDTH       = 0x08000000,
+	DM_PANNINGHEIGHT      = 0x10000000;
+static if (_WIN32_WINNT >= 0x0501) {
 	const DWORD
 		DM_DISPLAYFIXEDOUTPUT = 0x20000000;
 }
@@ -1953,12 +1932,11 @@ const LAYOUT_BTT = 2;
 const LAYOUT_VBH = 4;
 const LAYOUT_BITMAPORIENTATIONPRESERVED = 8;
 
-static if (WINVER > 0x0400) {
-	const CS_ENABLE = 0x00000001;
-	const CS_DISABLE = 0x00000002;
-	const CS_DELETE_TRANSFORM = 0x00000003;
-}
-static if (WINVER > 0x0500) {
+const CS_ENABLE = 0x00000001;
+const CS_DISABLE = 0x00000002;
+const CS_DELETE_TRANSFORM = 0x00000003;
+
+static if (_WIN32_WINNT > 0x0500) {
 	const GRADIENT_FILL_RECT_H=0x00;
 	const GRADIENT_FILL_RECT_V=0x01;
 	const GRADIENT_FILL_TRIANGLE=0x02;
@@ -2220,18 +2198,14 @@ struct DEVMODEA {
 		DWORD  dmNup;
 	}
 	DWORD  dmDisplayFrequency;
-	static if (WINVER >= 0x0400) {
-		DWORD  dmICMMethod;
-		DWORD  dmICMIntent;
-		DWORD  dmMediaType;
-		DWORD  dmDitherType;
-		DWORD  dmReserved1;
-		DWORD  dmReserved2;
-		static if ((WINVER >= 0x0500) || (_WIN32_WINNT >= 0x0400)) {
-			DWORD  dmPanningWidth;
-			DWORD  dmPanningHeight;
-		}
-	}
+	DWORD  dmICMMethod;
+	DWORD  dmICMIntent;
+	DWORD  dmMediaType;
+	DWORD  dmDitherType;
+	DWORD  dmReserved1;
+	DWORD  dmReserved2;
+	DWORD  dmPanningWidth;
+	DWORD  dmPanningHeight;
 }
 alias DEVMODEA* PDEVMODEA, NPDEVMODEA, LPDEVMODEA;
 
@@ -2273,18 +2247,14 @@ struct DEVMODEW {
 		DWORD  dmNup;
 	}
 	DWORD  dmDisplayFrequency;
-	static if (WINVER >= 0x0400) {
-		DWORD  dmICMMethod;
-		DWORD  dmICMIntent;
-		DWORD  dmMediaType;
-		DWORD  dmDitherType;
-		DWORD  dmReserved1;
-		DWORD  dmReserved2;
-		static if ((WINVER >= 0x0500) || (_WIN32_WINNT >= 0x0400)) {
-			DWORD  dmPanningWidth;
-			DWORD  dmPanningHeight;
-		}
-	}
+	DWORD  dmICMMethod;
+	DWORD  dmICMIntent;
+	DWORD  dmMediaType;
+	DWORD  dmDitherType;
+	DWORD  dmReserved1;
+	DWORD  dmReserved2;
+	DWORD  dmPanningWidth;
+	DWORD  dmPanningHeight;
 }
 alias DEVMODEW* PDEVMODEW, NPDEVMODEW, LPDEVMODEW;
 
@@ -2547,48 +2517,45 @@ struct TRIVERTEX {
 }
 alias TRIVERTEX* PTRIVERTEX, LPTRIVERTEX;
 
-static if (WINVER >= 0x0400) {
-
-	struct EMRGLSRECORD {
-		EMR emr;
-		DWORD cbData;
-		BYTE[1] Data;
-	}
-	alias EMRGLSRECORD* PEMRGLSRECORD;
-
-	struct EMRGLSBOUNDEDRECORD {
-		EMR emr;
-		RECTL rclBounds;
-		DWORD cbData;
-		BYTE[1] Data;
-	}
-	alias EMRGLSBOUNDEDRECORD* PEMRGLSBOUNDEDRECORD;
-
-	struct EMRPIXELFORMAT {
-		EMR emr;
-		PIXELFORMATDESCRIPTOR pfd;
-	}
-	alias EMRPIXELFORMAT* PEMRPIXELFORMAT;
-
-	struct EMRCREATECOLORSPACE {
-		EMR emr;
-		DWORD ihCS;
-		LOGCOLORSPACE lcs;
-	}
-	alias EMRCREATECOLORSPACE* PEMRCREATECOLORSPACE;
-
-	struct EMRSETCOLORSPACE {
-		EMR emr;
-		DWORD ihCS;
-	}
-	alias EMRSETCOLORSPACE* PEMRSETCOLORSPACE;
-	alias TypeDef!(EMRSETCOLORSPACE) EMRSELECTCOLORSPACE;
-	alias EMRSELECTCOLORSPACE* PEMRSELECTCOLORSPACE;
-	alias TypeDef!(EMRSETCOLORSPACE) EMRDELETECOLORSPACE;
-	alias EMRDELETECOLORSPACE* PEMRDELETECOLORSPACE;
+struct EMRGLSRECORD {
+	EMR emr;
+	DWORD cbData;
+	BYTE[1] Data;
 }
+alias EMRGLSRECORD* PEMRGLSRECORD;
 
-static if (WINVER >= 0x0500) {
+struct EMRGLSBOUNDEDRECORD {
+	EMR emr;
+	RECTL rclBounds;
+	DWORD cbData;
+	BYTE[1] Data;
+}
+alias EMRGLSBOUNDEDRECORD* PEMRGLSBOUNDEDRECORD;
+
+struct EMRPIXELFORMAT {
+	EMR emr;
+	PIXELFORMATDESCRIPTOR pfd;
+}
+alias EMRPIXELFORMAT* PEMRPIXELFORMAT;
+
+struct EMRCREATECOLORSPACE {
+	EMR emr;
+	DWORD ihCS;
+	LOGCOLORSPACE lcs;
+}
+alias EMRCREATECOLORSPACE* PEMRCREATECOLORSPACE;
+
+struct EMRSETCOLORSPACE {
+	EMR emr;
+	DWORD ihCS;
+}
+alias EMRSETCOLORSPACE* PEMRSETCOLORSPACE;
+alias TypeDef!(EMRSETCOLORSPACE) EMRSELECTCOLORSPACE;
+alias EMRSELECTCOLORSPACE* PEMRSELECTCOLORSPACE;
+alias TypeDef!(EMRSETCOLORSPACE) EMRDELETECOLORSPACE;
+alias EMRDELETECOLORSPACE* PEMRDELETECOLORSPACE;
+
+static if (_WIN32_WINNT >= 0x0500) {
 
 	struct EMREXTESCAPE {
 		EMR emr;
@@ -3285,7 +3252,7 @@ alias TypeDef!(EMRSELECTCLIPPATH) EMRSETTEXTALIGN;
 alias EMRSETTEXTALIGN* PEMRSETTEXTALIGN;
 alias TypeDef!(EMRSELECTCLIPPATH) EMRENABLEICM;
 alias EMRENABLEICM* PEMRENABLEICM;
-static if (WINVER >= 0x0500) {
+static if (_WIN32_WINNT >= 0x0500) {
 	alias TypeDef!(EMRSELECTCLIPPATH) EMRSETLAYOUT;
 	alias EMRSETLAYOUT* PEMRSETLAYOUT;
 }
@@ -3321,12 +3288,10 @@ struct ENHMETAHEADER {
 	DWORD nPalEntries;
 	SIZEL szlDevice;
 	SIZEL szlMillimeters;
-	static if (WINVER >= 0x0400) {
-		DWORD cbPixelFormat;
-		DWORD offPixelFormat;
-		DWORD bOpenGL;
-	}
-	static if (WINVER >= 0x0500) {
+	DWORD cbPixelFormat;
+	DWORD offPixelFormat;
+	DWORD bOpenGL;
+	static if (_WIN32_WINNT >= 0x0500) {
 		SIZEL szlMicrometers;
 	}
 }
@@ -3960,15 +3925,13 @@ struct DISPLAY_DEVICEW {
 }
 alias DISPLAY_DEVICEW* PDISPLAY_DEVICEW, LPDISPLAY_DEVICEW;
 
-static if (WINVER >= 0x0400) {
-	struct DRAWPATRECT {
-		POINT ptPosition;
-		POINT ptSize;
-		WORD wStyle;
-		WORD wPattern;
-	}
-	alias DRAWPATRECT* PDRAWPATRECT;
+struct DRAWPATRECT {
+	POINT ptPosition;
+	POINT ptSize;
+	WORD wStyle;
+	WORD wPattern;
 }
+alias DRAWPATRECT* PDRAWPATRECT;
 
 // ---------
 // Callbacks
@@ -4330,7 +4293,7 @@ extern(Windows) {
 	BOOL SetICMProfileW(HDC, LPWSTR);
 	int SetMapMode(HDC, int);
 
-	static if (WINVER >= 0x0500) {
+	static if (_WIN32_WINNT >= 0x0500) {
 		DWORD SetLayout(HDC hdc, DWORD l);
 		DWORD GetLayout(HDC hdc);
 	}
@@ -4393,7 +4356,7 @@ extern(Windows) {
 	BOOL wglUseFontOutlinesA(HDC, DWORD, DWORD, DWORD, FLOAT, FLOAT, int, LPGLYPHMETRICSFLOAT);
 	BOOL wglUseFontOutlinesW(HDC, DWORD, DWORD, DWORD, FLOAT, FLOAT, int, LPGLYPHMETRICSFLOAT);
 
-	static if (WINVER >= 0x0500) {
+	static if (_WIN32_WINNT >= 0x0500) {
 	alias WGLSWAP* PWGLSWAP;
 	struct WGLSWAP {
 		HDC hdc;
@@ -4403,7 +4366,7 @@ extern(Windows) {
 	DWORD  wglSwapMultipleBuffers(UINT, WGLSWAP*);
 }
 
-static if (WINVER >= 0x0500) {
+static if (_WIN32_WINNT >= 0x0500) {
 		BOOL AlphaBlend(HDC, int, int, int, int, HDC, int, int, int, int, BLENDFUNCTION);
 		BOOL GradientFill(HDC, PTRIVERTEX, ULONG, PVOID, ULONG, ULONG);
 		BOOL TransparentBlt(HDC, int, int, int, int, HDC, int, int, int, int, UINT);

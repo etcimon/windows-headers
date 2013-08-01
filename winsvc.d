@@ -13,11 +13,6 @@ pragma(lib, "advapi32");
 
 private import win32.w32api, win32.windef;
 
-static assert (_WIN32_WINNT_ONLY,
-	"win32.winsvc is available only if version WindowsNTonly, WindowsXP, "
-	"Windows2003 or WindowsVista is set");
-
-
 // FIXME: check Windows version support
 
 const TCHAR[]

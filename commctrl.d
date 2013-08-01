@@ -5483,7 +5483,7 @@ int ListView_EnableGroupView(HWND w, BOOL i) {
 	return cast(int) SendMessage(w, LVM_ENABLEGROUPVIEW, i, 0);
 }
 
-static if (_WIN32_WINDOWS >= 0x410 && (_WIN32_WINNT >= 0x500 || _WIN32_IE >= 0x500)) {
+static if (_WIN32_WINNT >= 0x500 || _WIN32_IE >= 0x500) {
 	BOOL ListView_SortItemsEx(HWND w, PFNLVCOMPARE c, LPARAM p) {
 		return cast(BOOL) SendMessage(w, LVM_SORTITEMSEX, cast(WPARAM) p, cast(LPARAM)c);
 	}

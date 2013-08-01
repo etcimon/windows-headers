@@ -74,7 +74,7 @@ struct VALENTW {
 alias VALENTW* PVALENTW;
 
 // RRF - Registry Routine Flags (for RegGetValue)
-static if (WINVER >= 0x600) {
+static if (_WIN32_WINNT >= 0x600) {
 	enum : DWORD {
 		RRF_RT_REG_NONE      = 0x00000001,
 		RRF_RT_REG_SZ        = 0x00000002,
@@ -133,39 +133,35 @@ extern (Windows) {
 	LONG RegSetValueExW(HKEY, LPCWSTR, DWORD, DWORD, CPtr!(BYTE), DWORD);
 	LONG RegUnLoadKeyA(HKEY, LPCSTR);
 	LONG RegUnLoadKeyW(HKEY, LPCWSTR);
-	static if (_WIN32_WINDOWS >= 0x410) {
-		LONG RegNotifyChangeKeyValue(HKEY, BOOL, DWORD, HANDLE, BOOL);
+	LONG RegNotifyChangeKeyValue(HKEY, BOOL, DWORD, HANDLE, BOOL);
+
+	BOOL AbortSystemShutdownA(LPCSTR);
+	BOOL AbortSystemShutdownW(LPCWSTR);
+	BOOL InitiateSystemShutdownA(LPSTR, LPSTR, DWORD, BOOL, BOOL);
+	BOOL InitiateSystemShutdownW(LPWSTR, LPWSTR, DWORD, BOOL, BOOL);
+	LONG RegGetKeySecurity(HKEY, SECURITY_INFORMATION,
+	  PSECURITY_DESCRIPTOR, PDWORD);
+	LONG RegRestoreKeyA(HKEY, LPCSTR, DWORD);
+	LONG RegRestoreKeyW(HKEY, LPCWSTR, DWORD);
+	LONG RegSetKeySecurity(HKEY, SECURITY_INFORMATION,
+	  PSECURITY_DESCRIPTOR);
+
+	static if (_WIN32_WINNT >= 0x500) {
+		LONG RegDisablePredefinedCache();
+		LONG RegOpenCurrentUser(REGSAM, PHKEY);
+		LONG RegOpenUserClassesRoot(HANDLE, DWORD, REGSAM, PHKEY);
 	}
 
-	static if (_WIN32_WINNT_ONLY) {
-		BOOL AbortSystemShutdownA(LPCSTR);
-		BOOL AbortSystemShutdownW(LPCWSTR);
-		BOOL InitiateSystemShutdownA(LPSTR, LPSTR, DWORD, BOOL, BOOL);
-		BOOL InitiateSystemShutdownW(LPWSTR, LPWSTR, DWORD, BOOL, BOOL);
-		LONG RegGetKeySecurity(HKEY, SECURITY_INFORMATION,
-		  PSECURITY_DESCRIPTOR, PDWORD);
-		LONG RegRestoreKeyA(HKEY, LPCSTR, DWORD);
-		LONG RegRestoreKeyW(HKEY, LPCWSTR, DWORD);
-		LONG RegSetKeySecurity(HKEY, SECURITY_INFORMATION,
-		  PSECURITY_DESCRIPTOR);
+	static if (_WIN32_WINNT >= 0x501) {
+		LONG RegSaveKeyExA(HKEY, LPCSTR, LPSECURITY_ATTRIBUTES, DWORD);
+		LONG RegSaveKeyExW(HKEY, LPCWSTR, LPSECURITY_ATTRIBUTES, DWORD);
+	}
 
-		static if (_WIN32_WINNT >= 0x500) {
-			LONG RegDisablePredefinedCache();
-			LONG RegOpenCurrentUser(REGSAM, PHKEY);
-			LONG RegOpenUserClassesRoot(HANDLE, DWORD, REGSAM, PHKEY);
-		}
-
-		static if (_WIN32_WINNT >= 0x501) {
-			LONG RegSaveKeyExA(HKEY, LPCSTR, LPSECURITY_ATTRIBUTES, DWORD);
-			LONG RegSaveKeyExW(HKEY, LPCWSTR, LPSECURITY_ATTRIBUTES, DWORD);
-		}
-
-		static if (_WIN32_WINNT >= 0x600) {
-			LONG RegGetValueA(HKEY hkey, LPCSTR lpSubKey, LPCSTR lpValue,
-			  DWORD dwFlags, LPDWORD pdwType, PVOID pvData, LPDWORD pcbData);
-			LONG RegGetValueW(HKEY hkey, LPCWSTR lpSubKey, LPCWSTR lpValue,
-			  DWORD dwFlags, LPDWORD pdwType, PVOID pvData, LPDWORD pcbData);
-		}
+	static if (_WIN32_WINNT >= 0x600) {
+		LONG RegGetValueA(HKEY hkey, LPCSTR lpSubKey, LPCSTR lpValue,
+		  DWORD dwFlags, LPDWORD pdwType, PVOID pvData, LPDWORD pcbData);
+		LONG RegGetValueW(HKEY hkey, LPCWSTR lpSubKey, LPCWSTR lpValue,
+		  DWORD dwFlags, LPDWORD pdwType, PVOID pvData, LPDWORD pcbData);
 	}
 
 	deprecated {
@@ -200,16 +196,14 @@ version (Unicode) {
 	alias RegSetValueExW RegSetValueEx;
 	alias RegUnLoadKeyW RegUnLoadKey;
 
-	static if (_WIN32_WINNT_ONLY) {
-		alias AbortSystemShutdownW AbortSystemShutdown;
-		alias InitiateSystemShutdownW InitiateSystemShutdown;
-		alias RegRestoreKeyW RegRestoreKey;
-		static if (_WIN32_WINNT >= 0x501) {
-			alias RegSaveKeyExA RegSaveKeyEx;
-		}
-		static if (_WIN32_WINNT >= 0x600) {
-			alias RegGetValueW RegGetValue;
-		}
+	alias AbortSystemShutdownW AbortSystemShutdown;
+	alias InitiateSystemShutdownW InitiateSystemShutdown;
+	alias RegRestoreKeyW RegRestoreKey;
+	static if (_WIN32_WINNT >= 0x501) {
+		alias RegSaveKeyExA RegSaveKeyEx;
+	}
+	static if (_WIN32_WINNT >= 0x600) {
+		alias RegGetValueW RegGetValue;
 	}
 	deprecated {
 		alias RegCreateKeyW RegCreateKey;
@@ -235,16 +229,14 @@ version (Unicode) {
 	alias RegSaveKeyA RegSaveKey;
 	alias RegSetValueExA RegSetValueEx;
 	alias RegUnLoadKeyA RegUnLoadKey;
-	static if (_WIN32_WINNT_ONLY) {
-		alias AbortSystemShutdownA AbortSystemShutdown;
-		alias InitiateSystemShutdownA InitiateSystemShutdown;
-		alias RegRestoreKeyW RegRestoreKey;
-		static if (_WIN32_WINNT >= 0x501) {
-			alias RegSaveKeyExA RegSaveKeyEx;
-		}
-		static if (_WIN32_WINNT >= 0x600) {
-			alias RegGetValueA RegGetValue;
-		}
+	alias AbortSystemShutdownA AbortSystemShutdown;
+	alias InitiateSystemShutdownA InitiateSystemShutdown;
+	alias RegRestoreKeyW RegRestoreKey;
+	static if (_WIN32_WINNT >= 0x501) {
+		alias RegSaveKeyExA RegSaveKeyEx;
+	}
+	static if (_WIN32_WINNT >= 0x600) {
+		alias RegGetValueA RegGetValue;
 	}
 	deprecated {
 		alias RegCreateKeyA RegCreateKey;

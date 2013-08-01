@@ -25,17 +25,12 @@ enum : DWORD {
 	DBT_DEVICEREMOVECOMPLETE    = 0x8004,
 	DBT_DEVICETYPESPECIFIC      = 0x8005,
 	DBT_DEVTYP_OEM              = 0,
-	DBT_DEVTYP_DEVNODE          = 1,
-	DBT_DEVTYP_VOLUME           = 2,
-	DBT_DEVTYP_PORT             = 3,
-	DBT_DEVTYP_NET              = 4
-}
-
-static if (_WIN32_WINDOWS >= 0x040A) {
-	enum : DWORD {
-		DBT_DEVTYP_DEVICEINTERFACE = 5,
-		DBT_DEVTYP_HANDLE          = 6
-	}
+	DBT_DEVTYP_DEVNODE,
+	DBT_DEVTYP_VOLUME,
+	DBT_DEVTYP_PORT,
+	DBT_DEVTYP_NET,
+	DBT_DEVTYP_DEVICEINTERFACE,
+	DBT_DEVTYP_HANDLE        // = 6
 }
 
 enum : DWORD {
@@ -151,7 +146,7 @@ version (Unicode) {
 }
 alias DEV_BROADCAST_PORT* PDEV_BROADCAST_PORT;
 
-static if ((_WIN32_WINDOWS >= 0x0410) || (_WIN32_WINNT >= 0x0500)) {
+static if (_WIN32_WINNT >= 0x0500) {
 	struct DEV_BROADCAST_DEVICEINTERFACE_A {
 		DWORD dbcc_size = DEV_BROADCAST_DEVICEINTERFACE_A.sizeof;
 		DWORD dbcc_devicetype;

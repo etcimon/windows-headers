@@ -26,32 +26,30 @@ version (Win32_Winsock1) {
 	import win32.winsock2;
 }
 
-static if (_WIN32_WINNT_ONLY) {
-	static if (_WIN32_WINNT >= 0x500) {
-		enum {
-			/* WinNT5+:
-			   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/socket_options.htm */
-			SO_MAXDG             = 0x7009,
-			SO_MAXPATHDG         = 0x700A,
-		}
-	}
-
+static if (_WIN32_WINNT >= 0x500) {
 	enum {
-		/* WinNT4+:
-		   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/socket_options_for_windows_nt_4_0_2.htm */
-		SO_CONNDATA              = 0x7000,
-		SO_CONNOPT               = 0x7001,
-		SO_DISCDATA              = 0x7002,
-		SO_DISCOPT               = 0x7003,
-		SO_CONNDATALEN           = 0x7004,
-		SO_CONNOPTLEN            = 0x7005,
-		SO_DISCDATALEN           = 0x7006,
-		SO_DISCOPTLEN            = 0x7007,
-
-		/* WinNT4:
+		/* WinNT5+:
 		   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/socket_options.htm */
-		SO_UPDATE_ACCEPT_CONTENT = 0x700B,
+		SO_MAXDG             = 0x7009,
+		SO_MAXPATHDG         = 0x700A,
 	}
+}
+
+enum {
+	/* WinNT4+:
+	   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/socket_options_for_windows_nt_4_0_2.htm */
+	SO_CONNDATA              = 0x7000,
+	SO_CONNOPT               = 0x7001,
+	SO_DISCDATA              = 0x7002,
+	SO_DISCOPT               = 0x7003,
+	SO_CONNDATALEN           = 0x7004,
+	SO_CONNOPTLEN            = 0x7005,
+	SO_DISCDATALEN           = 0x7006,
+	SO_DISCOPTLEN            = 0x7007,
+
+	/* WinNT4:
+	   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/socket_options.htm */
+	SO_UPDATE_ACCEPT_CONTENT = 0x700B,
 }
 
 enum {
@@ -71,22 +69,20 @@ enum {
 }
 
 
-static if (_WIN32_WINNT_ONLY) {
-	enum {
-		TCP_BSDURGENT = 0x7000,
-	}
+enum {
+	TCP_BSDURGENT = 0x7000,
+}
 
-	/* These *appear* to be constants for passing to the TransmitFile /
-	   TransmitPackets functions, which are available in WinNT3.51+
-	   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/transmitfile_2.htm */
-	enum {
-		TF_DISCONNECT         = 1,
-		TF_REUSE_SOCKET       = 2,
-		TF_WRITE_BEHIND       = 4,
-		TF_USE_DEFAULT_WORKER = 0,
-		TF_USE_SYSTEM_THREAD  = 16,
-		TF_USE_KERNEL_APC     = 32
-	}
+/* These *appear* to be constants for passing to the TransmitFile /
+   TransmitPackets functions, which are available in WinNT3.51+
+   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/transmitfile_2.htm */
+enum {
+	TF_DISCONNECT         = 1,
+	TF_REUSE_SOCKET       = 2,
+	TF_WRITE_BEHIND       = 4,
+	TF_USE_DEFAULT_WORKER = 0,
+	TF_USE_SYSTEM_THREAD  = 16,
+	TF_USE_KERNEL_APC     = 32
 }
 
 /* Win95+, WinNT3.51+
@@ -108,24 +104,22 @@ extern(Windows) {
 	   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/getacceptexSOCKADDRs_2.htm */
 	VOID GetAcceptExSockaddrs(PVOID, DWORD, DWORD, DWORD, SOCKADDR**, LPINT, SOCKADDR**, LPINT);
 
-	static if (_WIN32_WINNT_ONLY) {
-		/* WinNT3.51+
-		   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/transmitfile_2.htm */
-		BOOL TransmitFile(SOCKET, HANDLE, DWORD, DWORD, LPOVERLAPPED, LPTRANSMIT_FILE_BUFFERS, DWORD);
+	/* WinNT3.51+
+	   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/transmitfile_2.htm */
+	BOOL TransmitFile(SOCKET, HANDLE, DWORD, DWORD, LPOVERLAPPED, LPTRANSMIT_FILE_BUFFERS, DWORD);
 
-		/* WinNT3.51+
-		   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/acceptex_2.htm */
-		alias BOOL function(SOCKET, SOCKET, PVOID, DWORD, DWORD, DWORD, LPDWORD, LPOVERLAPPED) LPFN_ACCEPTEX;
-        const GUID WSAID_ACCEPTEX = {0xb5367df1,0xcbac,0x11cf,[0x95,0xca,0x00,0x80,0x5f,0x48,0xa1,0x92]};
+	/* WinNT3.51+
+	   ms-help://MS.MSDNQTR.2003FEB.1033/winsock/winsock/acceptex_2.htm */
+	alias BOOL function(SOCKET, SOCKET, PVOID, DWORD, DWORD, DWORD, LPDWORD, LPOVERLAPPED) LPFN_ACCEPTEX;
+	const GUID WSAID_ACCEPTEX = {0xb5367df1,0xcbac,0x11cf,[0x95,0xca,0x00,0x80,0x5f,0x48,0xa1,0x92]};
 
-        alias BOOL function(SOCKET, SOCKADDR*, int, PVOID, DWORD, LPDWORD, LPOVERLAPPED) LPFN_CONNECTEX;
-        const GUID WSAID_CONNECTEX = {0x25a207b9,0xddf3,0x4660,[0x8e,0xe9,0x76,0xe5,0x8c,0x74,0x06,0x3e]};
-	}
+	alias BOOL function(SOCKET, SOCKADDR*, int, PVOID, DWORD, LPDWORD, LPOVERLAPPED) LPFN_CONNECTEX;
+	const GUID WSAID_CONNECTEX = {0x25a207b9,0xddf3,0x4660,[0x8e,0xe9,0x76,0xe5,0x8c,0x74,0x06,0x3e]};
 }
 
 version(Win32_Winsock1) {
 } else {
-	static if (WINVER > 0x501) {
+	static if (_WIN32_WINNT > 0x501) {
 		/*	These appear to be constants for the TRANSMIT_PACKETS_ELEMENT
 		 *	structure below, so I've given them the same minimum version
 		 */

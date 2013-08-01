@@ -66,58 +66,45 @@ extern (Windows) {
 	RPC_STATUS RpcNsBindingSelect(RPC_BINDING_VECTOR*, RPC_BINDING_HANDLE*);
 }
 
-// For the cases where Win95, 98, ME have no _W versions, and we must alias to
-// _A even for version(Unicode).
 
 version (Unicode) {
-	static if (_WIN32_WINNT_ONLY) {
-		const bool _WIN32_USE_UNICODE = true;
-	} else {
-		const bool _WIN32_USE_UNICODE = false;
-	}
 } else {
-	const bool _WIN32_USE_UNICODE = false;
-}
-
-static if (!_WIN32_USE_UNICODE) {
 	RPC_STATUS RpcNsEntryObjectInqBeginA(uint, ubyte*, RPC_NS_HANDLE*);
 	RPC_STATUS RpcNsBindingImportBeginA(uint, ubyte*, RPC_IF_HANDLE, UUID*,
 	  RPC_NS_HANDLE*);
 }
 
-static if (_WIN32_WINNT_ONLY) {
-	RPC_STATUS RpcNsBindingExportW(uint, ushort*, RPC_IF_HANDLE,
-	  RPC_BINDING_VECTOR*, UUID_VECTOR*);
-	RPC_STATUS RpcNsBindingUnexportW(uint, ushort*, RPC_IF_HANDLE,
-	  UUID_VECTOR*);
-	RPC_STATUS RpcNsBindingLookupBeginW(uint, ushort*, RPC_IF_HANDLE, UUID*,
-	  uint, RPC_NS_HANDLE*);
-	RPC_STATUS RpcNsGroupDeleteW(uint, ushort*);
-	RPC_STATUS RpcNsGroupMbrAddW(uint, ushort*, uint, ushort*);
-	RPC_STATUS RpcNsGroupMbrRemoveW(uint, ushort*, uint, ushort*);
-	RPC_STATUS RpcNsGroupMbrInqBeginW(uint, ushort*, uint, RPC_NS_HANDLE*);
-	RPC_STATUS RpcNsGroupMbrInqNextW(RPC_NS_HANDLE, ushort**);
-	RPC_STATUS RpcNsProfileDeleteW(uint, ushort*);
-	RPC_STATUS RpcNsProfileEltAddW(uint, ushort*, RPC_IF_ID*, uint, ushort*,
-	  uint, ushort*);
-	RPC_STATUS RpcNsProfileEltRemoveW(uint, ushort*, RPC_IF_ID*, uint,
-	  ushort*);
-	RPC_STATUS RpcNsProfileEltInqBeginW(uint, ushort*, uint, RPC_IF_ID*,
-	  uint, uint, ushort*, RPC_NS_HANDLE*);
-	RPC_STATUS RpcNsProfileEltInqNextW(RPC_NS_HANDLE, RPC_IF_ID*, ushort**,
-	  uint*, ushort**);
-	RPC_STATUS RpcNsEntryObjectInqBeginW(uint, ushort*, RPC_NS_HANDLE*);
-	RPC_STATUS RpcNsEntryExpandNameW(uint, ushort*, ushort**);
-	RPC_STATUS RpcNsMgmtBindingUnexportW(uint, ushort*, RPC_IF_ID*, uint,
-	  UUID_VECTOR*);
-	RPC_STATUS RpcNsMgmtEntryCreateW(uint, ushort*);
-	RPC_STATUS RpcNsMgmtEntryDeleteW(uint, ushort*);
-	RPC_STATUS RpcNsMgmtEntryInqIfIdsW(uint, ushort , RPC_IF_ID_VECTOR**);
-	RPC_STATUS RpcNsBindingImportBeginW(uint, ushort*, RPC_IF_HANDLE, UUID*,
-	  RPC_NS_HANDLE*);
-} // _WIN32_WINNT_ONLY
+RPC_STATUS RpcNsBindingExportW(uint, ushort*, RPC_IF_HANDLE,
+  RPC_BINDING_VECTOR*, UUID_VECTOR*);
+RPC_STATUS RpcNsBindingUnexportW(uint, ushort*, RPC_IF_HANDLE,
+  UUID_VECTOR*);
+RPC_STATUS RpcNsBindingLookupBeginW(uint, ushort*, RPC_IF_HANDLE, UUID*,
+  uint, RPC_NS_HANDLE*);
+RPC_STATUS RpcNsGroupDeleteW(uint, ushort*);
+RPC_STATUS RpcNsGroupMbrAddW(uint, ushort*, uint, ushort*);
+RPC_STATUS RpcNsGroupMbrRemoveW(uint, ushort*, uint, ushort*);
+RPC_STATUS RpcNsGroupMbrInqBeginW(uint, ushort*, uint, RPC_NS_HANDLE*);
+RPC_STATUS RpcNsGroupMbrInqNextW(RPC_NS_HANDLE, ushort**);
+RPC_STATUS RpcNsProfileDeleteW(uint, ushort*);
+RPC_STATUS RpcNsProfileEltAddW(uint, ushort*, RPC_IF_ID*, uint, ushort*,
+  uint, ushort*);
+RPC_STATUS RpcNsProfileEltRemoveW(uint, ushort*, RPC_IF_ID*, uint,
+  ushort*);
+RPC_STATUS RpcNsProfileEltInqBeginW(uint, ushort*, uint, RPC_IF_ID*,
+  uint, uint, ushort*, RPC_NS_HANDLE*);
+RPC_STATUS RpcNsProfileEltInqNextW(RPC_NS_HANDLE, RPC_IF_ID*, ushort**,
+  uint*, ushort**);
+RPC_STATUS RpcNsEntryObjectInqBeginW(uint, ushort*, RPC_NS_HANDLE*);
+RPC_STATUS RpcNsEntryExpandNameW(uint, ushort*, ushort**);
+RPC_STATUS RpcNsMgmtBindingUnexportW(uint, ushort*, RPC_IF_ID*, uint,
+  UUID_VECTOR*);
+RPC_STATUS RpcNsMgmtEntryCreateW(uint, ushort*);
+RPC_STATUS RpcNsMgmtEntryDeleteW(uint, ushort*);
+RPC_STATUS RpcNsMgmtEntryInqIfIdsW(uint, ushort , RPC_IF_ID_VECTOR**);
+RPC_STATUS RpcNsBindingImportBeginW(uint, ushort*, RPC_IF_HANDLE, UUID*,
+  RPC_NS_HANDLE*);
 
-static if (_WIN32_USE_UNICODE) {
+version (Unicode) {
 	alias RpcNsBindingLookupBeginW RpcNsBindingLookupBegin;
 	alias RpcNsBindingImportBeginW RpcNsBindingImportBegin;
 	alias RpcNsBindingExportW RpcNsBindingExport;
