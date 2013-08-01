@@ -26,5 +26,6 @@ dmd -I.. -c -version=Unicode -version=WindowsVista testall.d
 dmd -I.. -c -version=Unicode -version=Win32_Winsock1 testall.d
 @if errorlevel 1 goto abort
 dmd -I.. -c -version=Unicode -version=IE7 testall.d
-del testall.obj
+@del testall.obj
+@echo.
 :abort
