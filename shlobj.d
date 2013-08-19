@@ -396,14 +396,14 @@ struct SHITEMID {
 	USHORT  cb;
 	BYTE[1] abID;
 }
-alias SHITEMID*       LPSHITEMID;
-alias CPtr!(SHITEMID) LPCSHITEMID;
+alias SHITEMID*        LPSHITEMID;
+alias const(SHITEMID)* LPCSHITEMID;
 
 struct ITEMIDLIST {
 	SHITEMID mkid;
 }
-alias ITEMIDLIST*       LPITEMIDLIST;
-alias CPtr!(ITEMIDLIST) LPCITEMIDLIST;
+alias ITEMIDLIST*        LPITEMIDLIST;
+alias const(ITEMIDLIST)* LPCITEMIDLIST;
 
 alias int function(HWND, UINT, LPARAM, LPARAM) BFFCALLBACK;
 
@@ -580,8 +580,8 @@ struct FOLDERSETTINGS {
 	UINT ViewMode;
 	UINT fFlags;
 }
-alias FOLDERSETTINGS*       LPFOLDERSETTINGS;
-alias CPtr!(FOLDERSETTINGS) LPCFOLDERSETTINGS;
+alias FOLDERSETTINGS*        LPFOLDERSETTINGS;
+alias const(FOLDERSETTINGS)* LPCFOLDERSETTINGS;
 
 struct FVSHOWINFO {
 	DWORD cbSize = this.sizeof;
@@ -639,8 +639,8 @@ static if (_WIN32_IE >= 0x500) {
 		GUID fmtid;
 		DWORD pid;
 	}
-	alias SHCOLUMNID*       LPSHCOLUMNID;
-	alias CPtr!(SHCOLUMNID) LPCSHCOLUMNID;
+	alias SHCOLUMNID*        LPSHCOLUMNID;
+	alias const(SHCOLUMNID)* LPCSHCOLUMNID;
 
 	struct SHELLDETAILS {
 		int fmt;
@@ -697,8 +697,8 @@ static if (_WIN32_IE >= 0x500) {
 			ULONG dwReserved;
 			WCHAR wszFolder[MAX_PATH];
 		}
-		alias SHCOLUMNINIT*       LPSHCOLUMNINIT;
-		alias CPtr!(SHCOLUMNINIT) LPCSHCOLUMNINIT;
+		alias SHCOLUMNINIT*        LPSHCOLUMNINIT;
+		alias const(SHCOLUMNINIT)* LPCSHCOLUMNINIT;
 
 		struct SHCOLUMNDATA {
 			ULONG dwFlags;
@@ -707,8 +707,8 @@ static if (_WIN32_IE >= 0x500) {
 			WCHAR *pwszExt;
 			WCHAR wszFile[MAX_PATH];
 		}
-		alias SHCOLUMNDATA*       LPSHCOLUMNDATA;
-		alias CPtr!(SHCOLUMNDATA) LPCSHCOLUMNDATA;
+		alias SHCOLUMNDATA*        LPSHCOLUMNDATA;
+		alias const(SHCOLUMNDATA)* LPCSHCOLUMNDATA;
 	}
 
 	const MAX_COLUMN_NAME_LEN = 80;
@@ -723,8 +723,8 @@ static if (_WIN32_IE >= 0x500) {
 		WCHAR wszTitle[MAX_COLUMN_NAME_LEN];
 		WCHAR wszDescription[MAX_COLUMN_DESC_LEN];
 	}
-	alias SHCOLUMNINFO*       LPSHCOLUMNINFO;
-	alias CPtr!(SHCOLUMNINFO) LPCSHCOLUMNINFO;
+	alias SHCOLUMNINFO*        LPSHCOLUMNINFO;
+	alias const(SHCOLUMNINFO)* LPCSHCOLUMNINFO;
 
 	enum SHCOLSTATE {
 		SHCOLSTATE_TYPE_STR      = 0x00000001,
@@ -864,7 +864,7 @@ interface IShellFolder2 : IShellFolder {
 	HRESULT EnumSearches(IEnumExtraSearch*);
 	HRESULT GetDefaultColumn(DWORD, ULONG*, ULONG*);
 	HRESULT GetDefaultColumnState(UINT, SHCOLSTATEF*);
-	HRESULT GetDetailsEx(LPCITEMIDLIST, CPtr!(SHCOLUMNID), VARIANT*);
+	HRESULT GetDetailsEx(LPCITEMIDLIST, const(SHCOLUMNID)*, VARIANT*);
 	HRESULT GetDetailsOf(LPCITEMIDLIST, UINT, SHELLDETAILS*);
 	HRESULT MapColumnToSCID(UINT, SHCOLUMNID*);
 }
@@ -891,7 +891,7 @@ interface IFileViewer : IUnknown {
 alias IFileViewer LPFILEVIEWER;
 
 interface IFileSystemBindData : IUnknown {
-	HRESULT SetFindData(CPtr!(WIN32_FIND_DATAW));
+	HRESULT SetFindData(const(WIN32_FIND_DATAW)*);
 	HRESULT GetFindData(WIN32_FIND_DATAW*);
 }
 
@@ -918,7 +918,7 @@ interface IPersistFolder3 : IPersistFolder2 {
 	HRESULT GetClassID(CLSID*);
 	HRESULT Initialize(LPCITEMIDLIST);
 	HRESULT GetCurFolder(LPITEMIDLIST*);
-	HRESULT InitializeEx(IBindCtx, LPCITEMIDLIST, CPtr!(PERSIST_FOLDER_TARGET_INFO));
+	HRESULT InitializeEx(IBindCtx, LPCITEMIDLIST, const(PERSIST_FOLDER_TARGET_INFO)*);
 	HRESULT GetFolderTargetInfo(PERSIST_FOLDER_TARGET_INFO*);
 }
 alias IPersistFolder3 LPPERSISTFOLDER3;
@@ -981,7 +981,7 @@ struct SV2CVW2_PARAMS {
 	FOLDERSETTINGS  *pfs;
 	IShellBrowser psbOwner;
 	RECT *prcView;
-	CPtr!(SHELLVIEWID) pvid;
+	const(SHELLVIEWID)* pvid;
 	HWND hwndView;
 }
 alias SV2CVW2_PARAMS* LPSV2CVW2_PARAMS;

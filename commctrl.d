@@ -2800,8 +2800,8 @@ struct COMBOBOXEXITEMA {
 	int    iIndent;
 	LPARAM lParam;
 }
-alias COMBOBOXEXITEMA*       PCOMBOBOXEXITEMA;
-alias CPtr!(COMBOBOXEXITEMA) PCCOMBOEXITEMA;
+alias COMBOBOXEXITEMA*        PCOMBOBOXEXITEMA;
+alias const(COMBOBOXEXITEMA)* PCCOMBOEXITEMA;
 
 struct COMBOBOXEXITEMW {
 	UINT   mask;
@@ -2814,8 +2814,8 @@ struct COMBOBOXEXITEMW {
 	int    iIndent;
 	LPARAM lParam;
 }
-alias COMBOBOXEXITEMW*       PCOMBOBOXEXITEMW;
-alias CPtr!(COMBOBOXEXITEMW) PCCOMBOEXITEMW;
+alias COMBOBOXEXITEMW*        PCOMBOBOXEXITEMW;
+alias const(COMBOBOXEXITEMW)* PCCOMBOEXITEMW;
 
 static if (_WIN32_IE >= 0x400) {
 	struct NMCOMBOBOXEXA {
@@ -3001,8 +3001,8 @@ struct TBBUTTON {
 	DWORD_PTR dwData;
 	INT_PTR iString;
 }
-alias TBBUTTON*       PTBBUTTON, LPTBBUTTON;
-alias CPtr!(TBBUTTON) LPCTBBUTTON;
+alias TBBUTTON*        PTBBUTTON, LPTBBUTTON;
+alias const(TBBUTTON)* LPCTBBUTTON;
 
 static if (_WIN32_IE >= 0x400) {
 	struct TBBUTTONINFOA {
@@ -4369,10 +4369,10 @@ static if (_WIN32_IE >= 0x400) {
 		REBARBANDINFOW_V3_SIZE = REBARBANDINFOW.sizeof
 	}
 }
-alias REBARBANDINFOA*       LPREBARBANDINFOA;
-alias CPtr!(REBARBANDINFOA) LPCREBARBANDINFOA;
-alias REBARBANDINFOW*       LPREBARBANDINFOW;
-alias CPtr!(REBARBANDINFOW) LPCREBARBANDINFOW;
+alias REBARBANDINFOA*        LPREBARBANDINFOA;
+alias const(REBARBANDINFOA)* LPCREBARBANDINFOA;
+alias REBARBANDINFOW*        LPREBARBANDINFOW;
+alias const(REBARBANDINFOW)* LPCREBARBANDINFOW;
 
 static if (_WIN32_IE >= 0x300) {
 	struct NMLVODSTATECHANGE {
@@ -5066,7 +5066,7 @@ int Header_GetItemCount(HWND w) {
 	return cast(int) SendMessage(w, HDM_GETITEMCOUNT, 0, 0);
 }
 
-int Header_InsertItem(HWND w, int i, CPtr!(HDITEM) phdi) {
+int Header_InsertItem(HWND w, int i, const(HDITEM)* phdi) {
 	return cast(int) SendMessage(w, HDM_INSERTITEM, i, cast(LPARAM) phdi);
 }
 
@@ -5078,7 +5078,7 @@ BOOL Header_GetItem(HWND w, int i, LPHDITEM phdi) {
 	return cast(BOOL) SendMessage(w, HDM_GETITEM, i, cast(LPARAM) phdi);
 }
 
-BOOL Header_SetItem(HWND w, int i, CPtr!(HDITEM) phdi) {
+BOOL Header_SetItem(HWND w, int i, const(HDITEM)* phdi) {
 	return cast(BOOL) SendMessage(w, HDM_SETITEM, i, cast(LPARAM) phdi);
 }
 
@@ -5270,11 +5270,11 @@ HIMAGELIST ListView_SetImageList(HWND w, HIMAGELIST h, int i) {
 	  cast(LPARAM) h);
 }
 
-BOOL ListView_SetItem(HWND w, CPtr!(LV_ITEM) i) {
+BOOL ListView_SetItem(HWND w, const(LV_ITEM)* i) {
 	return cast(BOOL) SendMessage(w, LVM_SETITEM, 0, cast(LPARAM) i);
 }
 
-int ListView_InsertItem(HWND w, CPtr!(LV_ITEM) i) {
+int ListView_InsertItem(HWND w, const(LV_ITEM)* i) {
 	return cast(int) SendMessage(w, LVM_INSERTITEM, 0, cast(LPARAM) i);
 }
 
@@ -5298,7 +5298,7 @@ int ListView_GetNextItem(HWND w, int i, UINT f) {
 	return cast(int) SendMessage(w, LVM_GETNEXTITEM, i, MAKELPARAM(cast(ushort)f, 0));
 }
 
-int ListView_FindItem(HWND w, int i, CPtr!(LV_FINDINFO) p) {
+int ListView_FindItem(HWND w, int i, const(LV_FINDINFO)* p) {
 	return cast(int) SendMessage(w, LVM_FINDITEM, i, cast(LPARAM) p);
 }
 
@@ -5355,11 +5355,11 @@ BOOL ListView_GetColumn(HWND w, int i, LPLVCOLUMN p) {
 	return cast(BOOL) SendMessage(w, LVM_GETCOLUMN, i, cast(LPARAM) p);
 }
 
-BOOL ListView_SetColumn(HWND w, int i, CPtr!(LV_COLUMN) p) {
+BOOL ListView_SetColumn(HWND w, int i, const(LV_COLUMN)* p) {
 	return cast(BOOL) SendMessage(w, LVM_SETCOLUMN, i, cast(LPARAM) p);
 }
 
-int ListView_InsertColumn(HWND w, int i, CPtr!(LV_COLUMN) p) {
+int ListView_InsertColumn(HWND w, int i, const(LV_COLUMN)* p) {
 	return cast(int) SendMessage(w, LVM_INSERTCOLUMN, i, cast(LPARAM) p);
 }
 
@@ -5754,7 +5754,7 @@ BOOL TabCtrl_SetItem(HWND w, int i, LPTCITEM p) {
 	return cast(BOOL) SendMessage(w, TCM_SETITEM, i, cast(LPARAM) p);
 }
 
-int TabCtrl_InsertItem(HWND w, int i, CPtr!(TC_ITEM) p) {
+int TabCtrl_InsertItem(HWND w, int i, const(TC_ITEM)* p) {
 	return cast(int) SendMessage(w, TCM_INSERTITEM, i, cast(LPARAM) p);
 }
 
@@ -5943,7 +5943,7 @@ BOOL TreeView_GetItem(HWND w, LPTVITEM i) {
  return cast(BOOL) SendMessage(w, TVM_GETITEM, 0, cast(LPARAM) i);
 }
 
-BOOL TreeView_SetItem(HWND w, CPtr!(TV_ITEM) i) {
+BOOL TreeView_SetItem(HWND w, const(TV_ITEM)* i) {
 	return cast(BOOL) SendMessage(w, TVM_SETITEM, 0, cast(LPARAM) i);
 }
 
@@ -6271,13 +6271,13 @@ static if (_WIN32_WINNT >= 0x501) {
     }
     alias EDITBALLOONTIP* PEDITBALLOONTIP;
 
-const EM_SETCUEBANNER = ECM_FIRST + 1;
-const EM_GETCUEBANNER = ECM_FIRST + 2;
-const EM_SHOWBALLOONTIP = ECM_FIRST + 3;
-const EM_HIDEBALLOONTIP = ECM_FIRST + 4;
+	const EM_SETCUEBANNER = ECM_FIRST + 1;
+	const EM_GETCUEBANNER = ECM_FIRST + 2;
+	const EM_SHOWBALLOONTIP = ECM_FIRST + 3;
+	const EM_HIDEBALLOONTIP = ECM_FIRST + 4;
 }
 
 static if (_WIN32_WINNT >= 0x600) {
-const EM_SETHILITE = ECM_FIRST + 5;
-const EM_GETHILITE = ECM_FIRST + 6;
+	const EM_SETHILITE = ECM_FIRST + 5;
+	const EM_GETHILITE = ECM_FIRST + 6;
 }

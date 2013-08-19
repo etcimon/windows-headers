@@ -32,7 +32,7 @@ version (Windows7) {
 } else version (Windows2000) {
 	enum uint _WIN32_WINNT = 0x500;
 } else {
-	enum uint _WIN32_WINNT = 0x400;
+	enum uint _WIN32_WINNT = 0x501;
 }
 
 version (IE8) {
@@ -72,6 +72,12 @@ debug (WindowsUnitTest) {
 
 version (Unicode) {
 	enum bool _WIN32_UNICODE = true;
+	package template DECLARE_AW(string name) {
+		mixin("alias " ~ name ~ "W " ~ name ~ ";");
+	}
 } else {
 	enum bool _WIN32_UNICODE = false;
+	package template DECLARE_AW(string name) {
+		mixin("alias " ~ name ~ "A " ~ name ~ ";");
+	}
 }

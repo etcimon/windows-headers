@@ -79,7 +79,7 @@ struct RPC_SERVER_INTERFACE {
 	uint                  RpcProtseqEndpointCount;
 	PRPC_PROTSEQ_ENDPOINT RpcProtseqEndpoint;
 	void*                 DefaultManagerEpv;
-	CPtr!(void)           InterpreterInfo;
+	const(void)*          InterpreterInfo;
 }
 alias RPC_SERVER_INTERFACE* PRPC_SERVER_INTERFACE;
 
@@ -91,7 +91,7 @@ struct RPC_CLIENT_INTERFACE {
 	uint                  RpcProtseqEndpointCount;
 	PRPC_PROTSEQ_ENDPOINT RpcProtseqEndpoint;
 	uint                  Reserved;
-	CPtr!(void)           InterpreterInfo;
+	const(void)*          InterpreterInfo;
 }
 alias RPC_CLIENT_INTERFACE* PRPC_CLIENT_INTERFACE;
 

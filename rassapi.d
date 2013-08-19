@@ -198,15 +198,15 @@ struct RAS_SERVER_0 {
 alias RAS_SERVER_0* PRAS_SERVER_0;
 
 extern (Windows) {
-	DWORD RasAdminServerGetInfo(CPtr!(WCHAR), PRAS_SERVER_0);
-	DWORD RasAdminGetUserAccountServer(CPtr!(WCHAR), CPtr!(WCHAR), LPWSTR);
-	DWORD RasAdminUserGetInfo(CPtr!(WCHAR), CPtr!(WCHAR), PRAS_USER_0);
-	DWORD RasAdminUserSetInfo(CPtr!(WCHAR), CPtr!(WCHAR), PRAS_USER_0);
+	DWORD RasAdminServerGetInfo(const(WCHAR)*, PRAS_SERVER_0);
+	DWORD RasAdminGetUserAccountServer(const(WCHAR)*, const(WCHAR)*, LPWSTR);
+	DWORD RasAdminUserGetInfo(const(WCHAR)*, const(WCHAR)*, PRAS_USER_0);
+	DWORD RasAdminUserSetInfo(const(WCHAR)*, const(WCHAR)*, PRAS_USER_0);
 	DWORD RasAdminPortEnum(WCHAR*, PRAS_PORT_0*, WORD*);
-	DWORD RasAdminPortGetInfo(CPtr!(WCHAR), CPtr!(WCHAR), RAS_PORT_1*,
+	DWORD RasAdminPortGetInfo(const(WCHAR)*, const(WCHAR)*, RAS_PORT_1*,
 	 RAS_PORT_STATISTICS*, RAS_PARAMETERS**);
-	DWORD RasAdminPortClearStatistics(CPtr!(WCHAR), CPtr!(WCHAR));
-	DWORD RasAdminPortDisconnect(CPtr!(WCHAR), CPtr!(WCHAR));
+	DWORD RasAdminPortClearStatistics(const(WCHAR)*, const(WCHAR)*);
+	DWORD RasAdminPortDisconnect(const(WCHAR)*, const(WCHAR)*);
 	DWORD RasAdminFreeBuffer(PVOID);
 	DWORD RasAdminGetErrorString(UINT, WCHAR*, DWORD);
 	BOOL RasAdminAcceptNewConnection(RAS_PORT_1*, RAS_PORT_STATISTICS*,

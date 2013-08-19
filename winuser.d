@@ -91,7 +91,7 @@ enum {
 }
 
 enum {
-	CF_TEXT = 1,
+	CF_TEXT                = 0x0001,
 	CF_BITMAP,
 	CF_METAFILEPICT,
 	CF_SYLK,
@@ -107,16 +107,16 @@ enum {
 	CF_ENHMETAFILE,
 	CF_HDROP,
 	CF_LOCALE,
-	CF_MAX, // = 17
-	CF_OWNERDISPLAY   = 128,
+	CF_MAX,             // = 0x0011
+	CF_OWNERDISPLAY        = 0x0080,
 	CF_DSPTEXT,
 	CF_DSPBITMAP,
-	CF_DSPMETAFILEPICT, // = 131
-	CF_DSPENHMETAFILE = 142,
-	CF_PRIVATEFIRST   = 512,
-	CF_PRIVATELAST    = 767,
-	CF_GDIOBJFIRST    = 768,
-	CF_GDIOBJLAST     = 1023
+	CF_DSPMETAFILEPICT, // = 0x0083
+	CF_DSPENHMETAFILE      = 0x008E,
+	CF_PRIVATEFIRST        = 0x0200,
+	CF_PRIVATELAST         = 0x02FF,
+	CF_GDIOBJFIRST         = 0x0300,
+	CF_GDIOBJLAST          = 0x03FF
 }
 
 const HKL_PREV = 0;
@@ -174,10 +174,9 @@ const BSF_POSTMESSAGE        = 0x00000010;
 const BSF_FORCEIFHUNG        = 0x00000020;
 const BSF_NOTIMEOUTIFNOTHUNG = 0x00000040;
 
-static if (_WIN32_WINNT >= 0x500) {
-	const BSF_ALLOWSFW          = 0x00000080;
-	const BSF_SENDNOTIFYMESSAGE = 0x00000100;
-}
+const BSF_ALLOWSFW          = 0x00000080;
+const BSF_SENDNOTIFYMESSAGE = 0x00000100;
+
 static if (_WIN32_WINNT >= 0x501) {
 	const BSF_RETURNHDESK       = 0x00000200;
 	const BSF_LUID              = 0x00000400;
@@ -456,11 +455,9 @@ const DC_ICON     = 0x00000004;
 const DC_TEXT     = 0x00000008;
 const DC_INBUTTON = 0x00000010;
 
-static if (_WIN32_WINNT >= 0x500) {
-const DC_GRADIENT=0x00000020;
-}
+const DC_GRADIENT = 0x00000020;
 static if (_WIN32_WINNT >= 0x501) {
-const DC_BUTTONS=0x00001000;
+	const DC_BUTTONS = 0x00001000;
 }
 
 // Where are these documented?
@@ -502,13 +499,11 @@ const BF_FLAT                    = 0x4000;
 const BF_MONO                    = 0x8000;
 
 enum {
-	DFC_CAPTION = 1,
+	DFC_CAPTION      = 1,
 	DFC_MENU,
 	DFC_SCROLL,
-	DFC_BUTTON
-}
-static if (_WIN32_WINNT >= 0x500) {
-	enum DFC_POPUPMENU = 5;
+	DFC_BUTTON,
+	DFC_POPUPMENU // = 5
 }
 
 const DFCS_CAPTIONCLOSE   = 0;
@@ -1256,20 +1251,31 @@ const SWP_NOSENDCHANGING = 1024;
 const SWP_DEFERERASE = 8192;
 const SWP_ASYNCWINDOWPOS = 16384;
 
-const HSHELL_ACTIVATESHELLWINDOW = 3;
-const HSHELL_GETMINRECT = 5;
-const HSHELL_LANGUAGE = 8;
-const HSHELL_REDRAW = 6;
-const HSHELL_TASKMAN = 7;
-const HSHELL_WINDOWACTIVATED = 4;
-const HSHELL_WINDOWCREATED = 1;
-const HSHELL_WINDOWDESTROYED = 2;
-const HSHELL_FLASH = 32774;
-
-static if (_WIN32_WINNT >= 0x500) {
-const SPI_SETFOREGROUNDLOCKTIMEOUT=0x2001;
-const SPI_GETFOREGROUNDLOCKTIMEOUT=0x2000;
+enum { // passed variously as int or WPARAM
+	HSHELL_WINDOWCREATED    =     1,
+	HSHELL_WINDOWDESTROYED,
+	HSHELL_ACTIVATESHELLWINDOW,
+	HSHELL_WINDOWACTIVATED,
+	HSHELL_GETMINRECT,
+	HSHELL_REDRAW,
+	HSHELL_TASKMAN,
+	HSHELL_LANGUAGE,     // =     8
+	HSHELL_ENDTASK          =    10,
+	HSHELL_ACCESSIBILITYSTATE,
+	HSHELL_APPCOMMAND,   // =    12
+	HSHELL_RUDEAPPACTIVATED = 32772,
+	HSHELL_FLASH            = 32774
 }
+
+static if (_WIN32_WINNT >= 0x501) {
+	enum {
+		HSHELL_WINDOWREPLACED = 13,
+		HSHELL_WINDOWREPLACING
+	}
+}
+
+enum SPI_SETFOREGROUNDLOCKTIMEOUT = 0x2001;
+enum SPI_GETFOREGROUNDLOCKTIMEOUT = 0x2000;
 
 const SPI_GETACCESSTIMEOUT=60;
 const SPI_GETACTIVEWNDTRKTIMEOUT=8194;
@@ -1634,7 +1640,7 @@ const WM_KEYLAST=265;
 const UNICODE_NOCHAR=0xFFFF;
 } else {
 const WM_KEYLAST=264;
-}        
+}
 const WM_SYNCPAINT=136;
 const WM_MOUSEACTIVATE=33;
 const WM_MOUSEMOVE=512;
@@ -2747,7 +2753,7 @@ struct WTSSESSION_NOTIFICATION
 alias WTSSESSION_NOTIFICATION* PWTSSESSION_NOTIFICATION;
 
 }
-    
+
 struct CLIENTCREATESTRUCT {
 	HANDLE hWindowMenu;
 	UINT   idFirstChild;
@@ -2839,8 +2845,8 @@ struct DLGTEMPLATE {
 	short cx;
 	short cy;
 }
-alias DLGTEMPLATE*       LPDLGTEMPLATE, LPDLGTEMPLATEA, LPDLGTEMPLATEW;
-alias CPtr!(DLGTEMPLATE) LPCDLGTEMPLATE;
+alias DLGTEMPLATE*        LPDLGTEMPLATE, LPDLGTEMPLATEA, LPDLGTEMPLATEW;
+alias const(DLGTEMPLATE)* LPCDLGTEMPLATE;
 
 align:
 
@@ -2992,8 +2998,8 @@ struct MENUITEMINFOA {
 		HBITMAP hbmpItem;
 	}
 }
-alias MENUITEMINFOA*       LPMENUITEMINFOA;
-alias CPtr!(MENUITEMINFOA) LPCMENUITEMINFOA;
+alias MENUITEMINFOA*        LPMENUITEMINFOA;
+alias const(MENUITEMINFOA)* LPCMENUITEMINFOA;
 
 struct MENUITEMINFOW {
 	UINT    cbSize = MENUITEMINFOW.sizeof;
@@ -3011,8 +3017,8 @@ struct MENUITEMINFOW {
 		HBITMAP hbmpItem;
 	}
 }
-alias MENUITEMINFOW*       LPMENUITEMINFOW;
-alias CPtr!(MENUITEMINFOW) LPCMENUITEMINFOW;
+alias MENUITEMINFOW*        LPMENUITEMINFOW;
+alias const(MENUITEMINFOW)* LPCMENUITEMINFOW;
 
 struct SCROLLINFO {
 	UINT cbSize = this.sizeof;
@@ -3023,8 +3029,8 @@ struct SCROLLINFO {
 	int nPos;
 	int nTrackPos;
 }
-alias SCROLLINFO*       LPSCROLLINFO;
-alias CPtr!(SCROLLINFO) LPCSCROLLINFO;
+alias SCROLLINFO*        LPSCROLLINFO;
+alias const(SCROLLINFO)* LPCSCROLLINFO;
 
 struct WINDOWPLACEMENT {
 	UINT length;
@@ -3469,8 +3475,8 @@ struct MENUINFO {
 	DWORD   dwContextHelpID;
 	ULONG_PTR dwMenuData;
 }
-alias MENUINFO*       LPMENUINFO;
-alias CPtr!(MENUINFO) LPCMENUINFO;
+alias MENUINFO*        LPMENUINFO;
+alias const(MENUINFO)* LPCMENUINFO;
 
 
 const CCHILDREN_SCROLLBAR=5;
@@ -3700,8 +3706,8 @@ static if (_WIN32_WINNT >= 0x501) {
 		DWORD dwFlags;
 		HWND hwndTarget;
 	}
-	alias RAWINPUTDEVICE*       PRAWINPUTDEVICE, LPRAWINPUTDEVICE;
-	alias CPtr!(RAWINPUTDEVICE) PCRAWINPUTDEVICE;
+	alias RAWINPUTDEVICE*        PRAWINPUTDEVICE, LPRAWINPUTDEVICE;
+	alias const(RAWINPUTDEVICE)* PCRAWINPUTDEVICE;
 
 	struct RAWINPUTDEVICELIST {
 		HANDLE hDevice;
@@ -3768,7 +3774,7 @@ alias MAKELONG MAKEWPARAM;
 alias MAKELONG MAKELPARAM;
 alias MAKELONG MAKELRESULT;
 
-//MACRO #define POINTSTOPOINT(p, ps) { (p).x=LOWORD(*(DWORD* )&ps); (p).y=HIWORD(*(DWORD* )&ps); }
+//MACRO #define POINTSTOPOINT(p, ps) { (p).x=LOWORD(*(DWORD*)&ps); (p).y=HIWORD(*(DWORD*)&ps); }
 //MACRO #define POINTTOPOINTS(p) ((POINTS)MAKELONG((p).x, (p).y))
 
 extern (Windows) {
@@ -3789,7 +3795,7 @@ extern (Windows) {
 	LRESULT CallNextHookEx(HHOOK, int, WPARAM, LPARAM);
 	LRESULT CallWindowProcA(WNDPROC, HWND, UINT, WPARAM, LPARAM);
 	LRESULT CallWindowProcW(WNDPROC, HWND, UINT, WPARAM, LPARAM);
-	WORD CascadeWindows(HWND, UINT, LPCRECT, UINT, CPtr!(HWND));
+	WORD CascadeWindows(HWND, UINT, LPCRECT, UINT, const(HWND)*);
 	BOOL ChangeClipboardChain(HWND, HWND);
 
 	LONG ChangeDisplaySettingsA(PDEVMODEA, DWORD);
@@ -3851,7 +3857,7 @@ extern (Windows) {
 	HWND CreateDialogIndirectParamA(HINSTANCE, LPCDLGTEMPLATE, HWND, DLGPROC, LPARAM);
 	HWND CreateDialogIndirectParamW(HINSTANCE, LPCDLGTEMPLATE, HWND, DLGPROC, LPARAM);
 
-	HICON CreateIcon(HINSTANCE, int, int, BYTE, BYTE, CPtr!(BYTE), BYTE*);
+	HICON CreateIcon(HINSTANCE, int, int, BYTE, BYTE, const(BYTE)*, BYTE*);
 	HICON CreateIconFromResource(PBYTE, DWORD, BOOL, DWORD);
 	HICON CreateIconFromResourceEx(PBYTE, DWORD, BOOL, DWORD, int, int, UINT);
 	HICON CreateIconIndirect(PICONINFO);
@@ -3903,11 +3909,11 @@ HWND CreateDialogW()(HINSTANCE h, LPCWSTR n, HWND w, DLGPROC f) {
 	return CreateDialogParamW(h, n, w, f, 0);
 }
 
-HWND CreateDialogIndirectA()(HINSTANCE h, LPCDLGTEMPLATE t, HWND w , DLGPROC f) {
+HWND CreateDialogIndirectA()(HINSTANCE h, LPCDLGTEMPLATE t, HWND w, DLGPROC f) {
 	return CreateDialogIndirectParamA(h, t, w, f, 0);
 }
 
-HWND CreateDialogIndirectW()(HINSTANCE h, LPCDLGTEMPLATE t, HWND w , DLGPROC f) {
+HWND CreateDialogIndirectW()(HINSTANCE h, LPCDLGTEMPLATE t, HWND w, DLGPROC f) {
 	return CreateDialogIndirectParamW(h, t, w, f, 0);
 }
 
@@ -3941,8 +3947,8 @@ BOOL ExitWindows()(UINT r, DWORD c) {
 alias GetWindow GetNextWindow;
 
 extern (Windows):
-LONG DispatchMessageA(CPtr!(MSG));
-LONG DispatchMessageW(CPtr!(MSG));
+LONG DispatchMessageA(const(MSG)*);
+LONG DispatchMessageW(const(MSG)*);
 int DlgDirListA(HWND, LPSTR, int, int, UINT);
 int DlgDirListW(HWND, LPWSTR, int, int, UINT);
 int DlgDirListComboBoxA(HWND, LPSTR, int, int, UINT);
@@ -3974,7 +3980,7 @@ BOOL EnableWindow(HWND, BOOL);
 BOOL EndDeferWindowPos(HDWP);
 BOOL EndDialog(HWND, INT_PTR);
 BOOL EndMenu();
-BOOL EndPaint(HWND, CPtr!(PAINTSTRUCT));
+BOOL EndPaint(HWND, const(PAINTSTRUCT)*);
 BOOL EnumChildWindows(HWND, ENUMWINDOWSPROC, LPARAM);
 UINT EnumClipboardFormats(UINT);
 BOOL EnumDesktopsA(HWINSTA, DESKTOPENUMPROCA, LPARAM);
@@ -4182,8 +4188,8 @@ HANDLE LoadImageW(HINSTANCE, LPCWSTR, UINT, int, int, UINT);
 HKL LoadKeyboardLayoutA(LPCSTR, UINT);
 HKL LoadKeyboardLayoutW(LPCWSTR, UINT);
 HMENU LoadMenuA(HINSTANCE, LPCSTR);
-HMENU LoadMenuIndirectA( CPtr!(MENUTEMPLATE));
-HMENU LoadMenuIndirectW( CPtr!(MENUTEMPLATE));
+HMENU LoadMenuIndirectA(const(MENUTEMPLATE)*);
+HMENU LoadMenuIndirectW(const(MENUTEMPLATE)*);
 HMENU LoadMenuW(HINSTANCE, LPCWSTR);
 int LoadStringA(HINSTANCE, UINT, LPSTR, int);
 int LoadStringW(HINSTANCE, UINT, LPWSTR, int);
@@ -4202,14 +4208,14 @@ int MessageBoxA(HWND, LPCSTR, LPCSTR, UINT);
 int MessageBoxW(HWND, LPCWSTR, LPCWSTR, UINT);
 int MessageBoxExA(HWND, LPCSTR, LPCSTR, UINT, WORD);
 int MessageBoxExW(HWND, LPCWSTR, LPCWSTR, UINT, WORD);
-int MessageBoxIndirectA(CPtr!(MSGBOXPARAMSA));
-int MessageBoxIndirectW(CPtr!(MSGBOXPARAMSW));
+int MessageBoxIndirectA(const(MSGBOXPARAMSA)*);
+int MessageBoxIndirectW(const(MSGBOXPARAMSW)*);
 BOOL ModifyMenuA(HMENU, UINT, UINT, UINT_PTR, LPCSTR);
 BOOL ModifyMenuW(HMENU, UINT, UINT, UINT_PTR, LPCWSTR);
 void mouse_event(DWORD, DWORD, DWORD, DWORD, ULONG_PTR);
 BOOL MoveWindow(HWND, int, int, int, int, BOOL);
-DWORD MsgWaitForMultipleObjects(DWORD, CPtr!(HANDLE), BOOL, DWORD, DWORD);
-DWORD MsgWaitForMultipleObjectsEx(DWORD, CPtr!(HANDLE), DWORD, DWORD, DWORD);
+DWORD MsgWaitForMultipleObjects(DWORD, const(HANDLE)*, BOOL, DWORD, DWORD);
+DWORD MsgWaitForMultipleObjectsEx(DWORD, const(HANDLE)*, DWORD, DWORD, DWORD);
 DWORD OemKeyScan(WORD);
 BOOL OemToCharA(LPCSTR, LPSTR);
 BOOL OemToCharBuffA(LPCSTR, LPSTR, DWORD);
@@ -4236,10 +4242,10 @@ HWND RealChildWindowFromPoint(HWND, POINT);
 UINT RealGetWindowClassA(HWND, LPSTR, UINT);
 UINT RealGetWindowClassW(HWND, LPWSTR, UINT);
 BOOL RedrawWindow(HWND, LPCRECT, HRGN, UINT);
-ATOM RegisterClassA(CPtr!(WNDCLASSA));
-ATOM RegisterClassW(CPtr!(WNDCLASSW));
-ATOM RegisterClassExA(CPtr!(WNDCLASSEXA));
-ATOM RegisterClassExW(CPtr!(WNDCLASSEXW));
+ATOM RegisterClassA(const(WNDCLASSA)*);
+ATOM RegisterClassW(const(WNDCLASSW)*);
+ATOM RegisterClassExA(const(WNDCLASSEXA)*);
+ATOM RegisterClassExW(const(WNDCLASSEXW)*);
 UINT RegisterClipboardFormatA(LPCSTR);
 UINT RegisterClipboardFormatW(LPCWSTR);
 BOOL RegisterHotKey(HWND, int, UINT, UINT);
@@ -4290,7 +4296,7 @@ BOOL SetMenuDefaultItem(HMENU, UINT, UINT);
 BOOL SetMenuInfo(HMENU, LPCMENUINFO);
 BOOL SetMenuItemBitmaps(HMENU, UINT, UINT, HBITMAP, HBITMAP);
 BOOL SetMenuItemInfoA(HMENU, UINT, BOOL, LPCMENUITEMINFOA);
-BOOL SetMenuItemInfoW( HMENU, UINT, BOOL, LPCMENUITEMINFOW);
+BOOL SetMenuItemInfoW(HMENU, UINT, BOOL, LPCMENUITEMINFOW);
 LPARAM SetMessageExtraInfo(LPARAM);
 BOOL SetMessageQueue(int);
 HWND SetParent(HWND, HWND);
@@ -4302,7 +4308,7 @@ BOOL SetRectEmpty(LPRECT);
 int SetScrollInfo(HWND, int, LPCSCROLLINFO, BOOL);
 int SetScrollPos(HWND, int, int, BOOL);
 BOOL SetScrollRange(HWND, int, int, int, BOOL);
-BOOL SetSysColors(int, CPtr!(INT) , CPtr!(COLORREF) );
+BOOL SetSysColors(int, const(INT)*, const(COLORREF)*);
 BOOL SetSystemCursor(HCURSOR, DWORD);
 BOOL SetThreadDesktop(HDESK);
 UINT_PTR SetTimer(HWND, UINT_PTR, UINT, TIMERPROC);
@@ -4312,7 +4318,7 @@ BOOL SetUserObjectSecurity(HANDLE, PSECURITY_INFORMATION, PSECURITY_DESCRIPTOR);
 BOOL SetWindowContextHelpId(HWND, DWORD);
 LONG SetWindowLongA(HWND, int, LONG);
 LONG SetWindowLongW(HWND, int, LONG);
-BOOL SetWindowPlacement(HWND hWnd, CPtr!(WINDOWPLACEMENT));
+BOOL SetWindowPlacement(HWND hWnd, const(WINDOWPLACEMENT)*);
 BOOL SetWindowPos(HWND, HWND, int, int, int, int, UINT);
 int SetWindowRgn(HWND, HRGN, BOOL);
 HHOOK SetWindowsHookA(int, HOOKPROC);
@@ -4335,7 +4341,7 @@ BOOL SystemParametersInfoA(UINT, UINT, PVOID, UINT);
 BOOL SystemParametersInfoW(UINT, UINT, PVOID, UINT);
 LONG TabbedTextOutA(HDC, int, int, LPCSTR, int, int, LPINT, int);
 LONG TabbedTextOutW(HDC, int, int, LPCWSTR, int, int, LPINT, int);
-WORD TileWindows(HWND, UINT, LPCRECT, UINT, CPtr!(HWND) );
+WORD TileWindows(HWND, UINT, LPCRECT, UINT, const(HWND)*);
 int ToAscii(UINT, UINT, PBYTE, LPWORD, UINT);
 int ToAsciiEx(UINT, UINT, PBYTE, LPWORD, UINT, HKL);
 int ToUnicode(UINT, UINT, PBYTE, LPWSTR, int, UINT);
@@ -4346,7 +4352,7 @@ BOOL TrackPopupMenuEx(HMENU, UINT, int, int, HWND, LPTPMPARAMS);
 int TranslateAcceleratorA(HWND, HACCEL, LPMSG);
 int TranslateAcceleratorW(HWND, HACCEL, LPMSG);
 BOOL TranslateMDISysAccel(HWND, LPMSG);
-BOOL TranslateMessage( CPtr!(MSG));
+BOOL TranslateMessage(const(MSG)*);
 BOOL UnhookWindowsHook(int, HOOKPROC);
 BOOL UnhookWindowsHookEx(HHOOK);
 BOOL UnionRect(LPRECT, LPCRECT, LPCRECT);

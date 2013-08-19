@@ -117,7 +117,7 @@ struct _FULL_PTR_XLAT_TABLES;
 alias ubyte *RPC_BUFPTR;
 alias uint RPC_LENGTH;
 
-alias CPtr!(char) PFORMAT_STRING;
+alias const(char)* PFORMAT_STRING;
 
 struct ARRAY_INFO {
 	int Dimension;
@@ -189,7 +189,7 @@ struct MIDL_STUB_MESSAGE {
 	ubyte * pPresentedType;
 	ubyte * pTransmitType;
 	handle_t SavedHandle;
-	CPtr!(_MIDL_STUB_DESC) StubDesc;
+	const(_MIDL_STUB_DESC)* StubDesc;
 	_FULL_PTR_XLAT_TABLES *FullPtrXlatTables;
 	uint FullPtrRefId;
 	int fCheckBounds;
@@ -293,24 +293,24 @@ struct MIDL_STUB_DESC {
 		PGENERIC_BINDING_INFO pGenericBindingInfo;
 	}
 	_IMPLICIT_HANDLE_INFO IMPLICIT_HANDLE_INFO;	
-	CPtr!(NDR_RUNDOWN) apfnNdrRundownRoutines;
-	CPtr!(GENERIC_BINDING_ROUTINE_PAIR) aGenericBindingRoutinePairs;
-	CPtr!(EXPR_EVAL) apfnExprEval;
-	CPtr!(XMIT_ROUTINE_QUINTUPLE) aXmitQuintuple;
-	CPtr!(char) *pFormatTypes;
+	const(NDR_RUNDOWN)* apfnNdrRundownRoutines;
+	const(GENERIC_BINDING_ROUTINE_PAIR)* aGenericBindingRoutinePairs;
+	const(EXPR_EVAL)* apfnExprEval;
+	const(XMIT_ROUTINE_QUINTUPLE)* aXmitQuintuple;
+	const(char)* *pFormatTypes;
 	int fCheckBounds;
 	uint Version;
 	MALLOC_FREE_STRUCT *pMallocFreeStruct;
 	int MIDLVersion;
-	CPtr!(COMM_FAULT_OFFSETS) CommFaultOffsets;
-	CPtr!(USER_MARSHAL_ROUTINE_QUADRUPLE) aUserMarshalQuadruple;
-	CPtr!(NDR_NOTIFY_ROUTINE) NotifyRoutineTable;
+	const(COMM_FAULT_OFFSETS)* CommFaultOffsets;
+	const(USER_MARSHAL_ROUTINE_QUADRUPLE)* aUserMarshalQuadruple;
+	const(NDR_NOTIFY_ROUTINE)* NotifyRoutineTable;
 	ULONG_PTR mFlags;
-	CPtr!(NDR_CS_ROUTINES) CsRoutineTables;
+	const(NDR_CS_ROUTINES)* CsRoutineTables;
 	void *Reserved4;
 	ULONG_PTR Reserved5;
 }
-alias CPtr!(MIDL_STUB_DESC) PMIDL_STUB_DESC;
+alias const(MIDL_STUB_DESC)* PMIDL_STUB_DESC;
 
 alias void * PMIDL_XMIT_TYPE;
 
@@ -321,17 +321,17 @@ struct MIDL_FORMAT_STRING {
 
 struct MIDL_SERVER_INFO {
 	PMIDL_STUB_DESC pStubDesc;
-	CPtr!(SERVER_ROUTINE) DispatchTable;
+	const(SERVER_ROUTINE)* DispatchTable;
 	PFORMAT_STRING ProcString;
-	CPtr!(ushort) FmtStringOffset;
-	CPtr!(STUB_THUNK) ThunkTable;
+	const(ushort)* FmtStringOffset;
+	const(STUB_THUNK)* ThunkTable;
 }
 alias MIDL_SERVER_INFO * PMIDL_SERVER_INFO;
 
 struct MIDL_STUBLESS_PROXY_INFO {
 	PMIDL_STUB_DESC pStubDesc;
 	PFORMAT_STRING ProcFormatString;
-	CPtr!(ushort) FormatStringOffset;
+	const(ushort)* FormatStringOffset;
 }
 alias MIDL_STUBLESS_PROXY_INFO *PMIDL_STUBLESS_PROXY_INFO;
 

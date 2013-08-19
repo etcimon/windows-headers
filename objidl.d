@@ -139,9 +139,9 @@ enum EXTCONN {
 }
 
 struct MULTI_QI {
-	CPtr!(IID) pIID;
-	IUnknown   pItf;
-	HRESULT    hr;
+	const(IID)* pIID;
+	IUnknown    pItf;
+	HRESULT     hr;
 }
 
 struct AUTH_IDENTITY {
@@ -1091,15 +1091,15 @@ HRESULT IEnumSTATSTG_Clone_Proxy(IEnumSTATSTG, IEnumSTATSTG*);
 void IEnumSTATSTG_Clone_Stub(IRpcStubBuffer, IRpcChannelBuffer, PRPC_MESSAGE, PDWORD);
 HRESULT IStorage_CreateStream_Proxy(IStorage, OLECHAR*, DWORD, DWORD, DWORD, IStream*);
 void IStorage_CreateStream_Stub(IRpcStubBuffer, IRpcChannelBuffer, PRPC_MESSAGE, PDWORD);
-HRESULT IStorage_RemoteOpenStream_Proxy(IStorage, CPtr!(OLECHAR), uint, BYTE*, DWORD, DWORD, IStream*);
+HRESULT IStorage_RemoteOpenStream_Proxy(IStorage, const(OLECHAR)*, uint, BYTE*, DWORD, DWORD, IStream*);
 void IStorage_RemoteOpenStream_Stub(IRpcStubBuffer, IRpcChannelBuffer, PRPC_MESSAGE, PDWORD);
 HRESULT IStorage_CreateStorage_Proxy(IStorage, OLECHAR*, DWORD, DWORD, DWORD, IStorage*);
 void IStorage_CreateStorage_Stub(IRpcStubBuffer, IRpcChannelBuffer, PRPC_MESSAGE, PDWORD);
 HRESULT IStorage_OpenStorage_Proxy(IStorage, OLECHAR*, IStorage, DWORD, SNB, DWORD, IStorage*);
 void IStorage_OpenStorage_Stub(IRpcStubBuffer, IRpcChannelBuffer, PRPC_MESSAGE, PDWORD);
-HRESULT IStorage_CopyTo_Proxy(IStorage, DWORD, CPtr!(IID), SNB, IStorage);
+HRESULT IStorage_CopyTo_Proxy(IStorage, DWORD, const(IID)*, SNB, IStorage);
 void IStorage_CopyTo_Stub(IRpcStubBuffer, IRpcChannelBuffer, PRPC_MESSAGE, PDWORD);
-HRESULT IStorage_MoveElementTo_Proxy(IStorage, CPtr!(OLECHAR), IStorage, CPtr!(OLECHAR), DWORD);
+HRESULT IStorage_MoveElementTo_Proxy(IStorage, const(OLECHAR)*, IStorage, const(OLECHAR)*, DWORD);
 void IStorage_MoveElementTo_Stub(IRpcStubBuffer, IRpcChannelBuffer, PRPC_MESSAGE, PDWORD);
 HRESULT IStorage_Commit_Proxy(IStorage, DWORD);
 void IStorage_Commit_Stub(IRpcStubBuffer, IRpcChannelBuffer, PRPC_MESSAGE, PDWORD);
@@ -1109,9 +1109,9 @@ HRESULT IStorage_RemoteEnumElements_Proxy(IStorage, DWORD, uint, BYTE*, DWORD, I
 void IStorage_RemoteEnumElements_Stub(IRpcStubBuffer, IRpcChannelBuffer, PRPC_MESSAGE, PDWORD);
 HRESULT IStorage_DestroyElement_Proxy(IStorage, OLECHAR*);
 void IStorage_DestroyElement_Stub(IRpcStubBuffer, IRpcChannelBuffer, PRPC_MESSAGE, PDWORD);
-HRESULT IStorage_RenameElement_Proxy(IStorage, CPtr!(OLECHAR), CPtr!(OLECHAR));
+HRESULT IStorage_RenameElement_Proxy(IStorage, const(OLECHAR)*, const(OLECHAR)*);
 void IStorage_RenameElement_Stub(IRpcStubBuffer, IRpcChannelBuffer, PRPC_MESSAGE, PDWORD);
-HRESULT IStorage_SetElementTimes_Proxy(IStorage, CPtr!(OLECHAR), CPtr!(FILETIME), CPtr!(FILETIME), CPtr!(FILETIME));
+HRESULT IStorage_SetElementTimes_Proxy(IStorage, const(OLECHAR)*, const(FILETIME)*, const(FILETIME)*, const(FILETIME)*);
 void IStorage_SetElementTimes_Stub(IRpcStubBuffer, IRpcChannelBuffer, PRPC_MESSAGE, PDWORD);
 HRESULT IStorage_SetClass_Proxy(IStorage, REFCLSID);
 void IStorage_SetClass_Stub(IRpcStubBuffer, IRpcChannelBuffer, PRPC_MESSAGE, PDWORD);
@@ -1301,7 +1301,7 @@ HRESULT IStorage_EnumElements_Proxy(IStorage, DWORD, void*, DWORD, IEnumSTATSTG*
 HRESULT IStorage_EnumElements_Stub(IStorage, DWORD, uint, BYTE*, DWORD, IEnumSTATSTG*);
 HRESULT ILockBytes_ReadAt_Proxy(ILockBytes, ULARGE_INTEGER, void*, ULONG, ULONG*);
 HRESULT ILockBytes_ReadAt_Stub(ILockBytes, ULARGE_INTEGER, BYTE*, ULONG, ULONG*);
-HRESULT ILockBytes_WriteAt_Proxy(ILockBytes, ULARGE_INTEGER, CPtr!(void), ULONG, ULONG*);
+HRESULT ILockBytes_WriteAt_Proxy(ILockBytes, ULARGE_INTEGER, const(void)*, ULONG, ULONG*);
 HRESULT ILockBytes_WriteAt_Stub(ILockBytes, ULARGE_INTEGER, BYTE*, ULONG, ULONG*);
 }
 +/

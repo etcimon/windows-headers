@@ -645,18 +645,18 @@ extern (Windows) {
 	BOOL GetCPInfo(UINT, LPCPINFO);
 	BOOL GetCPInfoExA(UINT, DWORD, LPCPINFOEXA);
 	BOOL GetCPInfoExW(UINT, DWORD, LPCPINFOEXW);
-	int GetCurrencyFormatA(LCID, DWORD, LPCSTR,  CPtr!(CURRENCYFMTA), LPSTR, int);
-	int GetCurrencyFormatW(LCID, DWORD, LPCWSTR,  CPtr!(CURRENCYFMTW), LPWSTR,
+	int GetCurrencyFormatA(LCID, DWORD, LPCSTR,  const(CURRENCYFMTA)*, LPSTR, int);
+	int GetCurrencyFormatW(LCID, DWORD, LPCWSTR,  const(CURRENCYFMTW)*, LPWSTR,
 	  int);
-	int GetDateFormatA(LCID, DWORD,  CPtr!(SYSTEMTIME), LPCSTR, LPSTR, int);
-	int GetDateFormatW(LCID, DWORD,  CPtr!(SYSTEMTIME), LPCWSTR, LPWSTR, int);
+	int GetDateFormatA(LCID, DWORD,  const(SYSTEMTIME)*, LPCSTR, LPSTR, int);
+	int GetDateFormatW(LCID, DWORD,  const(SYSTEMTIME)*, LPCWSTR, LPWSTR, int);
 	int GetGeoInfoA(GEOID, GEOTYPE, LPSTR, int, LANGID);
 	int GetGeoInfoW(GEOID, GEOTYPE, LPWSTR, int, LANGID);
 	int GetLocaleInfoA(LCID, LCTYPE, LPSTR, int);
 	int GetLocaleInfoW(LCID, LCTYPE, LPWSTR, int);
 	BOOL GetNLSVersion(NLS_FUNCTION, LCID, LPNLSVERSIONINFO);
-	int GetNumberFormatA(LCID, DWORD, LPCSTR,  CPtr!(NUMBERFMTA), LPSTR, int);
-	int GetNumberFormatW(LCID, DWORD, LPCWSTR,  CPtr!(NUMBERFMTW), LPWSTR, int);
+	int GetNumberFormatA(LCID, DWORD, LPCSTR,  const(NUMBERFMTA)*, LPSTR, int);
+	int GetNumberFormatW(LCID, DWORD, LPCWSTR,  const(NUMBERFMTW)*, LPWSTR, int);
 	UINT GetOEMCP();
 	BOOL GetStringTypeA(LCID, DWORD, LPCSTR, int, LPWORD);
 	BOOL GetStringTypeW(DWORD, LPCWSTR, int, LPWORD);
@@ -665,8 +665,8 @@ extern (Windows) {
 	LANGID GetSystemDefaultLangID();
 	LCID GetSystemDefaultLCID();
 	LCID GetThreadLocale();
-	int GetTimeFormatA(LCID, DWORD,  CPtr!(SYSTEMTIME), LPCSTR, LPSTR, int);
-	int GetTimeFormatW(LCID, DWORD,  CPtr!(SYSTEMTIME), LPCWSTR, LPWSTR, int);
+	int GetTimeFormatA(LCID, DWORD,  const(SYSTEMTIME)*, LPCSTR, LPSTR, int);
+	int GetTimeFormatW(LCID, DWORD,  const(SYSTEMTIME)*, LPCWSTR, LPWSTR, int);
 	LANGID GetUserDefaultLangID();
 	LCID GetUserDefaultLCID();
 	GEOID GetUserGeoID(GEOCLASS);

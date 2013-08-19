@@ -512,20 +512,20 @@ enum : int {
 
 extern (Pascal) {
 	SOCKET accept(SOCKET, SOCKADDR*, int*);
-	int bind(SOCKET, CPtr!(SOCKADDR), int);
+	int bind(SOCKET, const(SOCKADDR)*, int);
 	int closesocket(SOCKET);
-	int connect(SOCKET, CPtr!(SOCKADDR), int);
+	int connect(SOCKET, const(SOCKADDR)*, int);
 	int ioctlsocket(SOCKET, int, u_long*);
 	int getpeername(SOCKET, SOCKADDR*, int*);
 	int getsockname(SOCKET, SOCKADDR*, int*);
 	int getsockopt(SOCKET, int, int, char*, int*);
-	uint inet_addr(CPtr!(char));
+	uint inet_addr(const(char)*);
 	int listen(SOCKET, int);
 	int recv(SOCKET, char*, int, int);
 	int recvfrom(SOCKET, char*, int, int, SOCKADDR*, int*);
-	int send(SOCKET, CPtr!(char), int, int);
-	int sendto(SOCKET, CPtr!(char), int, int, CPtr!(SOCKADDR), int);
-	int setsockopt(SOCKET, int, int, CPtr!(char), int);
+	int send(SOCKET, const(char)*, int, int);
+	int sendto(SOCKET, const(char)*, int, int, const(SOCKADDR)*, int);
+	int setsockopt(SOCKET, int, int, const(char)*, int);
 	int shutdown(SOCKET, int);
 	SOCKET socket(int, int, int);
 	int WSAStartup(WORD, LPWSADATA);
@@ -536,30 +536,30 @@ extern (Pascal) {
 	int WSAUnhookBlockingHook();
 	FARPROC WSASetBlockingHook(FARPROC);
 	int WSACancelBlockingCall();
-	HANDLE WSAAsyncGetServByName(HWND, u_int, CPtr!(char), CPtr!(char), char*, int);
-	HANDLE WSAAsyncGetServByPort(HWND, u_int, int, CPtr!(char), char*, int);
-	HANDLE WSAAsyncGetProtoByName(HWND, u_int, CPtr!(char), char*, int);
+	HANDLE WSAAsyncGetServByName(HWND, u_int, const(char)*, const(char)*, char*, int);
+	HANDLE WSAAsyncGetServByPort(HWND, u_int, int, const(char)*, char*, int);
+	HANDLE WSAAsyncGetProtoByName(HWND, u_int, const(char)*, char*, int);
 	HANDLE WSAAsyncGetProtoByNumber(HWND, u_int, int, char*, int);
-	HANDLE WSAAsyncGetHostByName(HWND, u_int, CPtr!(char), char*, int);
-	HANDLE WSAAsyncGetHostByAddr(HWND, u_int, CPtr!(char), int, int, char*, int);
+	HANDLE WSAAsyncGetHostByName(HWND, u_int, const(char)*, char*, int);
+	HANDLE WSAAsyncGetHostByAddr(HWND, u_int, const(char)*, int, int, char*, int);
 	int WSACancelAsyncRequest(HANDLE);
 	int WSAAsyncSelect(SOCKET, HWND, u_int, int);
 	u_long htonl(u_long);
 	u_long ntohl(u_long);
 	u_short htons(u_short);
 	u_short ntohs(u_short);
-	int select(int nfds, FD_SET*, FD_SET*, FD_SET*, CPtr!(TIMEVAL));
+	int select(int nfds, FD_SET*, FD_SET*, FD_SET*, const(TIMEVAL)*);
 	int gethostname(char*, int);
 }
 
 extern (Windows) {
 	char* inet_ntoa(IN_ADDR);
-	HOSTENT* gethostbyaddr(CPtr!(char), int, int);
-	HOSTENT* gethostbyname(CPtr!(char));
-	SERVENT* getservbyport(int, CPtr!(char));
-	SERVENT* getservbyname(CPtr!(char), CPtr!(char));
+	HOSTENT* gethostbyaddr(const(char)*, int, int);
+	HOSTENT* gethostbyname(const(char)*);
+	SERVENT* getservbyport(int, const(char)*);
+	SERVENT* getservbyname(const(char)*, const(char)*);
 	PROTOENT* getprotobynumber(int);
-	PROTOENT* getprotobyname(CPtr!(char));
+	PROTOENT* getprotobyname(const(char)*);
 }
 
 alias MAKELONG WSAMAKEASYNCREPLY, WSAMAKESELECTREPLY;

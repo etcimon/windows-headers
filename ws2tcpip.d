@@ -225,8 +225,8 @@ struct addrinfo {
 extern(Windows) {
 	static if (_WIN32_WINNT >= 0x501) {
 		void freeaddrinfo(addrinfo*);
-		int getaddrinfo (CPtr!(char), CPtr!(char), CPtr!(addrinfo), addrinfo**);
-		int getnameinfo(CPtr!(SOCKADDR), socklen_t, char*, DWORD, char*, DWORD, int);
+		int getaddrinfo (const(char)*, const(char)*, const(addrinfo)*, addrinfo**);
+		int getnameinfo(const(SOCKADDR)*, socklen_t, char*, DWORD, char*, DWORD, int);
 	}
 }
 

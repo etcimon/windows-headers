@@ -54,10 +54,10 @@ const ber_tag_t
  *	attribute?
  */
 extern (C) {
-	BerElement* ber_init(CPtr!(BerValue));
-	int ber_printf(BerElement*, CPtr!(char), ...);
+	BerElement* ber_init(const(BerValue)*);
+	int ber_printf(BerElement*, const(char)*, ...);
 	int ber_flatten(BerElement*, BerValue**);
-	ber_tag_t ber_scanf(BerElement*, CPtr!(char), ...);
+	ber_tag_t ber_scanf(BerElement*, const(char)*, ...);
 	ber_tag_t ber_peek_tag(BerElement*, ber_len_t*);
 	ber_tag_t ber_skip_tag(BerElement*, ber_len_t*);
 	ber_tag_t ber_first_element(BerElement*, ber_len_t*, char**);

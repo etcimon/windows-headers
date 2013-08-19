@@ -63,18 +63,18 @@ template min(T) {
 	}
 }
 
-const void* NULL = null;
-alias ubyte       BYTE;
-alias ubyte*      PBYTE, LPBYTE;
-alias ushort      USHORT, WORD, ATOM;
-alias ushort*     PUSHORT, PWORD, LPWORD;
-alias uint        ULONG, DWORD, UINT, COLORREF;
-alias uint*       PULONG, PDWORD, LPDWORD, PUINT, LPUINT;
-alias int         WINBOOL, BOOL, INT, LONG, HFILE, HRESULT;
-alias int*        PWINBOOL, LPWINBOOL, PBOOL, LPBOOL, PINT, LPINT, LPLONG;
-alias float       FLOAT;
-alias float*      PFLOAT;
-alias CPtr!(void) PCVOID, LPCVOID;
+enum void* NULL = null;
+alias ubyte        BYTE;
+alias ubyte*       PBYTE, LPBYTE;
+alias ushort       USHORT, WORD, ATOM;
+alias ushort*      PUSHORT, PWORD, LPWORD;
+alias uint         ULONG, DWORD, UINT, COLORREF;
+alias uint*        PULONG, PDWORD, LPDWORD, PUINT, LPUINT;
+alias int          WINBOOL, BOOL, INT, LONG, HFILE, HRESULT;
+alias int*         PWINBOOL, LPWINBOOL, PBOOL, LPBOOL, PINT, LPINT, LPLONG;
+alias float        FLOAT;
+alias float*       PFLOAT;
+alias const(void)* PCVOID, LPCVOID;
 
 alias UINT_PTR WPARAM;
 alias LONG_PTR LPARAM, LRESULT;
@@ -126,8 +126,8 @@ struct RECT {
 	LONG bottom;
 }
 alias RECT RECTL;
-alias RECT*       PRECT, LPRECT, PRECTL, LPRECTL;
-alias CPtr!(RECT) LPCRECT, LPCRECTL;
+alias RECT*        PRECT, LPRECT, PRECTL, LPRECTL;
+alias const(RECT)* LPCRECT, LPCRECTL;
 
 struct POINT {
 	LONG x;

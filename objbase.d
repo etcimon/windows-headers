@@ -66,7 +66,7 @@ struct STGOPTIONS {
 	USHORT usVersion;
 	USHORT reserved;
 	ULONG ulSectorSize;
-	CPtr!(WCHAR) pwcsTemplateFile;
+	const(WCHAR)* pwcsTemplateFile;
 }
 
 enum REGCLS {
@@ -164,15 +164,15 @@ extern(Windows) {
 	void CoTaskMemFree(PVOID);
 	HRESULT CreateDataAdviseHolder(LPDATAADVISEHOLDER*);
 	HRESULT CreateDataCache(LPUNKNOWN, REFCLSID, REFIID, PVOID*);
-	HRESULT StgCreateDocfile(CPtr!(OLECHAR), DWORD, DWORD, IStorage*);
+	HRESULT StgCreateDocfile(const(OLECHAR)*, DWORD, DWORD, IStorage*);
 	HRESULT StgCreateDocfileOnILockBytes(ILockBytes, DWORD, DWORD, IStorage*);
-	HRESULT StgOpenStorage(CPtr!(OLECHAR), IStorage, DWORD, SNB, DWORD, IStorage*);
+	HRESULT StgOpenStorage(const(OLECHAR)*, IStorage, DWORD, SNB, DWORD, IStorage*);
 	HRESULT StgOpenStorageOnILockBytes(ILockBytes, IStorage, DWORD, SNB, DWORD, IStorage*);
-	HRESULT StgIsStorageFile(CPtr!(OLECHAR));
+	HRESULT StgIsStorageFile(const(OLECHAR)*);
 	HRESULT StgIsStorageILockBytes(ILockBytes);
 	HRESULT StgSetTimes(OLECHAR *, FILETIME *, FILETIME *, FILETIME *);
-	HRESULT StgCreateStorageEx(CPtr!(WCHAR), DWORD, DWORD, DWORD, STGOPTIONS*, void*, REFIID, void**);
-	HRESULT StgOpenStorageEx(CPtr!(WCHAR), DWORD, DWORD, DWORD, STGOPTIONS*, void*, REFIID, void**);
+	HRESULT StgCreateStorageEx(const(WCHAR)*, DWORD, DWORD, DWORD, STGOPTIONS*, void*, REFIID, void**);
+	HRESULT StgOpenStorageEx(const(WCHAR)*, DWORD, DWORD, DWORD, STGOPTIONS*, void*, REFIID, void**);
 	HRESULT BindMoniker(LPMONIKER, DWORD, REFIID, PVOID*);
 	HRESULT CoGetObject(LPCWSTR, BIND_OPTS*, REFIID, void**);
 	HRESULT MkParseDisplayName(LPBC, LPCOLESTR, ULONG*, LPMONIKER*);

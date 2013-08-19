@@ -13,14 +13,15 @@ pragma(lib, "advapi32");
 
 private import win32.w32api, win32.winbase, win32.windef;
 
-const HKEY
+enum : HKEY { // for some reason, DMD errors if I don't give all the values explicitly
 	HKEY_CLASSES_ROOT     = cast(HKEY) 0x80000000,
 	HKEY_CURRENT_USER     = cast(HKEY) 0x80000001,
 	HKEY_LOCAL_MACHINE    = cast(HKEY) 0x80000002,
 	HKEY_USERS            = cast(HKEY) 0x80000003,
 	HKEY_PERFORMANCE_DATA = cast(HKEY) 0x80000004,
 	HKEY_CURRENT_CONFIG   = cast(HKEY) 0x80000005,
-	HKEY_DYN_DATA         = cast(HKEY) 0x80000006;
+	HKEY_DYN_DATA         = cast(HKEY) 0x80000006
+}
 
 enum : DWORD {
 	REG_OPTION_NON_VOLATILE,
@@ -129,8 +130,8 @@ extern (Windows) {
 	LONG RegSaveKeyA(HKEY, LPCSTR, LPSECURITY_ATTRIBUTES);
 	LONG RegSaveKeyW(HKEY, LPCWSTR, LPSECURITY_ATTRIBUTES);
 	LONG RegSetKeySecurity(HKEY, SECURITY_INFORMATION, PSECURITY_DESCRIPTOR);
-	LONG RegSetValueExA(HKEY, LPCSTR, DWORD, DWORD, CPtr!(BYTE), DWORD);
-	LONG RegSetValueExW(HKEY, LPCWSTR, DWORD, DWORD, CPtr!(BYTE), DWORD);
+	LONG RegSetValueExA(HKEY, LPCSTR, DWORD, DWORD, const(BYTE)*, DWORD);
+	LONG RegSetValueExW(HKEY, LPCWSTR, DWORD, DWORD, const(BYTE)*, DWORD);
 	LONG RegUnLoadKeyA(HKEY, LPCSTR);
 	LONG RegUnLoadKeyW(HKEY, LPCWSTR);
 	LONG RegNotifyChangeKeyValue(HKEY, BOOL, DWORD, HANDLE, BOOL);

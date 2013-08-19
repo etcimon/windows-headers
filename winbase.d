@@ -180,7 +180,7 @@ enum : WORD {
 }
 
 // used by dwServiceMask
-const SP_SERIALCOMM = 1;
+enum SP_SERIALCOMM = 1;
 
 struct COMMPROP {
 	WORD  wPacketLength;
@@ -458,7 +458,7 @@ enum : DWORD {
 	STD_ERROR_HANDLE  = 0xFFFFFFF4
 }
 
-const HANDLE INVALID_HANDLE_VALUE = cast(HANDLE) (-1);
+enum HANDLE INVALID_HANDLE_VALUE = cast(HANDLE) (-1);
 
 enum : DWORD {
 	GET_TAPE_MEDIA_INFORMATION = 0,
@@ -1563,8 +1563,8 @@ static if (_WIN32_WINNT >= 0x501) {
 		LPCSTR lpApplicationName;
 		HMODULE hModule;
 	}
-	alias ACTCTXA*       PACTCTXA;
-	alias CPtr!(ACTCTXA) PCACTCTXA;
+	alias ACTCTXA*        PACTCTXA;
+	alias const(ACTCTXA)* PCACTCTXA;
 
 	struct ACTCTXW {
 		ULONG cbSize = this.sizeof;
@@ -1577,8 +1577,8 @@ static if (_WIN32_WINNT >= 0x501) {
 		LPCWSTR lpApplicationName;
 		HMODULE hModule;
 	}
-	alias ACTCTXW*       PACTCTXW;
-	alias CPtr!(ACTCTXW) PCACTCTXW;
+	alias ACTCTXW*        PACTCTXW;
+	alias const(ACTCTXW)* PCACTCTXW;
 
 	struct ACTCTX_SECTION_KEYED_DATA {
 		ULONG cbSize = this.sizeof;
@@ -1592,8 +1592,8 @@ static if (_WIN32_WINNT >= 0x501) {
 		HANDLE hActCtx;
 		HANDLE ulAssemblyRosterIndex;
 	}
-	alias ACTCTX_SECTION_KEYED_DATA*       PACTCTX_SECTION_KEYED_DATA;
-	alias CPtr!(ACTCTX_SECTION_KEYED_DATA) PCACTCTX_SECTION_KEYED_DATA;
+	alias ACTCTX_SECTION_KEYED_DATA*        PACTCTX_SECTION_KEYED_DATA;
+	alias const(ACTCTX_SECTION_KEYED_DATA)* PCACTCTX_SECTION_KEYED_DATA;
 
 	enum MEMORY_RESOURCE_NOTIFICATION_TYPE {
 		LowMemoryResourceNotification,
@@ -1658,7 +1658,7 @@ extern (Windows) {
 	BOOL CloseHandle(HANDLE);
 	BOOL CommConfigDialogA(LPCSTR, HWND, LPCOMMCONFIG);
 	BOOL CommConfigDialogW(LPCWSTR, HWND, LPCOMMCONFIG);
-	LONG CompareFileTime(CPtr!(FILETIME), CPtr!(FILETIME));
+	LONG CompareFileTime(const(FILETIME)*, const(FILETIME)*);
 	BOOL ContinueDebugEvent(DWORD, DWORD, DWORD);
 	BOOL CopyFileA(LPCSTR, LPCSTR, BOOL);
 	BOOL CopyFileW(LPCWSTR, LPCWSTR, BOOL);
@@ -1674,7 +1674,7 @@ extern (Windows) {
 	}
 
 	void RtlZeroMemory(PVOID dest, SIZE_T len) {
-		RtlFillMemory(dest, len , 0);
+		RtlFillMemory(dest, len, 0);
 	}
 
 	alias RtlMoveMemory MoveMemory;
@@ -1727,9 +1727,9 @@ extern (Windows) {
 	void FatalAppExitA(UINT, LPCSTR);
 	void FatalAppExitW(UINT, LPCWSTR);
 	void FatalExit(int);
-	BOOL FileTimeToDosDateTime(CPtr!(FILETIME) , LPWORD, LPWORD);
-	BOOL FileTimeToLocalFileTime(CPtr!(FILETIME) , LPFILETIME);
-	BOOL FileTimeToSystemTime(CPtr!(FILETIME) , LPSYSTEMTIME);
+	BOOL FileTimeToDosDateTime(const(FILETIME)*, LPWORD, LPWORD);
+	BOOL FileTimeToLocalFileTime(const(FILETIME)*, LPFILETIME);
+	BOOL FileTimeToSystemTime(const(FILETIME)*, LPSYSTEMTIME);
 	ATOM FindAtomA(LPCSTR);
 	ATOM FindAtomW(LPCWSTR);
 	BOOL FindClose(HANDLE);
@@ -1901,7 +1901,7 @@ WINBASEAPI DWORD WINAPI GetCurrentThreadId(void);
 	HINSTANCE LoadLibraryExW(LPCWSTR, HANDLE, DWORD);
 	DWORD LoadModule(LPCSTR, PVOID);
 	HGLOBAL LoadResource(HINSTANCE, HRSRC);
-	BOOL LocalFileTimeToFileTime(CPtr!(FILETIME) , LPFILETIME);
+	BOOL LocalFileTimeToFileTime(const(FILETIME)*, LPFILETIME);
 	BOOL LockFile(HANDLE, DWORD, DWORD, DWORD, DWORD);
 	PVOID LockResource(HGLOBAL);
 
@@ -1937,7 +1937,7 @@ WINBASEAPI DWORD WINAPI GetCurrentThreadId(void);
 	BOOL QueryPerformanceCounter(PLARGE_INTEGER);
 	BOOL QueryPerformanceFrequency(PLARGE_INTEGER);
 	DWORD QueueUserAPC(PAPCFUNC, HANDLE, ULONG_PTR);
-	void RaiseException(DWORD, DWORD, DWORD, CPtr!(DWORD));
+	void RaiseException(DWORD, DWORD, DWORD, const(DWORD)*);
 	BOOL ReadFile(HANDLE, PVOID, DWORD, PDWORD, LPOVERLAPPED);
 	BOOL ReadFileEx(HANDLE, PVOID, DWORD, LPOVERLAPPED, LPOVERLAPPED_COMPLETION_ROUTINE);
 	BOOL ReadProcessMemory(HANDLE, PCVOID, PVOID, DWORD, PDWORD);
@@ -1984,20 +1984,20 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 	BOOL SetFileAttributesA(LPCSTR, DWORD);
 	BOOL SetFileAttributesW(LPCWSTR, DWORD);
 	DWORD SetFilePointer(HANDLE, LONG, PLONG, DWORD);
-	BOOL SetFileTime(HANDLE, CPtr!(FILETIME), CPtr!(FILETIME), CPtr!(FILETIME));
+	BOOL SetFileTime(HANDLE, const(FILETIME)*, const(FILETIME)*, const(FILETIME)*);
 	deprecated UINT SetHandleCount(UINT);
 	void SetLastError(DWORD);
 	void SetLastErrorEx(DWORD, DWORD);
-	BOOL SetLocalTime(CPtr!(SYSTEMTIME));
+	BOOL SetLocalTime(const(SYSTEMTIME)*);
 	BOOL SetMailslotInfo(HANDLE, DWORD);
 	BOOL SetNamedPipeHandleState(HANDLE, PDWORD, PDWORD, PDWORD);
 	BOOL SetPriorityClass(HANDLE, DWORD);
 	BOOL SetStdHandle(DWORD, HANDLE);
-	BOOL SetSystemTime(CPtr!(SYSTEMTIME));
+	BOOL SetSystemTime(const(SYSTEMTIME)*);
 	DWORD SetThreadAffinityMask(HANDLE, DWORD);
-	BOOL SetThreadContext(HANDLE, CPtr!(CONTEXT));
+	BOOL SetThreadContext(HANDLE, const(CONTEXT)*);
 	BOOL SetThreadPriority(HANDLE, int);
-	BOOL SetTimeZoneInformation(CPtr!(TIME_ZONE_INFORMATION));
+	BOOL SetTimeZoneInformation(const(TIME_ZONE_INFORMATION)*);
 	LPTOP_LEVEL_EXCEPTION_FILTER SetUnhandledExceptionFilter(LPTOP_LEVEL_EXCEPTION_FILTER);
 	BOOL SetupComm(HANDLE, DWORD, DWORD);
 	BOOL SetVolumeLabelA(LPCSTR, LPCSTR);
@@ -2007,7 +2007,7 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 	void Sleep(DWORD);
 	DWORD SleepEx(DWORD, BOOL);
 	DWORD SuspendThread(HANDLE);
-	BOOL SystemTimeToFileTime(CPtr!(SYSTEMTIME), LPFILETIME);
+	BOOL SystemTimeToFileTime(const(SYSTEMTIME)*, LPFILETIME);
 	BOOL TerminateProcess(HANDLE, UINT);
 	BOOL TerminateThread(HANDLE, DWORD);
 	DWORD TlsAlloc();
@@ -2020,8 +2020,8 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 	BOOL UnlockFile(HANDLE, DWORD, DWORD, DWORD, DWORD);
 	BOOL WaitCommEvent(HANDLE, PDWORD, LPOVERLAPPED);
 	BOOL WaitForDebugEvent(LPDEBUG_EVENT, DWORD);
-	DWORD WaitForMultipleObjects(DWORD, CPtr!(HANDLE), BOOL, DWORD);
-	DWORD WaitForMultipleObjectsEx(DWORD, CPtr!(HANDLE), BOOL, DWORD, BOOL);
+	DWORD WaitForMultipleObjects(DWORD, const(HANDLE)*, BOOL, DWORD);
+	DWORD WaitForMultipleObjectsEx(DWORD, const(HANDLE)*, BOOL, DWORD, BOOL);
 	DWORD WaitForSingleObject(HANDLE, DWORD);
 	DWORD WaitForSingleObjectEx(HANDLE, DWORD, BOOL);
 	BOOL WaitNamedPipeA(LPCSTR, DWORD);
@@ -2106,7 +2106,7 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 	HANDLE OpenWaitableTimerW(DWORD, BOOL, LPCWSTR);
 	DWORD QueryDosDeviceA(LPCSTR, LPSTR, DWORD);
 	DWORD QueryDosDeviceW(LPCWSTR, LPWSTR, DWORD);
-	BOOL SetWaitableTimer(HANDLE, CPtr!(LARGE_INTEGER), LONG, PTIMERAPCROUTINE, PVOID, BOOL);
+	BOOL SetWaitableTimer(HANDLE, const(LARGE_INTEGER)*, LONG, PTIMERAPCROUTINE, PVOID, BOOL);
 	void SwitchToFiber(PVOID);
 
 	static if (_WIN32_WINNT >= 0x500) {
@@ -2261,7 +2261,7 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 	BOOL SetFileSecurityW(LPCWSTR, SECURITY_INFORMATION, PSECURITY_DESCRIPTOR);
 	BOOL SetHandleInformation(HANDLE, DWORD, DWORD);
 	BOOL SetKernelObjectSecurity(HANDLE, SECURITY_INFORMATION, PSECURITY_DESCRIPTOR);
-	BOOL SetPrivateObjectSecurity(SECURITY_INFORMATION, PSECURITY_DESCRIPTOR, PSECURITY_DESCRIPTOR* , PGENERIC_MAPPING, HANDLE);
+	BOOL SetPrivateObjectSecurity(SECURITY_INFORMATION, PSECURITY_DESCRIPTOR, PSECURITY_DESCRIPTOR*, PGENERIC_MAPPING, HANDLE);
 	BOOL SetProcessAffinityMask(HANDLE, DWORD);
 	BOOL SetProcessPriorityBoost(HANDLE, BOOL);
 	BOOL SetProcessShutdownParameters(DWORD, DWORD);
@@ -2387,11 +2387,11 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 		BOOL DebugActiveProcessStop(DWORD);
 		BOOL DebugBreakProcess(HANDLE);
 		BOOL DebugSetProcessKillOnExit(BOOL);
-		BOOL FindActCtxSectionGuid(DWORD, CPtr!(GUID), ULONG, CPtr!(GUID),
+		BOOL FindActCtxSectionGuid(DWORD, const(GUID)*, ULONG, const(GUID)*,
 		  PACTCTX_SECTION_KEYED_DATA);
-		BOOL FindActCtxSectionStringA(DWORD, CPtr!(GUID), ULONG, LPCSTR,
+		BOOL FindActCtxSectionStringA(DWORD, const(GUID)*, ULONG, LPCSTR,
 		  PACTCTX_SECTION_KEYED_DATA);
-		BOOL FindActCtxSectionStringW(DWORD, CPtr!(GUID), ULONG, LPCWSTR,
+		BOOL FindActCtxSectionStringW(DWORD, const(GUID)*, ULONG, LPCWSTR,
 		  PACTCTX_SECTION_KEYED_DATA);
 		BOOL GetCurrentActCtx(HANDLE*);
 		VOID GetNativeSystemInfo(LPSYSTEM_INFO);
@@ -2438,9 +2438,9 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 	}
 }
 
-
+mixin DECLARE_AW!("STARTUPINFO");
 version (Unicode) {
-	alias STARTUPINFOW STARTUPINFO;
+	//alias STARTUPINFOW STARTUPINFO;
 	alias WIN32_FIND_DATAW WIN32_FIND_DATA;
 	alias ENUMRESLANGPROCW ENUMRESLANGPROC;
 	alias ENUMRESNAMEPROCW ENUMRESNAMEPROC;
@@ -2615,7 +2615,7 @@ version (Unicode) {
 	}
 
 } else {
-	alias STARTUPINFOA STARTUPINFO;
+	//alias STARTUPINFOA STARTUPINFO;
 	alias WIN32_FIND_DATAA WIN32_FIND_DATA;
 	alias ENUMRESLANGPROCW ENUMRESLANGPROC;
 	alias ENUMRESNAMEPROCW ENUMRESNAMEPROC;

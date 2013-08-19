@@ -124,8 +124,8 @@ interface IOleDocument : IUnknown {
 }
 
 interface IOleCommandTarget : IUnknown {
-	HRESULT QueryStatus(CPtr!(GUID), ULONG, OLECMD*, OLECMDTEXT*);
-	HRESULT Exec(CPtr!(GUID), DWORD, DWORD, VARIANTARG*, VARIANTARG*);
+	HRESULT QueryStatus(const(GUID)*, ULONG, OLECMD*, OLECMDTEXT*);
+	HRESULT Exec(const(GUID)*, DWORD, DWORD, VARIANTARG*, VARIANTARG*);
 }
 
 interface IOleDocumentSite : IUnknown {
