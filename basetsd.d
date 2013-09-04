@@ -95,7 +95,7 @@ version (Win64) {
 
 	uint HandleToUlong(HANDLE h)      { return cast(uint) h; }
 	int HandleToLong(HANDLE h)        { return cast(int) h; }
-	HANDLE LongToHandle(LONG_PTR h)   { return cast(HANDLE) h; }
+	HANDLE LongToHandle(LONG_PTR h)   { return HANDLE(cast(void*)h); }
 	uint PtrToUlong(const(void)* p)    { return cast(uint) p; }
 	uint PtrToUint(const(void)* p)     { return cast(uint) p; }
 	int PtrToInt(const(void)* p)       { return cast(int) p; }
