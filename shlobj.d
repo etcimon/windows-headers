@@ -1056,9 +1056,9 @@ struct SHELLFLAGSTATE {
 
 	@property bool fShowAllObjects(bool f)       { _bf = cast(ushort) ((_bf & ~0xFFFE) | f);        return f; }
 	@property bool fShowExtensions(bool f)       { _bf = cast(ushort) ((_bf & ~0xFFFD) | (f <<  1)); return f; }
-	@property bool fNoConfirmRecycle()           { _bf = cast(ushort) ((_bf & ~0xFFFB) | (f <<  2)); return f; }
-	@property bool fShowSysFiles()               { _bf = cast(ushort) ((_bf & ~0xFFF8) | (f <<  3)); return f; }
-	@property bool fShowCompColor()              { _bf = cast(ushort) ((_bf & ~0xFFEF) | (f <<  4)); return f; }
+	@property bool fNoConfirmRecycle(bool f)     { _bf = cast(ushort) ((_bf & ~0xFFFB) | (f <<  2)); return f; }
+	@property bool fShowSysFiles(bool f)         { _bf = cast(ushort) ((_bf & ~0xFFF8) | (f <<  3)); return f; }
+	@property bool fShowCompColor(bool f)        { _bf = cast(ushort) ((_bf & ~0xFFEF) | (f <<  4)); return f; }
 	@property bool fDoubleClickInWebView(bool f) { _bf = cast(ushort) ((_bf & ~0xFFDF) | (f <<  5)); return f; }
 	@property bool fDesktopHTML(bool f)          { _bf = cast(ushort) ((_bf & ~0xFFBF) | (f <<  6)); return f; }
 	@property bool fWin95Classic(bool f)         { _bf = cast(ushort) ((_bf & ~0xFF8F) | (f <<  7)); return f; }
@@ -1173,7 +1173,7 @@ static if (_WIN32_WINNT >= 0x500) {
 		@property bool fStartPanelOn(bool f)   { _bf2 = cast(uint) ((_bf2 & ~0xFFFFFFFD) | (f << 1)); return f; }
 		@property bool fShowStartPage(bool f)  { _bf2 = cast(uint) ((_bf2 & ~0xFFFFFFFB) | (f << 2)); return f; }
 		@property ushort fSpareFlags(ushort f) {
-			_bf = cast(ushort) ((_bf & ~0xFFFF0007) | ((f & 0x1FFF) << 3));
+			_bf2 = cast(ushort) ((_bf2 & ~0xFFFF0007) | ((f & 0x1FFF) << 3));
 			return cast(ushort) (f & 0x1FFF);
 		}
 	}
