@@ -38,17 +38,14 @@ template TypeDef(T) {
 // 'forwatd template reference' to CPtr from winnt.d caused by a circular
 // import.
 
-//alias TypeDef!(void*) HANDLE;
-struct HANDLE {
+alias TypeDef!(void*) HANDLE;
+/+struct HANDLE {
     const(void)* h;
     alias h this;
-}
+}+/
 
 package template DECLARE_HANDLE(string name, base = HANDLE) {
-    mixin ("struct " ~ name ~ " {
-        " ~ base.stringof ~ " h;
-        alias h this;
-    }");
+    mixin ("alias " ~ base.stringof ~ " " ~ name ~ ";");
 }
 alias HANDLE* PHANDLE, LPHANDLE;
 
@@ -95,7 +92,7 @@ version (Win64) {
 
 	uint HandleToUlong(HANDLE h)      { return cast(uint) h; }
 	int HandleToLong(HANDLE h)        { return cast(int) h; }
-	HANDLE LongToHandle(LONG_PTR h)   { return HANDLE(cast(void*)h); }
+	HANDLE LongToHandle(LONG_PTR h)   { return cast(HANDLE)h; }
 	uint PtrToUlong(const(void)* p)    { return cast(uint) p; }
 	uint PtrToUint(const(void)* p)     { return cast(uint) p; }
 	int PtrToInt(const(void)* p)       { return cast(int) p; }
