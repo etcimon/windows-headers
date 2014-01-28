@@ -1,31 +1,23 @@
-dmd -I.. -c testall.d
-@if errorlevel 1 goto abort
-dmd -I.. -c -version=Windows2000 testall.d
-@if errorlevel 1 goto abort
-dmd -I.. -c -version=WindowsXP testall.d
-@if errorlevel 1 goto abort
-dmd -I.. -c -version=Windows2003 testall.d
-@if errorlevel 1 goto abort
-dmd -I.. -c -version=WindowsVista testall.d
-@if errorlevel 1 goto abort
-dmd -I.. -c -version=Win32_Winsock1 testall.d
-@if errorlevel 1 goto abort
-dmd -I.. -c -version=IE7 testall.d
-@if errorlevel 1 goto abort
-@rem Do we really need to test version=Unicode under all combinations?
-dmd -I.. -c -version=Unicode testall.d
-@if errorlevel 1 goto abort
-dmd -I.. -c -version=Unicode -version=Windows2000 testall.d
-@if errorlevel 1 goto abort
-dmd -I.. -c -version=Unicode -version=WindowsXP testall.d
-@if errorlevel 1 goto abort
-dmd -I.. -c -version=Unicode -version=Windows2003 testall.d
-@if errorlevel 1 goto abort
-dmd -I.. -c -version=Unicode -version=WindowsVista testall.d
-@if errorlevel 1 goto abort
-dmd -I.. -c -version=Unicode -version=Win32_Winsock1 testall.d
-@if errorlevel 1 goto abort
-dmd -I.. -c -version=Unicode -version=IE7 testall.d
-@del testall.obj
-@echo.
-:abort
+@call :testuni
+@call :testuni -version=Unicode
+@goto :eof
+
+:testuni
+@call :testversion %*
+@call :testversion %* -version=Windows2000
+@call :testversion %* -version=WindowsXP
+@call :testversion %* -version=Windows2003
+@call :testversion %* -version=WindowsVista
+@call :testversion %* -version=Win32_Winsock1
+@call :testversion %* -version=IE7
+@goto :eof
+
+:testversion
+@call :testone -m32 %*
+@call :testone -m64 %*
+@goto :eof
+
+:testone
+dmd -I.. -c %* testall.d
+@if errorlevel 1 exit 1
+@goto :eof
