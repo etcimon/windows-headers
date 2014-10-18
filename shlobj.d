@@ -476,7 +476,7 @@ struct STRRET {
 	union {
 		LPWSTR pOleStr;
 		UINT uOffset;
-		char cStr[MAX_PATH];
+		char[MAX_PATH] cStr;
 	}
 }
 alias STRRET* LPSTRRET;
@@ -503,7 +503,7 @@ struct FILEDESCRIPTORA {
 	FILETIME ftLastWriteTime;
 	DWORD nFileSizeHigh;
 	DWORD nFileSizeLow;
-	CHAR cFileName[MAX_PATH];
+	CHAR[MAX_PATH] cFileName;
 }
 alias FILEDESCRIPTORA* LPFILEDESCRIPTORA;
 
@@ -518,19 +518,19 @@ struct FILEDESCRIPTORW {
 	FILETIME ftLastWriteTime;
 	DWORD nFileSizeHigh;
 	DWORD nFileSizeLow;
-	WCHAR cFileName[MAX_PATH];
+	WCHAR[MAX_PATH] cFileName;
 }
 alias FILEDESCRIPTORW* LPFILEDESCRIPTORW;
 
 struct FILEGROUPDESCRIPTORA {
 	UINT cItems;
-	FILEDESCRIPTORA fgd[1];
+	FILEDESCRIPTORA[1] fgd;
 }
 alias FILEGROUPDESCRIPTORA* LPFILEGROUPDESCRIPTORA;
 
 struct FILEGROUPDESCRIPTORW {
 	UINT cItems;
-	FILEDESCRIPTORW fgd[1];
+	FILEDESCRIPTORW[1] fgd;
 }
 alias FILEGROUPDESCRIPTORW* LPFILEGROUPDESCRIPTORW;
 
@@ -590,13 +590,13 @@ struct FVSHOWINFO {
 	DWORD dwFlags;
 	RECT rect;
 	LPUNKNOWN punkRel;
-	OLECHAR strNewFile[MAX_PATH];
+	OLECHAR[MAX_PATH] strNewFile;
 }
 alias FVSHOWINFO* LPFVSHOWINFO;
 
 struct NRESARRAY {
 	UINT cItems;
-	NETRESOURCE nr[1];
+	NETRESOURCE[1] nr;
 }
 alias NRESARRAY* LPNRESARRAY;
 
@@ -628,8 +628,8 @@ static if (_WIN32_IE >= 0x500) {
 	struct EXTRASEARCH
 	 {
 		GUID guidSearch;
-		WCHAR wszFriendlyName[80];
-		WCHAR wszUrl[2084];
+		WCHAR[80] wszFriendlyName;
+		WCHAR[2084] wszUrl;
 	}
 	alias EXTRASEARCH* LPEXTRASEARCH;
 
@@ -652,8 +652,8 @@ static if (_WIN32_IE >= 0x500) {
 	struct PERSIST_FOLDER_TARGET_INFO
 	 {
 		LPITEMIDLIST pidlTargetFolder;
-		WCHAR szTargetParsingName[MAX_PATH];
-		WCHAR szNetworkProvider[MAX_PATH];
+		WCHAR[MAX_PATH] szTargetParsingName;
+		WCHAR[MAX_PATH] szNetworkProvider;
 		DWORD dwAttributes;
 		int csidl;
 	}
@@ -695,7 +695,7 @@ static if (_WIN32_IE >= 0x500) {
 		struct SHCOLUMNINIT {
 			ULONG dwFlags;
 			ULONG dwReserved;
-			WCHAR wszFolder[MAX_PATH];
+			WCHAR[MAX_PATH] wszFolder;
 		}
 		alias SHCOLUMNINIT*        LPSHCOLUMNINIT;
 		alias const(SHCOLUMNINIT)* LPCSHCOLUMNINIT;
@@ -705,7 +705,7 @@ static if (_WIN32_IE >= 0x500) {
 			DWORD dwFileAttributes;
 			ULONG dwReserved;
 			WCHAR *pwszExt;
-			WCHAR wszFile[MAX_PATH];
+			WCHAR[MAX_PATH] wszFile;
 		}
 		alias SHCOLUMNDATA*        LPSHCOLUMNDATA;
 		alias const(SHCOLUMNDATA)* LPCSHCOLUMNDATA;
@@ -720,8 +720,8 @@ static if (_WIN32_IE >= 0x500) {
 		DWORD fmt;
 		UINT cChars;
 		DWORD csFlags;
-		WCHAR wszTitle[MAX_COLUMN_NAME_LEN];
-		WCHAR wszDescription[MAX_COLUMN_DESC_LEN];
+		WCHAR[MAX_COLUMN_NAME_LEN] wszTitle;
+		WCHAR[MAX_COLUMN_DESC_LEN] wszDescription;
 	}
 	alias SHCOLUMNINFO*        LPSHCOLUMNINFO;
 	alias const(SHCOLUMNINFO)* LPCSHCOLUMNINFO;

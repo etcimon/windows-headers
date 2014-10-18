@@ -46,8 +46,8 @@ alias ADMIN_OTHER_INFO* PADMIN_OTHER_INFO, LPADMIN_OTHER_INFO;
 
 struct STD_ALERT{
 	DWORD alrt_timestamp;
-	TCHAR alrt_eventname[EVLEN+1];
-	TCHAR alrt_servicename[SNLEN+1];
+	TCHAR[EVLEN+1] alrt_eventname;
+	TCHAR[SNLEN+1] alrt_servicename;
 }
 alias STD_ALERT* PSTD_ALERT, LPSTD_ALERT;
 

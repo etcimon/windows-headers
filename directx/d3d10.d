@@ -1140,7 +1140,7 @@ interface ID3D10Device : IUnknown {
 	void GSGetShaderResources(UINT StartSlot, UINT NumViews, ID3D10ShaderResourceView* ppShaderResourceViews);
 	void GSGetSamplers(UINT StartSlot, UINT NumSamplers, ID3D10SamplerState* ppSamplers);
 	void OMGetRenderTargets(UINT NumViews, ID3D10RenderTargetView* ppRenderTargetViews, ID3D10DepthStencilView* ppDepthStencilView);
-	void OMGetBlendState(ID3D10BlendState* ppBlendState, FLOAT BlendFactor[ 4 ], UINT* pSampleMask);
+	void OMGetBlendState(ID3D10BlendState* ppBlendState, FLOAT[ 4 ] BlendFactor, UINT* pSampleMask);
 	void OMGetDepthStencilState(ID3D10DepthStencilState* ppDepthStencilState, UINT* pStencilRef);
 	void SOGetTargets(UINT NumBuffers, ID3D10Buffer* ppSOTargets, UINT* pOffsets);
 	void RSGetState(ID3D10RasterizerState* ppRasterizerState);

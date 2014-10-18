@@ -159,7 +159,7 @@ align(4) struct D3DXFONT_DESCA
     BYTE OutputPrecision;
     BYTE Quality;
     BYTE PitchAndFamily;
-    CHAR FaceName[LF_FACESIZE];
+    CHAR[LF_FACESIZE] FaceName;
 }
 
 align(4) struct D3DXFONT_DESCW
@@ -173,7 +173,7 @@ align(4) struct D3DXFONT_DESCW
     BYTE OutputPrecision;
     BYTE Quality;
     BYTE PitchAndFamily;
-    WCHAR FaceName[LF_FACESIZE];
+    WCHAR[LF_FACESIZE] FaceName;
 }
 
 align(4) struct TEXTMETRICA
@@ -379,7 +379,7 @@ align(4) struct D3DXATTRIBUTEWEIGHTS
     FLOAT Normal = 0;
     FLOAT Diffuse = 0;
     FLOAT Specular = 0;
-    FLOAT Texcoord[8] = 0;
+    FLOAT[8] Texcoord = 0;
     FLOAT Tangent = 0;
     FLOAT Binormal = 0;
 }
@@ -565,7 +565,7 @@ interface ID3DXSkinInfo : IUnknown
     HRESULT SetFVF(DWORD FVF);
     HRESULT SetDeclaration(D3DVERTEXELEMENT9 *pDeclaration);
     DWORD GetFVF();
-    HRESULT GetDeclaration(D3DVERTEXELEMENT9 Declaration[MAX_FVF_DECL_SIZE]);
+    HRESULT GetDeclaration(D3DVERTEXELEMENT9[MAX_FVF_DECL_SIZE] Declaration);
 
     // Apply SW skinning based on current pose matrices to the target vertices.
     HRESULT UpdateSkinnedMesh(
@@ -613,7 +613,7 @@ interface ID3DXBaseMesh : IUnknown
     DWORD GetNumFaces() ;
     DWORD GetNumVertices() ;
     DWORD GetFVF() ;
-    HRESULT GetDeclaration( D3DVERTEXELEMENT9 Declaration[MAX_FVF_DECL_SIZE]) ;
+    HRESULT GetDeclaration( D3DVERTEXELEMENT9[MAX_FVF_DECL_SIZE] Declaration) ;
     DWORD GetNumBytesPerVertex() ;
     DWORD GetOptions() ;
     HRESULT GetDevice( IDirect3DDevice9* ppDevice) ;
@@ -634,7 +634,7 @@ interface ID3DXBaseMesh : IUnknown
     HRESULT ConvertAdjacencyToPointReps(  DWORD* pAdjacency, DWORD* pPRep) ;
     HRESULT GenerateAdjacency( FLOAT Epsilon, DWORD* pAdjacency) ;
 
-    HRESULT UpdateSemantics( D3DVERTEXELEMENT9 Declaration[MAX_FVF_DECL_SIZE]) ;
+    HRESULT UpdateSemantics( D3DVERTEXELEMENT9[MAX_FVF_DECL_SIZE] Declaration) ;
 }
 
 interface ID3DXMesh : ID3DXBaseMesh
@@ -702,7 +702,7 @@ interface ID3DXPatchMesh : IUnknown
     // Return creation parameters
     DWORD GetNumPatches() ;
     DWORD GetNumVertices() ;
-    HRESULT GetDeclaration( D3DVERTEXELEMENT9 Declaration[MAX_FVF_DECL_SIZE]) ;
+    HRESULT GetDeclaration( D3DVERTEXELEMENT9[MAX_FVF_DECL_SIZE] Declaration) ;
     DWORD GetControlVerticesPerPatch() ;
     DWORD GetOptions() ;
     HRESULT GetDevice( IDirect3DDevice9 *ppDevice) ;
@@ -1366,7 +1366,7 @@ const GUID TID_D3DRMStringProperty = DEFINE_GUID!(0x7f0f21e0, 0xbfe1, 0x11d1, 0x
 const GUID TID_D3DRMPropertyBag = DEFINE_GUID!(0x7f0f21e1, 0xbfe1, 0x11d1, 0x82, 0xc0, 0x0, 0xa0, 0xc9, 0x69, 0x72, 0x71);
 const GUID TID_D3DRMRightHanded = DEFINE_GUID!(0x7f5d5ea0, 0xd53a, 0x11d1, 0x82, 0xc0, 0x0, 0xa0, 0xc9, 0x69, 0x72, 0x71);
 
-ubyte D3DRM_XTEMPLATES[] =
+ubyte[] D3DRM_XTEMPLATES =
 [
 	0x78, 0x6f, 0x66, 0x20, 0x30, 0x33, 0x30, 0x32, 0x62,
 	0x69, 0x6e, 0x20, 0x30, 0x30, 0x36, 0x34, 0x1f, 0, 0x1,
@@ -1743,36 +1743,36 @@ const char[] XSKINEXP_TEMPLATES =
             <B8D65549-D7C9-4995-89CF-53A9A8B031E3>
             DWORD nIndices;
             DWORD nOriginalVertices;
-            array DWORD indices[nIndices];
+            array DWORD[nIndices] indices;
         }
         template FaceAdjacency
         {
             <A64C844A-E282-4756-8B80-250CDE04398C>
             DWORD nIndices;
-            array DWORD indices[nIndices];
+            array DWORD[nIndices] indices;
         }
         template SkinWeights
         {
             <6F0D123B-BAD2-4167-A0D0-80224F25FABB>
             STRING transformNodeName;
             DWORD nWeights;
-            array DWORD vertexIndices[nWeights];
-            array float weights[nWeights];
+            array DWORD[nWeights] vertexIndices;
+            array float[nWeights] weights;
             Matrix4x4 matrixOffset;
         }
         template Patch
         {
             <A3EB5D44-FC22-429D-9AFB-3221CB9719A6>
             DWORD nControlIndices;
-            array DWORD controlIndices[nControlIndices];
+            array DWORD[nControlIndices] controlIndices;
         }
         template PatchMesh
         {
             <D02C95CC-EDBA-4305-9B5D-1820D7704BBF>
             DWORD nVertices;
-            array Vector vertices[nVertices];
+            array Vector[nVertices] vertices;
             DWORD nPatches;
-            array Patch patches[nPatches];
+            array Patch[nPatches] patches;
             [ ... ]
         }
         template PatchMesh9
@@ -1782,16 +1782,16 @@ const char[] XSKINEXP_TEMPLATES =
             DWORD Degree;
             DWORD Basis;
             DWORD nVertices;
-            array Vector vertices[nVertices];
+            array Vector[nVertices] vertices;
             DWORD nPatches;
-            array Patch patches[nPatches];
+            array Patch[nPatches] patches;
             [ ... ]
         } "
         "template EffectFloats
         {
             <F1CFE2B3-0DE3-4e28-AFA1-155A750A282D>
             DWORD nFloats;
-            array float Floats[nFloats];
+            array float[nFloats] Floats;
         }
         template EffectString
         {
@@ -1808,7 +1808,7 @@ const char[] XSKINEXP_TEMPLATES =
             <3014B9A0-62F5-478c-9B86-E4AC9F4E418B>
             STRING ParamName;
             DWORD nFloats;
-            array float Floats[nFloats];
+            array float[nFloats] Floats;
         } "
         "template EffectParamString
         {
@@ -1840,7 +1840,7 @@ const char[] XSKINEXP_TEMPLATES =
             FLOAT TicksPerSec;
             DWORD PlaybackType;
             DWORD BufferLength;
-            array DWORD CompressedData[BufferLength];
+            array DWORD[BufferLength] CompressedData;
         } ";
 
 const char[] XEXTENSIONS_TEMPLATES =
@@ -1850,7 +1850,7 @@ const char[] XEXTENSIONS_TEMPLATES =
             <B6E70A0E-8EF9-4e83-94AD-ECC8B0C04897>
             DWORD dwFVF;
             DWORD nDWords;
-            array DWORD data[nDWords];
+            array DWORD[nDWords] data;
         }
         template VertexElement
         {
@@ -1864,9 +1864,9 @@ const char[] XEXTENSIONS_TEMPLATES =
         {
             <BF22E553-292C-4781-9FEA-62BD554BDD93>
             DWORD nElements;
-            array VertexElement Elements[nElements];
+            array VertexElement[nElements] Elements;
             DWORD nDWords;
-            array DWORD data[nDWords];
+            array DWORD[nDWords] data;
         }
         template PMAttributeRange
         {
@@ -1889,14 +1889,14 @@ const char[] XEXTENSIONS_TEMPLATES =
         {
             <B6C3E656-EC8B-4b92-9B62-681659522947>
             DWORD nAttributes;
-            array PMAttributeRange attributeRanges[nAttributes];
+            array PMAttributeRange[nAttributes] attributeRanges;
             DWORD nMaxValence;
             DWORD nMinLogicalVertices;
             DWORD nMaxLogicalVertices;
             DWORD nVSplits;
-            array PMVSplitRecord splitRecords[nVSplits];
+            array PMVSplitRecord[nVSplits] splitRecords;
             DWORD nAttributeMispredicts;
-            array DWORD attributeMispredicts[nAttributeMispredicts];
+            array DWORD[nAttributeMispredicts] attributeMispredicts;
         } ";
 
 enum : uint

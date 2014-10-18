@@ -227,11 +227,11 @@ alias HRASCONN* LPHRASCONN;
 struct RASCONNW {
 	DWORD dwSize;
 	HRASCONN hrasconn;
-	WCHAR szEntryName[RAS_MaxEntryName + 1];
-	WCHAR szDeviceType[RAS_MaxDeviceType + 1];
-	WCHAR szDeviceName[RAS_MaxDeviceName + 1];
+	WCHAR[RAS_MaxEntryName + 1] szEntryName;
+	WCHAR[RAS_MaxDeviceType + 1] szDeviceType;
+	WCHAR[RAS_MaxDeviceName + 1] szDeviceName;
 	static if (_WIN32_WINNT >= 0x401) {
-		WCHAR szPhonebook[MAX_PATH];
+		WCHAR[MAX_PATH] szPhonebook;
 		DWORD dwSubEntry;
 	}
 	static if (_WIN32_WINNT >= 0x500) {
@@ -247,11 +247,11 @@ alias RASCONNW* LPRASCONNW;
 struct RASCONNA {
 	DWORD dwSize;
 	HRASCONN hrasconn;
-	CHAR szEntryName[RAS_MaxEntryName + 1];
-	CHAR szDeviceType[RAS_MaxDeviceType + 1];
-	CHAR szDeviceName[RAS_MaxDeviceName + 1];
+	CHAR[RAS_MaxEntryName + 1] szEntryName;
+	CHAR[RAS_MaxDeviceType + 1] szDeviceType;
+	CHAR[RAS_MaxDeviceName + 1] szDeviceName;
 	static if (_WIN32_WINNT >= 0x401) {
-		CHAR szPhonebook[MAX_PATH];
+		CHAR[MAX_PATH] szPhonebook;
 		DWORD dwSubEntry;
 	}
 	static if (_WIN32_WINNT >= 0x500) {
@@ -268,10 +268,10 @@ struct RASCONNSTATUSW {
 	DWORD dwSize;
 	RASCONNSTATE rasconnstate;
 	DWORD dwError;
-	WCHAR szDeviceType[RAS_MaxDeviceType + 1];
-	WCHAR szDeviceName[RAS_MaxDeviceName + 1];
+	WCHAR[RAS_MaxDeviceType + 1] szDeviceType;
+	WCHAR[RAS_MaxDeviceName + 1] szDeviceName;
 	static if (_WIN32_WINNT >= 0x401) {
-		WCHAR szPhoneNumber[RAS_MaxPhoneNumber + 1];
+		WCHAR[RAS_MaxPhoneNumber + 1] szPhoneNumber;
 	}
 }
 alias RASCONNSTATUSW* LPRASCONNSTATUSW;
@@ -280,22 +280,22 @@ struct RASCONNSTATUSA {
 	DWORD dwSize;
 	RASCONNSTATE rasconnstate;
 	DWORD dwError;
-	CHAR szDeviceType[RAS_MaxDeviceType + 1];
-	CHAR szDeviceName[RAS_MaxDeviceName + 1];
+	CHAR[RAS_MaxDeviceType + 1] szDeviceType;
+	CHAR[RAS_MaxDeviceName + 1] szDeviceName;
 	static if (_WIN32_WINNT >= 0x401) {
-		CHAR szPhoneNumber[RAS_MaxPhoneNumber + 1];
+		CHAR[RAS_MaxPhoneNumber + 1] szPhoneNumber;
 	}
 }
 alias RASCONNSTATUSA* LPRASCONNSTATUSA;
 
 struct RASDIALPARAMSW {
 	DWORD dwSize;
-	WCHAR szEntryName[RAS_MaxEntryName + 1];
-	WCHAR szPhoneNumber[RAS_MaxPhoneNumber + 1];
-	WCHAR szCallbackNumber[RAS_MaxCallbackNumber + 1];
-	WCHAR szUserName[UNLEN + 1];
-	WCHAR szPassword[PWLEN + 1];
-	WCHAR szDomain[DNLEN + 1];
+	WCHAR[RAS_MaxEntryName + 1] szEntryName;
+	WCHAR[RAS_MaxPhoneNumber + 1] szPhoneNumber;
+	WCHAR[RAS_MaxCallbackNumber + 1] szCallbackNumber;
+	WCHAR[UNLEN + 1] szUserName;
+	WCHAR[PWLEN + 1] szPassword;
+	WCHAR[DNLEN + 1] szDomain;
 	static if (_WIN32_WINNT >= 0x401) {
 		DWORD dwSubEntry;
 		ULONG_PTR dwCallbackId;
@@ -305,12 +305,12 @@ alias RASDIALPARAMSW* LPRASDIALPARAMSW;
 
 struct RASDIALPARAMSA{
 	DWORD dwSize;
-	CHAR szEntryName[RAS_MaxEntryName + 1];
-	CHAR szPhoneNumber[RAS_MaxPhoneNumber + 1];
-	CHAR szCallbackNumber[RAS_MaxCallbackNumber + 1];
-	CHAR szUserName[UNLEN + 1];
-	CHAR szPassword[PWLEN + 1];
-	CHAR szDomain[DNLEN + 1];
+	CHAR[RAS_MaxEntryName + 1] szEntryName;
+	CHAR[RAS_MaxPhoneNumber + 1] szPhoneNumber;
+	CHAR[RAS_MaxCallbackNumber + 1] szCallbackNumber;
+	CHAR[UNLEN + 1] szUserName;
+	CHAR[PWLEN + 1] szPassword;
+	CHAR[DNLEN + 1] szDomain;
 	static if (_WIN32_WINNT >= 0x401) {
 		DWORD dwSubEntry;
 		ULONG_PTR dwCallbackId;
@@ -339,20 +339,20 @@ alias RASDIALEXTENSIONS* LPRASDIALEXTENSIONS;
 
 struct RASENTRYNAMEW {
 	DWORD dwSize;
-	WCHAR szEntryName[RAS_MaxEntryName + 1];
+	WCHAR[RAS_MaxEntryName + 1] szEntryName;
 	static if (_WIN32_WINNT >= 0x500) {
 		DWORD dwFlags;
-		WCHAR szPhonebookPath[MAX_PATH + 1];
+		WCHAR[MAX_PATH + 1] szPhonebookPath;
 	}
 }
 alias RASENTRYNAMEW* LPRASENTRYNAMEW;
 
 struct RASENTRYNAMEA{
 	DWORD dwSize;
-	CHAR szEntryName[RAS_MaxEntryName + 1];
+	CHAR[RAS_MaxEntryName + 1] szEntryName;
 	static if (_WIN32_WINNT >= 0x500) {
 		DWORD dwFlags;
-		CHAR szPhonebookPath[MAX_PATH + 1];
+		CHAR[MAX_PATH + 1] szPhonebookPath;
 	}
 }
 alias RASENTRYNAMEA* LPRASENTRYNAMEA;
@@ -360,7 +360,7 @@ alias RASENTRYNAMEA* LPRASENTRYNAMEA;
 struct RASAMBW{
 	DWORD dwSize;
 	DWORD dwError;
-	WCHAR szNetBiosError[NETBIOS_NAME_LEN + 1];
+	WCHAR[NETBIOS_NAME_LEN + 1] szNetBiosError;
 	BYTE bLana;
 }
 alias RASAMBW* LPRASAMBW;
@@ -368,7 +368,7 @@ alias RASAMBW* LPRASAMBW;
 struct RASAMBA{
 	DWORD dwSize;
 	DWORD dwError;
-	CHAR szNetBiosError[NETBIOS_NAME_LEN + 1];
+	CHAR[NETBIOS_NAME_LEN + 1] szNetBiosError;
 	BYTE bLana;
 }
 alias RASAMBA* LPRASAMBA;
@@ -377,8 +377,8 @@ struct RASPPPNBFW{
 	DWORD dwSize;
 	DWORD dwError;
 	DWORD dwNetBiosError;
-	WCHAR szNetBiosError[NETBIOS_NAME_LEN + 1];
-	WCHAR szWorkstationName[NETBIOS_NAME_LEN + 1];
+	WCHAR[NETBIOS_NAME_LEN + 1] szNetBiosError;
+	WCHAR[NETBIOS_NAME_LEN + 1] szWorkstationName;
 	BYTE bLana;
 }
 alias RASPPPNBFW* LPRASPPPNBFW;
@@ -387,8 +387,8 @@ struct RASPPPNBFA{
 	DWORD dwSize;
 	DWORD dwError;
 	DWORD dwNetBiosError;
-	CHAR szNetBiosError[NETBIOS_NAME_LEN + 1];
-	CHAR szWorkstationName[NETBIOS_NAME_LEN + 1];
+	CHAR[NETBIOS_NAME_LEN + 1] szNetBiosError;
+	CHAR[NETBIOS_NAME_LEN + 1] szWorkstationName;
 	BYTE bLana;
 }
 alias RASPPPNBFA* LPRASPPPNBFA;
@@ -396,23 +396,23 @@ alias RASPPPNBFA* LPRASPPPNBFA;
 struct RASPPPIPXW {
 	DWORD dwSize;
 	DWORD dwError;
-	WCHAR szIpxAddress[RAS_MaxIpxAddress + 1];
+	WCHAR[RAS_MaxIpxAddress + 1] szIpxAddress;
 }
 alias RASPPPIPXW* LPRASPPPIPXW;
 
 struct RASPPPIPXA {
 	DWORD dwSize;
 	DWORD dwError;
-	CHAR szIpxAddress[RAS_MaxIpxAddress + 1];
+	CHAR[RAS_MaxIpxAddress + 1] szIpxAddress;
 }
 alias RASPPPIPXA* LPRASPPPIPXA;
 
 struct RASPPPIPW{
 	DWORD dwSize;
 	DWORD dwError;
-	WCHAR szIpAddress[RAS_MaxIpAddress + 1];
+	WCHAR[RAS_MaxIpAddress + 1] szIpAddress;
 	//#ifndef WINNT35COMPATIBLE
-	WCHAR szServerIpAddress[RAS_MaxIpAddress + 1];
+	WCHAR[RAS_MaxIpAddress + 1] szServerIpAddress;
 	//#endif
 	static if (_WIN32_WINNT >= 0x500) {
 		DWORD dwOptions;
@@ -424,9 +424,9 @@ alias RASPPPIPW* LPRASPPPIPW;
 struct RASPPPIPA{
 	DWORD dwSize;
 	DWORD dwError;
-	CHAR szIpAddress[RAS_MaxIpAddress + 1];
+	CHAR[RAS_MaxIpAddress + 1] szIpAddress;
 	//#ifndef WINNT35COMPATIBLE
-	CHAR szServerIpAddress[RAS_MaxIpAddress + 1];
+	CHAR[RAS_MaxIpAddress + 1] szServerIpAddress;
 	//#endif
 	static if (_WIN32_WINNT >= 0x500) {
 		DWORD dwOptions;
@@ -449,7 +449,7 @@ struct RASPPPLCPW{
 		BOOL fMultilink;
 		DWORD dwTerminateReason;
 		DWORD dwServerTerminateReason;
-		WCHAR szReplyMessage[RAS_MaxReplyMessage];
+		WCHAR[RAS_MaxReplyMessage] szReplyMessage;
 		DWORD dwOptions;
 		DWORD dwServerOptions;
 	}
@@ -470,7 +470,7 @@ struct RASPPPLCPA{
 		BOOL fMultilink;
 		DWORD dwTerminateReason;
 		DWORD dwServerTerminateReason;
-		CHAR szReplyMessage[RAS_MaxReplyMessage];
+		CHAR[RAS_MaxReplyMessage] szReplyMessage;
 		DWORD dwOptions;
 		DWORD dwServerOptions;
 	}
@@ -480,28 +480,28 @@ alias RASPPPLCPA* LPRASPPPLCPA;
 struct RASSLIPW{
 	DWORD dwSize;
 	DWORD dwError;
-	WCHAR szIpAddress[RAS_MaxIpAddress + 1];
+	WCHAR[RAS_MaxIpAddress + 1] szIpAddress;
 }
 alias RASSLIPW* LPRASSLIPW;
 
 struct RASSLIPA{
 	DWORD dwSize;
 	DWORD dwError;
-	CHAR szIpAddress[RAS_MaxIpAddress + 1];
+	CHAR[RAS_MaxIpAddress + 1] szIpAddress;
 }
 alias RASSLIPA* LPRASSLIPA;
 
 struct RASDEVINFOW{
 	DWORD dwSize;
-	WCHAR szDeviceType[RAS_MaxDeviceType + 1];
-	WCHAR szDeviceName[RAS_MaxDeviceName + 1];
+	WCHAR[RAS_MaxDeviceType + 1] szDeviceType;
+	WCHAR[RAS_MaxDeviceName + 1] szDeviceName;
 }
 alias RASDEVINFOW* LPRASDEVINFOW;
 
 struct RASDEVINFOA{
 	DWORD dwSize;
-	CHAR szDeviceType[RAS_MaxDeviceType + 1];
-	CHAR szDeviceName[RAS_MaxDeviceName + 1];
+	CHAR[RAS_MaxDeviceType + 1] szDeviceType;
+	CHAR[RAS_MaxDeviceName + 1] szDeviceName;
 }
 alias RASDEVINFOA* LPRASDEVINFOA;
 
@@ -529,8 +529,8 @@ struct RASENTRYW {
 	DWORD dwfOptions;
 	DWORD dwCountryID;
 	DWORD dwCountryCode;
-	WCHAR szAreaCode[RAS_MaxAreaCode + 1];
-	WCHAR szLocalPhoneNumber[RAS_MaxPhoneNumber + 1];
+	WCHAR[RAS_MaxAreaCode + 1] szAreaCode;
+	WCHAR[RAS_MaxPhoneNumber + 1] szLocalPhoneNumber;
 	DWORD dwAlternateOffset;
 	RASIPADDR ipaddr;
 	RASIPADDR ipaddrDns;
@@ -540,15 +540,15 @@ struct RASENTRYW {
 	DWORD dwFrameSize;
 	DWORD dwfNetProtocols;
 	DWORD dwFramingProtocol;
-	WCHAR szScript[MAX_PATH];
-	WCHAR szAutodialDll[MAX_PATH];
-	WCHAR szAutodialFunc[MAX_PATH];
-	WCHAR szDeviceType[RAS_MaxDeviceType + 1];
-	WCHAR szDeviceName[RAS_MaxDeviceName + 1];
-	WCHAR szX25PadType[RAS_MaxPadType + 1];
-	WCHAR szX25Address[RAS_MaxX25Address + 1];
-	WCHAR szX25Facilities[RAS_MaxFacilities + 1];
-	WCHAR szX25UserData[RAS_MaxUserData + 1];
+	WCHAR[MAX_PATH] szScript;
+	WCHAR[MAX_PATH] szAutodialDll;
+	WCHAR[MAX_PATH] szAutodialFunc;
+	WCHAR[RAS_MaxDeviceType + 1] szDeviceType;
+	WCHAR[RAS_MaxDeviceName + 1] szDeviceName;
+	WCHAR[RAS_MaxPadType + 1] szX25PadType;
+	WCHAR[RAS_MaxX25Address + 1] szX25Address;
+	WCHAR[RAS_MaxFacilities + 1] szX25Facilities;
+	WCHAR[RAS_MaxUserData + 1] szX25UserData;
 	DWORD dwChannels;
 	DWORD dwReserved1;
 	DWORD dwReserved2;
@@ -566,7 +566,7 @@ struct RASENTRYW {
 		DWORD dwEncryptionType;
 		DWORD dwCustomAuthKey;
 		GUID guidId;
-		WCHAR szCustomDialDll[MAX_PATH];
+		WCHAR[MAX_PATH] szCustomDialDll;
 		DWORD dwVpnStrategy;
 	}
 }
@@ -577,8 +577,8 @@ struct RASENTRYA {
 	DWORD dwfOptions;
 	DWORD dwCountryID;
 	DWORD dwCountryCode;
-	CHAR szAreaCode[RAS_MaxAreaCode + 1];
-	CHAR szLocalPhoneNumber[RAS_MaxPhoneNumber + 1];
+	CHAR[RAS_MaxAreaCode + 1] szAreaCode;
+	CHAR[RAS_MaxPhoneNumber + 1] szLocalPhoneNumber;
 	DWORD dwAlternateOffset;
 	RASIPADDR ipaddr;
 	RASIPADDR ipaddrDns;
@@ -588,15 +588,15 @@ struct RASENTRYA {
 	DWORD dwFrameSize;
 	DWORD dwfNetProtocols;
 	DWORD dwFramingProtocol;
-	CHAR szScript[MAX_PATH];
-	CHAR szAutodialDll[MAX_PATH];
-	CHAR szAutodialFunc[MAX_PATH];
-	CHAR szDeviceType[RAS_MaxDeviceType + 1];
-	CHAR szDeviceName[RAS_MaxDeviceName + 1];
-	CHAR szX25PadType[RAS_MaxPadType + 1];
-	CHAR szX25Address[RAS_MaxX25Address + 1];
-	CHAR szX25Facilities[RAS_MaxFacilities + 1];
-	CHAR szX25UserData[RAS_MaxUserData + 1];
+	CHAR[MAX_PATH] szScript;
+	CHAR[MAX_PATH] szAutodialDll;
+	CHAR[MAX_PATH] szAutodialFunc;
+	CHAR[RAS_MaxDeviceType + 1] szDeviceType;
+	CHAR[RAS_MaxDeviceName + 1] szDeviceName;
+	CHAR[RAS_MaxPadType + 1] szX25PadType;
+	CHAR[RAS_MaxX25Address + 1] szX25Address;
+	CHAR[RAS_MaxFacilities + 1] szX25Facilities;
+	CHAR[RAS_MaxUserData + 1] szX25UserData;
 	DWORD dwChannels;
 	DWORD dwReserved1;
 	DWORD dwReserved2;
@@ -614,7 +614,7 @@ struct RASENTRYA {
 		DWORD dwEncryptionType;
 		DWORD dwCustomAuthKey;
 		GUID guidId;
-		CHAR szCustomDialDll[MAX_PATH];
+		CHAR[MAX_PATH] szCustomDialDll;
 		DWORD dwVpnStrategy;
 	}
 }
@@ -634,9 +634,9 @@ static if (_WIN32_WINNT >= 0x401) {
 	struct RASSUBENTRYW{
 		DWORD dwSize;
 		DWORD dwfFlags;
-		WCHAR szDeviceType[RAS_MaxDeviceType + 1];
-		WCHAR szDeviceName[RAS_MaxDeviceName + 1];
-		WCHAR szLocalPhoneNumber[RAS_MaxPhoneNumber + 1];
+		WCHAR[RAS_MaxDeviceType + 1] szDeviceType;
+		WCHAR[RAS_MaxDeviceName + 1] szDeviceName;
+		WCHAR[RAS_MaxPhoneNumber + 1] szLocalPhoneNumber;
 		DWORD dwAlternateOffset;
 	}
 	alias RASSUBENTRYW* LPRASSUBENTRYW;
@@ -644,9 +644,9 @@ static if (_WIN32_WINNT >= 0x401) {
 	struct RASSUBENTRYA{
 		DWORD dwSize;
 		DWORD dwfFlags;
-		CHAR szDeviceType[RAS_MaxDeviceType + 1];
-		CHAR szDeviceName[RAS_MaxDeviceName + 1];
-		CHAR szLocalPhoneNumber[RAS_MaxPhoneNumber + 1];
+		CHAR[RAS_MaxDeviceType + 1] szDeviceType;
+		CHAR[RAS_MaxDeviceName + 1] szDeviceName;
+		CHAR[RAS_MaxPhoneNumber + 1] szLocalPhoneNumber;
 		DWORD dwAlternateOffset;
 	}
 	alias RASSUBENTRYA* LPRASSUBENTRYA;
@@ -654,18 +654,18 @@ static if (_WIN32_WINNT >= 0x401) {
 	struct RASCREDENTIALSW{
 		DWORD dwSize;
 		DWORD dwMask;
-		WCHAR szUserName[UNLEN + 1];
-		WCHAR szPassword[PWLEN + 1];
-		WCHAR szDomain[DNLEN + 1];
+		WCHAR[UNLEN + 1] szUserName;
+		WCHAR[PWLEN + 1] szPassword;
+		WCHAR[DNLEN + 1] szDomain;
 	}
 	alias RASCREDENTIALSW* LPRASCREDENTIALSW;
 
 	struct RASCREDENTIALSA{
 		DWORD dwSize;
 		DWORD dwMask;
-		CHAR szUserName[UNLEN + 1];
-		CHAR szPassword[PWLEN + 1];
-		CHAR szDomain[DNLEN + 1];
+		CHAR[UNLEN + 1] szUserName;
+		CHAR[PWLEN + 1] szPassword;
+		CHAR[DNLEN + 1] szDomain;
 	}
 	alias RASCREDENTIALSA* LPRASCREDENTIALSA;
 
@@ -673,7 +673,7 @@ static if (_WIN32_WINNT >= 0x401) {
 		DWORD dwSize;
 		DWORD dwFlags;
 		DWORD dwDialingLocation;
-		WCHAR szEntry[RAS_MaxEntryName + 1];
+		WCHAR[RAS_MaxEntryName + 1] szEntry;
 	}
 	alias RASAUTODIALENTRYW* LPRASAUTODIALENTRYW;
 
@@ -681,7 +681,7 @@ static if (_WIN32_WINNT >= 0x401) {
 		DWORD dwSize;
 		DWORD dwFlags;
 		DWORD dwDialingLocation;
-		CHAR szEntry[RAS_MaxEntryName + 1];
+		CHAR[RAS_MaxEntryName + 1] szEntry;
 	}
 	alias RASAUTODIALENTRYA* LPRASAUTODIALENTRYA;
 }
@@ -698,16 +698,16 @@ static if (_WIN32_WINNT >= 0x500) {
 	alias RASPPPCCP* LPRASPPPCCP;
 
 	struct RASEAPUSERIDENTITYW{
-		WCHAR szUserName[UNLEN + 1];
+		WCHAR[UNLEN + 1] szUserName;
 		DWORD dwSizeofEapInfo;
-		BYTE pbEapInfo[1];
+		BYTE[1] pbEapInfo;
 	}
 	alias RASEAPUSERIDENTITYW* LPRASEAPUSERIDENTITYW;
 
 	struct RASEAPUSERIDENTITYA{
-		CHAR szUserName[UNLEN + 1];
+		CHAR[UNLEN + 1] szUserName;
 		DWORD dwSizeofEapInfo;
-		BYTE pbEapInfo[1];
+		BYTE[1] pbEapInfo;
 	}
 	alias RASEAPUSERIDENTITYA* LPRASEAPUSERIDENTITYA;
 

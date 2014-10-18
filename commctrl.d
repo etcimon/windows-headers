@@ -2833,14 +2833,14 @@ static if (_WIN32_IE >= 0x400) {
 	struct NMCBEDRAGBEGINW {
 		NMHDR hdr;
 		int   iItemid;
-		WCHAR szText[CBEMAXSTRLEN];
+		WCHAR[CBEMAXSTRLEN] szText;
 	}
 	alias NMCBEDRAGBEGINW* LPNMCBEDRAGBEGINW, PNMCBEDRAGBEGINW;
 
 	struct NMCBEDRAGBEGINA {
 		NMHDR hdr;
 		int   iItemid;
-		char  szText[CBEMAXSTRLEN];
+		char[CBEMAXSTRLEN] szText;
 	}
 	alias NMCBEDRAGBEGINA* LPNMCBEDRAGBEGINA, PNMCBEDRAGBEGINA;
 
@@ -2961,7 +2961,7 @@ struct NMCBEENDEDITW {
 	NMHDR hdr;
 	BOOL  fChanged;
 	int   iNewSelection;
-	WCHAR szText[CBEMAXSTRLEN];
+	WCHAR[CBEMAXSTRLEN] szText;
 	int   iWhy;
 }
 alias NMCBEENDEDITW* LPNMCBEENDEDITW, PNMCBEENDEDITW;
@@ -2970,7 +2970,7 @@ struct NMCBEENDEDITA {
 	NMHDR hdr;
 	BOOL  fChanged;
 	int   iNewSelection;
-	char  szText[CBEMAXSTRLEN];
+	char[CBEMAXSTRLEN] szText;
 	int   iWhy;
 }
 alias NMCBEENDEDITA* LPNMCBEENDEDITA, PNMCBEENDEDITA;
@@ -2994,9 +2994,9 @@ struct TBBUTTON {
 	BYTE  fsState;
 	BYTE  fsStyle;
 	version(Win64){
-		BYTE  bReserved[6];
+		BYTE[6] bReserved;
 	} else {
-		BYTE  bReserved[2];
+		BYTE[2] bReserved;
 	}
 	DWORD_PTR dwData;
 	INT_PTR iString;
@@ -3542,7 +3542,7 @@ static if (_WIN32_IE >= 0x300) {
 	struct NMTTDISPINFOA {
 		NMHDR     hdr;
 		LPSTR     lpszText;
-		char      szText[80];
+		char[80]  szText;
 		HINSTANCE hinst;
 		UINT      uFlags;
 		LPARAM    lParam;
@@ -3551,7 +3551,7 @@ static if (_WIN32_IE >= 0x300) {
 	struct NMTTDISPINFOW {
 		NMHDR     hdr;
 		LPWSTR    lpszText;
-		WCHAR     szText[80];
+		WCHAR[80] szText;
 		HINSTANCE hinst;
 		UINT      uFlags;
 		LPARAM    lParam;
@@ -3560,7 +3560,7 @@ static if (_WIN32_IE >= 0x300) {
 	struct NMTTDISPINFOA {
 		NMHDR     hdr;
 		LPSTR     lpszText;
-		char      szText[80];
+		char[80]  szText;
 		HINSTANCE hinst;
 		UINT      uFlags;
 	}
@@ -3568,7 +3568,7 @@ static if (_WIN32_IE >= 0x300) {
 	struct NMTTDISPINFOW {
 		NMHDR     hdr;
 		LPWSTR    lpszText;
-		WCHAR     szText[80];
+		WCHAR[80] szText;
 		HINSTANCE hinst;
 		UINT      uFlags;
 	}

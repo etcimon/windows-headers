@@ -635,7 +635,7 @@ struct PRINTER_NOTIFY_INFO_DATA {
 	DWORD Reserved;
 	DWORD Id;
 	union _NotifyData {
-		DWORD adwData[2];
+		DWORD[2] adwData;
 		struct Data {
 			DWORD cbBuf;
 			PVOID pBuf;
@@ -649,7 +649,7 @@ struct PRINTER_NOTIFY_INFO {
 	DWORD Version;
 	DWORD Flags;
 	DWORD Count;
-	PRINTER_NOTIFY_INFO_DATA aData[1];
+	PRINTER_NOTIFY_INFO_DATA[1] aData;
 }
 alias PRINTER_NOTIFY_INFO* PPRINTER_NOTIFY_INFO, LPPRINTER_NOTIFY_INFO;
 

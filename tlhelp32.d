@@ -66,7 +66,7 @@ struct PROCESSENTRY32W {
 	DWORD th32ParentProcessID;
 	LONG pcPriClassBase;
 	DWORD dwFlags;
-	WCHAR szExeFile[MAX_PATH];
+	WCHAR[MAX_PATH] szExeFile;
 }
 alias PROCESSENTRY32W* PPROCESSENTRY32W;
 alias PROCESSENTRY32W* LPPROCESSENTRY32W;
@@ -92,8 +92,8 @@ struct MODULEENTRY32W {
 	BYTE *modBaseAddr;
 	DWORD modBaseSize;
 	HMODULE hModule; 
-	WCHAR szModule[MAX_MODULE_NAME32 + 1];
-	WCHAR szExePath[MAX_PATH];
+	WCHAR[MAX_MODULE_NAME32 + 1] szModule;
+	WCHAR[MAX_PATH] szExePath;
 }
 alias MODULEENTRY32W* PMODULEENTRY32W;
 alias MODULEENTRY32W* LPMODULEENTRY32W;
@@ -117,7 +117,7 @@ version(Unicode) {
 		DWORD th32ParentProcessID;
 		LONG pcPriClassBase;
 		DWORD dwFlags;
-		CHAR  szExeFile[MAX_PATH];
+		CHAR[MAX_PATH] szExeFile;
 	}
 	alias PROCESSENTRY32* PPROCESSENTRY32;
 	alias PROCESSENTRY32* LPPROCESSENTRY32;
@@ -131,8 +131,8 @@ version(Unicode) {
 		BYTE *modBaseAddr;
 		DWORD modBaseSize;
 		HMODULE hModule;
-		char szModule[MAX_MODULE_NAME32 + 1];
-		char szExePath[MAX_PATH];
+		char[MAX_MODULE_NAME32 + 1] szModule;
+		char[MAX_PATH] szExePath;
 	}
 	alias MODULEENTRY32* PMODULEENTRY32;
 	alias MODULEENTRY32* LPMODULEENTRY32;

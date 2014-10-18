@@ -234,7 +234,7 @@ extern(Windows) {
 static __inline char*
 gai_strerrorA(int ecode)
 {
-	static char message[1024+1];
+	static char[1024+1] message;
 	DWORD dwFlags = FORMAT_MESSAGE_FROM_SYSTEM
 	              | FORMAT_MESSAGE_IGNORE_INSERTS
 		      | FORMAT_MESSAGE_MAX_WIDTH_MASK;
@@ -245,7 +245,7 @@ gai_strerrorA(int ecode)
 static __inline WCHAR*
 gai_strerrorW(int ecode)
 {
-	static WCHAR message[1024+1];
+	static WCHAR[1024+1] message;
 	DWORD dwFlags = FORMAT_MESSAGE_FROM_SYSTEM
 	              | FORMAT_MESSAGE_IGNORE_INSERTS
 		      | FORMAT_MESSAGE_MAX_WIDTH_MASK;
