@@ -3171,7 +3171,7 @@ struct HD_LAYOUT {
 	RECT*      prc;
 	WINDOWPOS* pwpos;
 }
-alias HDLAYOUT* LPHDLAYOUT;
+alias HD_LAYOUT* LPHDLAYOUT;
 deprecated alias HD_LAYOUT HDLAYOUT;
 
 struct HD_HITTESTINFO {

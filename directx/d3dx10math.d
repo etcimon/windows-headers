@@ -11,7 +11,10 @@ version(Tango) {
     import tango.math.Math;
     alias sqrt sqrtf;
 } else {
-    import std.c.math;
+    version (D_Version2)
+        import core.stdc.math;
+    else
+        import std.c.math;
 }
 
 private import win32.windows;

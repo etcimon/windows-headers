@@ -14,7 +14,10 @@ import win32.windef;
 version(Tango){
     private import tango.stdc.time;
 }else{
-    private import std.c.time;
+    version (D_Version2)
+        import core.stdc.time;
+    else
+        import std.c.time;
 }
 //#include <sys/types.h>
 
