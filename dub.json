@@ -1,0 +1,7 @@
+{
+    "name": "win32",
+    "description": "Bindings for win32.",
+    "license": "Boost",
+    "authors": ["Benjamin Thaut"],
+    "targetType": "sourceLibrary"
+}
