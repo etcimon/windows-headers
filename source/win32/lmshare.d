@@ -8,7 +8,8 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module win32.lmshare;
-pragma(lib, "netapi");
+version(Win32)
+	pragma(lib, "netapi");
 
 import win32.lmcons;
 private import win32.w32api, win32.windef;

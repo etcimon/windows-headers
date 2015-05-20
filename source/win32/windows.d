@@ -6,7 +6,7 @@
 *             Translated from MinGW API for MS-Windows 4.0              *
 *                                                                       *
 *                       Placed into public domain                       *
-\***********************************************************************/
+/***********************************************************************/
 module win32.windows;
 
 /*
@@ -42,15 +42,8 @@ public import win32.commdlg;
 public import win32.winspool;
 public import win32.ole2;
 
-// Select correct version of winsock.  Importing the incorrect
-// module will cause a static assert to prevent problems later on.
-version (Win32_Winsock1) {
-	public import win32.winsock;
-} else {
-	public import win32.winsock2;
-	public import win32.ws2tcpip;
-}
-
+public import win32.winsock2;
+public import win32.ws2tcpip;
 /+
 #if (_WIN32_WINNT >= 0x400)
 #include <winsock2.h>
