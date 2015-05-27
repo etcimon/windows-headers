@@ -1654,7 +1654,6 @@ const uint
 	SE_DACL_PROTECTED           = 0x1000,
 	SE_SACL_PROTECTED           = 0x2000,
 	SE_SELF_RELATIVE            = 0x8000;
-
 enum SECURITY_IMPERSONATION_LEVEL {
 	SecurityAnonymous,
 	SecurityIdentification,
@@ -2385,7 +2384,7 @@ struct TOKEN_OWNER {
 	PSID Owner;
 }
 alias TOKEN_OWNER* PTOKEN_OWNER;
-
+const int SECURITY_MAX_SID_SIZE = 68;
 struct TOKEN_PRIMARY_GROUP {
 	PSID PrimaryGroup;
 }
@@ -2398,8 +2397,8 @@ struct TOKEN_PRIVILEGES {
 	LUID_AND_ATTRIBUTES* Privileges() { return &_Privileges; }
 }
 alias TOKEN_PRIVILEGES* PTOKEN_PRIVILEGES, LPTOKEN_PRIVILEGES;
-
-enum TOKEN_TYPE {
+alias TOKEN_TYPE = int;
+enum : TOKEN_TYPE {
 	TokenPrimary = 1,
 	TokenImpersonation
 }
@@ -2424,6 +2423,11 @@ struct TOKEN_USER {
 }
 alias TOKEN_USER* PTOKEN_USER;
 
+struct TOKEN_MANDATORY_LABEL {
+	SID_AND_ATTRIBUTES Label;
+}
+alias PTOKEN_MANDATORY_LABEL = TOKEN_MANDATORY_LABEL*;
+
 alias DWORD SECURITY_INFORMATION;
 alias SECURITY_INFORMATION* PSECURITY_INFORMATION;
 alias WORD SECURITY_DESCRIPTOR_CONTROL;
@@ -2439,8 +2443,22 @@ struct SECURITY_DESCRIPTOR {
 	PACL Dacl;
 }
 alias SECURITY_DESCRIPTOR* PSECURITY_DESCRIPTOR, PISECURITY_DESCRIPTOR;
+alias TOKEN_ELEVATION_TYPE = int;
+enum : TOKEN_ELEVATION_TYPE {
+	TokenElevationTypeDefault = 1,
+	TokenElevationTypeFull,
+	TokenElevationTypeLimited
+}
 
-enum TOKEN_INFORMATION_CLASS {
+alias PTOKEN_ELEVATION_TYPE = TOKEN_ELEVATION_TYPE*;
+
+struct TOKEN_ELEVATION {
+	DWORD TokenIsElevated;
+}
+alias PTOKEN_ELEVATION = TOKEN_ELEVATION*;
+
+alias TOKEN_INFORMATION_CLASS = int;
+enum : TOKEN_INFORMATION_CLASS {
 	TokenUser = 1,
 	TokenGroups,
 	TokenPrivileges,
@@ -2457,7 +2475,33 @@ enum TOKEN_INFORMATION_CLASS {
 	TokenSessionReference,
 	TokenSandBoxInert,
 	TokenAuditPolicy,
-	TokenOrigin
+	TokenOrigin,
+	TokenElevationType,
+	TokenLinkedToken,
+	TokenElevation,
+	TokenHasRestrictions,
+	TokenAccessInformation,
+	TokenVirtualizationAllowed,
+	TokenVirtualizationEnabled,
+	TokenIntegrityLevel,
+	TokenUIAccess,
+	TokenMandatoryPolicy,
+	TokenLogonSid,
+	TokenIsAppContainer,
+	TokenCapabilities,
+	TokenAppContainerSid,
+	TokenAppContainerNumber,
+	TokenUserClaimAttributes,
+	TokenDeviceClaimAttributes,
+	TokenRestrictedUserClaimAttributes,
+	TokenRestrictedDeviceClaimAttributes,
+	TokenDeviceGroups,
+	TokenRestrictedDeviceGroups,
+	TokenSecurityAttributes,
+	TokenIsRestricted,
+	TokenProcessTrustLevel,
+	MaxTokenInfoClass  // MaxTokenInfoClass should always be the last enum
+
 }
 
 enum SID_NAME_USE {
@@ -2472,6 +2516,105 @@ enum SID_NAME_USE {
 	SidTypeComputer
 }
 alias SID_NAME_USE* PSID_NAME_USE;
+
+alias WELL_KNOWN_SID_TYPE = int;
+enum : WELL_KNOWN_SID_TYPE { 
+	WinNullSid                                   = 0,
+	WinWorldSid                                  = 1,
+	WinLocalSid                                  = 2,
+	WinCreatorOwnerSid                           = 3,
+	WinCreatorGroupSid                           = 4,
+	WinCreatorOwnerServerSid                     = 5,
+	WinCreatorGroupServerSid                     = 6,
+	WinNtAuthoritySid                            = 7,
+	WinDialupSid                                 = 8,
+	WinNetworkSid                                = 9,
+	WinBatchSid                                  = 10,
+	WinInteractiveSid                            = 11,
+	WinServiceSid                                = 12,
+	WinAnonymousSid                              = 13,
+	WinProxySid                                  = 14,
+	WinEnterpriseControllersSid                  = 15,
+	WinSelfSid                                   = 16,
+	WinAuthenticatedUserSid                      = 17,
+	WinRestrictedCodeSid                         = 18,
+	WinTerminalServerSid                         = 19,
+	WinRemoteLogonIdSid                          = 20,
+	WinLogonIdsSid                               = 21,
+	WinLocalSystemSid                            = 22,
+	WinLocalServiceSid                           = 23,
+	WinNetworkServiceSid                         = 24,
+	WinBuiltinDomainSid                          = 25,
+	WinBuiltinAdministratorsSid                  = 26,
+	WinBuiltinUsersSid                           = 27,
+	WinBuiltinGuestsSid                          = 28,
+	WinBuiltinPowerUsersSid                      = 29,
+	WinBuiltinAccountOperatorsSid                = 30,
+	WinBuiltinSystemOperatorsSid                 = 31,
+	WinBuiltinPrintOperatorsSid                  = 32,
+	WinBuiltinBackupOperatorsSid                 = 33,
+	WinBuiltinReplicatorSid                      = 34,
+	WinBuiltinPreWindows2000CompatibleAccessSid  = 35,
+	WinBuiltinRemoteDesktopUsersSid              = 36,
+	WinBuiltinNetworkConfigurationOperatorsSid   = 37,
+	WinAccountAdministratorSid                   = 38,
+	WinAccountGuestSid                           = 39,
+	WinAccountKrbtgtSid                          = 40,
+	WinAccountDomainAdminsSid                    = 41,
+	WinAccountDomainUsersSid                     = 42,
+	WinAccountDomainGuestsSid                    = 43,
+	WinAccountComputersSid                       = 44,
+	WinAccountControllersSid                     = 45,
+	WinAccountCertAdminsSid                      = 46,
+	WinAccountSchemaAdminsSid                    = 47,
+	WinAccountEnterpriseAdminsSid                = 48,
+	WinAccountPolicyAdminsSid                    = 49,
+	WinAccountRasAndIasServersSid                = 50,
+	WinNTLMAuthenticationSid                     = 51,
+	WinDigestAuthenticationSid                   = 52,
+	WinSChannelAuthenticationSid                 = 53,
+	WinThisOrganizationSid                       = 54,
+	WinOtherOrganizationSid                      = 55,
+	WinBuiltinIncomingForestTrustBuildersSid     = 56,
+	WinBuiltinPerfMonitoringUsersSid             = 57,
+	WinBuiltinPerfLoggingUsersSid                = 58,
+	WinBuiltinAuthorizationAccessSid             = 59,
+	WinBuiltinTerminalServerLicenseServersSid    = 60,
+	WinBuiltinDCOMUsersSid                       = 61,
+	WinBuiltinIUsersSid                          = 62,
+	WinIUserSid                                  = 63,
+	WinBuiltinCryptoOperatorsSid                 = 64,
+	WinUntrustedLabelSid                         = 65,
+	WinLowLabelSid                               = 66,
+	WinMediumLabelSid                            = 67,
+	WinHighLabelSid                              = 68,
+	WinSystemLabelSid                            = 69,
+	WinWriteRestrictedCodeSid                    = 70,
+	WinCreatorOwnerRightsSid                     = 71,
+	WinCacheablePrincipalsGroupSid               = 72,
+	WinNonCacheablePrincipalsGroupSid            = 73,
+	WinEnterpriseReadonlyControllersSid          = 74,
+	WinAccountReadonlyControllersSid             = 75,
+	WinBuiltinEventLogReadersGroup               = 76,
+	WinNewEnterpriseReadonlyControllersSid       = 77,
+	WinBuiltinCertSvcDComAccessGroup             = 78,
+	WinMediumPlusLabelSid                        = 79,
+	WinLocalLogonSid                             = 80,
+	WinConsoleLogonSid                           = 81,
+	WinThisOrganizationCertificateSid            = 82,
+	WinApplicationPackageAuthoritySid            = 83,
+	WinBuiltinAnyPackageSid                      = 84,
+	WinCapabilityInternetClientSid               = 85,
+	WinCapabilityInternetClientServerSid         = 86,
+	WinCapabilityPrivateNetworkClientServerSid   = 87,
+	WinCapabilityPicturesLibrarySid              = 88,
+	WinCapabilityVideosLibrarySid                = 89,
+	WinCapabilityMusicLibrarySid                 = 90,
+	WinCapabilityDocumentsLibrarySid             = 91,
+	WinCapabilitySharedUserCertificatesSid       = 92,
+	WinCapabilityEnterpriseAuthenticationSid     = 93,
+	WinCapabilityRemovableStorageSid             = 94
+}
 
 struct QUOTA_LIMITS {
 	SIZE_T PagedPoolLimit;
@@ -2682,7 +2825,7 @@ struct EVENTLOGRECORD {
 alias EVENTLOGRECORD* PEVENTLOGRECORD;
 
 struct OSVERSIONINFOA {
-	DWORD     dwOSVersionInfoSize;
+	DWORD     dwOSVersionInfoSize = OSVERSIONINFOA.sizeof;
 	DWORD     dwMajorVersion;
 	DWORD     dwMinorVersion;
 	DWORD     dwBuildNumber;
@@ -2692,7 +2835,7 @@ struct OSVERSIONINFOA {
 alias OSVERSIONINFOA* POSVERSIONINFOA, LPOSVERSIONINFOA;
 
 struct OSVERSIONINFOW {
-	DWORD      dwOSVersionInfoSize;
+	DWORD      dwOSVersionInfoSize = OSVERSIONINFOW.sizeof;
 	DWORD      dwMajorVersion;
 	DWORD      dwMinorVersion;
 	DWORD      dwBuildNumber;

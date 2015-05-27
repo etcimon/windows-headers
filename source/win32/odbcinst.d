@@ -112,10 +112,9 @@ static if (ODBCVER >= 0x0250) {
 	BOOL  ConfigDriverW(HWND,WORD,LPCWSTR,LPCWSTR,LPWSTR,WORD,WORD*);
 	BOOL  SQLConfigDriver(HWND,WORD,LPCSTR,LPCSTR,LPSTR,WORD,WORD*);
 	BOOL  SQLConfigDriverW(HWND,WORD,LPCWSTR,LPCWSTR,LPWSTR,WORD,WORD*);
-	deprecated {
-		BOOL  SQLInstallTranslator(LPCSTR,LPCSTR,LPCSTR,LPSTR,WORD,WORD*,WORD,LPDWORD);
-		BOOL  SQLInstallTranslatorW(LPCWSTR,LPCWSTR,LPCWSTR,LPWSTR,WORD,WORD*,WORD,LPDWORD);
-	}
+	BOOL  SQLInstallTranslator(LPCSTR,LPCSTR,LPCSTR,LPSTR,WORD,WORD*,WORD,LPDWORD);
+	BOOL  SQLInstallTranslatorW(LPCWSTR,LPCWSTR,LPCWSTR,LPWSTR,WORD,WORD*,WORD,LPDWORD);
+
 	BOOL  SQLRemoveDriver(LPCSTR,BOOL,LPDWORD);
 	BOOL  SQLRemoveDriverManager(LPDWORD);
 	BOOL  SQLRemoveDriverW(LPCWSTR,BOOL,LPDWORD);
@@ -152,7 +151,7 @@ version (Unicode) {
 	alias SQLInstallDriverManagerW SQLInstallDriverManager;
 	alias SQLInstallerErrorW SQLInstallerError;
 	alias SQLInstallODBCW SQLInstallODBC;
-	deprecated alias SQLInstallTranslatorW SQLInstallTranslator;
+	alias SQLInstallTranslatorW SQLInstallTranslator;
 	alias SQLInstallTranslatorExW SQLInstallTranslatorEx;
 	alias SQLPostInstallerErrorW SQLPostInstallerError;
 	alias SQLReadFileDSNW SQLReadFileDSN;
