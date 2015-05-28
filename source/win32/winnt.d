@@ -2860,7 +2860,7 @@ struct OSVERSIONINFOEXA {
 alias OSVERSIONINFOEXA* POSVERSIONINFOEXA, LPOSVERSIONINFOEXA;
 
 struct OSVERSIONINFOEXW {
-	DWORD      dwOSVersionInfoSize;
+	DWORD      dwOSVersionInfoSize = OSVERSIONINFOEXW.sizeof;
 	DWORD      dwMajorVersion;
 	DWORD      dwMinorVersion;
 	DWORD      dwBuildNumber;

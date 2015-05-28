@@ -1424,7 +1424,7 @@ alias MEMORYSTATUS* LPMEMORYSTATUS;
 
 static if (_WIN32_WINNT >= 0x500) {
 	struct MEMORYSTATUSEX {
-		DWORD     dwLength;
+		DWORD     dwLength = MEMORYSTATUSEX.sizeof;
 		DWORD     dwMemoryLoad;
 		DWORDLONG ullTotalPhys;
 		DWORDLONG ullAvailPhys;
