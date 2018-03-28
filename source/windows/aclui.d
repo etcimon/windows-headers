@@ -15,7 +15,7 @@ private import windows.w32api;
 
 static assert (_WIN32_WINNT >= 0x500,
 	"windows.aclui is available only if version Windows2000, WindowsXP, Windows2003 "
-	"or WindowsVista is set");
+	~ "or WindowsVista is set");
 
 import windows.accctrl, windows.commctrl, windows.objbase;
 private import windows.basetyps, windows.prsht, windows.unknwn, windows.windef,
