@@ -2108,7 +2108,7 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 	HANDLE OpenWaitableTimerW(DWORD, BOOL, LPCWSTR);
 	DWORD QueryDosDeviceA(LPCSTR, LPSTR, DWORD);
 	DWORD QueryDosDeviceW(LPCWSTR, LPWSTR, DWORD);
-	BOOL SetWaitableTimer(HANDLE, const(LARGE_INTEGER)*, LONG, PTIMERAPCROUTINE, PVOID, BOOL);
+	version(LDC){}else BOOL SetWaitableTimer(HANDLE, const(LARGE_INTEGER)*, LONG, PTIMERAPCROUTINE, PVOID, BOOL);
 	BOOL SetWaitableTimer(HANDLE, const(LARGE_INTEGER)*, LONG, VOID*, PVOID, BOOL);
 	void SwitchToFiber(PVOID);
 
@@ -2433,6 +2433,9 @@ WINBASEAPI BOOL WINAPI SetEvent(HANDLE);
 		BOOL SetDllDirectoryW(LPCWSTR);
 		BOOL SetFirmwareEnvironmentVariableA(LPCSTR, LPCSTR, PVOID, DWORD);
 		BOOL SetFirmwareEnvironmentVariableW(LPCWSTR, LPCWSTR, PVOID, DWORD);
+		DWORD WTSGetActiveConsoleSessionId();
+		BOOL WTSQueryUserToken(ULONG, PHANDLE);
+		
 	}
 
 	// ???

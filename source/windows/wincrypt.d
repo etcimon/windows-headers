@@ -720,6 +720,14 @@ struct CRYPT_ATTRIBUTE {
 }
 alias CRYPT_ATTRIBUTE* PCRYPT_ATTRIBUTE;
 
+struct CRYPTPROTECT_PROMPTSTRUCT {
+  DWORD   cbSize;
+  DWORD   dwPromptFlags;
+  HWND    hwndApp;
+  LPCWSTR szPrompt;
+} 
+alias CRYPTPROTECT_PROMPTSTRUCT* PCRYPTPROTECT_PROMPTSTRUCT;
+
 struct CTL_ENTRY {
 	CRYPT_DATA_BLOB  SubjectIdentifier;
 	DWORD            cAttribute;
@@ -876,6 +884,9 @@ extern (Windows) {
 	  DWORD);
 	BOOL CryptSetProviderA(LPCSTR, DWORD);
 	BOOL CryptSetProviderW(LPCWSTR, DWORD);
+	
+	BOOL CryptUnprotectData(DATA_BLOB*, LPWSTR*, DATA_BLOB*, PVOID, CRYPTPROTECT_PROMPTSTRUCT*, DWORD, DATA_BLOB*);
+	BOOL CryptProtectData(DATA_BLOB*, LPCWSTR, DATA_BLOB*, PVOID, CRYPTPROTECT_PROMPTSTRUCT*, DWORD, DATA_BLOB*);
 }
 
 version (Unicode) {

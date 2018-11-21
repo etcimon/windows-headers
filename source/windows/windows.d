@@ -25,6 +25,7 @@ module windows.windows;
 public import windows.w32api;
 public import windows.core;
 
+public import windows.profinfo;
 public import windows.cderr;
 public import windows.dde;
 public import windows.ddeml;
