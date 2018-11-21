@@ -22,7 +22,7 @@ enum __W32API_MINOR_VERSION = 17;
  *	removed in order to simplify the bindings.
  */
  version (Windows10) {
-	enum uint _WIN32_WINNT = 0x604;
+	enum uint _WIN32_WINNT = 0xA00;
 } else version (Windows8_1) {	// also Windows2012R2
 	enum uint _WIN32_WINNT = 0x603;
 } else version (Windows8) {	// also Windows2012
