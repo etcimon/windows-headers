@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.winnt;
 
-public import windows.basetsd, windows.windef, windows.winerror;
+public import windows.basetsd, windows.basetyps, windows.windef, windows.winerror;
 private import windows.w32api;
 
 /* Translation Notes:
@@ -1952,7 +1952,6 @@ ULONG WT_SET_MAX_THREADPOOL_THREADS(ref ULONG Flags, ushort Limit) {
 	return Flags |= Limit << 16;
 }
 
-import windows.basetyps;
 /* also in windows.basetyps
 struct GUID {
 	uint  Data1;
