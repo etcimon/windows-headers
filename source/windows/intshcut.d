@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.intshcut;
-
+nothrow:
 private import windows.unknwn, windows.windef;
 
 enum : SCODE {

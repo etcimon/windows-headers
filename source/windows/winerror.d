@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.winerror;
-
+nothrow:
 /* Comments from the Mingw header:
  * WAIT_TIMEOUT is also defined in winbase.h
  */

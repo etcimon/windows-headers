@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.rpcdcep;
-
+nothrow:
 private import windows.basetyps;
 private import windows.w32api;
 private import windows.windef;

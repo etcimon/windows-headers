@@ -12,7 +12,7 @@ module windows.lmconfig;
 // All functions in this file are deprecated!
 
 private import windows.lmcons, windows.windef;
-
+nothrow:
 deprecated {
 	struct CONFIG_INFO_0 {
 		LPWSTR cfgi0_key;

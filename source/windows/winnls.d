@@ -10,7 +10,7 @@
 \***********************************************************************/
 module windows.winnls;
 pragma(lib, "kernel32");
-
+nothrow:
 private import windows.basetsd, windows.w32api, windows.winbase, windows.windef;
 
 alias DWORD LCTYPE, CALTYPE, CALID, LGRPID, GEOID, GEOTYPE, GEOCLASS;

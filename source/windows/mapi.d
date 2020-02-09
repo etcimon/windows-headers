@@ -11,7 +11,7 @@
 module windows.mapi;
 
 private import windows.windef;
-
+nothrow:
 // FIXME: check types and grouping of constants
 
 enum {
@@ -122,7 +122,7 @@ struct MapiMessage {
 }
 alias MapiMessage* lpMapiMessage;
 
-extern (Pascal) {
+extern(Windows) {
 	ULONG MAPILogon(ULONG, LPSTR, LPSTR, FLAGS, ULONG, LPLHANDLE);
 	ULONG MAPISendMail(LHANDLE, ULONG, lpMapiMessage, FLAGS, ULONG);
 	ULONG MAPISendDocuments(ULONG, LPSTR, LPSTR, LPSTR, ULONG);

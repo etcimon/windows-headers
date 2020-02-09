@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.comcat;
-
+nothrow:
 import windows.windows, windows.ole2;
 private import windows.basetyps, windows.cguid, windows.objbase, windows.unknwn,
   windows.windef, windows.wtypes;

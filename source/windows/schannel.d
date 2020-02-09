@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.schannel;
-
+nothrow:
 import windows.wincrypt;
 private import windows.windef;
 

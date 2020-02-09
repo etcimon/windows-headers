@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.commctrl;
 pragma(lib, "comctl32");
-
+nothrow:
 private import windows.w32api, windows.windef, windows.winuser;
 private import windows.winbase; // for SYSTEMTIME
 private import windows.objfwd;  // for LPSTREAM
@@ -3870,7 +3870,7 @@ static if (_WIN32_WINNT >= 0x501) {
 	}
 	alias LVINSERTGROUPSORTED* PLVINSERTGROUPSORTED;
 
-	alias int function(INT, INT, VOID*) PFNLVGROUPCOMPARE;
+	alias int function(INT, INT, VOID*) nothrow PFNLVGROUPCOMPARE;
 
 	struct LVSETINFOTIP {
 		UINT    cbSize = LVSETINFOTIP.sizeof;
@@ -3924,7 +3924,7 @@ static if (_WIN32_WINNT >= 0x600) {
     }
 }
 
-alias int function(LPARAM, LPARAM, LPARAM) PFNLVCOMPARE;
+alias int function(LPARAM, LPARAM, LPARAM) nothrow PFNLVCOMPARE;
 
 struct NMLISTVIEW {
 	NMHDR  hdr;
@@ -4931,12 +4931,12 @@ uint INDEXTOSTATEIMAGEMASK(uint i) { return i << 12; }
 
 template HANDLE_WM_NOTIFY(R) {
 	R HANDLE_WM_NOTIFY(HWND hwnd, WPARAM wParam, LPARAM lParam,
-		  R function(HWND, int, NMHDR*) fn) {
+		  R function(HWND, int, NMHDR*) nothrow fn) {
 		return fn(hwnd, wParam, cast(NMHDR*) lParam);
 	}
 }
 int FORWARD_WM_NOTIFY(HWND hwnd, int idFrom, NMHDR* pnmhdr,
-	  int function(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) fn) {
+	 int function(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) nothrow fn) {
 	return fn(hwnd, WM_NOTIFY, idFrom, cast(LPARAM) pnmhdr);
 }
 

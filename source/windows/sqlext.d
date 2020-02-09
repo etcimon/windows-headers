@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.sqlext;
-
+nothrow:
 /* Conversion notes:
    The MinGW file was a horrible mess. All of the #defines were sorted alphabetically,
    which is crazy. This file needs a lot of work.

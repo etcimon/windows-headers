@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.tlhelp32;
-
+nothrow:
 private import windows.windef;
 
 enum : uint {

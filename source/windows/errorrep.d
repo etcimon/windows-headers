@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.errorrep;
-
+nothrow:
 private import windows.w32api, windows.windef;
 
 static assert (_WIN32_WINNT >= 0x501,

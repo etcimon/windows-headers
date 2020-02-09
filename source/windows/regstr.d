@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.regstr;
-
+nothrow:
 // TODO: fix possible conflict with shloj. Sort out NEC_98 issue.
 
 private import windows.windef;

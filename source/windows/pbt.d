@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.pbt;
-
+nothrow:
 private import windows.windef;
 
 enum : WPARAM {

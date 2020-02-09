@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.ole2ver;
-
+nothrow:
 // These are apparently not documented on the MSDN site
 const rmm = 23;
 const rup = 639;

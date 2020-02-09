@@ -13,7 +13,7 @@ pragma(lib, "winmm");
 /*	The #defines MAKEFOURCC, mmioFOURCC, sndAlias are used to define
  *	compile-time constants, so they are implemented as templates.
  */
-
+nothrow:
 private import windows.w32api, windows.windef, windows.winver;
 
 align(1):

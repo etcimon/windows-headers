@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.wingdi;
 pragma(lib, "gdi32");
-
+nothrow:
 // FIXME: clean up Windows version support
 
 private import windows.w32api, windows.windef, windows.winver;

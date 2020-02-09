@@ -11,7 +11,7 @@
 module windows.mciavi;
 
 private import windows.mmsystem;
-
+nothrow:
 // FIXME: check types and grouping of constants
 
 const MCI_MCIAVI_PLAY_WINDOW     = 0x01000000;

@@ -11,7 +11,7 @@ module windows.exdisp;
 
 import windows.docobj, windows.oaidl, windows.ocidl;
 private import windows.basetyps, windows.windef, windows.wtypes;
-
+nothrow:
 
 enum BrowserNavConstants {
 	navOpenInNewWindow = 0x01,

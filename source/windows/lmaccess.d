@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.lmaccess;
 pragma(lib, "netapi32");
-
+nothrow:
 /**
  Changes relative to MinGW:
 	USER_POSIX_ID_PARMNUM and GROUP_POSIX_ID_PARMNUM aren't in MinGW or in

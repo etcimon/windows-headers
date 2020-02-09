@@ -13,7 +13,7 @@ module windows.ntldap;
 /*	TOTHINKABOUT: These constants don't have ANSI/Unicode versioned
  *	aliases.  Should we merge them anyway?
  */
-
+nothrow:
 const char[]
 	LDAP_SERVER_ASQ_OID                    = "1.2.840.113556.1.4.1504",
 	LDAP_SERVER_DIRSYNC_OID                = "1.2.840.113556.1.4.841",

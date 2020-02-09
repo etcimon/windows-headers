@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.raserror;
-
+nothrow:
 enum {
 	SUCCESS = 0,
 	RASBASE = 600,

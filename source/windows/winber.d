@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.winber;
-
+nothrow:
 /* Comment from MinGW
   winber.h - Header file for the Windows LDAP Basic Encoding Rules API
 

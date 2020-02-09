@@ -11,7 +11,7 @@
 module windows.nb30;
 
 private import windows.windef;
-
+nothrow:
 const size_t
 	NCBNAMSZ =  16,
 	MAX_LANA = 254;

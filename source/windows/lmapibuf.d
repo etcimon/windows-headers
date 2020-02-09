@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.lmapibuf;
 pragma(lib, "netapi32");
-
+nothrow:
 private import windows.lmcons, windows.windef;
 
 extern (Windows) {

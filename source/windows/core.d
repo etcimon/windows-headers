@@ -6,7 +6,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.core;
-
+nothrow:
 /**
  The core Windows API functions.
 

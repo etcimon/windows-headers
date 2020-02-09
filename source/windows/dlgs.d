@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.dlgs;
-
+nothrow:
 private import windows.windef;
 
 enum : ushort {

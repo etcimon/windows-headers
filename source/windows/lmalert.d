@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.lmalert;
 pragma(lib, "netapi32");
-
+nothrow:
 private import windows.lmcons, windows.windef;
 
 const TCHAR[]

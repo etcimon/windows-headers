@@ -12,7 +12,7 @@ module windows.oleidl;
 // DAC: This is defined in ocidl !!
 // what is it doing in here?
 //alias IEnumOleUndoUnits LPENUMOLEUNDOUNITS;
-
+nothrow:
 private import windows.basetyps, windows.objidl, windows.unknwn, windows.windef,
   windows.winuser, windows.wtypes;
 private import windows.objfwd; // for LPMONIKER

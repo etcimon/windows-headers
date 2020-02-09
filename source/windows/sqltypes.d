@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.sqltypes;
-
+nothrow:
 /* Conversion notes:
   It's assumed that ODBC >= 0x0300.
 */

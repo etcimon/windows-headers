@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.rpcnsip;
-
+nothrow:
 private import windows.rpcdce, windows.rpcdcep, windows.rpcnsi;
 
 struct RPC_IMPORT_CONTEXT_P {

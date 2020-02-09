@@ -11,7 +11,7 @@ module windows.lmat;
 pragma(lib, "netapi32");
 
 private import windows.lmcons, windows.windef;
-
+nothrow:
 const JOB_RUN_PERIODICALLY = 1;
 const JOB_EXEC_ERROR       = 2;
 const JOB_RUNS_TODAY       = 4;

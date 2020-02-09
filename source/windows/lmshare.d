@@ -10,7 +10,7 @@
 module windows.lmshare;
 //version(Win32)
 //	pragma(lib, "netapi");
-
+nothrow:
 import windows.lmcons;
 private import windows.w32api, windows.windef;
 

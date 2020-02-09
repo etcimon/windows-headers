@@ -12,7 +12,7 @@ module windows.winver;
 import windows.winbase;
 import windows.sdkddkver;
 pragma(lib, "version");
-
+nothrow:
 private import windows.windef;
 
 // FIXME: type weirdness

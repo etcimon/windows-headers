@@ -10,7 +10,7 @@
 \***********************************************************************/
 module windows.dde;
 pragma(lib, "user32");
-
+nothrow:
 private import windows.windef;
 
 enum : uint {

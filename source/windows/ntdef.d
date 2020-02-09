@@ -11,7 +11,7 @@
 module windows.ntdef;
 
 private import windows.basetsd, windows.subauth, windows.windef, windows.winnt;
-
+nothrow:
 const uint
 	OBJ_INHERIT          = 0x0002,
 	OBJ_PERMANENT        = 0x0010,

@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.rpcndr;
 pragma(lib, "rpcrt4");
-
+nothrow:
 /* Translation notes:
  RPC_CLIENT_ALLOC*, RPC_CLIENT_FREE* were replaced with PRPC_CLIENT_ALLOC, PRPC_CLIENT_FREE
 */

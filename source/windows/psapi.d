@@ -13,7 +13,7 @@
  */
 
 module windows.psapi;
-
+nothrow:
 private import windows.w32api;
 private import windows.winbase;
 private import windows.windef;

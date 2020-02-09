@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.cpl;
-
+nothrow:
 private import windows.windef, windows.winuser;
 
 enum : uint {

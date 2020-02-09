@@ -10,7 +10,7 @@
 \***********************************************************************/
 module windows.aclui;
 pragma(lib, "aclui");
-
+nothrow:
 private import windows.w32api;
 
 static assert (_WIN32_WINNT >= 0x500,

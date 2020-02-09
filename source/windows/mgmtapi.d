@@ -12,7 +12,7 @@ module windows.mgmtapi;
 
 import windows.snmp;
 private import windows.windef;
-
+nothrow:
 enum {
 	SNMP_MGMTAPI_TIMEOUT = 40,
 	SNMP_MGMTAPI_SELECT_FDERRORS,

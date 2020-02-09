@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.snmp;
-
+nothrow:
 private import windows.windows;
 
 // These are not documented on MSDN

@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.lmwksta;
 pragma(lib, "netapi32");
-
+nothrow:
 import windows.lmuseflg;
 private import windows.lmcons, windows.windef;
 

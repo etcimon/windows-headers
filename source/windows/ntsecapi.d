@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.ntsecapi;
-
+nothrow:
 private import
   windows.basetyps, windows.ntdef, windows.windef, windows.winnt, windows.w32api;
 

@@ -11,7 +11,7 @@ module windows.winnt;
 
 public import windows.basetsd, windows.basetyps, windows.windef, windows.winerror;
 private import windows.w32api;
-
+nothrow:
 /* Translation Notes:
 The following macros are unneeded for D:
 FIELD_OFFSET(t,f), CONTAINING_RECORD(address, type, field)

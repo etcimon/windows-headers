@@ -8,7 +8,7 @@
 \***********************************************************************/
 module windows.winsock2;
 pragma(lib, "Ws2_32");
-
+nothrow:
 /*
   Definitions for winsock 2
 

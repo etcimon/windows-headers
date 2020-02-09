@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.shlobj;
 pragma(lib, "shell32");
-
+nothrow:
 // TODO: fix bitfields
 // TODO: CMIC_VALID_SEE_FLAGS
 // SHGetFolderPath in shfolder.dll on W9x, NT4, also in shell32.dll on W2K

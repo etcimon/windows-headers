@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.rpcdce2;
-
+nothrow:
 import windows.rpcdce;
 private import windows.basetyps;
 

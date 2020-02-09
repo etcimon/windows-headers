@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.lmserver;
-
+nothrow:
 import windows.winsvc;
 private import windows.lmcons, windows.windef;
 

@@ -10,7 +10,7 @@
 module windows.lmsname;
 
 private import windows.windef;
-
+nothrow:
 const TCHAR[]
 	SERVICE_WORKSTATION      = "LanmanWorkstation",
 	SERVICE_LM20_WORKSTATION = "WORKSTATION",

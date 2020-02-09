@@ -10,7 +10,7 @@
 \***********************************************************************/
 module windows.shellapi;
 pragma(lib, "shell32");
-
+nothrow:
 private import windows.w32api, windows.windef, windows.basetyps;
 
 enum : UINT {

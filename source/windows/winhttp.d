@@ -11,7 +11,7 @@ module windows.winhttp;
 pragma(lib, "winhttp");
 // FIXME: Grouping of constants. Windows SDK doesn't make this entirely clear
 // FIXME: Verify WINHTTP_STATUS_CALLBACK function declaration works correctly
-
+nothrow:
 import windows.w32api;
 import windows.winbase;
 import windows.windef;

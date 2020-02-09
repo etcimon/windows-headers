@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.rpcnterr;
-
+nothrow:
 import windows.winerror;
 
 enum : uint {

@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.ocidl;
-
+nothrow:
 private import windows.ole2, windows.oleidl, windows.oaidl, windows.objfwd,
   windows.windef, windows.wtypes;
 private import windows.objidl;  // for CLIPFORMAT

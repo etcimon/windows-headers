@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.iphlpapi;
-
+nothrow:
 import windows.ipexport, windows.iprtrmib, windows.iptypes;
 private import windows.winbase, windows.windef;
 

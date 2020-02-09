@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.richole;
-
+nothrow:
 private import windows.objfwd, windows.objidl, windows.ole2, windows.unknwn,
   windows.windef;
 private import windows.richedit; // for CHARRANGE

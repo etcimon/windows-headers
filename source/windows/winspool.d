@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.winspool;
 pragma(lib, "winspool");
-
+nothrow:
 private import windows.w32api, windows.windef, windows.wingdi;
 private import windows.winbase; // for SYSTEMTIME
 

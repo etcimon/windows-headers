@@ -10,7 +10,7 @@
 \***********************************************************************/
 module windows.wininet;
 pragma(lib, "wininet");
-
+nothrow:
 // FIXME: check types and grouping of constants
 
 import windows.windows;

@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.basetyps;
-
+nothrow:
 private import windows.windef, windows.basetsd;
 
 align(1) struct GUID {  // size is 16

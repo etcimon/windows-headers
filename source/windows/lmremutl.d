@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.lmremutl;
 pragma(lib, "netapi32");
-
+nothrow:
 // D Conversion Note: DESC_CHAR is defined as TCHAR.
 
 private import windows.lmcons, windows.windef;

@@ -11,7 +11,7 @@
 module windows.nspapi;
 
 private import windows.basetyps, windows.windef;
-
+nothrow:
 // FIXME: check types of constants
 
 enum {

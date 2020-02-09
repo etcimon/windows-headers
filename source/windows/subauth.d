@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.subauth;
-
+nothrow:
 private import windows.ntdef, windows.windef;
 
 /+

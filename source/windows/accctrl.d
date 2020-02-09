@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.accctrl;
-
+nothrow:
 private import windows.basetyps, windows.w32api, windows.winbase, windows.windef;
 
 // FIXME: check types and grouping of constants

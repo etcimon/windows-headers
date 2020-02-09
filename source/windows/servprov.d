@@ -10,7 +10,7 @@
 module windows.servprov;
 
 private import windows.basetyps, windows.unknwn, windows.windef, windows.wtypes;
-
+nothrow:
 interface IServiceProvider : IUnknown {
 	HRESULT QueryService(REFGUID, REFIID, void**);
 }

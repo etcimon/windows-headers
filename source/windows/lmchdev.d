@@ -12,7 +12,7 @@ module windows.lmchdev;
 // COMMENT: This file might be deprecated.
 
 private import windows.lmcons, windows.windef;
-
+nothrow:
 const CHARDEVQ_NO_REQUESTS  = -1;
 const CHARDEV_CLOSE         = 0;
 const CHARDEVQ_MAX_PRIORITY = 1;

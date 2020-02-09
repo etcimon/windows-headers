@@ -5,7 +5,7 @@
 module windows.usp10;
 import windows.windows;
 
-
+nothrow:
 
 /* Uniscribe Enumeration Types
  * http://msdn2.microsoft.com/library/ms776518 */

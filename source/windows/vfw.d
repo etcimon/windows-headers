@@ -9,7 +9,7 @@
 
 module windows.vfw;
 pragma(lib, "vfw32");
-
+nothrow:
 private import
 	windows.commdlg,
 	windows.wingdi,

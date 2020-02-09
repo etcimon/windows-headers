@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.commdlg;
 pragma(lib, "comdlg32");
-
+nothrow:
 private import windows.w32api;
 import windows.windef, windows.winuser;
 import windows.wingdi; // for LPLOGFONTA

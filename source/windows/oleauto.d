@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.oleauto;
 pragma(lib, "oleaut32");
-
+nothrow:
 import windows.oaidl;
 private import windows.basetyps, windows.unknwn, windows.windef, windows.wtypes;
 private import windows.winbase; // for SYSTEMTIME

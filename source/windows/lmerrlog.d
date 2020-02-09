@@ -10,7 +10,7 @@
 module windows.lmerrlog;
 
 // COMMENT: This appears to be only for Win16. All functions are deprecated.
-
+nothrow:
 private import windows.lmcons, windows.windef;
 private import windows.lmaudit; // for LPHLOG
 

@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.dbt;
-
+nothrow:
 import windows.w32api, windows.windef;
 import windows.basetyps; // for GUID
 

@@ -8,6 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.lm;
+nothrow:
 /* removed - now supporting only Win2k up
 version (WindowsVista) {
 	version = WIN32_WINNT_ONLY;

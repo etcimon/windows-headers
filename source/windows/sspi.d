@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.sspi;
-
+nothrow:
 import windows.windef;
 import windows.ntdef;
 import windows.w32api;

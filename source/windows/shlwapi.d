@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.shlwapi;
 pragma(lib, "shlwapi");
-
+nothrow:
 /* Changes compared to MinGW:
 wnsprintf functions are not included.
 // Macros unneeded for D

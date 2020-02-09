@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.rpcdce;
 pragma(lib, "Rpcrt4");
-
+nothrow:
 // TODO: I think MinGW got this wrong. RPC_UNICODE_SUPPORTED should be
 // replaced aliases for version(Unicode)
 

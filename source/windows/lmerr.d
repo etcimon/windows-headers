@@ -10,7 +10,7 @@
 module windows.lmerr;
 
 import windows.winerror;
-
+nothrow:
 enum {
 	NERR_Success                      = 0,
 	NERR_BASE                         = 2100,

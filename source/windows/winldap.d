@@ -26,7 +26,7 @@ module windows.winldap;
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
-
+nothrow:
 import windows.schannel, windows.winber;
 private import windows.wincrypt, windows.windef;
 version(Tango){

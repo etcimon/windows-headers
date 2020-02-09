@@ -8,6 +8,6 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.cguid;
-
+nothrow:
 private import windows.basetyps;
 

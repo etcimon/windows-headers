@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.lmstats;
 pragma(lib, "netapi32");
-
+nothrow:
 private import windows.lmcons, windows.windef;
 
 const ULONG

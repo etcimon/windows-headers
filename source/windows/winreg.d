@@ -12,7 +12,7 @@ module windows.winreg;
 pragma(lib, "advapi32");
 
 private import windows.w32api, windows.winbase, windows.windef;
-
+nothrow:
 enum : HKEY { // for some reason, DMD errors if I don't give all the values explicitly
 	HKEY_CLASSES_ROOT     = cast(HKEY) 0x80000000,
 	HKEY_CURRENT_USER     = cast(HKEY) 0x80000001,

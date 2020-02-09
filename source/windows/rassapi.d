@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.rassapi;
-
+nothrow:
 private import windows.lmcons, windows.windef;
 
 // FIXME: check types of constants

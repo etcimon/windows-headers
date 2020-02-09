@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.exdispid;
-
+nothrow:
 enum : int {
 	DISPID_STATUSTEXTCHANGE = 102,
 	DISPID_PROGRESSCHANGE   = 108,

@@ -11,7 +11,7 @@ module windows.winperf;
 
 import windows.windef;
 import windows.winbase; // for SYSTEMTIME
-
+nothrow:
 const PERF_DATA_VERSION=1;
 const PERF_DATA_REVISION=1;
 const PERF_NO_INSTANCES=-1;

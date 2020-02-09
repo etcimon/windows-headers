@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.iptypes;
-
+nothrow:
 import windows.windef;
 version(Tango){
     private import tango.stdc.time;

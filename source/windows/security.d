@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.security;
-
+nothrow:
 enum :SECURITY_STATUS{
     SEC_E_OK = 0,
     SEC_E_CERT_EXPIRED = (-2146893016),

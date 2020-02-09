@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.ras;
 pragma(lib, "rasapi32");
-
+nothrow:
 private import windows.basetyps, windows.lmcons, windows.w32api, windows.windef;
 
 align(4):

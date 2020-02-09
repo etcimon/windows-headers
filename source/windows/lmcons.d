@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.lmcons;
-
+nothrow:
 private import windows.windef;
 private import windows.lmerr; // for NERR_BASE
 

@@ -10,7 +10,7 @@
 module windows.profinfo;
 
 private import windows.windef;
-
+nothrow:
 struct PROFILEINFO {
   DWORD  dwSize;
   DWORD  dwFlags;

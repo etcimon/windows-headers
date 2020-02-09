@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.iprtrmib;
-
+nothrow:
 import windows.ipifcons;
 private import windows.windef;
 

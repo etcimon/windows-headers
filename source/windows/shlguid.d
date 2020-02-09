@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.shlguid;
-
+nothrow:
 private import windows.basetyps, windows.w32api;
 
 // FIXME: clean up Windows version support

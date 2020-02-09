@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.objbase;
 pragma(lib, "ole32");
-
+nothrow:
 import windows.cguid, windows.objidl, windows.unknwn, windows.wtypes;
 private import windows.basetyps, windows.objfwd, windows.rpcdce, windows.winbase,
   windows.windef;

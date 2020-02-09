@@ -10,7 +10,7 @@
 \***********************************************************************/
 module windows.powrprof;
 pragma(lib, "powrprof");
-
+nothrow:
 private import windows.windef;
 private import windows.ntdef;
 

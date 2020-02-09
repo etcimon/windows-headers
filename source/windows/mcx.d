@@ -11,7 +11,7 @@
 module windows.mcx;
 
 private import windows.windef;
-
+nothrow:
 const DWORD
 	DIALOPTION_BILLING  =  64,
 	DIALOPTION_QUIET    = 128,

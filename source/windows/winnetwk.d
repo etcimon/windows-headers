@@ -10,7 +10,7 @@
 \***********************************************************************/
 module windows.winnetwk;
 pragma(lib, "mpr");
-
+nothrow:
 private import windows.winbase, windows.winerror, windows.winnt;
 
 enum : DWORD {
@@ -293,7 +293,7 @@ struct NETINFOSTRUCT {
 }
 alias NETINFOSTRUCT* LPNETINFOSTRUCT;
 
-extern (Pascal) {
+extern(Windows) {
 	alias UINT function(LPCSTR, LPSTR, UINT) PFNGETPROFILEPATHA;
 	alias UINT function(LPCWSTR, LPWSTR, UINT) PFNGETPROFILEPATHW;
 	alias UINT function(LPCSTR, LPCSTR, DWORD) PFNRECONCILEPROFILEA;

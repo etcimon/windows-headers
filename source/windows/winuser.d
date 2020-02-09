@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.winuser;
 pragma(lib, "user32");
-
+nothrow:
 // Conversion Notes:
 // The following macros were for win16 only, and are not included in this file:
 //#define EnumTaskWindows(h, f, p) EnumThreadWindows((DWORD)h, f, p)

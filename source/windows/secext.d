@@ -10,7 +10,7 @@
 // Don't include this file directly, use windows.security instead.
 module windows.secext;
 pragma(lib, "secur32");
-
+nothrow:
 private import windows.w32api, windows.windef;
 
 static assert (_WIN32_WINNT >= 0x501,

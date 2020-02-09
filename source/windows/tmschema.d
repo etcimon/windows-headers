@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.tmschema;
-
+nothrow:
 /* BUTTON parts */
 enum {
 	BP_PUSHBUTTON = 1,

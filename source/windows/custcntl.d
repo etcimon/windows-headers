@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.custcntl;
-
+nothrow:
 private import windows.windef;
 
 // FIXME: check type

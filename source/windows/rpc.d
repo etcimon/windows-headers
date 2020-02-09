@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.rpc;
-
+nothrow:
 /* Moved to rpcdecp (duplicate definition).
 	typedef void *I_RPC_HANDLE;
 	alias long RPC_STATUS;

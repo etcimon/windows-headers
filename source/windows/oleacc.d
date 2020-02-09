@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.oleacc;
 pragma(lib, "oleacc");
-
+nothrow:
 private import windows.basetyps, windows.oaidl, windows.unknwn, windows.wtypes,
   windows.windef;
 

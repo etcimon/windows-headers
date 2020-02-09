@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.basetsd;
-
+nothrow:
 /*	This template is used in these modules to declare constant pointer types,
  *	in order to support both D 1.x and 2.x.
  *	Since removed - now supporting only D2

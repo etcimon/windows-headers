@@ -15,7 +15,7 @@ module windows.lmsvc;
   lmsname is not imported publicly (instead, windows.lm imports it directly).
 */
 // TODO: 5 macros
-
+nothrow:
 private import windows.lmcons, windows.lmsname, windows.windef;
 
 const TCHAR[] SERVICE_DOS_ENCRYPTION = "ENCRYPT";

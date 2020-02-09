@@ -10,7 +10,7 @@
 module windows.oaidl;
 
 private import windows.basetyps, windows.unknwn, windows.windef, windows.wtypes;
-
+nothrow:
 const DISPID_UNKNOWN = -1;
 const DISPID_VALUE = 0;
 const DISPID_PROPERTYPUT = -3;

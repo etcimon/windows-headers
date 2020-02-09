@@ -11,7 +11,7 @@ module windows.mshtml;
 
 private import windows.basetyps, windows.oaidl, windows.unknwn,
   windows.windef, windows.wtypes;
-
+nothrow:
 // These are used in this file, but not defined in MinGW.
 interface IHTMLStyleSheet {};
 alias IHTMLStyle LPHTMLSTYLE;

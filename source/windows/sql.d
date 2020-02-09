@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.sql;
-
+nothrow:
 public import windows.sqltypes;
 private import windows.windef;
 

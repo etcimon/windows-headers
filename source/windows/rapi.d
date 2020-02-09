@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.rapi;
-
+nothrow:
 /* Comment from MinGW
    NOTE: This strictly does not belong in the Win32 API since it's
    really part of Platform SDK.

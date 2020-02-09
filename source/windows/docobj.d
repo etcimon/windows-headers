@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.docobj;
-
+nothrow:
 private import windows.basetyps, windows.oaidl, windows.objidl, windows.oleidl,
   windows.unknwn, windows.windef, windows.wtypes;
 

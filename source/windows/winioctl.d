@@ -13,7 +13,7 @@ module windows.winioctl;
 // FIXME: check types of some constants
 
 private import windows.basetyps, windows.windef;
-
+nothrow:
 const size_t
 	HIST_NO_OF_BUCKETS = 24,
 	HISTOGRAM_BUCKET_SIZE = HISTOGRAM_BUCKET.sizeof,

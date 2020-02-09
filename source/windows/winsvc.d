@@ -10,7 +10,7 @@
 \***********************************************************************/
 module windows.winsvc;
 pragma(lib, "advapi32");
-
+nothrow:
 private import windows.w32api, windows.windef;
 
 // FIXME: check Windows version support

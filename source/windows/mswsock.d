@@ -12,7 +12,7 @@ module windows.mswsock;
 
 import windows.winbase, windows.windef;
 private import windows.basetyps, windows.w32api;
-
+nothrow:
 // FIXME: clean up Windows version support
 
 version (Win32_Winsock2) pragma(msg,

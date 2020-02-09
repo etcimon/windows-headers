@@ -11,7 +11,7 @@
 module windows.ntdll;
 
 private import windows.w32api;
-
+nothrow:
 
 enum SHUTDOWN_ACTION {
 	ShutdownNoReboot,

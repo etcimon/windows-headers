@@ -10,7 +10,7 @@
 \***********************************************************************/
 module windows.setupapi;
 pragma(lib, "setupapi");
-
+nothrow:
 private import windows.basetyps, windows.commctrl, windows.prsht, windows.w32api,
   windows.winreg, windows.windef;
 private import windows.winbase; // for SYSTEMTIME

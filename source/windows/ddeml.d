@@ -10,7 +10,7 @@
 \***********************************************************************/
 module windows.ddeml;
 pragma(lib, "user32");
-
+nothrow:
 private import windows.basetsd, windows.windef, windows.winnt;
 
 enum : int {

@@ -14,7 +14,7 @@ import windows.commdlg, windows.dlgs, windows.ole2, windows.prsht, windows.shell
 private import windows.winbase, windows.objidl, windows.objfwd, windows.winnt;
 
 // FIXME: remove inherited methods from interface definitions
-
+nothrow:
 const PS_MAXLINKTYPES=8;
 
 const TCHAR[] OLESTDDELIM = "\\";

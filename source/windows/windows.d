@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 /***********************************************************************/
 module windows.windows;
-
+nothrow:
 /*
 	windows.h - main header file for the Win32 API
 

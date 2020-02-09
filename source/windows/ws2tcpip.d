@@ -15,7 +15,7 @@ import windows.w32api;
 import windows.windef;
 //import windows.basetyps;
 import windows.winsock2;
-
+nothrow:
 enum {
 	IP_OPTIONS					= 1,
 

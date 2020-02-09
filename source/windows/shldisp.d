@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.shldisp;
-
+nothrow:
 private import windows.unknwn, windows.windef, windows.wtypes;
 
 // options for IAutoComplete2

@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.cplext;
-
+nothrow:
 enum : uint {
 	CPLPAGE_MOUSE_BUTTONS      = 1,
 	CPLPAGE_MOUSE_PTRMOTION    = 2,

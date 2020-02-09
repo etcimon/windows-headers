@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.imm;
 pragma(lib, "imm32");
-
+nothrow:
 import windows.windef, windows.wingdi;
 import windows.winuser; // for the MFS_xxx enums.
 private import windows.w32api;

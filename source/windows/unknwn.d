@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.unknwn;
-
+nothrow:
 import windows.objfwd, windows.windef, windows.wtypes;
 private import windows.basetyps;
 

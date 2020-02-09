@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.ole2;
 pragma(lib, "ole32");
-
+nothrow:
 public import windows.basetyps, windows.objbase, windows.oleauto, windows.olectlid,
   windows.oleidl, windows.unknwn, windows.winerror, windows.uuid;
 private import windows.objfwd, windows.objidl, windows.windef, windows.wtypes;

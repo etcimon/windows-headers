@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.isguids;
-
+nothrow:
 private import windows.basetyps;
 
 extern (C) extern const GUID

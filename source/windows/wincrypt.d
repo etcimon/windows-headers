@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.wincrypt;
-
+nothrow:
 private import windows.w32api, windows.winbase, windows.windef;
 
 /* FIXME:

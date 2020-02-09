@@ -11,7 +11,7 @@ module windows.wtsapi32;
 pragma(lib, "wtsapi32");
 private import windows.w32api;
 import windows.windef;
-
+nothrow:
 enum {
 	WTS_CURRENT_SERVER        = null,
 	WTS_CURRENT_SERVER_HANDLE = null,

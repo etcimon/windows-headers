@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.ipifcons;
-
+nothrow:
 // FIXME: check types of constants
 
 enum {

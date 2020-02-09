@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.objsafe;
-
+nothrow:
 private import windows.basetyps, windows.unknwn, windows.windef;
 
 enum {

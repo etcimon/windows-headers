@@ -10,7 +10,7 @@
 \***********************************************************************/
 module windows.prsht;
 pragma(lib, "comctl32");
-
+nothrow:
 private import windows.w32api, windows.windef, windows.winuser;
 
 const MAXPROPPAGES = 100;

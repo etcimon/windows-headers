@@ -11,7 +11,7 @@
 module windows.lmaudit;
 
 private import windows.lmcons, windows.windef;
-
+nothrow:
 const LOGFLAGS_FORWARD  = 0;
 const LOGFLAGS_BACKWARD = 1;
 const LOGFLAGS_SEEK     = 2;

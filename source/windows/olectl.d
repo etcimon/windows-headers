@@ -11,7 +11,7 @@ module windows.olectl;
 
 // In conversion from MinGW, the following was deleted:
 //#define FONTSIZE(n) {n##0000, 0}
-
+nothrow:
 import windows.ocidl, windows.olectlid;
 private import windows.basetyps, windows.oaidl, windows.oleauto, windows.unknwn,
   windows.windef, windows.wingdi, windows.winuser, windows.wtypes;

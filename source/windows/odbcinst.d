@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.odbcinst;
-
+nothrow:
 import windows.sql;
 private import windows.windef;
 

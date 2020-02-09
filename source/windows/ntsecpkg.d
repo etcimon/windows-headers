@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.ntsecpkg;
-
+nothrow:
 import windows.windef, windows.ntsecapi, windows.security, windows.ntdef, windows.sspi;
 import windows.winnt: GUID;
 import windows.winbase;

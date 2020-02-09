@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.windef;
-
+nothrow:
 public import windows.winnt;
 private import windows.w32api;
 

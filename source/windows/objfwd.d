@@ -10,7 +10,7 @@
 module windows.objfwd;
 
 private import windows.objidl;
-
+nothrow:
 /+
 // Forward declararions are not necessary in D.
 extern(Windows) {

@@ -10,7 +10,7 @@
 module windows.lmbrowsr;
 
 private import windows.lmcons, windows.windef;
-
+nothrow:
 const BROWSER_ROLE_PDC = 1;
 const BROWSER_ROLE_BDC = 2;
 

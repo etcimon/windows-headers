@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.wincon;
 pragma(lib, "kernel32");
-
+nothrow:
 private import windows.w32api, windows.windef;
 
 // FIXME: clean up Windows version support

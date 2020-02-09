@@ -10,7 +10,7 @@
 \***********************************************************************/
 module windows.rpcnsi;
 pragma(lib, "rpcns4");
-
+nothrow:
 private import windows.basetyps, windows.rpcdcep, windows.rpcnsi, windows.rpcdce,
   windows.w32api;
 private import windows.windef;  // for HANDLE

@@ -10,7 +10,7 @@
 \***********************************************************************/
 module windows.aclapi;
 pragma(lib, "advapi32");
-
+nothrow:
 import windows.windows, windows.accctrl;
 
 extern (Windows) {

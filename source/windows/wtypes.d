@@ -8,7 +8,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.wtypes;
-
+nothrow:
 import windows.rpc, windows.rpcndr;
 private import windows.windef;
 private import windows.uuid; // for GUID_NULL

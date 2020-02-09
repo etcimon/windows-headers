@@ -11,7 +11,7 @@
 module windows.msacm;
 
 private import windows.basetsd, windows.mmsystem, windows.windef;
-
+nothrow:
 mixin DECLARE_HANDLE!("HACMDRIVERID");
 mixin DECLARE_HANDLE!("HACMDRIVER");
 alias HACMDRIVER* LPHACMDRIVER;

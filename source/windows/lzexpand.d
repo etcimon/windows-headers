@@ -11,7 +11,7 @@ module windows.lzexpand;
 pragma(lib, "lz32");
 
 private import windows.winbase, windows.windef;
-
+nothrow:
 enum : LONG {
 	LZERROR_BADINHANDLE  = -1,
 	LZERROR_BADOUTHANDLE = -2,

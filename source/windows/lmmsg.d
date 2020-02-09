@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.lmmsg;
 pragma(lib, "netapi32");
-
+nothrow:
 private import windows.lmcons, windows.windef, windows.w32api;
 
 static assert (_WIN32_WINNT >= 0x501,

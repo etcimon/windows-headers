@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.idispids;
-
+nothrow:
 enum : int {
 	DISPID_AMBIENT_OFFLINEIFNOTCONNECTED = -5501,
 	DISPID_AMBIENT_SILENT                = -5502

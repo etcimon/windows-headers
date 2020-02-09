@@ -9,7 +9,7 @@
 \***********************************************************************/
 module windows.winbase;
 pragma(lib, "kernel32");
-
+nothrow:
 /**
 Translation Notes:
 The following macros are obsolete, and have no effect.

@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.rasdlg;
-
+nothrow:
 import windows.ras;
 private import windows.lmcons, windows.windef;
 

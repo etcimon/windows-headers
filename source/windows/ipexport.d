@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.ipexport;
-
+nothrow:
 private import windows.windef;
 
 const size_t MAX_ADAPTER_NAME = 128;

@@ -9,7 +9,7 @@
 *                       Placed into public domain                       *
 \***********************************************************************/
 module windows.ole;
-
+nothrow:
 private import windows.windef, windows.wingdi, windows.uuid;
 
 alias LPCSTR OLE_LPCSTR;
