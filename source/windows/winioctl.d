@@ -256,7 +256,7 @@ struct BIN_RESULTS {
 	DWORD     NumberOfBins;
 	BIN_COUNT _BinCounts;
 
-	BIN_COUNT* BinCounts() { return &_BinCounts; }
+	BIN_COUNT* BinCounts() return scope { return &_BinCounts; }
 }
 alias BIN_RESULTS* PBIN_RESULTS;
 
@@ -395,7 +395,7 @@ struct DISK_GEOMETRY_EX {
 	LARGE_INTEGER DiskSize;
 	BYTE          _Data;
 
-	BYTE* Data() { return &_Data; }
+	BYTE* Data() return scope { return &_Data; }
 }
 alias DISK_GEOMETRY_EX* PDISK_GEOMETRY_EX;
 
@@ -474,7 +474,7 @@ struct FORMAT_EX_PARAMETERS {
 	WORD       SectorsPerTrack;
 	WORD       _SectorNumber;
 
-	WORD* SectorNumber() { return &_SectorNumber; }
+	WORD* SectorNumber() return scope { return &_SectorNumber; }
 }
 alias FORMAT_EX_PARAMETERS* PFORMAT_EX_PARAMETERS;
 
@@ -514,7 +514,7 @@ struct VOLUME_DISK_EXTENTS {
 	DWORD       NumberOfDiskExtents;
 	DISK_EXTENT _Extents;
 
-	DISK_EXTENT* Extents() { return &_Extents; }
+	DISK_EXTENT* Extents() return scope { return &_Extents; }
 }
 alias VOLUME_DISK_EXTENTS* PVOLUME_DISK_EXTENTS;
 
@@ -535,7 +535,7 @@ struct DRIVE_LAYOUT_INFORMATION {
 	DWORD                 Signature;
 	PARTITION_INFORMATION _PartitionEntry;
 
-	PARTITION_INFORMATION* PartitionEntry() { return &_PartitionEntry; }
+	PARTITION_INFORMATION* PartitionEntry() return scope { return &_PartitionEntry; }
 }
 alias DRIVE_LAYOUT_INFORMATION* PDRIVE_LAYOUT_INFORMATION;
 
@@ -587,7 +587,7 @@ struct DRIVE_LAYOUT_INFORMATION_EX {
 	}
 	PARTITION_INFORMATION_EX _PartitionEntry;
 
-	PARTITION_INFORMATION_EX* PartitionEntry() { return &_PartitionEntry; }
+	PARTITION_INFORMATION_EX* PartitionEntry() return scope { return &_PartitionEntry; }
 }
 alias DRIVE_LAYOUT_INFORMATION_EX* PDRIVE_LAYOUT_INFORMATION_EX;
 
@@ -604,7 +604,7 @@ struct PERF_BIN {
 	DWORD     TypeOfBin;
 	BIN_RANGE _BinsRanges;
 
-	BIN_RANGE* BinsRanges() { return &_BinsRanges; }
+	BIN_RANGE* BinsRanges() return scope { return &_BinsRanges; }
 }
 alias PERF_BIN* PPERF_BIN;
 
@@ -623,7 +623,7 @@ struct RETRIEVAL_POINTERS_BUFFER {
 	}
 	Extent _Extents;
 
-	Extent* Extents() { return &_Extents; }
+	Extent* Extents() return scope { return &_Extents; }
 }
 alias RETRIEVAL_POINTERS_BUFFER* PRETRIEVAL_POINTERS_BUFFER;
 
@@ -632,7 +632,7 @@ struct REASSIGN_BLOCKS {
 	WORD  Count;
 	DWORD _BlockNumber;
 
-	DWORD* BlockNumber() { return &_BlockNumber; }
+	DWORD* BlockNumber() return scope { return &_BlockNumber; }
 }
 alias REASSIGN_BLOCKS* PREASSIGN_BLOCKS;
 
@@ -662,7 +662,7 @@ struct VOLUME_BITMAP_BUFFER {
 	LARGE_INTEGER BitmapSize;
 	BYTE          _Buffer;
 
-	BYTE* Buffer() { return &_Buffer; }
+	BYTE* Buffer() return scope { return &_Buffer; }
 }
 alias VOLUME_BITMAP_BUFFER* PVOLUME_BITMAP_BUFFER;
 
