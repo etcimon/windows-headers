@@ -111,7 +111,7 @@ struct DEV_BROADCAST_PORT_A {
 	DWORD dbcp_devicetype;
 	DWORD dbcp_reserved;
 	char  _dbcp_name;
-	char* dbcp_name() { return &_dbcp_name; }
+	char* dbcp_name() return scope { return &_dbcp_name; }
 }
 alias DEV_BROADCAST_PORT_A* PDEV_BROADCAST_PORT_A;
 
@@ -120,14 +120,14 @@ struct DEV_BROADCAST_PORT_W {
 	DWORD  dbcp_devicetype;
 	DWORD  dbcp_reserved;
 	WCHAR  _dbcp_name;
-	WCHAR* dbcp_name() { return &_dbcp_name; }
+	WCHAR* dbcp_name() return scope { return &_dbcp_name; }
 }
 alias DEV_BROADCAST_PORT_W* PDEV_BROADCAST_PORT_W;
 
 struct DEV_BROADCAST_USERDEFINED {
 	DEV_BROADCAST_HDR dbud_dbh;
 	char  _dbud_szName;
-	char* dbud_szName() { return &_dbud_szName; }
+	char* dbud_szName() return scope { return &_dbud_szName; }
 }
 
 struct DEV_BROADCAST_VOLUME {
@@ -153,7 +153,7 @@ static if (_WIN32_WINNT >= 0x500) {
 		DWORD dbcc_reserved;
 		GUID  dbcc_classguid;
 		char  _dbcc_name;
-		char* dbcc_name() { return &_dbcc_name; }
+		char* dbcc_name() return scope { return &_dbcc_name; }
 	}
 	alias DEV_BROADCAST_DEVICEINTERFACE_A* PDEV_BROADCAST_DEVICEINTERFACE_A;
 
@@ -163,7 +163,7 @@ static if (_WIN32_WINNT >= 0x500) {
 		DWORD  dbcc_reserved;
 		GUID   dbcc_classguid;
 		WCHAR  _dbcc_name;
-		WCHAR* dbcc_name() { return &_dbcc_name; }
+		WCHAR* dbcc_name() return scope { return &_dbcc_name; }
 	}
 	alias DEV_BROADCAST_DEVICEINTERFACE_W* PDEV_BROADCAST_DEVICEINTERFACE_W;
 
@@ -183,7 +183,7 @@ static if (_WIN32_WINNT >= 0x500) {
 		GUID   dbch_eventguid;
 		LONG   dbch_nameoffset;
 		BYTE   _dbch_data;
-		BYTE*  dbch_data() { return &_dbch_data; }
+		BYTE*  dbch_data() return scope { return &_dbch_data; }
 	}
 	alias DEV_BROADCAST_HANDLE* PDEV_BROADCAST_HANDLE;
 }
