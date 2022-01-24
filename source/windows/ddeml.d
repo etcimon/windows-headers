@@ -249,7 +249,7 @@ struct MONHSZSTRUCT {
 	HANDLE   hTask;
 	TCHAR[1] _str;
 
-	TCHAR* str() return scope { return _str.ptr; }
+	TCHAR* str() return { return _str.ptr; }
 }
 alias MONHSZSTRUCT* PMONHSZSTRUCT;
 

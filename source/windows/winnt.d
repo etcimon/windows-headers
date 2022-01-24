@@ -2375,7 +2375,7 @@ struct TOKEN_GROUPS {
 	DWORD GroupCount;
 	SID_AND_ATTRIBUTES _Groups;
 
-	SID_AND_ATTRIBUTES* Groups() return scope { return &_Groups; }
+	SID_AND_ATTRIBUTES* Groups() return { return &_Groups; }
 }
 alias TOKEN_GROUPS* PTOKEN_GROUPS, LPTOKEN_GROUPS;
 

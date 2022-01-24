@@ -933,7 +933,7 @@ alias CSADDR_INFO* PCSADDR_INFO, LPCSADDR_INFO;
 struct SOCKET_ADDRESS_LIST {
     INT               iAddressCount;
     SOCKET_ADDRESS[1] _Address;
-    SOCKET_ADDRESS* Address() return scope { return _Address.ptr; }
+    SOCKET_ADDRESS* Address() return { return _Address.ptr; }
 }
 
 alias SOCKET_ADDRESS_LIST* LPSOCKET_ADDRESS_LIST;

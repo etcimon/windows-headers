@@ -183,7 +183,7 @@ static if (_WIN32_WINNT >= 0x500) {
 		GUID   dbch_eventguid;
 		LONG   dbch_nameoffset;
 		BYTE   _dbch_data;
-		BYTE*  dbch_data() return scope { return &_dbch_data; }
+		BYTE*  dbch_data() return { return &_dbch_data; }
 	}
 	alias DEV_BROADCAST_HANDLE* PDEV_BROADCAST_HANDLE;
 }
