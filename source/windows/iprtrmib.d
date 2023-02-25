@@ -69,7 +69,7 @@ struct MIB_IPADDRTABLE {
 	DWORD            dwNumEntries;
 	MIB_IPADDRROW[1] _table;
 
-	MIB_IPADDRROW* table() return { return _table.ptr; }
+	MIB_IPADDRROW* table() return scope { return _table.ptr; }
 }
 alias MIB_IPADDRTABLE* PMIB_IPADDRTABLE;
 
@@ -95,7 +95,7 @@ struct MIB_IPFORWARDTABLE {
 	DWORD               dwNumEntries;
 	MIB_IPFORWARDROW[1] _table;
 
-	MIB_IPFORWARDROW* table() return { return _table.ptr; }
+	MIB_IPFORWARDROW* table() return scope { return _table.ptr; }
 }
 alias MIB_IPFORWARDTABLE* PMIB_IPFORWARDTABLE;
 
@@ -112,7 +112,7 @@ struct MIB_IPNETTABLE {
 	DWORD           dwNumEntries;
 	MIB_IPNETROW[1] _table;
 
-	MIB_IPNETROW* table() return { return _table.ptr; }
+	MIB_IPNETROW* table() return scope { return _table.ptr; }
 }
 alias MIB_IPNETTABLE* PMIB_IPNETTABLE;
 
@@ -176,7 +176,7 @@ struct MIB_IFTABLE {
 	DWORD        dwNumEntries;
 	MIB_IFROW[1] _table;
 
-	MIB_IFROW* table() return { return _table.ptr; }
+	MIB_IFROW* table() return scope { return _table.ptr; }
 }
 alias MIB_IFTABLE* PMIB_IFTABLE;
 
@@ -239,7 +239,7 @@ struct MIB_TCPTABLE {
 	DWORD         dwNumEntries;
 	MIB_TCPROW[1] _table;
 
-	MIB_TCPROW* table() return { return _table.ptr; }
+	MIB_TCPROW* table() return scope { return _table.ptr; }
 }
 alias MIB_TCPTABLE* PMIB_TCPTABLE;
 
@@ -262,6 +262,6 @@ struct MIB_UDPTABLE {
 	DWORD         dwNumEntries;
 	MIB_UDPROW[1] _table;
 
-	MIB_UDPROW* table() return { return _table.ptr; }
+	MIB_UDPROW* table() return scope { return _table.ptr; }
 }
 alias MIB_UDPTABLE* PMIB_UDPTABLE;

@@ -202,7 +202,7 @@ struct COMMPROP {
 	DWORD dwProvSpec2;
 	WCHAR _wcProvChar;
 
-	WCHAR* wcProvChar() return { return &_wcProvChar; }
+	WCHAR* wcProvChar() return scope { return &_wcProvChar; }
 }
 alias COMMPROP* LPCOMMPROP;
 
@@ -1038,7 +1038,7 @@ struct COMMCONFIG {
 	DWORD dwProviderSize;
 	WCHAR _wcProviderData;
 
-	WCHAR* wcProviderData() return { return &_wcProviderData; }
+	WCHAR* wcProviderData() return scope { return &_wcProviderData; }
 }
 alias COMMCONFIG* LPCOMMCONFIG;
 
@@ -1323,7 +1323,7 @@ struct WIN32_STREAM_ID {
 	DWORD         dwStreamNameSize;
 	WCHAR         _cStreamName;
 
-	WCHAR* cStreamName() return { return &_cStreamName; }
+	WCHAR* cStreamName() return scope { return &_cStreamName; }
 }
 alias WIN32_STREAM_ID* LPWIN32_STREAM_ID;
 
@@ -1533,7 +1533,7 @@ struct WIN_CERTIFICATE {
 	WORD  wCertificateType;
 	BYTE  _bCertificate;
 
-	BYTE* bCertificate() return { return &_bCertificate; }
+	BYTE* bCertificate() return scope { return &_bCertificate; }
 }
 alias WIN_CERTIFICATE* LPWIN_CERTIFICATE;
 
