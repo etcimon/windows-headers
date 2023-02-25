@@ -2300,7 +2300,7 @@ struct PRIVILEGE_SET {
 	DWORD Control;
 	LUID_AND_ATTRIBUTES _Privilege;
 
-	LUID_AND_ATTRIBUTES* Privilege() return scope { return &_Privilege; }
+	LUID_AND_ATTRIBUTES* Privilege() return { return &_Privilege; }
 }
 alias PRIVILEGE_SET* PPRIVILEGE_SET;
 
@@ -2342,7 +2342,7 @@ struct SID {
 	SID_IDENTIFIER_AUTHORITY IdentifierAuthority;
 	DWORD _SubAuthority;
 
-	DWORD* SubAuthority() return scope { return &_SubAuthority; }
+	DWORD* SubAuthority() return { return &_SubAuthority; }
 }
 alias SID* PISID;
 
@@ -2393,7 +2393,7 @@ struct TOKEN_PRIVILEGES {
 	DWORD PrivilegeCount;
 	LUID_AND_ATTRIBUTES _Privileges;
 
-	LUID_AND_ATTRIBUTES* Privileges() return scope { return &_Privileges; }
+	LUID_AND_ATTRIBUTES* Privileges() return { return &_Privileges; }
 }
 alias TOKEN_PRIVILEGES* PTOKEN_PRIVILEGES, LPTOKEN_PRIVILEGES;
 alias TOKEN_TYPE = int;
@@ -2641,7 +2641,7 @@ struct FILE_NOTIFY_INFORMATION {
 	DWORD FileNameLength;
 	WCHAR _FileName;
 
-	WCHAR* FileName() return scope { return &_FileName; }
+	WCHAR* FileName() return { return &_FileName; }
 }
 alias FILE_NOTIFY_INFORMATION* PFILE_NOTIFY_INFORMATION;
 
@@ -2741,7 +2741,7 @@ struct MESSAGE_RESOURCE_ENTRY {
 	WORD Flags;
 	BYTE _Text;
 
-	BYTE* Text() return scope { return &_Text; }
+	BYTE* Text() return { return &_Text; }
 }
 alias MESSAGE_RESOURCE_ENTRY* PMESSAGE_RESOURCE_ENTRY;
 
@@ -2756,7 +2756,7 @@ struct MESSAGE_RESOURCE_DATA {
 	DWORD NumberOfBlocks;
 	MESSAGE_RESOURCE_BLOCK _Blocks;
 
-	MESSAGE_RESOURCE_BLOCK* Blocks() return scope { return &_Blocks; }
+	MESSAGE_RESOURCE_BLOCK* Blocks() return { return &_Blocks; }
 }
 alias MESSAGE_RESOURCE_DATA* PMESSAGE_RESOURCE_DATA;
 
@@ -3259,7 +3259,7 @@ struct IMAGE_IMPORT_BY_NAME {
 	WORD Hint;
 	BYTE _Name;
 
-	BYTE* Name() return scope {
+	BYTE* Name() return {
 		return &_Name;
 	}
 }
@@ -3387,7 +3387,7 @@ struct IMAGE_RESOURCE_DIRECTORY_STRING {
 	WORD Length;
 	CHAR _NameString;
 
-	CHAR* NameString() return scope { return &_NameString; }
+	CHAR* NameString() return { return &_NameString; }
 }
 alias IMAGE_RESOURCE_DIRECTORY_STRING* PIMAGE_RESOURCE_DIRECTORY_STRING;
 
@@ -3395,7 +3395,7 @@ struct IMAGE_RESOURCE_DIR_STRING_U {
 	WORD  Length;
 	WCHAR _NameString;
 
-	WCHAR* NameString() return scope { return &_NameString; }
+	WCHAR* NameString() return { return &_NameString; }
 }
 alias IMAGE_RESOURCE_DIR_STRING_U* PIMAGE_RESOURCE_DIR_STRING_U;
 
@@ -3540,7 +3540,7 @@ struct IMAGE_DEBUG_MISC {
 	BYTE[3] Reserved;
 	BYTE    _Data;
 
-	BYTE*   Data() return scope { return &_Data; }
+	BYTE*   Data() return { return &_Data; }
 }
 alias IMAGE_DEBUG_MISC* PIMAGE_DEBUG_MISC;
 
@@ -3630,7 +3630,7 @@ struct REPARSE_DATA_BUFFER {
 		struct _GenericReparseBuffer {
 			BYTE  _DataBuffer;
 
-			BYTE* DataBuffer() return scope { return &_DataBuffer; }
+			BYTE* DataBuffer() return { return &_DataBuffer; }
 		}
 		_GenericReparseBuffer GenericReparseBuffer;
 		struct _SymbolicLinkReparseBuffer {
@@ -3642,7 +3642,7 @@ struct REPARSE_DATA_BUFFER {
 			ULONG Flags;
 			WCHAR _PathBuffer;
 
-			WCHAR* PathBuffer() return scope { return &_PathBuffer; }
+			WCHAR* PathBuffer() return { return &_PathBuffer; }
 		}
 		_SymbolicLinkReparseBuffer SymbolicLinkReparseBuffer;
 		struct _MountPointReparseBuffer {
@@ -3652,7 +3652,7 @@ struct REPARSE_DATA_BUFFER {
 			WORD  PrintNameLength;
 			WCHAR _PathBuffer;
 
-			WCHAR* PathBuffer() return scope { return &_PathBuffer; }
+			WCHAR* PathBuffer() return { return &_PathBuffer; }
 		}
 		_MountPointReparseBuffer MountPointReparseBuffer;
 	}
@@ -3667,7 +3667,7 @@ struct REPARSE_GUID_DATA_BUFFER {
 	struct _GenericReparseBuffer {
 		BYTE _DataBuffer;
 
-		BYTE* DataBuffer() return scope { return &_DataBuffer; }
+		BYTE* DataBuffer() return { return &_DataBuffer; }
 	}
 	_GenericReparseBuffer GenericReparseBuffer;
 }
@@ -3787,7 +3787,7 @@ struct JOBOBJECT_BASIC_PROCESS_ID_LIST {
 	DWORD     NumberOfProcessIdsInList;
 	ULONG_PTR _ProcessIdList;
 
-	ULONG_PTR* ProcessIdList() return scope { return &_ProcessIdList; }
+	ULONG_PTR* ProcessIdList() return { return &_ProcessIdList; }
 }
 alias JOBOBJECT_BASIC_PROCESS_ID_LIST* PJOBOBJECT_BASIC_PROCESS_ID_LIST;
 
